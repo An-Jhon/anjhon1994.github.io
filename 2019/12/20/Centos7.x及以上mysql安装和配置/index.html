@@ -46,29 +46,39 @@
   };
 </script>
 
-  <meta name="description" content="没啥好说的">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Anjhon">
-<meta property="og:url" content="https://anjhon1994.github.io/index.html">
+  <meta name="description" content="在安装MySQL之前需要先将服务器的3306端口打开  下载MySQL源安装包:  wget http:&#x2F;&#x2F;dev.mysql.com&#x2F;get&#x2F;mysql57-community-release-el7-8.noarch.rpm    安装MySQL源:  yum localinstall mysql57-community-release-el7-8.noarch.rpm  安装MySQL: y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos7.x及以上mysql安装和配置">
+<meta property="og:url" content="https://anjhon1994.github.io/2019/12/20/Centos7.x%E5%8F%8A%E4%BB%A5%E4%B8%8Amysql%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Anjhon">
-<meta property="og:description" content="没啥好说的">
+<meta property="og:description" content="在安装MySQL之前需要先将服务器的3306端口打开  下载MySQL源安装包:  wget http:&#x2F;&#x2F;dev.mysql.com&#x2F;get&#x2F;mysql57-community-release-el7-8.noarch.rpm    安装MySQL源:  yum localinstall mysql57-community-release-el7-8.noarch.rpm  安装MySQL: y">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://anjhon1994.github.io/Users/yuting/Workspace/JAVA/%E6%8E%88%E8%AF%BE/%E6%96%87%E6%A1%A3/Linux%E9%98%B6%E6%AE%B5%E6%96%87%E6%A1%A3/img/mysql1.png">
+<meta property="og:image" content="https://anjhon1994.github.io/2019/12/20/Centos7.x%E5%8F%8A%E4%BB%A5%E4%B8%8Amysql%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/img/mysql2.png">
+<meta property="article:published_time" content="2019-12-20T05:28:26.000Z">
+<meta property="article:modified_time" content="2019-12-20T05:44:39.181Z">
 <meta property="article:author" content="anjhon">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="分享">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="服务器">
+<meta property="article:tag" content="配置">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://anjhon1994.github.io/Users/yuting/Workspace/JAVA/%E6%8E%88%E8%AF%BE/%E6%96%87%E6%A1%A3/Linux%E9%98%B6%E6%AE%B5%E6%96%87%E6%A1%A3/img/mysql1.png">
 
-<link rel="canonical" href="https://anjhon1994.github.io/">
+<link rel="canonical" href="https://anjhon1994.github.io/2019/12/20/Centos7.x%E5%8F%8A%E4%BB%A5%E4%B8%8Amysql%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>Anjhon</title>
+  <title>Centos7.x及以上mysql安装和配置 | Anjhon</title>
   
 
 
@@ -180,70 +190,10 @@
             
 
   <div class="posts-expand">
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://anjhon1994.github.io/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/aa.jpg">
-      <meta itemprop="name" content="anjhon">
-      <meta itemprop="description" content="没啥好说的">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Anjhon">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" class="post-title-link" itemprop="url">Linux定时任务</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2019-12-20 20:10:50 / 修改时间：20:13:38" itemprop="dateCreated datePublished" datetime="2019-12-20T20:10:50+08:00">2019-12-20</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-          <p>通过制定 ```crontab -e``编辑和开启定时任务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建一个完整的定时任务，需要确定时间和任务</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1.时间</span></span><br><span class="line"> .---------------- minute (0 - 59)   # 分</span><br><span class="line"> |  .------------- hour (0 - 23)     # 时</span><br><span class="line"> |  |  .---------- day of month (1 - 31)  # 日</span><br><span class="line"> |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...  # 月</span><br><span class="line"> |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span><br><span class="line"> |  |  |  |  |</span><br><span class="line"> *  *  *  *  * user-name  command to be executed</span><br><span class="line"></span><br><span class="line"> * * * * *   		- 每分钟执行一次任务(每隔一分钟)</span><br><span class="line"> */1 * * * *        - 每分钟执行一次任务(每隔一分钟)</span><br><span class="line"> */2 * * * *        - 每2分钟执行一次任务(每隔2分钟)</span><br><span class="line"> * */1 * * *        - 每隔1小时</span><br><span class="line"> * * */1 * *        - 每隔1天</span><br><span class="line"> * * * */2 *        - 每隔两个月</span><br><span class="line"> * * * *  fri       - 每周五执行任务</span><br><span class="line"></span><br><span class="line"> 30 * * * *         - 时间点到30分的时候做</span><br><span class="line"> 0  * * * *         - 时间点到整点的时候执行任务</span><br><span class="line"> 30 2 * * *         - 时间到 02:30 的时候执行任务</span><br><span class="line"> 0  12 28 * *       - 每月28号12:00执行任务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2.任务</span></span><br><span class="line">写Linux指令, 指令如果有结果，结果看不到</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
   
   
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://anjhon1994.github.io/2019/12/20/Centos7.x%E5%8F%8A%E4%BB%A5%E4%B8%8Amysql%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -257,8 +207,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/20/Centos7.x%E5%8F%8A%E4%BB%A5%E4%B8%8Amysql%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">Centos7.x及以上mysql安装和配置</a>
+          Centos7.x及以上mysql安装和配置
         </h1>
 
         <div class="post-meta">
@@ -294,7 +243,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在安装MySQL之前需要先将服务器的3306端口打开</p>
+        <p>在安装MySQL之前需要先将服务器的3306端口打开</p>
 <ol>
 <li><p>下载MySQL源安装包:  <font style='color:green;'>wget <a href="http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm" target="_blank" rel="noopener">http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm</a> </font> </p>
 </li>
@@ -342,24 +291,60 @@
 </li>
 </ol>
 
-      
     </div>
 
     
     
     
+        <div class="reward-container">
+  <div>您的赞助是对我的支持</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/Wechat.png" alt="anjhon 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="anjhon 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/%E5%88%86%E4%BA%AB/" rel="tag"># 分享</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag"># 服务器</a>
+              <a href="/tags/%E9%85%8D%E7%BD%AE/" rel="tag"># 配置</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" rel="next" title="Linux定时任务">
+      Linux定时任务 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
