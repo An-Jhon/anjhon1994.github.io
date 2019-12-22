@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.google.com/specimen/Oxygen/css?family=Monda:300,300italic,400,400italic,700,700italic|Songti SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-material.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://anjhon1994.github.io').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+    <meta name="description" content="shlle脚本基础教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell编程">
+<meta property="og:url" content="https://anjhon1994.github.io/2019/12/23/shell%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Anjhon&#39;s Blog">
+<meta property="og:description" content="shlle脚本基础教程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-12-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-12-22T09:43:19.145Z">
+<meta property="article:author" content="anjhon">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="脚本">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://anjhon1994.github.io/2019/12/23/shell%E7%BC%96%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+    <title>shell编程 | Anjhon's Blog</title>
+    
+
+
+
+
+
+
+    <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  </head>
+
+  <body itemscope itemtype="http://schema.org/WebPage">
+    <div class="container use-motion">
+      <div class="headband"></div>
+      <a href="https://github.com/anjhon1994" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Anjhon's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">小安</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+
+
+
+</div>
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+      <main class="main">
+        <div class="main-inner">
+          <div class="content-wrap">
+            
+
+            <div class="content">
+              
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://anjhon1994.github.io/2019/12/23/shell%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/aa.jpg">
+      <meta itemprop="name" content="anjhon">
+      <meta itemprop="description" content="没啥好说的">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Anjhon's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          shell编程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-23T00:00:00+08:00">2019-12-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-22 17:43:19" itemprop="dateModified" datetime="2019-12-22T17:43:19+08:00">2019-12-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/12/23/shell%E7%BC%96%E7%A8%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/12/23/shell%E7%BC%96%E7%A8%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.4k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>shlle脚本基础教程</p>
+<a id="more"></a>
+
+
+<h1 id="shell编程"><a href="#shell编程" class="headerlink" title="shell编程"></a>shell编程</h1><p>Shell脚本，是一种为shell编写的脚本程序。</p>
+<p>Shell编程跟JavaScript、Python编程一样，只要有一个能编写代码的文本编辑器和一个能解释执行的脚本解释器就可以了。</p>
+<p>Linux的Shell种类有很多，我们主要用的是Bourne Shell(/usr.bin/sh或/bin/sh)</p>
+<h1 id="1-创建shell文件"><a href="#1-创建shell文件" class="headerlink" title="1.创建shell文件"></a>1.创建shell文件</h1><p>原则上shell程序可以写在任何文件中，但是一般会在shell文件后加后缀.sh表示当前文件是一个shell文件<br>shell需要可执行权限，所以创建好的shell文件需要添加x权限</p>
+<h1 id="2-基础语法"><a href="#2-基础语法" class="headerlink" title="2.基础语法"></a>2.基础语法</h1><h2 id="1）注释"><a href="#1）注释" class="headerlink" title="1）注释"></a>1）注释</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 单行注释</span></span><br><span class="line">:&lt;&lt;EOF</span><br><span class="line">多行注释1</span><br><span class="line">多行注释2</span><br><span class="line">多行注释3</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h2 id="2）输出和输入"><a href="#2）输出和输入" class="headerlink" title="2）输出和输入"></a>2）输出和输入</h2><p>echo指令就相当于python中的print函数(默认会换行)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo  输出内容  </span><br><span class="line">echo -n 输出内容     # 输出的时候不换行</span><br></pre></td></tr></table></figure>
+
+<p>printf指令（输出不能换行）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> 输出内容</span><br></pre></td></tr></table></figure>
+
+<p>输入指令:<br>read 变量名    – 输入内容，并且将输入的结果保存在变量中</p>
+<h2 id="3）变量"><a href="#3）变量" class="headerlink" title="3）变量"></a>3）变量</h2><h3 id="a-声明变量的语法-变量名-值"><a href="#a-声明变量的语法-变量名-值" class="headerlink" title="a. 声明变量的语法:   变量名=值"></a>a. 声明变量的语法:   变量名=值</h3><p>说明:  a. 变量名和=, =和值之间不能有空格<br>​       b. 变量名的要求和python变量名要求一样</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name='小明'</span><br><span class="line">age=18</span><br><span class="line">stu_name=小红</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-使用变量"><a href="#b-使用变量" class="headerlink" title="b. 使用变量:"></a>b. 使用变量:</h3><p>​         $变量<br>​         ${变量}</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">age=18</span><br><span class="line">echo $age</span><br><span class="line">age2=$&#123;age&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="c-只读变量"><a href="#c-只读变量" class="headerlink" title="c. 只读变量"></a>c. 只读变量</h3><p>使用 readonly 命令可以将变量定义为只读变量，只读变量的值不能被改变。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gender='男'</span><br><span class="line">readonly gender</span><br><span class="line">gender='女'     # test.sh: line 17: gender: readonly variable</span><br></pre></td></tr></table></figure>
+
+<h3 id="d-删除变量"><a href="#d-删除变量" class="headerlink" title="d. 删除变量"></a>d. 删除变量</h3><p>使用 unset 命令可以删除变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name='yuting'</span><br><span class="line">unset name</span><br></pre></td></tr></table></figure>
+
+<h2 id="4）获取linux指令结果"><a href="#4）获取linux指令结果" class="headerlink" title="4）获取linux指令结果"></a>4）获取linux指令结果</h2><p>在shell脚本中可以直接写linux指令，在执行shell脚本的时候这些指令可以直接获取</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ls     # ls指令</span><br><span class="line">ls  -lh      # ls指令，并且设置参数</span><br><span class="line">touch a.txt    # 创建a.txt文件</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 获取指令结果: 变量=$(指令)  /   变量=`指令`</span></span><br><span class="line">lsresult=$(ls)    #将ls指令的结果保存到变量lsresult中</span><br><span class="line">currnet_path=`pwd`</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-shell字符串"><a href="#3-shell字符串" class="headerlink" title="3.shell字符串"></a>3.shell字符串</h1><p>shell中的字符串可以用单引号也可以使用双引号甚至可以不用引号。但是单引号中不能出现单引号字符，加\也不行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str1='abc'</span><br><span class="line">str2="abc"</span><br><span class="line">str3=abc</span><br><span class="line">str4='abc\n123'		#支持转义字符,但是不支持编码字符</span><br><span class="line">str5="abc\n123"</span><br><span class="line"></span><br><span class="line">age=18</span><br><span class="line">str6="年龄是$age"    #双引号里面可以出现变量,单引号不行</span><br></pre></td></tr></table></figure>
+
+<h2 id="1）字符串拼接"><a href="#1）字符串拼接" class="headerlink" title="1）字符串拼接"></a>1）字符串拼接</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">str1="hello"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">单引号拼接</span></span><br><span class="line">str2=''$&#123;str1&#125;',world!'</span><br><span class="line">str3=''$str1',world!'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">双引号拼接</span></span><br><span class="line">str4="$&#123;str1&#125;,world!"</span><br><span class="line">str5=""$str1",world!"</span><br></pre></td></tr></table></figure>
+
+<h2 id="2）获取字符串长度"><a href="#2）获取字符串长度" class="headerlink" title="2）获取字符串长度"></a>2）获取字符串长度</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str1="abcd"</span><br><span class="line">echo $&#123;#str1&#125;    # 输出4</span><br></pre></td></tr></table></figure>
+
+<h2 id="3）字符串提取"><a href="#3）字符串提取" class="headerlink" title="3）字符串提取"></a>3）字符串提取</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 字符串:下标:个数   --从字符串中指定下标开始获取指定个数字符,返回一个新的字符串</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 字符串:下标:1   -- 获取字符串中指定下标对应的字符</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 字符串:下标     -- 从指定下标开始获取到字符串最后</span></span><br><span class="line">string='hello world'</span><br><span class="line">echo $&#123;string:1:4&#125;    # ello</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-shell数组"><a href="#4-shell数组" class="headerlink" title="4.shell数组"></a>4.shell数组</h1><p>在 Shell 中，用括号来表示数组，数组元素用”空格”符号分割开。定义数组的一般形式为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 数组名=(元素1 元素2 元素3 ...)</span></span><br><span class="line">names=(小明 小红 大黄 Tom)</span><br><span class="line">names2=(</span><br><span class="line">'小明'</span><br><span class="line">'小红'</span><br><span class="line">'大黄'</span><br><span class="line">'Tom'</span><br><span class="line">)</span><br><span class="line">names3[0]=小明</span><br><span class="line">names3[1]=小红</span><br><span class="line">names3[2]=大黄</span><br><span class="line">names3[3]=Tom</span><br></pre></td></tr></table></figure>
+<h2 id="1）获取数组元素：-数组-下标"><a href="#1）获取数组元素：-数组-下标" class="headerlink" title="1）获取数组元素：${数组[下标]}"></a>1）获取数组元素：${数组[下标]}</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $&#123;names[1]&#125;    # 小红</span><br></pre></td></tr></table></figure>
+
+<h2 id="2）获取数组的长度"><a href="#2）获取数组的长度" class="headerlink" title="2）获取数组的长度"></a>2）获取数组的长度</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nums=(100 200 300 400)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 获取数组长度</span></span><br><span class="line">length=$&#123;#nums[@]&#125;</span><br><span class="line">length=$&#123;#nums[*]&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 获取数组指定下标对应的元素的长度</span></span><br><span class="line">length2=$&#123;#num[n]&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-运算符"><a href="#5-运算符" class="headerlink" title="5.运算符"></a>5.运算符</h1><p>shell中支持的运算符有:  算术运算符、关系运算符、布尔运算符、字符串运算符</p>
+<h2 id="1）算术运算符：-，-，-，-，"><a href="#1）算术运算符：-，-，-，-，" class="headerlink" title="1）算术运算符：+，-，*，/，%"></a>1）算术运算符：+，-，*，/，%</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 如果想要在shell完成数值运算，运算的语法:  `expr 运算表达式`; 并且运算符两边必须加空格</span></span><br><span class="line">re1=10+20</span><br><span class="line">echo $&#123;re1&#125;    # 10+20</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1.加法运算</span></span><br><span class="line">re2=`expr 10 + 20`    </span><br><span class="line">echo $&#123;re2&#125;    # 30</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2.减法运算</span></span><br><span class="line">re3=`expr 10 - 20`</span><br><span class="line">echo $&#123;re3&#125;	   # -10</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3.乘法运算</span></span><br><span class="line">re4=`expr 10 \* 20`   # 注意:使用*作为乘法运算符的时候需要前面加\</span><br><span class="line">echo $&#123;re4&#125; 	# 200</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4.除法运算</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 小数除法运算: `<span class="built_in">echo</span> <span class="string">"scale=小数点位数;数值1 / 数值2"</span>|bc`</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 整数除法运算: `expr 数值1 / 数值2`</span></span><br><span class="line">re5=`echo "scale=2;7 / 3"|bc`</span><br><span class="line">echo $re5</span><br><span class="line"></span><br><span class="line">re6=`expr 5 / 2`</span><br><span class="line">echo $re6</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 5.求余数</span></span><br><span class="line">re7=`expr 10 % 3`</span><br><span class="line"></span><br><span class="line">re8=`echo "10.2 + 5.1"|bc`</span><br><span class="line">echo $re8</span><br></pre></td></tr></table></figure>
+
+<h2 id="2）-关系运算符-比较运算符-，比较的是数字大小"><a href="#2）-关系运算符-比较运算符-，比较的是数字大小" class="headerlink" title="2） 关系运算符(比较运算符)，比较的是数字大小"></a>2） 关系运算符(比较运算符)，比较的是数字大小</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> -eq  ---  等于,相当于 ==</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -ne  ---  不等于,相当于!=</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -gt  ---  大于</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -lt  ---  小于</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -ge  ---  大于等于</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -le  ---  小于等于</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用语法: [ 值1 关系运算符 值2 ]</span></span><br><span class="line">a=100</span><br><span class="line">b=10</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 关系运算符要配合<span class="keyword">if</span>语句或者循环语句使用</span></span><br><span class="line">if [ $a -gt $b ]</span><br><span class="line">then</span><br><span class="line">	echo a大于b</span><br><span class="line">else </span><br><span class="line">	echo a不大于b</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h2 id="3）布尔运算符-逻辑运算符"><a href="#3）布尔运算符-逻辑运算符" class="headerlink" title="3）布尔运算符(逻辑运算符)"></a>3）布尔运算符(逻辑运算符)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> !    --  逻辑非运算</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -o   --  逻辑或运算</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -a   --  逻辑与运算</span></span><br><span class="line"></span><br><span class="line">age=18</span><br><span class="line">score=95</span><br><span class="line"><span class="meta">#</span><span class="bash"> 参加比赛的条件：分数大于90分并且年龄大于等于18岁</span></span><br><span class="line">if [ $age -ge 18 -a $score -gt 90 ]</span><br><span class="line">then</span><br><span class="line">	echo 可以参见比赛</span><br><span class="line">else</span><br><span class="line">	echo 不能参加比赛</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h2 id="4）字符串运算符"><a href="#4）字符串运算符" class="headerlink" title="4）字符串运算符"></a>4）字符串运算符</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> [ 字符串1 = 字符串2 ]    -- 判断两个字符串是否相等</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> [ 字符串1 != 字符串2 ]   -- 不相等</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> [ -z 字符串]   -- 判断字符串长度是否为0</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> [ -n <span class="string">"字符串"</span> ]    -- 判断字符串长度是否不为0</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> [ $ 字符串 ]   -- 判断字符串是否是空串</span></span><br><span class="line"></span><br><span class="line">a="abc"</span><br><span class="line">b="123"</span><br><span class="line"></span><br><span class="line">if [ $a = $b ]</span><br><span class="line">then</span><br><span class="line">    echo a和b相等</span><br><span class="line">else</span><br><span class="line">    echo a和b不相等</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">a=""</span><br><span class="line">if [ -n "$&#123;a&#125;" ]</span><br><span class="line">then</span><br><span class="line">    echo a的长度不为0</span><br><span class="line">else</span><br><span class="line">    echo a的长度为0</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-if语句"><a href="#6-if语句" class="headerlink" title="6. if语句"></a>6. if语句</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">语法1：</span><br><span class="line">if 条件语句</span><br><span class="line">then</span><br><span class="line">    满足条件执行的代码</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">语法2:</span><br><span class="line">if 条件语句</span><br><span class="line">then</span><br><span class="line">    满足条件执行的代码</span><br><span class="line">else</span><br><span class="line">    不满足条件执行的代码</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">语法3：</span><br><span class="line">if 条件语句1</span><br><span class="line">then </span><br><span class="line">    代码块1</span><br><span class="line">elif 条件语句2</span><br><span class="line">then</span><br><span class="line">    代码块2</span><br><span class="line">elif 条件语句3</span><br><span class="line">then </span><br><span class="line">    代码块3</span><br><span class="line">else</span><br><span class="line">    代码块N</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-for循环"><a href="#7-for循环" class="headerlink" title="7. for循环"></a>7. for循环</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">语法:</span><br><span class="line">for 变量 in 序列</span><br><span class="line">do</span><br><span class="line">    循环体</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 遍历字符串</span></span><br><span class="line">for char in "hello word"</span><br><span class="line">do</span><br><span class="line">    echo 循环体char: $&#123;char&#125;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 遍历数组</span></span><br><span class="line">arr1=(10 20 "abc")</span><br><span class="line">for x in $&#123;arr1[@]&#125;</span><br><span class="line">do</span><br><span class="line">    echo 循环体2x: $&#123;x&#125;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 遍历多个值</span></span><br><span class="line">for x in 10 20 "你好" 123</span><br><span class="line">do</span><br><span class="line">    echo 循环体3：$&#123;x&#125;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="8-while循环"><a href="#8-while循环" class="headerlink" title="8. while循环"></a>8. while循环</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">语法:</span><br><span class="line">while 条件语句</span><br><span class="line">do</span><br><span class="line">    循环体</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 遍历字符串</span></span><br><span class="line">str1="helloWorld!"</span><br><span class="line">index=0</span><br><span class="line">len=$&#123;#str1&#125;</span><br><span class="line">while [ $index -lt $len ]</span><br><span class="line">do</span><br><span class="line">    echo $&#123;str1:$&#123;index&#125;:1&#125;</span><br><span class="line">    index=`expr $&#123;index&#125; + 1`</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 计算1+2+3+...+100</span></span><br><span class="line">num=1</span><br><span class="line">sum=0</span><br><span class="line">while [ $&#123;num&#125; -le 100 ]</span><br><span class="line">do</span><br><span class="line">    sum=`expr $&#123;sum&#125; + $&#123;num&#125;`</span><br><span class="line">    num=`expr $&#123;num&#125; + 1`</span><br><span class="line">done</span><br><span class="line">echo 1+2+3+...+100 = $&#123;sum&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 死循环</span></span><br><span class="line">while true</span><br><span class="line">do</span><br><span class="line">    read -p "请输入一个数字:" num</span><br><span class="line">    if [ $&#123;num&#125; == 100 ]</span><br><span class="line">    then</span><br><span class="line">        break</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="9-函数"><a href="#9-函数" class="headerlink" title="9.函数"></a>9.函数</h1><h2 id="1）函数的声明和调用"><a href="#1）函数的声明和调用" class="headerlink" title="1）函数的声明和调用"></a>1）函数的声明和调用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 1.函数的声明</span></span><br><span class="line">声明的语法：</span><br><span class="line">函数名()&#123;</span><br><span class="line">    函数体</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">调用函数语法:  函数名</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">声明函数</span></span><br><span class="line">func1()&#123;</span><br><span class="line">    echo 你好函数1</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">调用函数</span></span><br><span class="line">func1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2.有参数的函数</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 声明的时候不需要形参, 直接在函数体中通过<span class="string">'$&#123;N&#125;'</span>来获取第N个实参</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 调用的时候:  函数名 实参1 实参2 实参3 ...</span></span><br><span class="line">func2()&#123;</span><br><span class="line">    echo 函数2被调用</span><br><span class="line">    echo 第一个参数: $&#123;1&#125;</span><br><span class="line">    echo 第二个参数: $&#123;2&#125;</span><br><span class="line">    echo 第三个参数: $&#123;3&#125; </span><br><span class="line">&#125;</span><br><span class="line">func2 10 20 "abc"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3.函数的返回值</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">return</span> 数字   - 数字的范围是0~255</span></span><br><span class="line">func3()&#123;</span><br><span class="line">    echo 函数3被调用</span><br><span class="line">    return 256</span><br><span class="line">    #a=`expr 100 + 200`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func3</span><br><span class="line">echo $&#123;?&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>------------- 我是有底线的! -------------</span>
+      
+    </div>
+  
+</div>
+      </div>
+    
+        <div class="reward-container">
+  <div>博主的要饭账号</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/Wechat.png" alt="anjhon 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="anjhon 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">📃 教程</a>
+              <a href="/tags/shell/" rel="tag">📃 shell</a>
+              <a href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">📃 脚本</a>
+              <a href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">📃 基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="vim基础使用教程">
+      <i class="fa fa-chevron-left"></i> vim基础使用教程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+            </div>
+            
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+          </div>
+            
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shell编程"><span class="nav-text">shell编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-创建shell文件"><span class="nav-text">1.创建shell文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-基础语法"><span class="nav-text">2.基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）注释"><span class="nav-text">1）注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）输出和输入"><span class="nav-text">2）输出和输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）变量"><span class="nav-text">3）变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-声明变量的语法-变量名-值"><span class="nav-text">a. 声明变量的语法:   变量名&#x3D;值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-使用变量"><span class="nav-text">b. 使用变量:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-只读变量"><span class="nav-text">c. 只读变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-删除变量"><span class="nav-text">d. 删除变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4）获取linux指令结果"><span class="nav-text">4）获取linux指令结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-shell字符串"><span class="nav-text">3.shell字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）字符串拼接"><span class="nav-text">1）字符串拼接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）获取字符串长度"><span class="nav-text">2）获取字符串长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）字符串提取"><span class="nav-text">3）字符串提取</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-shell数组"><span class="nav-text">4.shell数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）获取数组元素：-数组-下标"><span class="nav-text">1）获取数组元素：${数组[下标]}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）获取数组的长度"><span class="nav-text">2）获取数组的长度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-运算符"><span class="nav-text">5.运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）算术运算符：-，-，-，-，"><span class="nav-text">1）算术运算符：+，-，*，&#x2F;，%</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）-关系运算符-比较运算符-，比较的是数字大小"><span class="nav-text">2） 关系运算符(比较运算符)，比较的是数字大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）布尔运算符-逻辑运算符"><span class="nav-text">3）布尔运算符(逻辑运算符)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4）字符串运算符"><span class="nav-text">4）字符串运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-if语句"><span class="nav-text">6. if语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-for循环"><span class="nav-text">7. for循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-while循环"><span class="nav-text">8. while循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-函数"><span class="nav-text">9.函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）函数的声明和调用"><span class="nav-text">1）函数的声明和调用</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="anjhon"
+      src="/images/aa.jpg">
+  <p class="site-author-name" itemprop="name">anjhon</p>
+  <div class="site-description" itemprop="description">没啥好说的</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anjhon1994" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anjhon1994" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/3824057040/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;3824057040&#x2F;profile?rightmod&#x3D;1&amp;wvr&#x3D;6&amp;mod&#x3D;personinfo&amp;is_all&#x3D;1" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/anjhon/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;anjhon&#x2F;" rel="noopener" target="_blank">我的博客园</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <script
+  async
+  src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+></script>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anjhon</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">18k</span>
+</div>
+
+<!--
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.6.0
+  </div>-->
+
+          
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="我的第 undefined 位朋友，">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </footer>
+    </div>
+
+    
+  
+  <script color='128,128,128' opacity='1' zIndex='-1' count='110' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+    
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '85yDD6eqpbOV4bVplkRhkX3N-gzGzoHsz',
+      appKey: '8gkGGiVQS7UlblceAXrRVbTR',
+      placeholder: "Just go go",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: false,
+      lang: 'zh-Hans' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+
+    <!-- 点击彩色爆炸效果:哔哩哔哩mackxin教程 -->
+    
+
+
+    <!-- 随机三角丝带引用代码 -->
+    <!-- 边缘摆动效果引用代码 -->
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+  <script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+  <script async src="/js/explosion.min.js"></script>
+
+
+
+
+
+ 
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20191220,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hibiki.model.json"},"display":{"position":"right","width":150,"height":450},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>
