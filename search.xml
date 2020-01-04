@@ -224,9 +224,9 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <category>数据库</category>
       </categories>
       <tags>
-        <tag>数据库</tag>
-        <tag>redis</tag>
         <tag>基础</tag>
+        <tag>redis</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -350,8 +350,8 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <category>数据库</category>
       </categories>
       <tags>
-        <tag>数据库</tag>
         <tag>基础</tag>
+        <tag>数据库</tag>
         <tag>MySQL</tag>
       </tags>
   </entry>
@@ -485,6 +485,34 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <tag>教程</tag>
         <tag>Linux</tag>
         <tag>vim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git常用指令</title>
+    <url>/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<p>git的基本常用指令集</p>
+<a id="more"></a>
+<h1 id="1-基本指令"><a href="#1-基本指令" class="headerlink" title="1.基本指令"></a>1.基本指令</h1><p>git init        ——&gt;新建git仓库<br>git add 文件/文件夹       ——&gt;  将文件添加到缓存区中<br>git add -A   ——&gt;  添加所有内容到缓存区中</p>
+<p>git status      ——&gt;    查看git状态<br>git commit -m  ‘提交信息’       ——&gt;  将缓存区中的内容全部提交到git本地仓库中<br>git log        ——&gt; 查看提交日志 </p>
+<p>git reset  – hard   HEAD       ——&gt;   让工作目录中的内容和仓库中的内容保持一致<br>git reset  –hard HEAD^  ——&gt;  回到上一个版本<br>git  reset  – hard 版本号  ——&gt;  回到指定的版本 </p>
+<p>git checkout  文件名   ——&gt;  从暂存区中恢复工作目录中的内容(让工作区中的指定文件，回到上次提交的时候的状态) </p>
+<p>git clone <url>    ——&gt;  将服务器上的项目(仓库)克隆 (使用https地址需要输入密码，使用ssh地址需要添加公钥) </p>
+<p>git remote add origin 地址    ——&gt;  关联远程仓库(只需要关联一次)</p>
+<p>git push [-u] origin master   ——&gt;  提交(-u在第一次提交分支的时候才用) </p>
+<p>git push   ——&gt;  将本地仓库的内容提交到远程仓库master分支上</p>
+<p>git push origin 分支名     ——&gt;  将本地仓库的内容提交到远程仓库对应的分支上, 如果分支不存在会自动创建</p>
+<p>git pull   ——&gt;  将远程仓库中的内容更新到本地仓库和工作区中</p>
+<h1 id="2-分之管理"><a href="#2-分之管理" class="headerlink" title="2.分之管理"></a>2.分之管理</h1><p>创建仓库会默认给我们创建一个master分之,这个分之一般作为提交和发布分之;开发一般会自己创建一个develop分之，用来开发和测试;多人协作的时候还可能根据不同的人或者(不同的功能)创建不同的分之，用来独立开发 </p>
+<p>常见分之： master(主要是合并develop), develop(主要合并下面的其他分支), 功能/人员分之(开发)  </p>
+<p>git branch [-a]   ——&gt;查看分之<br>git branch 分之名——&gt;创建分之<br>git checkout   分支名——&gt;  切换分之<br>git checkout -b 分之名    ——&gt;切换并创建新的分之<br>git diff  分之1  分之2——&gt;查看两个分之之间的差异<br>git merge 分之名——&gt;让当前分之和指定分之进行合并</p>
+<p>注意: 切换分之、push、pull，这些操作前要保证工作区是clean<br>怎么避免冲突：  不要发生多个分之对同一个文件在同一个版本下进行修改(和同伴确认和商量)</p>
+]]></content>
+      <categories>
+        <category>技术文档</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+        <tag>指令</tag>
       </tags>
   </entry>
   <entry>
@@ -636,36 +664,8 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <category>Linux</category>
       </categories>
       <tags>
+        <tag>指令</tag>
         <tag>Linux</tag>
-        <tag>指令</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>git常用指令</title>
-    <url>/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<p>git的基本常用指令集</p>
-<a id="more"></a>
-<h1 id="1-基本指令"><a href="#1-基本指令" class="headerlink" title="1.基本指令"></a>1.基本指令</h1><p>git init        ——&gt;新建git仓库<br>git add 文件/文件夹       ——&gt;  将文件添加到缓存区中<br>git add -A   ——&gt;  添加所有内容到缓存区中</p>
-<p>git status      ——&gt;    查看git状态<br>git commit -m  ‘提交信息’       ——&gt;  将缓存区中的内容全部提交到git本地仓库中<br>git log        ——&gt; 查看提交日志 </p>
-<p>git reset  – hard   HEAD       ——&gt;   让工作目录中的内容和仓库中的内容保持一致<br>git reset  –hard HEAD^  ——&gt;  回到上一个版本<br>git  reset  – hard 版本号  ——&gt;  回到指定的版本 </p>
-<p>git checkout  文件名   ——&gt;  从暂存区中恢复工作目录中的内容(让工作区中的指定文件，回到上次提交的时候的状态) </p>
-<p>git clone <url>    ——&gt;  将服务器上的项目(仓库)克隆 (使用https地址需要输入密码，使用ssh地址需要添加公钥) </p>
-<p>git remote add origin 地址    ——&gt;  关联远程仓库(只需要关联一次)</p>
-<p>git push [-u] origin master   ——&gt;  提交(-u在第一次提交分支的时候才用) </p>
-<p>git push   ——&gt;  将本地仓库的内容提交到远程仓库master分支上</p>
-<p>git push origin 分支名     ——&gt;  将本地仓库的内容提交到远程仓库对应的分支上, 如果分支不存在会自动创建</p>
-<p>git pull   ——&gt;  将远程仓库中的内容更新到本地仓库和工作区中</p>
-<h1 id="2-分之管理"><a href="#2-分之管理" class="headerlink" title="2.分之管理"></a>2.分之管理</h1><p>创建仓库会默认给我们创建一个master分之,这个分之一般作为提交和发布分之;开发一般会自己创建一个develop分之，用来开发和测试;多人协作的时候还可能根据不同的人或者(不同的功能)创建不同的分之，用来独立开发 </p>
-<p>常见分之： master(主要是合并develop), develop(主要合并下面的其他分支), 功能/人员分之(开发)  </p>
-<p>git branch [-a]   ——&gt;查看分之<br>git branch 分之名——&gt;创建分之<br>git checkout   分支名——&gt;  切换分之<br>git checkout -b 分之名    ——&gt;切换并创建新的分之<br>git diff  分之1  分之2——&gt;查看两个分之之间的差异<br>git merge 分之名——&gt;让当前分之和指定分之进行合并</p>
-<p>注意: 切换分之、push、pull，这些操作前要保证工作区是clean<br>怎么避免冲突：  不要发生多个分之对同一个文件在同一个版本下进行修改(和同伴确认和商量)</p>
-]]></content>
-      <categories>
-        <category>技术文档</category>
-      </categories>
-      <tags>
-        <tag>指令</tag>
-        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -688,64 +688,33 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
       </tags>
   </entry>
   <entry>
-    <title>Centos7.x及以上mysql安装和配置</title>
+    <title>Linux中python相关软件安装记录</title>
     <url>/2019/12/20/Centos7.x%E5%8F%8A%E4%BB%A5%E4%B8%8Amysql%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>在安装MySQL之前需要先将服务器的3306端口打开</p>
+    <content><![CDATA[<p>Linux的基础软件安装</p>
 <a id="more"></a>
 
+<h1 id="Linux基本配置"><a href="#Linux基本配置" class="headerlink" title="Linux基本配置"></a>Linux基本配置</h1><h2 id="配置vim编辑器"><a href="#配置vim编辑器" class="headerlink" title="配置vim编辑器"></a>配置vim编辑器</h2><figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">cd ~</span><br><span class="line">vim .vimrc</span><br><span class="line">    <span class="keyword">set</span> nu   <span class="comment"># 行号</span></span><br><span class="line">    <span class="keyword">set</span> ts=<span class="number">4</span>   <span class="comment"># 设置制表键空格数量</span></span><br><span class="line">    <span class="keyword">set</span> autoindent   <span class="comment"># 自动缩进</span></span><br><span class="line">    <span class="keyword">set</span> expandtab   <span class="comment"># 制表键自动变空格</span></span><br><span class="line">    <span class="keyword">set</span> ruler   <span class="comment"># 显示光标位置</span></span><br><span class="line">    <span class="keyword">set</span> nohls   <span class="comment"># 选中的代码不高亮</span></span><br><span class="line">    syntax <span class="keyword">on</span>   <span class="comment"># 语法高亮</span></span><br></pre></td></tr></table></figure>
 
-<ol>
-<li><p>下载MySQL源安装包:  <font style='color:green;'>wget <a href="http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm" target="_blank" rel="noopener">http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm</a> </font> </p>
-</li>
-<li><p>安装MySQL源:  <font style='color:green'>yum localinstall mysql57-community-release-el7-8.noarch.rpm</font></p>
-</li>
-<li><p>安装MySQL: <font style='color:green'>yum install mysql-community-server</font></p>
-</li>
-<li><p>设置开机启动MySQL服务：<font style='color:green'>systemctl enable mysqld </font></p>
-</li>
-</ol>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># CentOS7.x以上的版本，程序控制指令</span></span><br><span class="line"><span class="attr">systemctl</span> <span class="string">enable 程序名     -  开机自启动程序/服务</span></span><br><span class="line"><span class="attr">systemctl</span> <span class="string">start  程序名     -  启动程序/服务</span></span><br><span class="line"><span class="attr">systemctl</span> <span class="string">stop   程序名     -  关闭程序/服务</span></span><br><span class="line"><span class="attr">systemctl</span> <span class="string">restart  程序名   -  重启程序/服务</span></span><br><span class="line"><span class="attr">systemctl</span> <span class="string">disable  程序名   -  禁用程序/服务</span></span><br><span class="line"><span class="meta">注意</span>: <span class="string">这儿的程序名一般需要在你安装的程序的原名的基础上加d</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS7.x一下的版本，不能用systemctl来控制，需要直接使用mysql去调用相关指令(因为一般不会向低版本发展，所以可以不用管，如果需要可以查资料，网上很多)</span></span><br></pre></td></tr></table></figure>
+<h2 id="查看命令别名"><a href="#查看命令别名" class="headerlink" title="查看命令别名"></a>查看命令别名</h2><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~</span><br><span class="line">vim <span class="string">.bashrc</span></span><br></pre></td></tr></table></figure>
 
-<ol start="5">
-<li><p>启动MySQL服务<font style='color:green'>systemctl start mysqld  </font></p>
-</li>
-<li><p>设置MySQL登录密码</p>
-</li>
-</ol>
-<p>   这个过程比较麻烦，请严格按照以下步骤完成！</p>
-<p>   第一步: 执行<font style='color:green'>systemctl stop mysqld</font>  关闭mysql服务</p>
-<p>   第二步: 使用vim打开mysql配置文件 ‘\etc\my.cnf’,并且在末尾添加两行代码然后保存退出</p>
-<p>   ​          <font style='color:green'>validate_password=off</font></p>
-<p>   ​          <font style='color:green'>skip-grant-tables</font></p>
-<p>   <img src="/Users/yuting/Workspace/JAVA/%E6%8E%88%E8%AF%BE/%E6%96%87%E6%A1%A3/Linux%E9%98%B6%E6%AE%B5%E6%96%87%E6%A1%A3/img/mysql1.png" alt=""></p>
-<p>   第三步：执行 <font style='color:green'>systemctl start mysqld</font> 开启mysql服务</p>
-<p>   第四步：在shell中执行 <font style='color:green'>mysql -u root -p</font> 设置密码（注意密码设置好以后要记住），并且按以下提示输入内容</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">[root ~]# mysql -u root -p   (需要输入的指令)</span><br><span class="line">Enter password:   (这个地方自己设置密码，输入的时候不会有显示提示)</span><br><span class="line">Welcome <span class="keyword">to</span> the MySQL monitor.  Commands end with ; <span class="keyword">or</span> \g.</span><br><span class="line">Your MySQL<span class="built_in"> connection </span>id is 10</span><br><span class="line">Server version: 5.7.28 MySQL<span class="built_in"> Community Server </span>(GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle <span class="keyword">and</span>/<span class="keyword">or</span> its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation <span class="keyword">and</span>/<span class="keyword">or</span> its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type <span class="string">'help;'</span> <span class="keyword">or</span> <span class="string">'\h'</span> <span class="keyword">for</span> help.<span class="built_in"> Type </span><span class="string">'\c'</span> <span class="keyword">to</span> clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; update mysql.user <span class="builtin-name">set</span> <span class="attribute">authentication_string</span>=password("yuting123456") where <span class="attribute">user</span>=<span class="string">"root"</span>;    (设置连接密码，将yuting123456设置为自己的密码就行，最好和上面的密码保持一致，否则容易混乱)</span><br><span class="line">Query OK, 1 row affected, 1 <span class="builtin-name">warning</span> (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 1</span><br><span class="line"></span><br><span class="line">mysql&gt; flush privileges;     (刷新权限)</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; quit;   (退出mysql指令模式)</span><br><span class="line">Bye</span><br></pre></td></tr></table></figure>
-
-<p>   第五步：执行<font style='color:green'>systemctl stop mysqld</font> 关闭mysql服务，然后重新打开mysql配置文件，注释或者删除之前添加的 <font style='color:green'>skip-grant-tables</font> ，保存退出后再执行 <font style='color:green'>systemctl start mysqld</font> 开启mysql服务</p>
-<p>   <img src="./img/mysql2.png" alt=""></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 这个过程比较麻烦，请严格按照以下步骤完成！</span></span><br><span class="line">第一步: 执行 'systemctl stop mysqld' 关闭mysql服务</span><br><span class="line">第二步: 使用vim打开mysql配置文件 '\etc\my.cnf',并且在末尾添加两行代码(注意：只需要复制引号中的内容)然	   后保存退出：</span><br><span class="line">		'validate_password=off   #关闭mysql密码强度验证'</span><br><span class="line">		'skip-grant-tables    #跳过密码验证'</span><br><span class="line">		</span><br><span class="line">第三步：执行 'systemctl start mysqld' 开启mysql服务</span><br><span class="line">第四步：在shell中执行以'mysql -u root -p'设置密码(注意：密码设置好以后要记住)</span><br></pre></td></tr></table></figure>
+<h2 id="修改用户名前的一长串"><a href="#修改用户名前的一长串" class="headerlink" title="修改用户名前的一长串"></a>修改用户名前的一长串</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">vim /etc/bashrc</span><br><span class="line"><span class="number">41</span>行删除@\h</span><br></pre></td></tr></table></figure>
 
 
+<h1 id="后端相关的开发工具安装"><a href="#后端相关的开发工具安装" class="headerlink" title="后端相关的开发工具安装"></a>后端相关的开发工具安装</h1><h2 id="Linux软件安装方法"><a href="#Linux软件安装方法" class="headerlink" title="Linux软件安装方法"></a>Linux软件安装方法</h2><figure class="highlight haml"><table><tr><td class="code"><pre><span class="line">1. 包管理工具 </span><br><span class="line">    -<span class="ruby"> yum CentOS</span></span><br><span class="line"><span class="ruby">        ~ yum search nginx   ---&gt;   查看安装库内是否已经安装nginx</span></span><br><span class="line"><span class="ruby">        ~ yum install nginx   ---&gt;   安装</span></span><br><span class="line"><span class="ruby">        ~ yum erase nginx / yum remove nginx   ---&gt;   卸载</span></span><br><span class="line"><span class="ruby">        ~ yum info nginx   ---&gt;   查看软件信息</span></span><br><span class="line"><span class="ruby">        ~ yum list installed <span class="params">| grep nginx   ---&gt;   查看是否已经安装</span></span></span><br><span class="line"><span class="ruby">    - rpm Redhat</span></span><br><span class="line"><span class="ruby">        ~ rpm -ivh 下载的rpm包文件名</span></span><br><span class="line"><span class="ruby">        ~ rpm -e</span></span><br><span class="line"><span class="ruby">        ~ rpm -qa</span></span><br><span class="line"><span class="ruby">    - apt Ubuntu</span></span><br><span class="line"><span class="ruby"><span class="number">2</span>. 源代码构建安装</span></span><br></pre></td></tr></table></figure>
 
-<ol start="7">
-<li><p>设置mysql能够远程访问</p>
-<p>执行<font style='color:green'>mysql -u root -p</font> 登录mysql添加远程连接权限。登录的密码就是之前设置的密码</p>
-</li>
-</ol>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">[root ~]# mysql -u root -p   (需要输入的指令)</span><br><span class="line">Enter password:     (输入密码)</span><br><span class="line">Welcome <span class="keyword">to</span> the MySQL monitor.  Commands end with ; <span class="keyword">or</span> \g.</span><br><span class="line">Your MySQL<span class="built_in"> connection </span>id is 6</span><br><span class="line">Server version: 5.7.28 MySQL<span class="built_in"> Community Server </span>(GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle <span class="keyword">and</span>/<span class="keyword">or</span> its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation <span class="keyword">and</span>/<span class="keyword">or</span> its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type <span class="string">'help;'</span> <span class="keyword">or</span> <span class="string">'\h'</span> <span class="keyword">for</span> help.<span class="built_in"> Type </span><span class="string">'\c'</span> <span class="keyword">to</span> clear the current input statement.</span><br><span class="line"></span><br><span class="line">ALTER<span class="built_in"> USER </span>USER() IDENTIFIED BY <span class="string">'123456'</span>;</span><br><span class="line"></span><br><span class="line">mysql&gt; grant all privileges on *.* <span class="keyword">to</span> <span class="string">'root'</span>@<span class="string">'%'</span> identified by <span class="string">'yuting123456'</span> with grant option;     (让所有的ip地址的设备都可以通过root账号并且密码是yuting123456进行连接；这个地方可以将%换成指定的某一个ip地址，%表示所有的ip)</span><br><span class="line">Query OK, 0 rows affected, 1 <span class="builtin-name">warning</span> (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; flush privileges;  (刷新权限)</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<ol start="8">
-<li>终于结束啦！！！</li>
-</ol>
-]]></content>
+<h2 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">yum</span> <span class="string">install -y nginx</span></span><br><span class="line"><span class="attr">systemctl</span> <span class="string">start nginx</span></span><br><span class="line"><span class="attr">systemctl</span> <span class="string">stop nginx</span></span><br></pre></td></tr></table></figure>
+<h2 id="MariaDB安装-MySQL-5-x-的一个分支-和5-x版本基本相同"><a href="#MariaDB安装-MySQL-5-x-的一个分支-和5-x版本基本相同" class="headerlink" title="MariaDB安装(MySQL 5.x 的一个分支,和5.x版本基本相同)"></a>MariaDB安装(MySQL 5.x 的一个分支,和5.x版本基本相同)</h2><figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">yum</span> install -y <span class="keyword">mariadb </span><span class="keyword">mariadb-server</span></span><br><span class="line"><span class="keyword">systemctl </span>start <span class="keyword">mariadb</span></span><br><span class="line"><span class="keyword">mysql </span>-u root</span><br></pre></td></tr></table></figure>
+<h2 id="MySQL安装"><a href="#MySQL安装" class="headerlink" title="MySQL安装"></a>MySQL安装</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 清除掉所有跟mariadb相关的东西</span><br><span class="line">  yum list installed | grep mariadb | awk <span class="string">'&#123;print $1&#125;'</span> | xargs yum erase -y</span><br><span class="line"><span class="number">2.</span> 清理之前的数据和日志文件（如果存在）</span><br><span class="line">  rm -rf /var/lib/mysql</span><br><span class="line">  rm -f /var/log/mysqld.log</span><br><span class="line"><span class="number">3.</span> 下载MySQL官方提供的RPM包并解归档</span><br><span class="line">  wget https:<span class="comment">//dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar</span></span><br><span class="line">  tar -xvf mysql<span class="number">-5.7</span><span class="number">.28</span><span class="number">-1.</span>el7.x86_64.rpm-bundle.tar</span><br><span class="line"><span class="number">4.</span> 安装依赖库</span><br><span class="line">  yum install -y libaio</span><br><span class="line"><span class="number">5.</span> 使用rpm包管理工具安装MySQL</span><br><span class="line">  rpm -ivh mysql-community-common<span class="number">-5.7</span><span class="number">.28</span><span class="number">-1.</span>el7.x86_64.rpm</span><br><span class="line">  rpm -ivh mysql-community-libs<span class="number">-5.7</span><span class="number">.28</span><span class="number">-1.</span>el7.x86_64.rpm</span><br><span class="line">  rpm -ivh mysql-community-client<span class="number">-5.7</span><span class="number">.28</span><span class="number">-1.</span>el7.x86_64.rpm</span><br><span class="line">  rpm -ivh mysql-community-server<span class="number">-5.7</span><span class="number">.28</span><span class="number">-1.</span>el7.x86_64.rpm</span><br><span class="line"><span class="number">6.</span> 启动服务查看随机密码</span><br><span class="line">  systemctl start mysqld</span><br><span class="line">  cat /var/log/mysqld.log | grep password</span><br><span class="line"><span class="number">7.</span> 用客户端工具连接MySQL</span><br><span class="line">  mysql -u root -p</span><br><span class="line"><span class="number">8.</span> 修改root用户口令</span><br><span class="line">  <span class="keyword">set</span> global validate_password_policy=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">set</span> global validate_password_length=<span class="number">6</span>;</span><br><span class="line">  alter user <span class="string">'root'</span>@<span class="string">'localhost'</span> identified by <span class="string">'123456'</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">安装Redis官方最新版</span><br><span class="line">wget http:<span class="comment">//download.redis.io/releases/redis-5.0.7.tar.gz</span></span><br><span class="line">gunzip redis<span class="number">-5.0</span><span class="number">.7</span>.tar.gz</span><br><span class="line">tar -xvf redis<span class="number">-5.0</span><span class="number">.7</span>.tar</span><br><span class="line">cd redis<span class="number">-5.0</span><span class="number">.7</span></span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h2 id="GIt安装"><a href="#GIt安装" class="headerlink" title="GIt安装"></a>GIt安装</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">安装Git官方最新版</span><br><span class="line">wget https:<span class="comment">//mirrors.edge.kernel.org/pub/software/scm/git/git-2.24.1.tar.xz</span></span><br><span class="line">xz -d git<span class="number">-2.24</span><span class="number">.1</span>.tar.xz</span><br><span class="line">tar -xf git<span class="number">-2.24</span><span class="number">.1</span>.tar</span><br><span class="line">cd git<span class="number">-2.24</span><span class="number">.1</span></span><br><span class="line">yum install -y curl libcurl-devel</span><br><span class="line">./configure --prefix=/usr/local</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h2 id="Python3安装"><a href="#Python3安装" class="headerlink" title="Python3安装"></a>Python3安装</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 安装依赖项</span><br><span class="line">    yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel</span><br><span class="line"><span class="number">2.</span> 下载Python3源代码</span><br><span class="line">    wget https:<span class="comment">//www.python.org/ftp/python/3.7.6/Python-3.7.6.tar.xz</span></span><br><span class="line"><span class="number">3.</span> 解压缩和解归档</span><br><span class="line">    xz -d Python<span class="number">-3.7</span><span class="number">.6</span>.tar.xz</span><br><span class="line">    tar -xvf Python<span class="number">-3.7</span><span class="number">.6</span>.tar</span><br><span class="line"><span class="number">4.</span> 执行安装前的配置</span><br><span class="line">    cd Python<span class="number">-3.7</span><span class="number">.6</span></span><br><span class="line">    ./configure --prefix=/usr/local/python37 --enable-optimizations</span><br><span class="line"><span class="number">5.</span> 构建和安装</span><br><span class="line">    make &amp;&amp; make install</span><br><span class="line"><span class="number">6.</span> 注册环境变量</span><br><span class="line">    vim ~/.bash_profile</span><br><span class="line">        PATH=$PATH:/usr/local/python37/bin</span><br><span class="line">        export PATH</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>技术文档</category>
       </categories>
       <tags>
         <tag>教程</tag>
         <tag>分享</tag>
-        <tag>数据库</tag>
+        <tag>Linux软件</tag>
         <tag>服务器</tag>
         <tag>配置</tag>
       </tags>
