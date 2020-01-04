@@ -225,8 +225,8 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
       </categories>
       <tags>
         <tag>基础</tag>
-        <tag>redis</tag>
         <tag>数据库</tag>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -350,9 +350,50 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <category>数据库</category>
       </categories>
       <tags>
+        <tag>MySQL</tag>
         <tag>基础</tag>
         <tag>数据库</tag>
-        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vim基础使用教程</title>
+    <url>/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>vim基础使用教程</p>
+<a id="more"></a>
+
+<h1 id="1-vim的三种模式"><a href="#1-vim的三种模式" class="headerlink" title="1.vim的三种模式"></a>1.vim的三种模式</h1><ul>
+<li><strong>命令模式：</strong>未尾既没有插入的字样也没有冒号（在编辑模式和末行模式下按esc键可以进入命令模式）</li>
+<li><strong>编辑模式：</strong>末尾会显示’一插入一/-insert-，并且在编辑模式下可以对文件进行输入操作（可以编辑）（在命令模式下按i就可以进入编辑模式）</li>
+<li><strong>未行模式：</strong>未尾显示冒号，并且冒号后边可以输入内容（在命令模式下输入冒号就可以进入未行模式）</li>
+</ul>
+<h1 id="2-vim的配置"><a href="#2-vim的配置" class="headerlink" title="2.vim的配置"></a>2.vim的配置</h1><p>通过编辑  etc/vimrc 文件配置</p>
+<h1 id="3-基本操作"><a href="#3-基本操作" class="headerlink" title="3.基本操作"></a>3.基本操作</h1><h2 id="1-保存和退出"><a href="#1-保存和退出" class="headerlink" title="1)保存和退出"></a>1)保存和退出</h2><p><strong>所有的保存和退出都是在末行模式下进行的</strong><br>W   ——&gt;只保存(相当于ctr+s)<br>q   ——&gt;直接退出(只有当前文件的内容全部保存才能直接退出,如果不保存强制退出,需要在q加!)<br>Wq   ——&gt;先保存再退出<br>注意:强制执行在指令后加!</p>
+<h2 id="2-光标操作"><a href="#2-光标操作" class="headerlink" title="2)光标操作"></a>2)光标操作</h2><p><strong>所有光标操作对应的指令都是在命令模式下执行的</strong><br>^   ——&gt;直接将光标移动到行首<br>$   ——&gt;直接将光标移动到行尾<br>G   ——&gt;移动到文件未尾<br>gg   ——&gt;移动到文件开头<br>行号G    ——&gt;移动到指定行号的位到</p>
+<h2 id="3-文本操作"><a href="#3-文本操作" class="headerlink" title="3)文本操作"></a>3)文本操作</h2><p>以下指令前面如果没有冒号表示在命令模式下执行，有冒号的在未行模式下执行</p>
+<p>dd   ——&gt;删除当前光标所在的行<br>数字dd   ——&gt;数字如果是N，从光标所在的位置开始删N行<br>:%d     ——&gt;末行模式下输入%d，删除所有</p>
+<p>u   ——&gt;撤销<br>ctr+   r   ——&gt;反撤销</p>
+<p>yy   ——&gt;复制光标所在的行<br>数字yy   ——&gt;数字如果是N,从光标所在的位置开始复制N行<br>:%y   ——&gt;未行模式下输入%y,复制所有p-粘贴<br>p   ——&gt;粘贴<br>P   ——&gt;粘贴到上一行</p>
+<h2 id="4-查找和替换"><a href="#4-查找和替换" class="headerlink" title="4)查找和替换"></a>4)查找和替换</h2><p><strong>: /正则表达式</strong>——&gt;查找当前文件中符合正则表达式的内容(结果可以用n和N来切换)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim中正则表达式的要求:</span><br><span class="line">1)python正则中所有的语法都有效</span><br><span class="line">2)单独使用有特殊功能的符号，在使用的时候需要加\才有效</span><br><span class="line">r'\d+'    -&gt;  /\d\+</span><br><span class="line">r'\d&#123;3&#125;'  -&gt;  /\d\&#123;3&#125;</span><br><span class="line">r'and|or' -&gt;  /and\|or</span><br></pre></td></tr></table></figure>
+
+<p><strong>:1,$s/被替换的对象对应的正则/替换内容/参数</strong>——&gt;将文件中正则匹配到的内容替换成指定内容</p>
+<blockquote>
+<p>参数:<br>g——&gt;全局匹配(会替换所有符合要求的字符串,默认情况下一行只替换一个)<br>i——&gt;匹配的时候忽略大小写<br>c——&gt;替换的时候给出提示<br>e——&gt;忽略错误(忽略正则的错)</p>
+</blockquote>
+<h1 id="4高级操作"><a href="#4高级操作" class="headerlink" title="4高级操作"></a>4高级操作</h1><h2 id="1-比较文件"><a href="#1-比较文件" class="headerlink" title="1)比较文件"></a>1)比较文件</h2><p><strong>vim -d  文件路径1  文件路径2</strong></p>
+<h2 id="2-同时打开多个文件"><a href="#2-同时打开多个文件" class="headerlink" title="2)同时打开多个文件"></a>2)同时打开多个文件</h2><p><strong>vim  文件路径  文件路径 …</strong></p>
+<blockquote>
+<p>1.切换窗口内容<br>在末行模式下输入:<strong>ls</strong>——&gt;可以查看当前打开的所有的文件和文件对象的标号在末行模式下输入:<strong>b标号</strong>——&gt;可以将当前窗口中的内容切换到指定标号对应的文件的内容</p>
+<p>2.窗口的拆分<br>在未行模式下输入:<strong>sp/vs</strong>——&gt;可以将当前窗口垂直方向/水平方向进行拆分;拆分后可以在命令模式下按<strong>ctr+w</strong>来切换窗口</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>Linux</tag>
+        <tag>vim</tag>
       </tags>
   </entry>
   <entry>
@@ -444,47 +485,6 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <tag>shell</tag>
         <tag>脚本</tag>
         <tag>基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vim基础使用教程</title>
-    <url>/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>vim基础使用教程</p>
-<a id="more"></a>
-
-<h1 id="1-vim的三种模式"><a href="#1-vim的三种模式" class="headerlink" title="1.vim的三种模式"></a>1.vim的三种模式</h1><ul>
-<li><strong>命令模式：</strong>未尾既没有插入的字样也没有冒号（在编辑模式和末行模式下按esc键可以进入命令模式）</li>
-<li><strong>编辑模式：</strong>末尾会显示’一插入一/-insert-，并且在编辑模式下可以对文件进行输入操作（可以编辑）（在命令模式下按i就可以进入编辑模式）</li>
-<li><strong>未行模式：</strong>未尾显示冒号，并且冒号后边可以输入内容（在命令模式下输入冒号就可以进入未行模式）</li>
-</ul>
-<h1 id="2-vim的配置"><a href="#2-vim的配置" class="headerlink" title="2.vim的配置"></a>2.vim的配置</h1><p>通过编辑  etc/vimrc 文件配置</p>
-<h1 id="3-基本操作"><a href="#3-基本操作" class="headerlink" title="3.基本操作"></a>3.基本操作</h1><h2 id="1-保存和退出"><a href="#1-保存和退出" class="headerlink" title="1)保存和退出"></a>1)保存和退出</h2><p><strong>所有的保存和退出都是在末行模式下进行的</strong><br>W   ——&gt;只保存(相当于ctr+s)<br>q   ——&gt;直接退出(只有当前文件的内容全部保存才能直接退出,如果不保存强制退出,需要在q加!)<br>Wq   ——&gt;先保存再退出<br>注意:强制执行在指令后加!</p>
-<h2 id="2-光标操作"><a href="#2-光标操作" class="headerlink" title="2)光标操作"></a>2)光标操作</h2><p><strong>所有光标操作对应的指令都是在命令模式下执行的</strong><br>^   ——&gt;直接将光标移动到行首<br>$   ——&gt;直接将光标移动到行尾<br>G   ——&gt;移动到文件未尾<br>gg   ——&gt;移动到文件开头<br>行号G    ——&gt;移动到指定行号的位到</p>
-<h2 id="3-文本操作"><a href="#3-文本操作" class="headerlink" title="3)文本操作"></a>3)文本操作</h2><p>以下指令前面如果没有冒号表示在命令模式下执行，有冒号的在未行模式下执行</p>
-<p>dd   ——&gt;删除当前光标所在的行<br>数字dd   ——&gt;数字如果是N，从光标所在的位置开始删N行<br>:%d     ——&gt;末行模式下输入%d，删除所有</p>
-<p>u   ——&gt;撤销<br>ctr+   r   ——&gt;反撤销</p>
-<p>yy   ——&gt;复制光标所在的行<br>数字yy   ——&gt;数字如果是N,从光标所在的位置开始复制N行<br>:%y   ——&gt;未行模式下输入%y,复制所有p-粘贴<br>p   ——&gt;粘贴<br>P   ——&gt;粘贴到上一行</p>
-<h2 id="4-查找和替换"><a href="#4-查找和替换" class="headerlink" title="4)查找和替换"></a>4)查找和替换</h2><p><strong>: /正则表达式</strong>——&gt;查找当前文件中符合正则表达式的内容(结果可以用n和N来切换)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim中正则表达式的要求:</span><br><span class="line">1)python正则中所有的语法都有效</span><br><span class="line">2)单独使用有特殊功能的符号，在使用的时候需要加\才有效</span><br><span class="line">r'\d+'    -&gt;  /\d\+</span><br><span class="line">r'\d&#123;3&#125;'  -&gt;  /\d\&#123;3&#125;</span><br><span class="line">r'and|or' -&gt;  /and\|or</span><br></pre></td></tr></table></figure>
-
-<p><strong>:1,$s/被替换的对象对应的正则/替换内容/参数</strong>——&gt;将文件中正则匹配到的内容替换成指定内容</p>
-<blockquote>
-<p>参数:<br>g——&gt;全局匹配(会替换所有符合要求的字符串,默认情况下一行只替换一个)<br>i——&gt;匹配的时候忽略大小写<br>c——&gt;替换的时候给出提示<br>e——&gt;忽略错误(忽略正则的错)</p>
-</blockquote>
-<h1 id="4高级操作"><a href="#4高级操作" class="headerlink" title="4高级操作"></a>4高级操作</h1><h2 id="1-比较文件"><a href="#1-比较文件" class="headerlink" title="1)比较文件"></a>1)比较文件</h2><p><strong>vim -d  文件路径1  文件路径2</strong></p>
-<h2 id="2-同时打开多个文件"><a href="#2-同时打开多个文件" class="headerlink" title="2)同时打开多个文件"></a>2)同时打开多个文件</h2><p><strong>vim  文件路径  文件路径 …</strong></p>
-<blockquote>
-<p>1.切换窗口内容<br>在末行模式下输入:<strong>ls</strong>——&gt;可以查看当前打开的所有的文件和文件对象的标号在末行模式下输入:<strong>b标号</strong>——&gt;可以将当前窗口中的内容切换到指定标号对应的文件的内容</p>
-<p>2.窗口的拆分<br>在未行模式下输入:<strong>sp/vs</strong>——&gt;可以将当前窗口垂直方向/水平方向进行拆分;拆分后可以在命令模式下按<strong>ctr+w</strong>来切换窗口</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>教程</tag>
-        <tag>Linux</tag>
-        <tag>vim</tag>
       </tags>
   </entry>
   <entry>
@@ -664,8 +664,8 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>指令</tag>
         <tag>Linux</tag>
+        <tag>指令</tag>
       </tags>
   </entry>
   <entry>
