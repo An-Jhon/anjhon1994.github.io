@@ -562,5 +562,34 @@
 
 
 
+    <!-- // 窗口波动效果相关样式
+if hexo-config('wobble')  {
+  .sidebar {
+    box-shadow: none;
+  }
+
+  .wobbleTransparentBK{
+    background-color: rgba(0,0,0,0) !important;
+  }
+
+  .wobbleTransparentLine{
+    border-color: rgba(0,0,0,0) !important;
+  }
+
+  // Next.Muse中为Header和Footer添加背景色
+  #header, #footer {
+    background-color: rgb(245, 245, 245);
+  }
+
+  // 防止sidebar和footer同时开启动效时堆叠异常
+  #sidebar, header {
+    z-index: 1 !important;
+  }
+
+  // 防止挡住页末文章的阅读全文按钮
+  .main {
+    padding-bottom: 200px;
+  }
+} -->
   <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
 </html>
