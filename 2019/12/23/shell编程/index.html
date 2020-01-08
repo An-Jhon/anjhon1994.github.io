@@ -28,7 +28,7 @@
     exturl: false,
     sidebar: {"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -56,9 +56,8 @@
 <meta property="og:description" content="Shell脚本，是一种为shell编写的脚本程序。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-12-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-01-04T11:58:19.434Z">
+<meta property="article:modified_time" content="2020-01-08T15:25:29.203Z">
 <meta property="article:author" content="Anjhon">
-<meta property="article:tag" content="教程">
 <meta property="article:tag" content="shell">
 <meta property="article:tag" content="脚本">
 <meta property="article:tag" content="基础">
@@ -250,7 +249,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-04 19:58:19" itemprop="dateModified" datetime="2020-01-04T19:58:19+08:00">2020-01-04</time>
+                <time title="修改时间：2020-01-08 23:25:29" itemprop="dateModified" datetime="2020-01-08T23:25:29+08:00">2020-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,7 +257,13 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Shell/" itemprop="url" rel="index">
                     <span itemprop="name">Shell</span>
                   </a>
                 </span>
@@ -408,7 +413,6 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">📃 教程</a>
               <a href="/tags/shell/" rel="tag">📃 shell</a>
               <a href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">📃 脚本</a>
               <a href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">📃 基础</a>
@@ -420,12 +424,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" rel="prev" title="git常用指令">
-      <i class="fa fa-chevron-left"></i> git常用指令
+    <a href="/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="vim基础使用教程">
+      <i class="fa fa-chevron-left"></i> vim基础使用教程
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="vim基础使用教程">
-      vim基础使用教程 <i class="fa fa-chevron-right"></i>
+    <a href="/2019/12/25/SQL%E5%9F%BA%E7%A1%80/" rel="next" title="MySQL基础">
+      MySQL基础 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -509,13 +513,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -639,8 +643,6 @@
     </div>
 
     
-  
-  <script color='50,50,50' opacity='1' zIndex='-1' count='110' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
@@ -659,6 +661,15 @@
 
 
     
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
 
 
 
@@ -691,6 +702,23 @@
     <!-- 随机三角丝带引用代码 -->
     <!-- 边缘摆动效果引用代码 -->
     
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+
 
 
 

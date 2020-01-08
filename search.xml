@@ -92,7 +92,7 @@
       <tags>
         <tag>框架</tag>
         <tag>后端</tag>
-        <tag>配置</tag>
+        <tag>Django</tag>
       </tags>
   </entry>
   <entry>
@@ -227,8 +227,8 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><h2 id="�
         <category>数据库</category>
       </categories>
       <tags>
+        <tag>MySQL</tag>
         <tag>数据库</tag>
-        <tag>MySQl</tag>
         <tag>Redis</tag>
       </tags>
   </entry>
@@ -317,6 +317,7 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
 ]]></content>
       <categories>
         <category>数据库</category>
+        <category>Redis</category>
       </categories>
       <tags>
         <tag>基础</tag>
@@ -443,52 +444,12 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
 ]]></content>
       <categories>
         <category>数据库</category>
+        <category>MySQL</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
         <tag>基础</tag>
         <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vim基础使用教程</title>
-    <url>/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>vim日常使用</p>
-<a id="more"></a>
-
-<h1 id="1-vim的三种模式"><a href="#1-vim的三种模式" class="headerlink" title="1.vim的三种模式"></a>1.vim的三种模式</h1><ul>
-<li><strong>命令模式：</strong>未尾既没有插入的字样也没有冒号（在编辑模式和末行模式下按esc键可以进入命令模式）</li>
-<li><strong>编辑模式：</strong>末尾会显示’一插入一/-insert-，并且在编辑模式下可以对文件进行输入操作（可以编辑）（在命令模式下按i就可以进入编辑模式）</li>
-<li><strong>未行模式：</strong>未尾显示冒号，并且冒号后边可以输入内容（在命令模式下输入冒号就可以进入未行模式）</li>
-</ul>
-<h1 id="2-vim的配置"><a href="#2-vim的配置" class="headerlink" title="2.vim的配置"></a>2.vim的配置</h1><p>通过编辑  etc/vimrc 文件配置</p>
-<h1 id="3-基本操作"><a href="#3-基本操作" class="headerlink" title="3.基本操作"></a>3.基本操作</h1><h2 id="1-保存和退出"><a href="#1-保存和退出" class="headerlink" title="1)保存和退出"></a>1)保存和退出</h2><p><strong>所有的保存和退出都是在末行模式下进行的</strong><br>W   ——&gt;只保存(相当于ctr+s)<br>q   ——&gt;直接退出(只有当前文件的内容全部保存才能直接退出,如果不保存强制退出,需要在q加!)<br>Wq   ——&gt;先保存再退出<br>注意:强制执行在指令后加!</p>
-<h2 id="2-光标操作"><a href="#2-光标操作" class="headerlink" title="2)光标操作"></a>2)光标操作</h2><p><strong>所有光标操作对应的指令都是在命令模式下执行的</strong><br>^   ——&gt;直接将光标移动到行首<br>$   ——&gt;直接将光标移动到行尾<br>G   ——&gt;移动到文件未尾<br>gg   ——&gt;移动到文件开头<br>行号G    ——&gt;移动到指定行号的位到</p>
-<h2 id="3-文本操作"><a href="#3-文本操作" class="headerlink" title="3)文本操作"></a>3)文本操作</h2><p>以下指令前面如果没有冒号表示在命令模式下执行，有冒号的在未行模式下执行</p>
-<p>dd   ——&gt;删除当前光标所在的行<br>数字dd   ——&gt;数字如果是N，从光标所在的位置开始删N行<br>:%d     ——&gt;末行模式下输入%d，删除所有</p>
-<p>u   ——&gt;撤销<br>ctr+   r   ——&gt;反撤销</p>
-<p>yy   ——&gt;复制光标所在的行<br>数字yy   ——&gt;数字如果是N,从光标所在的位置开始复制N行<br>:%y   ——&gt;未行模式下输入%y,复制所有p-粘贴<br>p   ——&gt;粘贴<br>P   ——&gt;粘贴到上一行</p>
-<h2 id="4-查找和替换"><a href="#4-查找和替换" class="headerlink" title="4)查找和替换"></a>4)查找和替换</h2><p><strong>: /正则表达式</strong>——&gt;查找当前文件中符合正则表达式的内容(结果可以用n和N来切换)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim中正则表达式的要求:</span><br><span class="line">1)python正则中所有的语法都有效</span><br><span class="line">2)单独使用有特殊功能的符号，在使用的时候需要加\才有效</span><br><span class="line">r'\d+'    -&gt;  /\d\+</span><br><span class="line">r'\d&#123;3&#125;'  -&gt;  /\d\&#123;3&#125;</span><br><span class="line">r'and|or' -&gt;  /and\|or</span><br></pre></td></tr></table></figure>
-
-<p><strong>:1,$s/被替换的对象对应的正则/替换内容/参数</strong>——&gt;将文件中正则匹配到的内容替换成指定内容</p>
-<blockquote>
-<p>参数:<br>g——&gt;全局匹配(会替换所有符合要求的字符串,默认情况下一行只替换一个)<br>i——&gt;匹配的时候忽略大小写<br>c——&gt;替换的时候给出提示<br>e——&gt;忽略错误(忽略正则的错)</p>
-</blockquote>
-<h1 id="4高级操作"><a href="#4高级操作" class="headerlink" title="4高级操作"></a>4高级操作</h1><h2 id="1-比较文件"><a href="#1-比较文件" class="headerlink" title="1)比较文件"></a>1)比较文件</h2><p><strong>vim -d  文件路径1  文件路径2</strong></p>
-<h2 id="2-同时打开多个文件"><a href="#2-同时打开多个文件" class="headerlink" title="2)同时打开多个文件"></a>2)同时打开多个文件</h2><p><strong>vim  文件路径  文件路径 …</strong></p>
-<blockquote>
-<p>1.切换窗口内容<br>在末行模式下输入:<strong>ls</strong>——&gt;可以查看当前打开的所有的文件和文件对象的标号在末行模式下输入:<strong>b标号</strong>——&gt;可以将当前窗口中的内容切换到指定标号对应的文件的内容</p>
-<p>2.窗口的拆分<br>在未行模式下输入:<strong>sp/vs</strong>——&gt;可以将当前窗口垂直方向/水平方向进行拆分;拆分后可以在命令模式下按<strong>ctr+w</strong>来切换窗口</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>教程</tag>
-        <tag>Linux</tag>
-        <tag>vim</tag>
       </tags>
   </entry>
   <entry>
@@ -573,41 +534,53 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
 <h1 id="9-函数"><a href="#9-函数" class="headerlink" title="9.函数"></a>9.函数</h1><h2 id="1）函数的声明和调用"><a href="#1）函数的声明和调用" class="headerlink" title="1）函数的声明和调用"></a>1）函数的声明和调用</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 1.函数的声明</span></span><br><span class="line">声明的语法：</span><br><span class="line">函数名()&#123;</span><br><span class="line">    函数体</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">调用函数语法:  函数名</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">声明函数</span></span><br><span class="line">func1()&#123;</span><br><span class="line">    echo 你好函数1</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">调用函数</span></span><br><span class="line">func1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2.有参数的函数</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 声明的时候不需要形参, 直接在函数体中通过<span class="string">'$&#123;N&#125;'</span>来获取第N个实参</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 调用的时候:  函数名 实参1 实参2 实参3 ...</span></span><br><span class="line">func2()&#123;</span><br><span class="line">    echo 函数2被调用</span><br><span class="line">    echo 第一个参数: $&#123;1&#125;</span><br><span class="line">    echo 第二个参数: $&#123;2&#125;</span><br><span class="line">    echo 第三个参数: $&#123;3&#125; </span><br><span class="line">&#125;</span><br><span class="line">func2 10 20 "abc"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3.函数的返回值</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">return</span> 数字   - 数字的范围是0~255</span></span><br><span class="line">func3()&#123;</span><br><span class="line">    echo 函数3被调用</span><br><span class="line">    return 256</span><br><span class="line">    #a=`expr 100 + 200`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func3</span><br><span class="line">echo $&#123;?&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
+        <category>编程语言</category>
         <category>Shell</category>
       </categories>
       <tags>
-        <tag>教程</tag>
         <tag>shell</tag>
         <tag>脚本</tag>
         <tag>基础</tag>
       </tags>
   </entry>
   <entry>
-    <title>git常用指令</title>
-    <url>/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<p>git的基本常用指令集</p>
+    <title>vim基础使用教程</title>
+    <url>/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>vim日常使用</p>
 <a id="more"></a>
-<h1 id="1-基本指令"><a href="#1-基本指令" class="headerlink" title="1.基本指令"></a>1.基本指令</h1><p>git init        ——&gt;新建git仓库<br>git add 文件/文件夹       ——&gt;  将文件添加到缓存区中<br>git add -A   ——&gt;  添加所有内容到缓存区中</p>
-<p>git status      ——&gt;    查看git状态<br>git commit -m  ‘提交信息’       ——&gt;  将缓存区中的内容全部提交到git本地仓库中<br>git log        ——&gt; 查看提交日志 </p>
-<p>git reset  – hard   HEAD       ——&gt;   让工作目录中的内容和仓库中的内容保持一致<br>git reset  –hard HEAD^  ——&gt;  回到上一个版本<br>git  reset  – hard 版本号  ——&gt;  回到指定的版本 </p>
-<p>git checkout  文件名   ——&gt;  从暂存区中恢复工作目录中的内容(让工作区中的指定文件，回到上次提交的时候的状态) </p>
-<p>git clone <url>    ——&gt;  将服务器上的项目(仓库)克隆 (使用https地址需要输入密码，使用ssh地址需要添加公钥) </p>
-<p>git remote add origin 地址    ——&gt;  关联远程仓库(只需要关联一次)</p>
-<p>git push [-u] origin master   ——&gt;  提交(-u在第一次提交分支的时候才用) </p>
-<p>git push   ——&gt;  将本地仓库的内容提交到远程仓库master分支上</p>
-<p>git push origin 分支名     ——&gt;  将本地仓库的内容提交到远程仓库对应的分支上, 如果分支不存在会自动创建</p>
-<p>git pull   ——&gt;  将远程仓库中的内容更新到本地仓库和工作区中</p>
-<h1 id="2-分之管理"><a href="#2-分之管理" class="headerlink" title="2.分之管理"></a>2.分之管理</h1><p>创建仓库会默认给我们创建一个master分之,这个分之一般作为提交和发布分之;开发一般会自己创建一个develop分之，用来开发和测试;多人协作的时候还可能根据不同的人或者(不同的功能)创建不同的分之，用来独立开发 </p>
-<p>常见分之： master(主要是合并develop), develop(主要合并下面的其他分支), 功能/人员分之(开发)  </p>
-<p>git branch [-a]   ——&gt;查看分之<br>git branch 分之名——&gt;创建分之<br>git checkout   分支名——&gt;  切换分之<br>git checkout -b 分之名    ——&gt;切换并创建新的分之<br>git diff  分之1  分之2——&gt;查看两个分之之间的差异<br>git merge 分之名——&gt;让当前分之和指定分之进行合并</p>
-<p>注意: 切换分之、push、pull，这些操作前要保证工作区是clean<br>怎么避免冲突：  不要发生多个分之对同一个文件在同一个版本下进行修改(和同伴确认和商量)</p>
+
+<h1 id="1-vim的三种模式"><a href="#1-vim的三种模式" class="headerlink" title="1.vim的三种模式"></a>1.vim的三种模式</h1><ul>
+<li><strong>命令模式：</strong>未尾既没有插入的字样也没有冒号（在编辑模式和末行模式下按esc键可以进入命令模式）</li>
+<li><strong>编辑模式：</strong>末尾会显示’一插入一/-insert-，并且在编辑模式下可以对文件进行输入操作（可以编辑）（在命令模式下按i就可以进入编辑模式）</li>
+<li><strong>未行模式：</strong>未尾显示冒号，并且冒号后边可以输入内容（在命令模式下输入冒号就可以进入未行模式）</li>
+</ul>
+<h1 id="2-vim的配置"><a href="#2-vim的配置" class="headerlink" title="2.vim的配置"></a>2.vim的配置</h1><p>通过编辑  etc/vimrc 文件配置</p>
+<h1 id="3-基本操作"><a href="#3-基本操作" class="headerlink" title="3.基本操作"></a>3.基本操作</h1><h2 id="1-保存和退出"><a href="#1-保存和退出" class="headerlink" title="1)保存和退出"></a>1)保存和退出</h2><p><strong>所有的保存和退出都是在末行模式下进行的</strong><br>W   ——&gt;只保存(相当于ctr+s)<br>q   ——&gt;直接退出(只有当前文件的内容全部保存才能直接退出,如果不保存强制退出,需要在q加!)<br>Wq   ——&gt;先保存再退出<br>注意:强制执行在指令后加!</p>
+<h2 id="2-光标操作"><a href="#2-光标操作" class="headerlink" title="2)光标操作"></a>2)光标操作</h2><p><strong>所有光标操作对应的指令都是在命令模式下执行的</strong><br>^   ——&gt;直接将光标移动到行首<br>$   ——&gt;直接将光标移动到行尾<br>G   ——&gt;移动到文件未尾<br>gg   ——&gt;移动到文件开头<br>行号G    ——&gt;移动到指定行号的位到</p>
+<h2 id="3-文本操作"><a href="#3-文本操作" class="headerlink" title="3)文本操作"></a>3)文本操作</h2><p>以下指令前面如果没有冒号表示在命令模式下执行，有冒号的在未行模式下执行</p>
+<p>dd   ——&gt;删除当前光标所在的行<br>数字dd   ——&gt;数字如果是N，从光标所在的位置开始删N行<br>:%d     ——&gt;末行模式下输入%d，删除所有</p>
+<p>u   ——&gt;撤销<br>ctr+   r   ——&gt;反撤销</p>
+<p>yy   ——&gt;复制光标所在的行<br>数字yy   ——&gt;数字如果是N,从光标所在的位置开始复制N行<br>:%y   ——&gt;未行模式下输入%y,复制所有p-粘贴<br>p   ——&gt;粘贴<br>P   ——&gt;粘贴到上一行</p>
+<h2 id="4-查找和替换"><a href="#4-查找和替换" class="headerlink" title="4)查找和替换"></a>4)查找和替换</h2><p><strong>: /正则表达式</strong>——&gt;查找当前文件中符合正则表达式的内容(结果可以用n和N来切换)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim中正则表达式的要求:</span><br><span class="line">1)python正则中所有的语法都有效</span><br><span class="line">2)单独使用有特殊功能的符号，在使用的时候需要加\才有效</span><br><span class="line">r'\d+'    -&gt;  /\d\+</span><br><span class="line">r'\d&#123;3&#125;'  -&gt;  /\d\&#123;3&#125;</span><br><span class="line">r'and|or' -&gt;  /and\|or</span><br></pre></td></tr></table></figure>
+
+<p><strong>:1,$s/被替换的对象对应的正则/替换内容/参数</strong>——&gt;将文件中正则匹配到的内容替换成指定内容</p>
+<blockquote>
+<p>参数:<br>g——&gt;全局匹配(会替换所有符合要求的字符串,默认情况下一行只替换一个)<br>i——&gt;匹配的时候忽略大小写<br>c——&gt;替换的时候给出提示<br>e——&gt;忽略错误(忽略正则的错)</p>
+</blockquote>
+<h1 id="4高级操作"><a href="#4高级操作" class="headerlink" title="4高级操作"></a>4高级操作</h1><h2 id="1-比较文件"><a href="#1-比较文件" class="headerlink" title="1)比较文件"></a>1)比较文件</h2><p><strong>vim -d  文件路径1  文件路径2</strong></p>
+<h2 id="2-同时打开多个文件"><a href="#2-同时打开多个文件" class="headerlink" title="2)同时打开多个文件"></a>2)同时打开多个文件</h2><p><strong>vim  文件路径  文件路径 …</strong></p>
+<blockquote>
+<p>1.切换窗口内容<br>在末行模式下输入:<strong>ls</strong>——&gt;可以查看当前打开的所有的文件和文件对象的标号在末行模式下输入:<strong>b标号</strong>——&gt;可以将当前窗口中的内容切换到指定标号对应的文件的内容</p>
+<p>2.窗口的拆分<br>在未行模式下输入:<strong>sp/vs</strong>——&gt;可以将当前窗口垂直方向/水平方向进行拆分;拆分后可以在命令模式下按<strong>ctr+w</strong>来切换窗口</p>
+</blockquote>
 ]]></content>
       <categories>
-        <category>技术文档</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>git</tag>
-        <tag>指令</tag>
+        <tag>Linux</tag>
+        <tag>vim</tag>
       </tags>
   </entry>
   <entry>
@@ -764,6 +737,34 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
       </tags>
   </entry>
   <entry>
+    <title>git常用指令</title>
+    <url>/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<p>git的基本常用指令集</p>
+<a id="more"></a>
+<h1 id="1-基本指令"><a href="#1-基本指令" class="headerlink" title="1.基本指令"></a>1.基本指令</h1><p>git init        ——&gt;新建git仓库<br>git add 文件/文件夹       ——&gt;  将文件添加到缓存区中<br>git add -A   ——&gt;  添加所有内容到缓存区中</p>
+<p>git status      ——&gt;    查看git状态<br>git commit -m  ‘提交信息’       ——&gt;  将缓存区中的内容全部提交到git本地仓库中<br>git log        ——&gt; 查看提交日志 </p>
+<p>git reset  – hard   HEAD       ——&gt;   让工作目录中的内容和仓库中的内容保持一致<br>git reset  –hard HEAD^  ——&gt;  回到上一个版本<br>git  reset  – hard 版本号  ——&gt;  回到指定的版本 </p>
+<p>git checkout  文件名   ——&gt;  从暂存区中恢复工作目录中的内容(让工作区中的指定文件，回到上次提交的时候的状态) </p>
+<p>git clone <url>    ——&gt;  将服务器上的项目(仓库)克隆 (使用https地址需要输入密码，使用ssh地址需要添加公钥) </p>
+<p>git remote add origin 地址    ——&gt;  关联远程仓库(只需要关联一次)</p>
+<p>git push [-u] origin master   ——&gt;  提交(-u在第一次提交分支的时候才用) </p>
+<p>git push   ——&gt;  将本地仓库的内容提交到远程仓库master分支上</p>
+<p>git push origin 分支名     ——&gt;  将本地仓库的内容提交到远程仓库对应的分支上, 如果分支不存在会自动创建</p>
+<p>git pull   ——&gt;  将远程仓库中的内容更新到本地仓库和工作区中</p>
+<h1 id="2-分之管理"><a href="#2-分之管理" class="headerlink" title="2.分之管理"></a>2.分之管理</h1><p>创建仓库会默认给我们创建一个master分之,这个分之一般作为提交和发布分之;开发一般会自己创建一个develop分之，用来开发和测试;多人协作的时候还可能根据不同的人或者(不同的功能)创建不同的分之，用来独立开发 </p>
+<p>常见分之： master(主要是合并develop), develop(主要合并下面的其他分支), 功能/人员分之(开发)  </p>
+<p>git branch [-a]   ——&gt;查看分之<br>git branch 分之名——&gt;创建分之<br>git checkout   分支名——&gt;  切换分之<br>git checkout -b 分之名    ——&gt;切换并创建新的分之<br>git diff  分之1  分之2——&gt;查看两个分之之间的差异<br>git merge 分之名——&gt;让当前分之和指定分之进行合并</p>
+<p>注意: 切换分之、push、pull，这些操作前要保证工作区是clean<br>怎么避免冲突：  不要发生多个分之对同一个文件在同一个版本下进行修改(和同伴确认和商量)</p>
+]]></content>
+      <categories>
+        <category>技术文档</category>
+      </categories>
+      <tags>
+        <tag>指令</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux定时任务</title>
     <url>/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
     <content><![CDATA[<p>通过制定 <code>crontab -e</code> 编辑和开启定时任务</p>
@@ -776,7 +777,6 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>教程</tag>
         <tag>Linux</tag>
         <tag>shell</tag>
         <tag>脚本</tag>
@@ -784,7 +784,7 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
   </entry>
   <entry>
     <title>Linux中python相关软件安装记录</title>
-    <url>/2019/12/20/Centos7.x%E5%8F%8A%E4%BB%A5%E4%B8%8Amysql%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</url>
+    <url>/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<p>Linux中的Python, MySQL, Redis, Nginx安装,基础环境配置</p>
 <a id="more"></a>
 
@@ -807,11 +807,9 @@ pickle.loads()   反序列化(字节串转换成字符串)</code></pre><p><stron
         <category>技术文档</category>
       </categories>
       <tags>
-        <tag>教程</tag>
-        <tag>配置</tag>
-        <tag>分享</tag>
         <tag>Linux软件</tag>
         <tag>服务器</tag>
+        <tag>配置</tag>
       </tags>
   </entry>
 </search>
