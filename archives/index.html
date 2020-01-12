@@ -1,53 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.1.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/coding.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('https://anjhon1994.github.io').hostname,
-    root: '/',
-    scheme: 'Mist',
-    version: '7.6.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
-  };
-</script>
-
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="没有做不到的事,只是看你想不想做">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Anjhon&#39;s Blog">
@@ -57,749 +15,390 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Anjhon">
 <meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://anjhon1994.github.io/archives/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: false
-  };
-</script>
-
-    <title>归档 | Anjhon's Blog</title>
     
-
-
-
-
-
-
-    <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-  </head>
-
-  <body itemscope itemtype="http://schema.org/WebPage">
-    <div class="container use-motion">
-      <div class="headband"></div>
-      <a href="https://github.com/anjhon1994" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Anjhon's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">小安</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-
-</nav>
-  <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
-           placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result"></div>
-
-</div>
-<div class="search-pop-overlay"></div>
-
-  </div>
-
-
-
-</div>
-      </header>
-
-      
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-      <main class="main">
-        <div class="main-inner">
-          <div class="content-wrap">
-            
-
-            <div class="content">
-              
-
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 10 篇日志。 继续努力。</span>
-      </div>
-
-      
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-01-05T20:48:50+08:00"
-              content="2020-01-05">
-          01-05
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/01/05/Django/" itemprop="url">
-            <span itemprop="name">Django框架</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-28T00:00:00+08:00"
-              content="2019-12-28">
-          12-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/28/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B0%8F%E7%BB%93/" itemprop="url">
-            <span itemprop="name">数据库小结</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-27T00:00:00+08:00"
-              content="2019-12-27">
-          12-27
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/27/radis/" itemprop="url">
-            <span itemprop="name">Redis及其应用</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-25T00:00:00+08:00"
-              content="2019-12-25">
-          12-25
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/25/SQL%E5%9F%BA%E7%A1%80/" itemprop="url">
-            <span itemprop="name">MySQL基础</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-23T00:00:00+08:00"
-              content="2019-12-23">
-          12-23
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/23/shell%E7%BC%96%E7%A8%8B/" itemprop="url">
-            <span itemprop="name">shell编程</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-23T00:00:00+08:00"
-              content="2019-12-23">
-          12-23
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/" itemprop="url">
-            <span itemprop="name">vim基础使用教程</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-22T00:00:00+08:00"
-              content="2019-12-22">
-          12-22
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/22/Linux%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" itemprop="url">
-            <span itemprop="name">Linux常用指令</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-22T00:00:00+08:00"
-              content="2019-12-22">
-          12-22
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" itemprop="url">
-            <span itemprop="name">git常用指令</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-20T20:10:50+08:00"
-              content="2019-12-20">
-          12-20
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" itemprop="url">
-            <span itemprop="name">Linux定时任务</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-20T13:28:26+08:00"
-              content="2019-12-20">
-          12-20
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" itemprop="url">
-            <span itemprop="name">Linux中python相关软件安装记录</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-
-    </div>
-  </div>
-  
-  
-  
-
-  
-
-
-
-            </div>
-            
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let activeClass = CONFIG.comments.activeClass;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-          </div>
-            
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Anjhon"
-      src="/images/aa.jpg">
-  <p class="site-author-name" itemprop="name">Anjhon</p>
-  <div class="site-description" itemprop="description">没有做不到的事,只是看你想不想做</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+    
         
-          <span class="site-state-item-count">10</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
+              <link rel="shortcut icon" href="/images/favicon.ico">
           
-        <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/anjhon1994" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anjhon1994" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://weibo.com/3824057040/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;3824057040&#x2F;profile?rightmod&#x3D;1&amp;wvr&#x3D;6&amp;mod&#x3D;personinfo&amp;is_all&#x3D;1" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
-      </span>
-  </div>
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>归档</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
 
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+    <div class="content index py4">
+        
+          <header id="header">
+  <a href="/">
+  
+    
+      <div id="logo" style="background-image: url(/images/logo.png);"></div>
+    
+  
+    <div id="title">
+      <h1>Anjhon&#39;s Blog</h1>
     </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="https://www.jianshu.com/u/398e2c5c1f65" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;398e2c5c1f65" rel="noopener" target="_blank">MyJianshu</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://www.cnblogs.com/anjhon/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;anjhon&#x2F;" rel="noopener" target="_blank">MyCnblogs</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://github.com/jackfrued/Python-100-Days" title="https:&#x2F;&#x2F;github.com&#x2F;jackfrued&#x2F;Python-100-Days" rel="noopener" target="_blank">老骆Python100天</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://bestzuo.cn/" title="https:&#x2F;&#x2F;bestzuo.cn&#x2F;" rel="noopener" target="_blank">Sanarous's Blog</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://yearito.cn/" title="http:&#x2F;&#x2F;yearito.cn&#x2F;" rel="noopener" target="_blank">Yearito's Blog</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://mayu123mayu.github.io/" title="http:&#x2F;&#x2F;mayu123mayu.github.io&#x2F;" rel="noopener" target="_blank">Friend'Ma</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://yydafx.github.io/" title="https:&#x2F;&#x2F;yydafx.github.io&#x2F;" rel="noopener" target="_blank">Friend'Yang</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://fhlsyol.top/" title="https:&#x2F;&#x2F;fhlsyol.top&#x2F;" rel="noopener" target="_blank">Friend'Jang</a>
-        </li>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">首页</a></li>
+       
+        <li><a href="/about/">关于</a></li>
+       
+        <li><a href="/archives/">归档</a></li>
+       
+        <li><a href="/projects_url">项目</a></li>
+      
     </ul>
   </div>
+</header>
 
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-        </div>
-      </main>
-
-      <footer class="footer">
-        <div class="footer-inner">
-          <script
-  async
-  src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Anjhon</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">52k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">47 分钟</span>
-</div>
-
-<!--
-  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.6.0
-  </div>-->
-
-          
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="我的第 undefined 位朋友，">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
-
-
-
-
-
-
-
-
-        </div>
-      </footer>
+        
+        <div id="archive">
+  <ul class="post-list">
+    
+    
+    
+    
+      
+      
+      
+      
+        <h2>2020</h2>
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-01-12T12:48:50.000Z" itemprop="datePublished">2020-01-12</time>
+        
+      
     </div>
 
+
+        <span>
     
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
+        <a class="" href="/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">Django进阶</a>
     
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
 
 
+</span>
+      </li>
+    
+      
+      
+      
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-01-05T12:48:50.000Z" itemprop="datePublished">2020-01-05</time>
+        
+      
+    </div>
 
 
+        <span>
+    
+        <a class="" href="/2020/01/05/Django%E5%85%A5%E9%97%A8%E4%B9%8B%E9%80%89%E8%AF%BE%E7%B3%BB%E7%BB%9F/">Django入门之选课系统</a>
+    
+
+
+</span>
+      </li>
+    
+      
+      
+      
+      
+        <h2>2019</h2>
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2019-12-27T16:00:00.000Z" itemprop="datePublished">2019-12-28</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/">浅浅浅谈数据库</a>
+    
+
+
+</span>
+      </li>
+    
+      
+      
+      
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2019-12-26T16:00:00.000Z" itemprop="datePublished">2019-12-27</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2019/12/27/radis/">Redis及其应用</a>
+    
+
+
+</span>
+      </li>
+    
+      
+      
+      
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2019-12-24T16:00:00.000Z" itemprop="datePublished">2019-12-25</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2019/12/25/SQL%E5%9F%BA%E7%A1%80/">MySQL基础</a>
+    
+
+
+</span>
+      </li>
+    
+      
+      
+      
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2019-12-22T16:00:00.000Z" itemprop="datePublished">2019-12-23</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2019/12/23/shell%E7%BC%96%E7%A8%8B/">shell编程</a>
+    
+
+
+</span>
+      </li>
+    
+      
+      
+      
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2019-12-22T16:00:00.000Z" itemprop="datePublished">2019-12-23</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/">vim基础使用教程</a>
+    
+
+
+</span>
+      </li>
+    
+      
+      
+      
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2019-12-21T16:00:00.000Z" itemprop="datePublished">2019-12-22</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2019/12/22/Linux%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/">Linux常用指令</a>
+    
+
+
+</span>
+      </li>
+    
+      
+      
+      
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2019-12-21T16:00:00.000Z" itemprop="datePublished">2019-12-22</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/">git常用指令</a>
+    
+
+
+</span>
+      </li>
+    
+      
+      
+      
+      
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2019-12-20T12:10:50.000Z" itemprop="datePublished">2019-12-20</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">Linux定时任务</a>
+    
+
+
+</span>
+      </li>
+    
+  </ul>
   
-<script src="/js/local-search.js"></script>
+    <div class="pagination">
+        
+        <span class="page-number">第 1 页，共 2 页</span>
+        
+            <a href="/archives/page/2/"><i class="fas fa-angle-right"></i>
+            </a>
+        
+    </div>
 
 
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Anjhon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
 
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
 
 
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
 
 
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
 
 
-
-    
-
-    
-
-
-
-    <!-- 点击彩色爆炸效果:哔哩哔哩mackxin教程 -->
-    
-
-
-    <!-- 随机三角丝带引用代码 -->
-    <!-- 边缘摆动效果引用代码 -->
-    
-
-  <canvas id="evanyou"></canvas>
-  <style>
-    #evanyou {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  </style>
-  <script src="/js/evan-you.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script src="/js/activate-power-mode.min.js"></script>
-  <script>
-    POWERMODE.colorful = true;
-    POWERMODE.shake = false;
-    document.body.addEventListener('input', POWERMODE);
-  </script>
-
-
-
-
-
-
-  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
-  <script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
-  <script async src="/js/explosion.min.js"></script>
-
-
-
-
-
- 
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
-<script>
-  function timer() {
-    var ages = moment.preciseDiff(moment(),moment(20191220,"YYYYMMDD"));
-    ages = ages.replace(/years?/, "年");
-    ages = ages.replace(/months?/, "月");
-    ages = ages.replace(/days?/, "天");
-    ages = ages.replace(/hours?/, "小时");
-    ages = ages.replace(/minutes?/, "分");
-    ages = ages.replace(/seconds?/, "秒");
-    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
-    div.innerHTML = `我已在此等候你 ${ages}`;
-  }
-  var div = document.createElement("div");
-  //插入到copyright之后
-  var copyright = document.querySelector(".copyright");
-  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
-  timer();
-  setInterval("timer()",1000)
-</script>
-
-
-
-
-
-    <!-- // 窗口波动效果相关样式
-if hexo-config('wobble')  {
-  .sidebar {
-    box-shadow: none;
-  }
-
-  .wobbleTransparentBK{
-    background-color: rgba(0,0,0,0) !important;
-  }
-
-  .wobbleTransparentLine{
-    border-color: rgba(0,0,0,0) !important;
-  }
-
-  // Next.Muse中为Header和Footer添加背景色
-  #header, #footer {
-    background-color: rgb(245, 245, 245);
-  }
-
-  // 防止sidebar和footer同时开启动效时堆叠异常
-  #sidebar, header {
-    z-index: 1 !important;
-  }
-
-  // 防止挡住页末文章的阅读全文按钮
-  .main {
-    padding-bottom: 200px;
-  }
-} -->
-  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
 </html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="数据库一周小结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅浅浅谈数据库">
+<meta property="og:url" content="https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="Anjhon&#39;s Blog">
+<meta property="og:description" content="数据库一周小结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/anjhon1994/some_image/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%9319%E5%B9%B412%E6%9C%88%E4%BD%BF%E7%94%A8%E6%8E%92%E8%A1%8C.png?raw=true">
+<meta property="article:published_time" content="2019-12-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-01-11T08:32:23.905Z">
+<meta property="article:author" content="Anjhon">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/anjhon1994/some_image/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%9319%E5%B9%B412%E6%9C%88%E4%BD%BF%E7%94%A8%E6%8E%92%E8%A1%8C.png?raw=true">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>浅浅浅谈数据库</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/01/05/Django%E5%85%A5%E9%97%A8%E4%B9%8B%E9%80%89%E8%AF%BE%E7%B3%BB%E7%BB%9F/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/27/radis/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&text=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&is_video=false&description=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=浅浅浅谈数据库&body=Check out this article: https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&name=浅浅浅谈数据库&description=&lt;p&gt;数据库一周小结&lt;/p&gt;" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&t=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL"><span class="toc-number">1.</span> <span class="toc-text">MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DDL"><span class="toc-number">1.1.</span> <span class="toc-text">DDL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库操作"><span class="toc-number">1.1.1.</span> <span class="toc-text">数据库操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据表操作"><span class="toc-number">1.1.2.</span> <span class="toc-text">数据表操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DML"><span class="toc-number">1.2.</span> <span class="toc-text">DML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DCL"><span class="toc-number">1.3.</span> <span class="toc-text">DCL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户管理"><span class="toc-number">1.3.1.</span> <span class="toc-text">用户管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#授权管理"><span class="toc-number">1.3.2.</span> <span class="toc-text">授权管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事务"><span class="toc-number">1.3.3.</span> <span class="toc-text">事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#视图"><span class="toc-number">1.3.4.</span> <span class="toc-text">视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引"><span class="toc-number">1.3.5.</span> <span class="toc-text">索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis"><span class="toc-number">2.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis命令"><span class="toc-number">2.1.</span> <span class="toc-text">Redis命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis的数据类型"><span class="toc-number">2.2.</span> <span class="toc-text">Redis的数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-字符串-string"><span class="toc-number">2.2.1.</span> <span class="toc-text">1.字符串 - string</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-哈希-hash"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.哈希 - hash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-列表-list"><span class="toc-number">2.2.3.</span> <span class="toc-text">3.列表 - list</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-集合-set"><span class="toc-number">2.2.4.</span> <span class="toc-text">4.集合 - set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-有序集合-zset-元素自带一个值-可以修改"><span class="toc-number">2.2.5.</span> <span class="toc-text">5.有序集合 - zset(元素自带一个值,可以修改)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-地理位置-LBS应用-Location-Based-Service-基于位置的服务"><span class="toc-number">2.2.6.</span> <span class="toc-text">6.地理位置(LBS应用-Location-Based Service - 基于位置的服务)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python中使用数据库"><span class="toc-number">3.</span> <span class="toc-text">Python中使用数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#连接MySQL数据库"><span class="toc-number">3.1.</span> <span class="toc-text">连接MySQL数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接Redis服务器"><span class="toc-number">3.2.</span> <span class="toc-text">连接Redis服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将Redis作为用户请求和MySQL数据库之间的缓存介质"><span class="toc-number">3.3.</span> <span class="toc-text">将Redis作为用户请求和MySQL数据库之间的缓存介质</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        浅浅浅谈数据库
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Anjhon's Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-27T16:00:00.000Z" itemprop="datePublished">2019-12-28</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/MySQL/" rel="tag">MySQL</a>, <a class="tag-link" href="/tags/Redis/" rel="tag">Redis</a>, <a class="tag-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>数据库一周小结</p>
+<a id="more"></a>
+
+<p>数据库主要分为两大类,分别是关系型数据库(SQL)和非关系型数据库(NOSQL);在关系型数据库中Oracle和MySQL是最具有代表性的两个,在非关系型数据库中MongoDB和Redis也是榜上有名. 而本周的学习中,主要对MySQL和Redis进行了深入的学习.</p>
+<p><img src="https://github.com/anjhon1994/some_image/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%9319%E5%B9%B412%E6%9C%88%E4%BD%BF%E7%94%A8%E6%8E%92%E8%A1%8C.png?raw=true" alt=""></p>
+<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><p>MySQL主要使用SQL语言进行增删查改操作;<br>SQL是一种结构化查询语言,SQL语言又分为DDL(数据定义语言), DML(数据操作语言), DCL(数据控制语言)</p>
+<h2 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h2><h3 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h3><p>1.创建数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> utf8;   <span class="comment">--若dbname不存在,则按编码方式为utf8来新建数据库</span></span><br></pre></td></tr></table></figure>
+<p>2.删除数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">DATABASE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> dbname;  <span class="comment">-- 若数据库dbname存在就删除该数据库</span></span><br></pre></td></tr></table></figure>
+<p>3.切换/使用数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> dbname;  <span class="comment">-- 切换后执行的操作均只对当前数据库有效</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据表操作"><a href="#数据表操作" class="headerlink" title="数据表操作"></a>数据表操作</h3><p>1.创建数据表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> tablname(filed1 <span class="keyword">type</span> constraint1, filed2 <span class="keyword">type</span> constraint2, ...);   <span class="comment">-- 创建以field1,filed2..为表头的数据表</span></span><br><span class="line"><span class="comment">-- 在SQL中常见的type: int, float, varchar/text, bit, date   (varchar后通常需要限制字符串的长度)</span></span><br><span class="line"><span class="comment">-- 常见的constraint: not null, unique, default, primary key, foreign key, auto_increment</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--注:外键约束的类型有一对一,一对多,多对多三种, 外键添加的方式各不相同</span></span><br><span class="line"><span class="comment">-- 一对一: 可以添加到任意一方;</span></span><br><span class="line"><span class="comment">-- 一对多和多对一: 添加到多的一方;</span></span><br><span class="line"><span class="comment">-- 多对多: 两张表没有办法直接建立多对多的对应关系,需要第三张表辅助</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 示例:</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> tb_student</span><br><span class="line">(</span><br><span class="line">stuid <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span> auto_increment,</span><br><span class="line">stuname <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">stubirth <span class="built_in">DATE</span>,</span><br><span class="line">stugender <span class="built_in">bit</span> <span class="keyword">DEFAULT</span> <span class="number">1</span>,</span><br><span class="line">stutel <span class="built_in">VARCHAR</span>(<span class="number">11</span>) <span class="keyword">UNIQUE</span></span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (stuid)  主键约束还可以单独设置</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>2.删除表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> tablname;</span><br></pre></td></tr></table></figure>
+
+<p>3.修改表</p>
+<p>①:添加字段</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tablname <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="keyword">field</span> <span class="keyword">type</span> <span class="keyword">constraint</span>;</span><br></pre></td></tr></table></figure>
+<p>②:删除字段</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tablname <span class="keyword">DROP</span> <span class="keyword">COLUMN</span> <span class="keyword">field</span>;</span><br></pre></td></tr></table></figure>
+<p>③:修改字段名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tablname <span class="keyword">CHANGE</span> <span class="keyword">field</span> new_filed new_type;</span><br></pre></td></tr></table></figure>
+<p>④:添加约束</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tablname <span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> consname <span class="keyword">constraint</span>(filed);</span><br></pre></td></tr></table></figure>
+<p>⑤:删除约束</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tablname <span class="keyword">DROP</span> <span class="keyword">INDEX</span> <span class="keyword">constraint</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tablname <span class="keyword">DROP</span> <span class="keyword">FOREIGN</span> <span class="keyword">KEY</span> <span class="keyword">constraint</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h2><p>1.INSERT(增)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tablname(field1, field2, ...) <span class="keyword">VALUES</span>(value1, value2, ...),(value11, value22, ...), (value111, value222, ...), ...;</span><br></pre></td></tr></table></figure>
+<p>2.DELETE(删)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tablename <span class="keyword">WHERE</span> 条件语句;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 补充:</span></span><br><span class="line">sq1条件语句的写法(筛选)(条件语句在写的时候可以通过加()改变运算顺序)</span><br><span class="line"><span class="comment">-- 比较运算:=(等于),&lt;&gt;(不等于),&gt;,&lt;,&gt;=,&lt;=</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_student <span class="keyword">WHERE</span> stuname=<span class="string">'真刚'</span>;</span><br><span class="line"><span class="comment">-- 逻辑运算:and(逻辑与),or(逻辑或),not(逻辑非);</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_student <span class="keyword">WHERE</span> stuid&gt;=<span class="number">35</span> <span class="keyword">AND</span> stugender&lt;&gt;<span class="number">1</span>;</span><br><span class="line"><span class="comment">-- 集合包含:in</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_student <span class="keyword">WHERE</span> stuname <span class="keyword">in</span> (<span class="string">'逍遥子'</span>, <span class="string">'韩信'</span>, <span class="string">'断水'</span>);</span><br><span class="line"><span class="comment">-- 范围:between...and</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_student <span class="keyword">WHERE</span> stubirth <span class="keyword">BETWEEN</span> <span class="string">'1976-8-21'</span> <span class="keyword">AND</span> <span class="string">'1976-8-31'</span>;</span><br><span class="line"><span class="comment">-- 判断是否为空:is null,is not null</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_student <span class="keyword">WHERE</span> (stubirth <span class="keyword">IS</span> <span class="literal">NULL</span>) <span class="keyword">AND</span> (stutel <span class="keyword">IS</span> <span class="literal">NULL</span>);</span><br><span class="line"><span class="comment">-- 筛选:like(% -&gt; 任意个任意字符; _  -&gt;  表示单个任意字符)</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_student <span class="keyword">WHERE</span> stuname <span class="keyword">LIKE</span> <span class="string">'盖_ '</span>;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_student <span class="keyword">WHERE</span> stutel <span class="keyword">LIKE</span> <span class="string">'%2_'</span>;</span><br></pre></td></tr></table></figure>
+<p>3.UPDATE(改)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> tablname <span class="keyword">SET</span> field1=value1, field1=value2, ... <span class="keyword">WHERE</span> 条件语句;</span><br></pre></td></tr></table></figure>
+<p>4.SELECT(查)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tablname;  <span class="comment">--查询表内所有内容</span></span><br><span class="line"><span class="keyword">SELECT</span> field1, field2, field3, ... <span class="keyword">FROM</span> tablname;  <span class="comment">--获取表中所有记录指定字段的数据</span></span><br><span class="line"><span class="keyword">SELECT</span> field1 <span class="keyword">AS</span> <span class="string">'new_filed1'</span>, field2, field3 <span class="keyword">AS</span> <span class="string">'new_field3'</span>, ... <span class="keyword">FROM</span> tablname;   <span class="comment">--列重名</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">IF</span>(field1, value1, value2) <span class="keyword">FROM</span> tablname;   <span class="comment">--如果if中对应的字段的值是1,最后结果是value1,否则是value2(mysql特有写法)</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CASE</span> <span class="keyword">field</span> <span class="keyword">WHEN</span> <span class="number">1</span> <span class="keyword">THEN</span> new_value1 <span class="keyword">ELSE</span> new_value2 <span class="keyword">END</span> <span class="keyword">FROM</span> tablname;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CONCAT</span>(field1, field2, ...) <span class="keyword">FROM</span> tablname;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tablname <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">field</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tablname <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">field</span> <span class="keyword">DESC</span>;   <span class="comment">-- 倒序</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">field</span> <span class="keyword">FROM</span> tablname;   <span class="comment">-- 去重</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tablname <span class="keyword">LIMIT</span> N;   <span class="comment">-- 限制(获取前N条数据)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 跳过前N条数据获取M条数据(从第N+1条数据开始,获取M条数据)</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tablname <span class="keyword">LIMIT</span> M <span class="keyword">OFFSET</span> N;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tablname <span class="keyword">LIMIT</span> N, M; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 聚合</span></span><br><span class="line"><span class="comment">-- MAX(), MIN(), SUM(), AVG(), COUNT()   -&gt;   MySQL专用</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(score) <span class="keyword">AS</span> <span class="string">'最高分'</span> <span class="keyword">FROM</span> tb_record;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(score) <span class="keyword">AS</span> <span class="string">'最低分'</span> <span class="keyword">FROM</span> tb_record;</span><br><span class="line">SELECT SUM(score) AS '总分' FROM tb_record;   -&gt;   -- 求和所有分数的和,如果某一个记录的分数是空,那么这条记录不存与运算</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(score) <span class="keyword">AS</span> <span class="string">'平均分'</span> <span class="keyword">FROM</span> tb_record;  </span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(score) <span class="keyword">AS</span> <span class="string">'个数'</span> <span class="keyword">FROM</span> tb_record; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 分组</span></span><br><span class="line"><span class="keyword">SELECT</span> 聚合操作 <span class="keyword">FROM</span> tablname <span class="keyword">GROUP</span> <span class="keyword">BY</span> (<span class="keyword">field</span>);   <span class="comment">-- 分组后要加条件,则用having代替where</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 子查询</span></span><br><span class="line"><span class="comment">-- ①:将一个查询的结果作为另外一个查询的条件</span></span><br><span class="line"><span class="comment">-- ②:将一个查询的结果作为另外一个查询的对象(注: 若将查询结果作为查询对象,则必须在使用时用as重命名)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 连接查询</span></span><br><span class="line"><span class="comment">--①:内连接</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tablname1, tablname2, ... <span class="keyword">WHERE</span> 连接条件 查询条件;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tablname1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> tablname2 <span class="keyword">ON</span> 连接条件<span class="number">1</span> <span class="keyword">INNER</span> <span class="keyword">JOIN</span> tablname3 <span class="keyword">ON</span> 连接条件<span class="number">2</span>;(注意:如果有中间表,中间表放在最前面)</span><br><span class="line"><span class="comment">--注意:如果既有连接条件又有查询条件,查询条件必须放在连接条件的后面</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--②:外连接</span></span><br><span class="line"><span class="comment">--在MySQL中只支持左外连接(LEFT JOIN)和右外连接(right join)</span></span><br><span class="line">左连接: <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> 表<span class="number">2</span> : 先将表<span class="number">1</span>中的记录全部取出来,按连接条件依次连接表<span class="number">2</span>中的记录,表<span class="number">1</span>中的记录找不到满足条件,则表<span class="number">2</span>记录那么连接的内容就是空</span><br><span class="line">右连接: <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> 表<span class="number">2</span> : 先将表<span class="number">2</span>中的记录全部取出来,按连接条件依次连接表<span class="number">1</span>中的记录,表<span class="number">2</span>中的记录找不到满足条件,则表<span class="number">1</span>记录那么连接的内容就是空</span><br></pre></td></tr></table></figure>
+
+<h2 id="DCL"><a href="#DCL" class="headerlink" title="DCL"></a>DCL</h2><h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><p>1.创建用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'username'</span>@<span class="string">'登陆地址'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'password'</span>;</span><br><span class="line"><span class="comment">-- 注:登录地址有三种写法:</span></span><br><span class="line"><span class="comment">-- ip地址</span></span><br><span class="line"><span class="comment">-- localhost(本机)</span></span><br><span class="line"><span class="comment">-- %(任意位置)</span></span><br></pre></td></tr></table></figure>
+<p>2.删除用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> <span class="string">'username'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="授权管理"><a href="#授权管理" class="headerlink" title="授权管理"></a>授权管理</h3><p>1.授权</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> 权限类型 <span class="keyword">ON</span> dataname.tablname <span class="keyword">TO</span> <span class="string">'username'</span>@<span class="string">'登陆地址'</span>;</span><br></pre></td></tr></table></figure>
+<p>2.召回权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">REVOKE</span> 权限类型 <span class="keyword">ON</span> dataname.tablname <span class="keyword">FROM</span> username;</span><br></pre></td></tr></table></figure>
+
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>若完成一个任务需要多个操作,但只要有一个失败则任务不完成,数据回到任务开始前的状态;只有所有操作都成功了,数据库才更新;此时用事务语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;   <span class="comment">-- 开启事务环境 </span></span><br><span class="line"><span class="keyword">UPDATE</span> tb_student <span class="keyword">SET</span> stubirth=<span class="string">'1993-1-1'</span> <span class="keyword">WHERE</span> stusex=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_student <span class="keyword">WHERE</span> stuname <span class="keyword">LIKE</span> <span class="string">'杨%'</span></span><br><span class="line"><span class="keyword">COMMIT</span>;   <span class="comment">-- 提交事务环境中的操作结果</span></span><br><span class="line"><span class="keyword">ROLLBACK</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> 视图名 <span class="keyword">AS</span> <span class="keyword">sql</span>查询语句;</span><br></pre></td></tr></table></figure>
+
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--①:添加索引</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> 索引名 <span class="keyword">ON</span> 表名(字段);   <span class="comment">-- 给指定字段添加索引</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> <span class="keyword">INDEX</span> 索引名 <span class="keyword">ON</span> 表名(字段);    <span class="comment">-- 给指定字段添加唯一索引</span></span><br><span class="line"><span class="comment">--②:删除索引</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tablname <span class="keyword">DROP</span> <span class="keyword">INDEX</span> 索引名;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="Redis命令"><a href="#Redis命令" class="headerlink" title="Redis命令"></a>Redis命令</h2><p>ttl key ——&gt; 查看key的存活时间<br>set key value ex N ——&gt; 设置key的存活时间为N秒<br>set key value px N ——&gt; 设置key的存活时间为N毫秒<br>shutdown  ——&gt; 关闭redis服务器<br>shutdown save ——&gt; 保存并关闭redis服务器<br>save ——&gt; 保存<br>bgsave ——&gt; 后台保存<br>dbsize ——&gt; 查看数据库大小<br>keys *  ——&gt; 获取所有的key<br>keys ta*  ——&gt; 获取ta开头的key</p>
+<p><strong>redis默认开启了16个数据库</strong><br>select 0-15 ——&gt; 切换数据库<br>flushdb ——&gt; 清空当前数据库<br>flushall ——&gt; 清空所有数据库</p>
+<p>type keyp ——&gt; 判断key的类型</p>
+<h2 id="Redis的数据类型"><a href="#Redis的数据类型" class="headerlink" title="Redis的数据类型"></a>Redis的数据类型</h2><h3 id="1-字符串-string"><a href="#1-字符串-string" class="headerlink" title="1.字符串 - string"></a>1.字符串 - string</h3><pre><code>set key value
+get key
+strlen key
+append key value ------&gt; 追加
+mset key1 value1 key2 value2 ... ------&gt; 同时设置多组值
+mget key1 key2 ...
+incr key ------&gt; 当key的值为数字时,数值加一
+incrby key N ------&gt; 为key的值加N
+decr key ------&gt; 减一
+decrby key N ------&gt; 减N
+getrange key m n ------&gt; 从m取到n
+setrange key N value ------&gt; 从n开始用value覆盖key的value值</code></pre><h3 id="2-哈希-hash"><a href="#2-哈希-hash" class="headerlink" title="2.哈希 - hash"></a>2.哈希 - hash</h3><pre><code>hset key field value 设置键和值
+hmset key field1 value1 field2 value2 同时设置多个键和值
+hget key field  查看指定的键对应的值
+hmget key fieldl field2 同时查看多个键和值
+hgetall key 获取所有的值和键
+hkeys key 获取所有的键
+hvals key 获取所有的值
+hexists key filed 判断是否存在对应的值</code></pre><h3 id="3-列表-list"><a href="#3-列表-list" class="headerlink" title="3.列表 - list"></a>3.列表 - list</h3><pre><code>lpush list value1 value2 ... 插入到最左边
+rpush list value1 value2 ... 插入到最右边
+lpop list 取最左边
+rpop list 取最右边
+lrange list start end 查看列表片段
+lindex list index 查看指定下标对应的元素
+llen list 列表长度
+lrem list count value 删除指定个数的元素</code></pre><h3 id="4-集合-set"><a href="#4-集合-set" class="headerlink" title="4.集合 - set"></a>4.集合 - set</h3><pre><code>sadd set value1 value2 ... 添加元素
+srem set value 移除元素
+spop set 获取随机元素
+smembers set 查看所有元素
+sismember set value 查看元素是否在集合内
+scard set 查看元素个数
+sinter set1 set2 交集
+sunion set1 set2 并集
+sdiff set1 set2 差集</code></pre><h3 id="5-有序集合-zset-元素自带一个值-可以修改"><a href="#5-有序集合-zset-元素自带一个值-可以修改" class="headerlink" title="5.有序集合 - zset(元素自带一个值,可以修改)"></a>5.有序集合 - zset(元素自带一个值,可以修改)</h3><pre><code>zadd zset score1 mem1 score2 mem2 ... 添加
+zrem zset mem 移除
+zrange zset start end 按score升序查看
+zrevrange zset start end 按score降序查看
+zscore zset mem 查看score值
+zincrby zset value mem 改变score的值</code></pre><h3 id="6-地理位置-LBS应用-Location-Based-Service-基于位置的服务"><a href="#6-地理位置-LBS应用-Location-Based-Service-基于位置的服务" class="headerlink" title="6.地理位置(LBS应用-Location-Based Service - 基于位置的服务)"></a>6.地理位置(LBS应用-Location-Based Service - 基于位置的服务)</h3><pre><code>geoadd zset longitude1 latitude1 member1 longitude2 latitude2 member2 ...   添加经纬度信息
+geopos zset member1 member2 ... 获取指定的位置的经纬度
+geodist zset member1 member2 [unit] 计算两点间的距离,默认单位是米,[unit]是单位,可以修改为m,km,mi英里,ft英尺
+georadius zset longitude1 latitude1 radius m/km/mi/ft 获取以点zset为圆心,radius为半径的圆的范围内的所有的坐标点;后面加withdist,可同时获取距离,加withcoord,可同时获取点的经纬度</code></pre><h1 id="Python中使用数据库"><a href="#Python中使用数据库" class="headerlink" title="Python中使用数据库"></a>Python中使用数据库</h1><h2 id="连接MySQL数据库"><a href="#连接MySQL数据库" class="headerlink" title="连接MySQL数据库"></a>连接MySQL数据库</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">连接对象 = pymysql.connect(host, port, user, password) - 和指定的数据库进行连接并返回一个连接对象</span></span><br><span class="line"><span class="string">参数说明:</span></span><br><span class="line"><span class="string">    host - MySQL主机地址: localhost表示当前设备上的MySQL,服务器的公网IP</span></span><br><span class="line"><span class="string">    port - MySQL服务端口,3306</span></span><br><span class="line"><span class="string">    user - MySQL用户</span></span><br><span class="line"><span class="string">    password - 用户对应的密码(如果创建用户的时候没有设置密码,这个参数可以不用赋值)</span></span><br><span class="line"><span class="string">    database - 建立连接后默认操作的数据库</span></span><br><span class="line"><span class="string">    charset - 设置连接的数据库文件的编码方式</span></span><br><span class="line"><span class="string">    autocommit - 是否自动提交(布尔值)  </span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">with 连接对象.cursor(查询返回值类型(默认值是none)) as 游标对象:</span></span><br><span class="line"><span class="string">    数据库操作上下文</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">说明:</span></span><br><span class="line"><span class="string">    查询返回值类型   -   None: 查询结果以元组的形式返回;</span></span><br><span class="line"><span class="string">                      pymysql.cursors.dictcursor: 查询结果以字典的形式返回;</span></span><br><span class="line"><span class="string">    数据库操作上下文   -   游标对象(数据库操作)只有在数据库操作上下文才有效</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">con = pymysql.connect(</span><br><span class="line">    host=<span class="string">'localhost'</span>,</span><br><span class="line">    port=<span class="number">3306</span>,</span><br><span class="line">    user=<span class="string">'root'</span>,</span><br><span class="line">    password=<span class="string">'123456'</span>,</span><br><span class="line">    database=<span class="string">'school'</span>,</span><br><span class="line">    charset=<span class="string">'utf8'</span>,</span><br><span class="line">    autocommit=<span class="string">'True'</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">with</span> con.cursor() <span class="keyword">as</span> cursor:</span><br><span class="line">    <span class="comment"># 数据库操作上下文</span></span><br><span class="line">    <span class="comment"># 3.执行sql语句: 游标对象.execute(sql语句)</span></span><br><span class="line">    cursor.execute(<span class="string">'create database if not exists pyschool;'</span>)</span><br><span class="line"><span class="comment"># 关闭连接</span></span><br><span class="line">con.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接Redis服务器"><a href="#连接Redis服务器" class="headerlink" title="连接Redis服务器"></a>连接Redis服务器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">redis.Redis(host=<span class="string">''</span>, password=<span class="string">''</span>, prot=<span class="string">''</span>)</span><br><span class="line">host : redis所在服务器公网地址;</span><br><span class="line">password : 登录口令;</span><br><span class="line">port : redis的服务端口</span><br><span class="line"></span><br><span class="line">连接时会返回一个连接对象:</span><br><span class="line">redis_cli = redis.Redis(host=<span class="string">''</span>, password=<span class="string">''</span>, prot=<span class="string">''</span>)</span><br><span class="line">使用redis完成相应的操作</span><br></pre></td></tr></table></figure>
+
+<p><strong>扩展:</strong></p>
+<pre><code>pip freeze &gt; requirement.txt   将虚拟环境依赖项写入到文件
+pip install -r requirement.txt   按照文件安装依赖项
+
+序列化:  把一个对象变成字符串(str)或字节串(bytes)
+反序列化:  把字符串或者字节串还原成对象
+json.dumps()   序列化(字符串转换成字节串)
+json.loads()   反序列化(字节串转换成字符串)
+pickle.dumps()   序列化(字符串转换成字节串)
+pickle.loads()   反序列化(字节串转换成字符串)</code></pre><h2 id="将Redis作为用户请求和MySQL数据库之间的缓存介质"><a href="#将Redis作为用户请求和MySQL数据库之间的缓存介质" class="headerlink" title="将Redis作为用户请求和MySQL数据库之间的缓存介质"></a>将Redis作为用户请求和MySQL数据库之间的缓存介质</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_depts_from_db</span><span class="params">()</span>:</span></span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">'localhost'</span>,</span><br><span class="line">        port=<span class="number">3306</span>,</span><br><span class="line">        user=<span class="string">'root'</span>,</span><br><span class="line">        password=<span class="string">'119148'</span>,</span><br><span class="line">        charset=<span class="string">'utf8'</span>,</span><br><span class="line">        autocommit=<span class="literal">True</span>,</span><br><span class="line">        database=<span class="string">'hrs'</span></span><br><span class="line">    )</span><br><span class="line">    depts = ()</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> conn.cursor() <span class="keyword">as</span> cursor:</span><br><span class="line">            cursor.execute(<span class="string">'select dno, dname, dloc from tb_dept'</span>)</span><br><span class="line">            depts = cursor.fetchall()</span><br><span class="line">    <span class="keyword">except</span> pymysql.MySQLError <span class="keyword">as</span> err:</span><br><span class="line">        print(err)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        conn.close()</span><br><span class="line">    <span class="keyword">return</span> depts</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    redis_cli = redis.Redis(host=<span class="string">'49.233.152.190'</span>, port=<span class="number">6379</span>, password=<span class="string">'119148'</span>)</span><br><span class="line">    start = time.time()</span><br><span class="line">    data = redis_cli.get(<span class="string">'depts'</span>)</span><br><span class="line">    <span class="keyword">if</span> data:</span><br><span class="line">        depts = pickle.loads(data)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        depts = load_depts_from_db()</span><br><span class="line">        redis_cli.set(<span class="string">'depts'</span>, pickle.dumps(depts))</span><br><span class="line"></span><br><span class="line">    end = time.time()</span><br><span class="line">    print(depts)</span><br><span class="line">    print(<span class="string">f'执行时间: <span class="subst">&#123;end - start&#125;</span>秒'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL"><span class="toc-number">1.</span> <span class="toc-text">MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DDL"><span class="toc-number">1.1.</span> <span class="toc-text">DDL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库操作"><span class="toc-number">1.1.1.</span> <span class="toc-text">数据库操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据表操作"><span class="toc-number">1.1.2.</span> <span class="toc-text">数据表操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DML"><span class="toc-number">1.2.</span> <span class="toc-text">DML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DCL"><span class="toc-number">1.3.</span> <span class="toc-text">DCL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户管理"><span class="toc-number">1.3.1.</span> <span class="toc-text">用户管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#授权管理"><span class="toc-number">1.3.2.</span> <span class="toc-text">授权管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事务"><span class="toc-number">1.3.3.</span> <span class="toc-text">事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#视图"><span class="toc-number">1.3.4.</span> <span class="toc-text">视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引"><span class="toc-number">1.3.5.</span> <span class="toc-text">索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis"><span class="toc-number">2.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis命令"><span class="toc-number">2.1.</span> <span class="toc-text">Redis命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis的数据类型"><span class="toc-number">2.2.</span> <span class="toc-text">Redis的数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-字符串-string"><span class="toc-number">2.2.1.</span> <span class="toc-text">1.字符串 - string</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-哈希-hash"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.哈希 - hash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-列表-list"><span class="toc-number">2.2.3.</span> <span class="toc-text">3.列表 - list</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-集合-set"><span class="toc-number">2.2.4.</span> <span class="toc-text">4.集合 - set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-有序集合-zset-元素自带一个值-可以修改"><span class="toc-number">2.2.5.</span> <span class="toc-text">5.有序集合 - zset(元素自带一个值,可以修改)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-地理位置-LBS应用-Location-Based-Service-基于位置的服务"><span class="toc-number">2.2.6.</span> <span class="toc-text">6.地理位置(LBS应用-Location-Based Service - 基于位置的服务)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python中使用数据库"><span class="toc-number">3.</span> <span class="toc-text">Python中使用数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#连接MySQL数据库"><span class="toc-number">3.1.</span> <span class="toc-text">连接MySQL数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接Redis服务器"><span class="toc-number">3.2.</span> <span class="toc-text">连接Redis服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将Redis作为用户请求和MySQL数据库之间的缓存介质"><span class="toc-number">3.3.</span> <span class="toc-text">将Redis作为用户请求和MySQL数据库之间的缓存介质</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&text=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&is_video=false&description=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=浅浅浅谈数据库&body=Check out this article: https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&title=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&name=浅浅浅谈数据库&description=&lt;p&gt;数据库一周小结&lt;/p&gt;" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://anjhon1994.github.io/2019/12/28/%E6%B5%85%E6%B5%85%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%BA%93/&t=浅浅浅谈数据库" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Anjhon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>
