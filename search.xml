@@ -845,8 +845,8 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </categories>
       <tags>
         <tag>指令</tag>
-        <tag>git</tag>
         <tag>技术文档</tag>
+        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -892,10 +892,10 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>技术文档</tag>
         <tag>Linux软件</tag>
         <tag>服务器</tag>
         <tag>配置</tag>
+        <tag>技术文档</tag>
       </tags>
   </entry>
 </search>
