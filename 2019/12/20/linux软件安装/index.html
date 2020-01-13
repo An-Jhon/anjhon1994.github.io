@@ -1,163 +1,209 @@
 <!DOCTYPE html>
-<html lang=zh>
+<html lang="zh-CN">
 <head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Linux中的Python, MySQL, Redis, Nginx安装,基础环境配置">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Linux中python相关软件安装记录">
-<meta property="og:url" content="https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/index.html">
-<meta property="og:site_name" content="Anjhon&#39;s Blog">
-<meta property="og:description" content="Linux中的Python, MySQL, Redis, Nginx安装,基础环境配置">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-12-20T05:28:26.000Z">
-<meta property="article:modified_time" content="2020-01-08T15:26:49.294Z">
-<meta property="article:author" content="Anjhon">
-<meta property="article:tag" content="Linux软件">
-<meta property="article:tag" content="服务器">
-<meta property="article:tag" content="配置">
-<meta name="twitter:card" content="summary">
-    
-    
-        
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
-        
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
-    
-    <!-- title -->
-    <title>Linux中python相关软件安装记录</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- persian styles -->
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Linux中python相关软件安装记录 | Anjhon&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
     
-      
-<link rel="stylesheet" href="/css/rtl.css">
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
 
     
-    <!-- rss -->
     
+        
     
+
+
 <meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
 
-<body class="max-width mx-auto px3 ltr">
+        </div>
+    </nav>
+
     
-      <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a href="/search/">搜索</a></li>
-        
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" href="/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">上一篇</span>
-      <span id="i-next" class="info" style="display:none;">下一篇</span>
-      <span id="i-top" class="info" style="display:none;">返回顶部</span>
-      <span id="i-share" class="info" style="display:none;">分享文章</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&text=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&is_video=false&description=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux中python相关软件安装记录&body=Check out this article: https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&name=Linux中python相关软件安装记录&description=&lt;p&gt;Linux中的Python, MySQL, Redis, Nginx安装,基础环境配置&lt;/p&gt;" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&t=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
 
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
     </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux基本配置"><span class="toc-number">1.</span> <span class="toc-text">Linux基本配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置vim编辑器"><span class="toc-number">1.1.</span> <span class="toc-text">配置vim编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看命令别名"><span class="toc-number">1.2.</span> <span class="toc-text">查看命令别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改用户名前的一长串"><span class="toc-number">1.3.</span> <span class="toc-text">修改用户名前的一长串</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后端相关的开发工具安装"><span class="toc-number">2.</span> <span class="toc-text">后端相关的开发工具安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux软件安装方法"><span class="toc-number">2.1.</span> <span class="toc-text">Linux软件安装方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx安装"><span class="toc-number">2.2.</span> <span class="toc-text">Nginx安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MariaDB安装-MySQL-5-x-的一个分支-和5-x版本基本相同"><span class="toc-number">2.3.</span> <span class="toc-text">MariaDB安装(MySQL 5.x 的一个分支,和5.x版本基本相同)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL安装"><span class="toc-number">2.4.</span> <span class="toc-text">MySQL安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis安装"><span class="toc-number">2.5.</span> <span class="toc-text">Redis安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GIt安装"><span class="toc-number">2.6.</span> <span class="toc-text">GIt安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python3安装"><span class="toc-number">2.7.</span> <span class="toc-text">Python3安装</span></a></li></ol></li></ol>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
     </div>
-  </span>
 </div>
 
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
     
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+
     
-    <h1 class="posttitle" itemprop="name headline">
-        Linux中python相关软件安装记录
-    </h1>
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Linux中python相关软件安装记录</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Anjhon</a>
+                    
 
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 20, 2019&nbsp;&nbsp;13:28:26</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Linux/">Linux</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
 
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Anjhon's Blog</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2019-12-20T05:28:26.000Z" itemprop="datePublished">2019-12-20</time>
-        
-      
-    </div>
-
-
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/">技术文档</a>
-    </div>
-
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Linux%E8%BD%AF%E4%BB%B6/" rel="tag">Linux软件</a>, <a class="tag-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">服务器</a>, <a class="tag-link" href="/tags/%E9%85%8D%E7%BD%AE/" rel="tag">配置</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <p>Linux中的Python, MySQL, Redis, Nginx安装,基础环境配置</p>
+        <div class="post-content">
+            <p>Linux中的Python, MySQL, Redis, Nginx安装,基础环境配置</p>
 <a id="more"></a>
 
 <h1 id="Linux基本配置"><a href="#Linux基本配置" class="headerlink" title="Linux基本配置"></a>Linux基本配置</h1><h2 id="配置vim编辑器"><a href="#配置vim编辑器" class="headerlink" title="配置vim编辑器"></a>配置vim编辑器</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">vim .vimrc</span><br><span class="line">    <span class="keyword">set</span> nu   <span class="comment"># 行号</span></span><br><span class="line">    <span class="keyword">set</span> ts=<span class="number">4</span>   <span class="comment"># 设置制表键空格数量</span></span><br><span class="line">    <span class="keyword">set</span> autoindent   <span class="comment"># 自动缩进</span></span><br><span class="line">    <span class="keyword">set</span> expandtab   <span class="comment"># 制表键自动变空格</span></span><br><span class="line">    <span class="keyword">set</span> ruler   <span class="comment"># 显示光标位置</span></span><br><span class="line">    <span class="keyword">set</span> nohls   <span class="comment"># 选中的代码不高亮</span></span><br><span class="line">    syntax <span class="keyword">on</span>   <span class="comment"># 语法高亮</span></span><br></pre></td></tr></table></figure>
@@ -175,134 +221,73 @@
 <h2 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">安装Redis官方最新版</span><br><span class="line">wget http:<span class="comment">//download.redis.io/releases/redis-5.0.7.tar.gz</span></span><br><span class="line">gunzip redis<span class="number">-5.0</span><span class="number">.7</span>.tar.gz</span><br><span class="line">tar -xvf redis<span class="number">-5.0</span><span class="number">.7</span>.tar</span><br><span class="line">cd redis<span class="number">-5.0</span><span class="number">.7</span></span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 <h2 id="GIt安装"><a href="#GIt安装" class="headerlink" title="GIt安装"></a>GIt安装</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">安装Git官方最新版</span><br><span class="line">wget https:<span class="comment">//mirrors.edge.kernel.org/pub/software/scm/git/git-2.24.1.tar.xz</span></span><br><span class="line">xz -d git<span class="number">-2.24</span><span class="number">.1</span>.tar.xz</span><br><span class="line">tar -xf git<span class="number">-2.24</span><span class="number">.1</span>.tar</span><br><span class="line">cd git<span class="number">-2.24</span><span class="number">.1</span></span><br><span class="line">yum install -y curl libcurl-devel</span><br><span class="line">./configure --prefix=/usr/local</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 <h2 id="Python3安装"><a href="#Python3安装" class="headerlink" title="Python3安装"></a>Python3安装</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 安装依赖项</span><br><span class="line">    yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel</span><br><span class="line"><span class="number">2.</span> 下载Python3源代码</span><br><span class="line">    wget https:<span class="comment">//www.python.org/ftp/python/3.7.6/Python-3.7.6.tar.xz</span></span><br><span class="line"><span class="number">3.</span> 解压缩和解归档</span><br><span class="line">    xz -d Python<span class="number">-3.7</span><span class="number">.6</span>.tar.xz</span><br><span class="line">    tar -xvf Python<span class="number">-3.7</span><span class="number">.6</span>.tar</span><br><span class="line"><span class="number">4.</span> 执行安装前的配置</span><br><span class="line">    cd Python<span class="number">-3.7</span><span class="number">.6</span></span><br><span class="line">    ./configure --prefix=/usr/local/python37 --enable-optimizations</span><br><span class="line"><span class="number">5.</span> 构建和安装</span><br><span class="line">    make &amp;&amp; make install</span><br><span class="line"><span class="number">6.</span> 注册环境变量</span><br><span class="line">    vim ~/.bash_profile</span><br><span class="line">        PATH=$PATH:/usr/local/python37/bin</span><br><span class="line">        export PATH</span><br></pre></td></tr></table></figure>
-  </div>
-</article>
-
-
+        </div>
 
         
-          <div id="footer-post-container">
-  <div id="footer-post">
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">Linux中python相关软件安装记录</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
 
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a href="/search/">搜索</a></li>
+            </section>
         
-      </ul>
-    </div>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/">✓ 技术文档</a>
+                    
+                        <a href="/tags/Linux%E8%BD%AF%E4%BB%B6/">✓ Linux软件</a>
+                    
+                        <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">✓ 服务器</a>
+                    
+                        <a href="/tags/%E9%85%8D%E7%BD%AE/">✓ 配置</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">Linux定时任务</a>
+            
+            
+        </section>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux基本配置"><span class="toc-number">1.</span> <span class="toc-text">Linux基本配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置vim编辑器"><span class="toc-number">1.1.</span> <span class="toc-text">配置vim编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看命令别名"><span class="toc-number">1.2.</span> <span class="toc-text">查看命令别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改用户名前的一长串"><span class="toc-number">1.3.</span> <span class="toc-text">修改用户名前的一长串</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后端相关的开发工具安装"><span class="toc-number">2.</span> <span class="toc-text">后端相关的开发工具安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux软件安装方法"><span class="toc-number">2.1.</span> <span class="toc-text">Linux软件安装方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx安装"><span class="toc-number">2.2.</span> <span class="toc-text">Nginx安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MariaDB安装-MySQL-5-x-的一个分支-和5-x版本基本相同"><span class="toc-number">2.3.</span> <span class="toc-text">MariaDB安装(MySQL 5.x 的一个分支,和5.x版本基本相同)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL安装"><span class="toc-number">2.4.</span> <span class="toc-text">MySQL安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis安装"><span class="toc-number">2.5.</span> <span class="toc-text">Redis安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GIt安装"><span class="toc-number">2.6.</span> <span class="toc-text">GIt安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python3安装"><span class="toc-number">2.7.</span> <span class="toc-text">Python3安装</span></a></li></ol></li></ol>
-    </div>
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&text=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&is_video=false&description=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux中python相关软件安装记录&body=Check out this article: https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&title=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&name=Linux中python相关软件安装记录&description=&lt;p&gt;Linux中的Python, MySQL, Redis, Nginx安装,基础环境配置&lt;/p&gt;" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://anjhon1994.github.io/2019/12/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/&t=Linux中python相关软件安装记录" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
-    </div>
-
-  </div>
+    </article>
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy; 2020 Anjhon
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a href="/search/">搜索</a></li>
-        
-      </ul>
-    </nav>
-  </div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
 </footer>
 
     </div>
-    <!-- styles -->
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-
-<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
-
-
-    <!-- jquery -->
-
-<script src="/lib/jquery/jquery.min.js"></script>
-
-
-<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
-
-<!-- clipboard -->
-
-  
-<script src="/lib/clipboard/clipboard.min.js"></script>
-
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "复制成功!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Disqus Comments -->
-
-
 </body>
 </html>

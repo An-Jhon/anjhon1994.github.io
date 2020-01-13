@@ -1,163 +1,209 @@
 <!DOCTYPE html>
-<html lang=zh>
+<html lang="zh-CN">
 <head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Django进阶和API接口">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Django进阶">
-<meta property="og:url" content="https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/index.html">
-<meta property="og:site_name" content="Anjhon&#39;s Blog">
-<meta property="og:description" content="Django进阶和API接口">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-01-12T12:48:50.000Z">
-<meta property="article:modified_time" content="2020-01-12T08:10:50.089Z">
-<meta property="article:author" content="Anjhon">
-<meta property="article:tag" content="框架">
-<meta property="article:tag" content="后端">
-<meta property="article:tag" content="Django">
-<meta name="twitter:card" content="summary">
-    
-    
-        
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
-        
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
-    
-    <!-- title -->
-    <title>Django进阶</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- persian styles -->
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Django进阶 | Anjhon&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
     
-      
-<link rel="stylesheet" href="/css/rtl.css">
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
 
     
-    <!-- rss -->
     
+        
     
+
+
 <meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
 
-<body class="max-width mx-auto px3 ltr">
+        </div>
+    </nav>
+
     
-      <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a href="/search/">搜索</a></li>
-        
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        
-        <li><a class="icon" href="/2020/01/05/Django%E5%85%A5%E9%97%A8%E4%B9%8B%E9%80%89%E8%AF%BE%E7%B3%BB%E7%BB%9F/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">上一篇</span>
-      <span id="i-next" class="info" style="display:none;">下一篇</span>
-      <span id="i-top" class="info" style="display:none;">返回顶部</span>
-      <span id="i-share" class="info" style="display:none;">分享文章</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&text=Django进阶" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&is_video=false&description=Django进阶" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Django进阶&body=Check out this article: https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&name=Django进阶&description=&lt;p&gt;Django进阶和API接口&lt;/p&gt;" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&t=Django进阶" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
 
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
     </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一丶-工欲善其事必先利其器"><span class="toc-number">1.</span> <span class="toc-text">一丶 工欲善其事必先利其器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-pip全局使用豆瓣镜像设置"><span class="toc-number">1.1.</span> <span class="toc-text">1. pip全局使用豆瓣镜像设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#windows系统中"><span class="toc-number">1.1.1.</span> <span class="toc-text">windows系统中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git中"><span class="toc-number">1.1.2.</span> <span class="toc-text">git中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-调试工具Debug-Tool-Bar安装"><span class="toc-number">1.2.</span> <span class="toc-text">2. 调试工具Debug-Tool-Bar安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二丶-Django用法进阶"><span class="toc-number">2.</span> <span class="toc-text">二丶 Django用法进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-django自带分页器"><span class="toc-number">2.1.</span> <span class="toc-text">1. django自带分页器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-查询-查询结果是集合类型的对象"><span class="toc-number">2.2.</span> <span class="toc-text">2. 查询(查询结果是集合类型的对象)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Vue"><span class="toc-number">2.3.</span> <span class="toc-text">3. Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-字段映射器dpmapper-将数据库的查询对象转换成字典"><span class="toc-number">2.4.</span> <span class="toc-text">4. 字段映射器dpmapper:  将数据库的查询对象转换成字典</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-fetch请求"><span class="toc-number">2.5.</span> <span class="toc-text">5.  fetch请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-配置redis数据库作为缓存"><span class="toc-number">2.6.</span> <span class="toc-text">6. 配置redis数据库作为缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-redis配置-添加以下代码"><span class="toc-number">2.6.1.</span> <span class="toc-text">1. redis配置(添加以下代码)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-为视图函数-添加缓存机制"><span class="toc-number">2.6.2.</span> <span class="toc-text">2. 为视图函数 添加缓存机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-测试"><span class="toc-number">2.6.3.</span> <span class="toc-text">3. 测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三丶-API-应用程序编程接口"><span class="toc-number">3.</span> <span class="toc-text">三丶 API  -  应用程序编程接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-准备工作"><span class="toc-number">3.1.</span> <span class="toc-text">1. 准备工作:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-API接口"><span class="toc-number">3.2.</span> <span class="toc-text">2. API接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-FBV-基于函数的视图"><span class="toc-number">3.2.1.</span> <span class="toc-text">1) FBV   -   基于函数的视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-CBV-基于类的视图"><span class="toc-number">3.2.2.</span> <span class="toc-text">2) CBV   -   基于类的视图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口测试"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">接口测试:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-DRF-分页"><span class="toc-number">3.3.</span> <span class="toc-text">3. DRF 分页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-DRF缓存"><span class="toc-number">3.4.</span> <span class="toc-text">4. DRF缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-接口数据的筛选和排序"><span class="toc-number">3.5.</span> <span class="toc-text">5. 接口数据的筛选和排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-接口限流-限制接口的访问频率"><span class="toc-number">3.6.</span> <span class="toc-text">6. 接口限流:  限制接口的访问频率</span></a></li></ol></li></ol>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
     </div>
-  </span>
 </div>
 
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
     
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+
     
-    <h1 class="posttitle" itemprop="name headline">
-        Django进阶
-    </h1>
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Django进阶</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Anjhon</a>
+                    
 
+                    
+                        <span class="post-time">
+                        Date: <a href="#">一月 12, 2020&nbsp;&nbsp;20:48:50</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Django/">Django</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
 
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Anjhon's Blog</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2020-01-12T12:48:50.000Z" itemprop="datePublished">2020-01-12</time>
-        
-      
-    </div>
-
-
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/Django/">Django</a>
-    </div>
-
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Django/" rel="tag">Django</a>, <a class="tag-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a>, <a class="tag-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <p>Django进阶和API接口</p>
+        <div class="post-content">
+            <p>Django进阶和API接口</p>
 <a id="more"></a>
 
 <h1 id="一丶-工欲善其事必先利其器"><a href="#一丶-工欲善其事必先利其器" class="headerlink" title="一丶 工欲善其事必先利其器"></a>一丶 工欲善其事必先利其器</h1><h2 id="1-pip全局使用豆瓣镜像设置"><a href="#1-pip全局使用豆瓣镜像设置" class="headerlink" title="1. pip全局使用豆瓣镜像设置"></a>1. pip全局使用豆瓣镜像设置</h2><h3 id="windows系统中"><a href="#windows系统中" class="headerlink" title="windows系统中"></a>windows系统中</h3><p>①在c盘—&gt;用户—&gt;anjhon—&gt;文件夹中创建pip文件夹<br>②在pip文件夹中创建pip.ini文件<br>③在pip.ini文件中添加以下代码</p>
@@ -182,7 +228,7 @@
 
 <h2 id="3-Vue"><a href="#3-Vue" class="headerlink" title="3. Vue"></a>3. Vue</h2><figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">1. 属性:</span></span><br><span class="line"><span class="xml">1) el属性  -   字符串，传选择器(一般写id选择器), 将当前创建的Vue对象和html中的标签进行关联</span></span><br><span class="line"><span class="xml">2) data属性  -  通过对象的属性提供数据</span></span><br><span class="line"><span class="xml">3) methods属性 -  通过对象属性提供方法</span></span><br><span class="line"><span class="xml">4) computed属性 -  属性值必须函数, 函数的返回值就是使用属性的值</span></span><br><span class="line"><span class="xml">5) created钩子 - 在实例被创建之后被调用</span></span><br><span class="line"><span class="xml">	</span></span><br><span class="line"><span class="xml">2. Vue指令</span></span><br><span class="line"><span class="xml">1) 标签内容  -  </span><span class="template-variable">&#123;&#123;Vue属性名&#125;&#125;</span></span><br><span class="line"><span class="xml">2) 标签属性  -  v-bind:标签属性 = 'Vue属性名'</span></span><br><span class="line"><span class="xml">3) if语句   -  v-if='Vue属性名' (如果Vue属性值是true对应的标签就显示，否则就隐藏)</span></span><br><span class="line"><span class="xml">4) 循环结构  -  v-for = '变量 in 类型是数组的Vue属性'</span></span><br><span class="line"><span class="xml">5) 双向绑定  -  v-model='Vue属性名' (一般在表单标签中有效)</span></span><br><span class="line"><span class="xml">6) 事件绑定  -  v-on:事件名</span></span><br><span class="line"></span><br><span class="line"><span class="xml">3. 补充</span></span><br><span class="line"><span class="xml">1) 可以直接在标签内用 @事件名 的方法绑定事件,并直接调用事件函数</span></span><br><span class="line"><span class="xml">	例:<span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"prevPage()"</span>&gt;</span>上一页<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">2) 缩写</span></span><br><span class="line"><span class="xml">v-bind 缩写</span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!-- 完整语法 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">a</span> <span class="attr">v-bind:href</span>=<span class="string">"url"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!-- 缩写 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">a</span> <span class="attr">:href</span>=<span class="string">"url"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">v-on 缩写</span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!-- 完整语法 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click</span>=<span class="string">"doSomething"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!-- 缩写 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">a</span> @<span class="attr">click</span>=<span class="string">"doSomething"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 
-<h2 id="4-字段映射器dpmapper-将数据库的查询对象转换成字典"><a href="#4-字段映射器dpmapper-将数据库的查询对象转换成字典" class="headerlink" title="4. 字段映射器dpmapper:  将数据库的查询对象转换成字典"></a>4. 字段映射器dpmapper:  将数据库的查询对象转换成字典</h2><p>1) 在应用文件夹下新建映射器文件 : mappers.py</p>
+<h2 id="4-字段映射器bpmapper-将数据库的查询对象转换成字典"><a href="#4-字段映射器bpmapper-将数据库的查询对象转换成字典" class="headerlink" title="4. 字段映射器bpmapper:  将数据库的查询对象转换成字典"></a>4. 字段映射器bpmapper:  将数据库的查询对象转换成字典</h2><p>1) 在应用文件夹下新建映射器文件 : mappers.py</p>
 <figure class="highlight diff"><figcaption><span>app/mappers.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from bpmappers import RawField, DelegateField</span><br><span class="line">from bpmappers.djangomodel import ModelMapper</span><br><span class="line">from polls.models import Subject, Teacher</span><br><span class="line"></span><br><span class="line">class SubjectMapper(ModelMapper):</span><br><span class="line">    """学科映射器"""</span><br><span class="line">    isHot = RawField('is_hot')</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        model = Subject</span><br><span class="line">        exclude = ('is_hot', )</span><br><span class="line">        </span><br><span class="line">    exclude = ()   ---&gt;   排除某些字段</span><br><span class="line">	fields = ()   ---&gt;   包含某些字段</span><br><span class="line">	fields = '__all__'   ---&gt;   序列化所有字段</span><br><span class="line">	isHot = RawField('is_hot')   ---&gt;   将后端的is_hot映射成前端的isHot</span><br><span class="line">	car = DelegateField(Car)   ---&gt;   将car字段委托Car类查询映射</span><br></pre></td></tr></table></figure>
 <p>2) 调用映射器</p>
 <figure class="highlight diff"><figcaption><span>app/views.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from polls.mappers import SubjectMapper</span><br><span class="line"></span><br><span class="line">def show_subjects(request):</span><br><span class="line">    """获取所有学科"""</span><br><span class="line">    queryset = Subject.objects.all()</span><br><span class="line">    subjects = [SubjectMapper(subject).as_dict()   # 调用映射器函数将查询对象变成有序字典</span><br><span class="line">                for subject in queryset]</span><br><span class="line">    return JsonResponse(subjects, safe=False)</span><br></pre></td></tr></table></figure>
@@ -246,134 +292,71 @@
 <p>若不想限流,可以在视图类里面加入以下代码:</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">throttle_classes</span> = ()</span><br></pre></td></tr></table></figure>
 
-  </div>
-</article>
-
-
+        </div>
 
         
-          <div id="footer-post-container">
-  <div id="footer-post">
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">Django进阶</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
 
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a href="/search/">搜索</a></li>
+            </section>
         
-      </ul>
-    </div>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%A1%86%E6%9E%B6/">✓ 框架</a>
+                    
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">✓ 后端</a>
+                    
+                        <a href="/tags/Django/">✓ Django</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/01/05/Django%E5%85%A5%E9%97%A8%E4%B9%8B%E9%80%89%E8%AF%BE%E7%B3%BB%E7%BB%9F/">Django入门之选课系统</a>
+            
+        </section>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一丶-工欲善其事必先利其器"><span class="toc-number">1.</span> <span class="toc-text">一丶 工欲善其事必先利其器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-pip全局使用豆瓣镜像设置"><span class="toc-number">1.1.</span> <span class="toc-text">1. pip全局使用豆瓣镜像设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#windows系统中"><span class="toc-number">1.1.1.</span> <span class="toc-text">windows系统中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git中"><span class="toc-number">1.1.2.</span> <span class="toc-text">git中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-调试工具Debug-Tool-Bar安装"><span class="toc-number">1.2.</span> <span class="toc-text">2. 调试工具Debug-Tool-Bar安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二丶-Django用法进阶"><span class="toc-number">2.</span> <span class="toc-text">二丶 Django用法进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-django自带分页器"><span class="toc-number">2.1.</span> <span class="toc-text">1. django自带分页器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-查询-查询结果是集合类型的对象"><span class="toc-number">2.2.</span> <span class="toc-text">2. 查询(查询结果是集合类型的对象)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Vue"><span class="toc-number">2.3.</span> <span class="toc-text">3. Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-字段映射器dpmapper-将数据库的查询对象转换成字典"><span class="toc-number">2.4.</span> <span class="toc-text">4. 字段映射器dpmapper:  将数据库的查询对象转换成字典</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-fetch请求"><span class="toc-number">2.5.</span> <span class="toc-text">5.  fetch请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-配置redis数据库作为缓存"><span class="toc-number">2.6.</span> <span class="toc-text">6. 配置redis数据库作为缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-redis配置-添加以下代码"><span class="toc-number">2.6.1.</span> <span class="toc-text">1. redis配置(添加以下代码)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-为视图函数-添加缓存机制"><span class="toc-number">2.6.2.</span> <span class="toc-text">2. 为视图函数 添加缓存机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-测试"><span class="toc-number">2.6.3.</span> <span class="toc-text">3. 测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三丶-API-应用程序编程接口"><span class="toc-number">3.</span> <span class="toc-text">三丶 API  -  应用程序编程接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-准备工作"><span class="toc-number">3.1.</span> <span class="toc-text">1. 准备工作:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-API接口"><span class="toc-number">3.2.</span> <span class="toc-text">2. API接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-FBV-基于函数的视图"><span class="toc-number">3.2.1.</span> <span class="toc-text">1) FBV   -   基于函数的视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-CBV-基于类的视图"><span class="toc-number">3.2.2.</span> <span class="toc-text">2) CBV   -   基于类的视图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口测试"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">接口测试:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-DRF-分页"><span class="toc-number">3.3.</span> <span class="toc-text">3. DRF 分页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-DRF缓存"><span class="toc-number">3.4.</span> <span class="toc-text">4. DRF缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-接口数据的筛选和排序"><span class="toc-number">3.5.</span> <span class="toc-text">5. 接口数据的筛选和排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-接口限流-限制接口的访问频率"><span class="toc-number">3.6.</span> <span class="toc-text">6. 接口限流:  限制接口的访问频率</span></a></li></ol></li></ol>
-    </div>
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&text=Django进阶" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&is_video=false&description=Django进阶" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Django进阶&body=Check out this article: https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&title=Django进阶" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&name=Django进阶&description=&lt;p&gt;Django进阶和API接口&lt;/p&gt;" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://anjhon1994.github.io/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/&t=Django进阶" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
-    </div>
-
-  </div>
+    </article>
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy; 2020 Anjhon
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a href="/search/">搜索</a></li>
-        
-      </ul>
-    </nav>
-  </div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
 </footer>
 
     </div>
-    <!-- styles -->
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-
-<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
-
-
-    <!-- jquery -->
-
-<script src="/lib/jquery/jquery.min.js"></script>
-
-
-<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
-
-<!-- clipboard -->
-
-  
-<script src="/lib/clipboard/clipboard.min.js"></script>
-
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "复制成功!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Disqus Comments -->
-
-
 </body>
 </html>
