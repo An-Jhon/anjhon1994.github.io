@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Python基础：基础 | Anjhon&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python基础：基础</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;1970-01-01</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Python%E5%AD%A6%E5%BD%95/">&nbsp;&nbsp;Python学录</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、计算机基础"><a href="#一、计算机基础" class="headerlink" title="一、计算机基础"></a>一、计算机基础</h1><h3 id="1-1、进制"><a href="#1-1、进制" class="headerlink" title="1.1、进制"></a>1.1、进制</h3><p>计算机中的数字有四种存在形式，分别是：十进制、二进制、八进制和十六进制</p>
+<h5 id="1-1-1、十进制"><a href="#1-1-1、十进制" class="headerlink" title="1.1.1、十进制"></a>1.1.1、十进制</h5><p>1.基数：0-9<br>2.进位：逢10进1<br>3.位权：例：123 = 3*10^0 + 2*10^1 +1*10^2，其中10^x就是这个十进制数的权位<br>4.在Python中的表示方式：十进制数在Python中可直接书写<br>5.将其他进制的数字转换为十进制的方法：直接用输出函数：print()<br>例：<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8yMDAxMDA3Ni1mMjdhZTcwZWRiNGZkN2FjLnBuZw?x-oss-process=image/format,png" alt="用print输出可将其他进制转换为十进制"></p>
+<h5 id="1-1-2、二进制"><a href="#1-1-2、二进制" class="headerlink" title="1.1.2、二进制"></a>1.1.2、二进制</h5><p>1.基数：0-1<br>2.进位：逢2进1<br>3.位权：例：1001011 = 1*2^0 + 1*2^1 + 0*2^2 + 1*2^3 + 0*2^4 + 0*2^5 + 1*2^6，其中2^x就是该数的权位<br>4.在Python中的表示方式：在二进制前加 0b / 0B ；例：0b1001/0B1001<br>5.将其他进制的数字转换为二进制的方法：bin(其他进制的数值)<br>例：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8yMDAxMDA3Ni1iNWY3MjFlZjBkMDA0Mjg3LnBuZw?x-oss-process=image/format,png" alt="用bin可将其他进制的数值转换为二进制"></p>
+<h5 id="1-1-3、八进制"><a href="#1-1-3、八进制" class="headerlink" title="1.1.3、八进制"></a>1.1.3、八进制</h5><p>1.基数：0-7<br>2.进位：逢8进1<br>3.位权：例：167 = 7*8^0 + 6*8^1 + 1*8^2 ，其中8^x就是该数的权位<br>4.在Python中的表示方式：在八进制前加 0o / 0O ；例：0o123/0O123<br>5.将其他进制的数字转换为八进制的方法：oct(其他进制的数值)<br>例：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8yMDAxMDA3Ni1iNGY4MDBlMGNmNTI2MzI1LnBuZw?x-oss-process=image/format,png" alt="用oct可将其他进制的数值转换为八进制"></p>
+<h5 id="1-1-4、十六进制"><a href="#1-1-4、十六进制" class="headerlink" title="1.1.4、十六进制"></a>1.1.4、十六进制</h5><p>1.基数：0，1，2，3，4，5，6，7，8，9，a(10)，b(11)，c(12)，d(13)，e(14)，f(15)<br>2.进位：逢16进1<br>3.位权：例：ef3d = d*16^0 + 3*16^1 + f*16^2 + e*16^3，其中16^x就是该数的权位<br>4.在Python中的表示方式：在十六进制前加 0x / 0X ；例：0xef3d / 0Xef3d<br>5.将其他进制的数字转换为十六进制的方法：hex(其他进制的数值)<br>例<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8yMDAxMDA3Ni03MTc3MDc4Y2IxZDg2MTBjLnBuZw?x-oss-process=image/format,png" alt="用hex可将其他进制的数值转换为十六进制"></p>
+<h5 id="1-1-5、进制之间的手动转换"><a href="#1-1-5、进制之间的手动转换" class="headerlink" title="1.1.5、进制之间的手动转换"></a>1.1.5、进制之间的手动转换</h5><h6 id="1、十进制和其他进制"><a href="#1、十进制和其他进制" class="headerlink" title="1、十进制和其他进制"></a>1、十进制和其他进制</h6><p>①：十进制转其他进制<br>辗转取余法：不断除2/8/16取余，然后从下往上将余数写出来。<br>②：其他进制转换成十进制<br>基数与权位的乘积求和。</p>
+<h6 id="2、二进制和其他进制"><a href="#2、二进制和其他进制" class="headerlink" title="2、二进制和其他进制"></a>2、二进制和其他进制</h6><p>①：二转八：将二进制数从低位到高位每三位分开，将每三位转换成十进制，最后得到的既是一个八进制数；<br>例：0b1 011 011 -&gt; 0o133<br>②：二转十六：将二进制数从低位到高位每四位分开，将每四位转换成十进制，如果数值大于10，则用a-f代替相应数值，最后得到的既是一个十六进制数；<br>例：0b101 1011 -&gt; 0x5b</p>
+<h6 id="3、八转二、十六转二"><a href="#3、八转二、十六转二" class="headerlink" title="3、八转二、十六转二"></a>3、八转二、十六转二</h6><p>①：八转二：将每一位八进制的数转换为三位的二进制数，最后得到相应的二进制数；<br>②：十六转二：将每一位十六进制的数转换为四位的二进制数，最后得到相应的二进制数。</p>
+<br>
+
+<h3 id="1-2、计算机存储"><a href="#1-2、计算机存储" class="headerlink" title="1.2、计算机存储"></a>1.2、计算机存储</h3><h5 id="1-2-1、存储单位"><a href="#1-2-1、存储单位" class="headerlink" title="1.2.1、存储单位"></a>1.2.1、存储单位</h5><ul>
+<li>在计算机内最小的存储单位是 ： bit（位）</li>
+<li>在计算机内使用内存的最小单位是：bytes（字节）</li>
+<li>其中：1bytes = 8bit</li>
+<li>其他单位换算：<br>1KB = 1024 bytes<br>1MB = 1024KB<br>1GB = 1024MB<br>1TB = 1024GB<br>1PB = 1024TB</li>
+</ul>
+<h5 id="1-2-2、计算机存储原理"><a href="#1-2-2、计算机存储原理" class="headerlink" title="1.2.2、计算机存储原理"></a>1.2.2、计算机存储原理</h5><ul>
+<li>在计算机中，数据有原码，反码，补码三种形态。而数据的存储都是以补码的方式进行存储的，原因是计算机只有加法器，负数在进行运算时不能得出正确的结果，所以只能通过存储补码的方式解决这个问题。</li>
+</ul>
+<h6 id="1-2-2-1、原码"><a href="#1-2-2-1、原码" class="headerlink" title="1.2.2.1、原码"></a>1.2.2.1、原码</h6><ul>
+<li>原码 = 符号位 + 数字对应的二进制</li>
+<li>符号位（只有一位）：0代表正数，1代表负数<br>例：<br>12的二进制：1100 -&gt; 00001100(原)，其中最高位的0是符号位，代表正数。</li>
+<li>12的原码是：10001100，其中最高位的1是符号位，代表负数。</li>
+</ul>
+<p><strong>注：由于计算机中使用内存时调用的最小存储单位是一个字节，8位，所以原码、反码和补码的位数都是8的倍数。</strong></p>
+<h6 id="1-2-2-2、反码"><a href="#1-2-2-2、反码" class="headerlink" title="1.2.2.2、反码"></a>1.2.2.2、反码</h6><ul>
+<li>原码的符号位不变，其余位全部取反，其结果就是原码的反码<br>例：-12  -&gt;  10001100（原码）  -&gt;   11110011（反码）</li>
+</ul>
+<h6 id="1-2-2-3、补码"><a href="#1-2-2-3、补码" class="headerlink" title="1.2.2.3、补码"></a>1.2.2.3、补码</h6><ul>
+<li>补码 = 反码 + 1<br>例：-12  -&gt;  10001100（原码）  -&gt;   11110011（反码）  -&gt;   11110100（补码）</li>
+</ul>
+<p><strong><em>注：正数的原码、反码和补码相同</em></strong><br><br><br><br></p>
+<hr>
+<h1 id="二、Python基础"><a href="#二、Python基础" class="headerlink" title="二、Python基础"></a>二、Python基础</h1><h3 id="2-1、Python编程中常用的快捷键"><a href="#2-1、Python编程中常用的快捷键" class="headerlink" title="2.1、Python编程中常用的快捷键"></a>2.1、Python编程中常用的快捷键</h3><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Ctrl+/</td>
+<td>添加注释或取消注释</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ctrl+S</td>
+<td>保存</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ctrl+C</td>
+<td>复制</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ctrl+V</td>
+<td>粘贴</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Ctrl+Z</td>
+<td>撤销</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Ctrl+X</td>
+<td>剪切</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Ctrl+F</td>
+<td>查找</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Ctrl+Shift+Z</td>
+<td>反撤销</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Ctrl+R</td>
+<td>替换</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Ctrl+D</td>
+<td>复制整行到下一行</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Ctrl+A</td>
+<td>全选</td>
+</tr>
+</tbody></table>
+<p>其他快捷操作：<br>①：选区多行代码：先用鼠标点击选区开头，找到选区结尾，按住Shift键再点击选区结尾；<br>②：同时操作多行代码：按住Alt键，用鼠标点击多行代码需要操作的位置即可。</p>
+<h3 id="2-2、Python基础语法"><a href="#2-2、Python基础语法" class="headerlink" title="2.2、Python基础语法"></a>2.2、Python基础语法</h3><p><strong>（一）、注释</strong></p>
+<ul>
+<li>注释是在编程中不参与编译执行的文字，用来对代码进行解释说明<br>1.单行整行注释：在该行代码的开头加  <strong>#</strong> 即可<br>2.单行部分注释：在需要注释部分的代码前加  <strong>#</strong> 即可<br>3.多行注释：在多行注释前后加三个单引号或者三个双引号即可<br>（<strong>注：单引号或双引号都是输入法为英文状态时的符号</strong>）</li>
+</ul>
+<p><strong>（二）、语句</strong></p>
+<ul>
+<li>一条语句占一行，一条语句结束后可以不加分号，如果多条语句在同一行，则语句之间必须加分号<br>例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'helllo world'</span>)</span><br><span class="line">print(<span class="string">'你好'</span>)</span><br><span class="line">print(<span class="string">'helllo world'</span>);print(<span class="string">'你好'</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>（三）、缩进</strong></p>
+<ul>
+<li>一条语句开头不能随便缩进或空格，需要缩进的地方则必须缩进</li>
+</ul>
+<p><strong><em>小提示：IndentationError   &gt;&gt;&gt;   缩进错误</em></strong></p>
+<p><strong>（四）、标识符</strong></p>
+<ul>
+<li>标识符是专门用来给函数、类和变量命名的</li>
+<li>标识符的基本要求：<br> 1、标识符由数字、字母和下划线组成<br> 2、数字不能开头</li>
+</ul>
+<p><strong>（五）、关键字</strong></p>
+<ul>
+<li>有特殊功能或者特殊意义的标识符就是关键字，又叫保留字</li>
+<li>常见关键字：[‘False’, ‘None’, ‘True’, ‘and’, ‘as’, ‘assert’, ‘async’, ‘await’, break’, ‘class’, ‘continue’, ‘def’, ‘del’, ‘elif’, ‘else’, ‘except’, ‘finally’, ‘for’, ‘from’, ‘global’, ‘if’, ‘import’, ‘in’, ‘is’, ‘lambda’, ‘nonlocal’, ‘not’,’or’, ‘pass’, ‘raise’, ‘return’, ‘try’,’while’, ‘with’, ‘yield’]</li>
+</ul>
+<p><strong>（六）、常用数据</strong><br>1.数字数据：用来表示大小，在程序中直接写<br>例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">100</span>)</span><br><span class="line">print(<span class="number">2</span>+<span class="number">5j</span>)</span><br></pre></td></tr></table></figure>
+<p>2.文本数据：文本信息对应的数据，在程序中需要用双引号或者单引号引起来<br>&emsp;<strong>电话号，身份证号，门牌号等是文本信息</strong><br>例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'木_Python'</span>)</span><br><span class="line">print(<span class="string">'13888888888'</span>)</span><br></pre></td></tr></table></figure>
+<p>3.布尔数据：用True表示真/肯定，用False表示假/否定，程序中只有True和False两种<br><strong><em>所有类型的数据都能转换成布尔值，所有为数字如果为0，所有序列如果为空则都会转换成False，其他都为True</em></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="literal">True</span>)</span><br><span class="line">print(<span class="literal">False</span>)</span><br><span class="line">print(bool(<span class="number">0</span>), bool(<span class="number">0.0</span>), bool(<span class="string">''</span>), bool([]), bool(()), bool(<span class="literal">None</span>))</span><br><span class="line">list1 = [<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line"><span class="keyword">if</span> list1:</span><br><span class="line">    print(<span class="string">'==='</span>)</span><br><span class="line"><span class="keyword">elif</span> <span class="keyword">not</span> list1:</span><br><span class="line">    print(<span class="string">'+++'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>（七）、常见数据类型</strong><br>1.数字类型：整型（int）、浮点型（float）、复数<br>2.文本类型：字符串（str）<br>3.布尔类型（bool）：True和False<br>4.其他：列表（list）、字典（dict）、元组（tuple）、集合（set）、迭代器（iter）、生成器、函数（function）<br><strong><em>&emsp;type（数据） - 获取数据类型</em></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(type(<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>（八）、输入和输出</strong><br><strong><em>1.输出：print</em></strong><br>print(数据) - 在控制台直接打印数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">10</span>)</span><br><span class="line">print(<span class="string">'aed'</span>)</span><br></pre></td></tr></table></figure>
+<p>print(表达式) - 打印表达式的结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">10</span>+<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>print(表达式1，表达式2，表达式3，…) - 在一行打印多个表达式的结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'你好'</span>,<span class="number">123</span>,<span class="string">'1+2'</span>)</span><br></pre></td></tr></table></figure>
+<p>1.定制换行:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'hello world'</span>,end= <span class="string">'你好,世界'</span>)</span><br><span class="line">print(<span class="string">'啥'</span>)</span><br></pre></td></tr></table></figure>
+<p>2.定制分隔:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,sep=<span class="string">'+'</span>)</span><br></pre></td></tr></table></figure>
+<br>
+
+<p><strong><em>2.输入：input</em></strong><br>input(提示输入信息)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">age = input(<span class="string">'请输入年龄：'</span>)</span><br><span class="line">print(<span class="string">'输入的年纪是：'</span>,age,type(age))</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.1%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8CPython%E5%9F%BA%E7%A1%80/">Python基础：基础</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/python/">✓ python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/01/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">Linux中python相关软件安装记录</a>
+            
+            
+            <a class="next" rel="next" href="/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.2%20%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/">Python基础：变量和运算符</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>
