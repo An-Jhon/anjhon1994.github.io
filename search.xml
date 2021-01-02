@@ -2353,6 +2353,37 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
+    <title>Python基础：7:数据类型之集合</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.7%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h1 id="一、什么是集合"><a href="#一、什么是集合" class="headerlink" title="一、什么是集合"></a>一、什么是集合</h1><ul>
+<li>集合是容器型数据类型，将大括号{}作为容器标志，元素之间用逗号隔开<br>  <strong>{元素1，元素2，元素3…}</strong></li>
+<li>集合有可变性（支持增删改），无序性（不支持下标操作）</li>
+<li>集合中的元素：元素不可变性，元素唯一性（自带去重）</li>
+</ul>
+<h2 id="1、空集合"><a href="#1、空集合" class="headerlink" title="1、空集合"></a>1、空集合</h2><p>x = {} —（如果这样写，系统会默认为空字典而不是空集合）<br>空集合的正确写法：set1 = <strong>set()</strong></p>
+<h2 id="2、集合中的元素"><a href="#2、集合中的元素" class="headerlink" title="2、集合中的元素"></a>2、集合中的元素</h2><p>集合里的元素具有不可变性和唯一性</p>
+<h2 id="3、集合的基本操作"><a href="#3、集合的基本操作" class="headerlink" title="3、集合的基本操作"></a>3、集合的基本操作</h2><h3 id="1、查-—-只能遍历，不能单取或切片"><a href="#1、查-—-只能遍历，不能单取或切片" class="headerlink" title="(1、查   —   只能遍历，不能单取或切片"></a>(1、查   —   只能遍历，不能单取或切片</h3><h3 id="2、增"><a href="#2、增" class="headerlink" title="(2、增"></a>(2、增</h3><p>a.添加单个元素：<strong>集合.add(元素)</strong>   -   在集合中添加指定元素<br>b.<strong>集合.update(序列)</strong>   -   将序列中所有的元素都添加到集合中去</p>
+<h3 id="3、删"><a href="#3、删" class="headerlink" title="(3、删"></a>(3、删</h3><p>a.<strong>集合.remove(元素)</strong>—元素不存在报错<br>b.<strong>集合.discard(序列)</strong>—元素不存在不报错</p>
+<h2 id="4、其他"><a href="#4、其他" class="headerlink" title="4、其他"></a>4、其他</h2><h3 id="1、in-not-in"><a href="#1、in-not-in" class="headerlink" title="(1、in / not in"></a>(1、in / not in</h3><h3 id="2、len、set"><a href="#2、len、set" class="headerlink" title="(2、len、set"></a>(2、len、set</h3><p>set(序列)   -   所有的序列都可以转换成集合（元素不可变），自动去重</p>
+<br>
+
+<hr>
+<h1 id="二、集合运算"><a href="#二、集合运算" class="headerlink" title="二、集合运算"></a>二、集合运算</h1><p><strong>并集（+），交集（&amp;），差集（-），对称差集（^），&gt; / &lt;（包含关系）</strong></p>
+<h2 id="1、并集：集合1-集合2-gt-将两个集合合并在一起产生一个新的集合"><a href="#1、并集：集合1-集合2-gt-将两个集合合并在一起产生一个新的集合" class="headerlink" title="1、并集：集合1 | 集合2   -&gt;   将两个集合合并在一起产生一个新的集合"></a>1、并集：集合1 | 集合2   -&gt;   将两个集合合并在一起产生一个新的集合</h2><p>print(set1 | set2)</p>
+<h2 id="2、交集：集合1-amp-集合2-gt-获取两个集合的公共部分产生一个辛几何"><a href="#2、交集：集合1-amp-集合2-gt-获取两个集合的公共部分产生一个辛几何" class="headerlink" title="2、交集：集合1 &amp; 集合2   -&gt;   获取两个集合的公共部分产生一个辛几何"></a>2、交集：集合1 &amp; 集合2   -&gt;   获取两个集合的公共部分产生一个辛几何</h2><p>print(set1 &amp; set2)</p>
+<h2 id="3、差集：集合1-集合2-gt-获取集合1中去掉集合2剩下的部分"><a href="#3、差集：集合1-集合2-gt-获取集合1中去掉集合2剩下的部分" class="headerlink" title="3、差集：集合1 - 集合2   -&gt;   获取集合1中去掉集合2剩下的部分"></a>3、差集：集合1 - 集合2   -&gt;   获取集合1中去掉集合2剩下的部分</h2><p>print(set1 - set2)<br>print(set2 - set1)</p>
+<h2 id="4、对称差集：集合1-集合2-gt-获取集合1和集合2合并后去掉公共部分剩下的部分"><a href="#4、对称差集：集合1-集合2-gt-获取集合1和集合2合并后去掉公共部分剩下的部分" class="headerlink" title="4、对称差集：集合1 ^ 集合2 -&gt;  获取集合1和集合2合并后去掉公共部分剩下的部分"></a>4、对称差集：集合1 ^ 集合2 -&gt;  获取集合1和集合2合并后去掉公共部分剩下的部分</h2><p>print(set1 ^ set2)</p>
+<h2 id="5、集合1-gt-集合2-gt-判断集合1是否包含集合2"><a href="#5、集合1-gt-集合2-gt-判断集合1是否包含集合2" class="headerlink" title="5、集合1 &gt; 集合2        -&gt;    判断集合1是否包含集合2"></a>5、集合1 &gt; 集合2        -&gt;    判断集合1是否包含集合2</h2><p>&emsp; 集合2 &gt; 集合1        -&gt;    判断集合2是否包含集合1</p>
+]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础：6:数据类型之字典</title>
     <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.6%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E5%85%B8/</url>
     <content><![CDATA[<h1 id="一、字典"><a href="#一、字典" class="headerlink" title="一、字典"></a>一、字典</h1><h2 id="1、什么是字典"><a href="#1、什么是字典" class="headerlink" title="1、什么是字典"></a>1、什么是字典</h2><h3 id="1）、字典："><a href="#1）、字典：" class="headerlink" title="1）、字典："></a>1）、字典：</h3><ul>
@@ -2398,37 +2429,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
 </ul>
 <p><strong>字典转换成列表  —  将字典所有的key取出来作为列表的元素</strong></p>
 <h2 id="4、字典-clear-清空字典"><a href="#4、字典-clear-清空字典" class="headerlink" title="4、字典.clear()   -   清空字典"></a>4、字典.clear()   -   清空字典</h2><h2 id="5、字典-copy-拷贝字典，返回新字典-相互不影响"><a href="#5、字典-copy-拷贝字典，返回新字典-相互不影响" class="headerlink" title="5、字典.copy()   -   拷贝字典，返回新字典(相互不影响)"></a>5、字典.copy()   -   拷贝字典，返回新字典(相互不影响)</h2><h2 id="6、dict-fromkeys-序列，值-创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典"><a href="#6、dict-fromkeys-序列，值-创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典" class="headerlink" title="6、dict.fromkeys(序列，值)   -   创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典"></a>6、dict.fromkeys(序列，值)   -   创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典</h2><h2 id="7、字典-items-字典-values-字典-keys"><a href="#7、字典-items-字典-values-字典-keys" class="headerlink" title="7、字典.items(),字典.values(),字典.keys()"></a>7、字典.items(),字典.values(),字典.keys()</h2><h3 id="1）、字典-key-gt-获取字典所有的key并且返回，返回的数据类型是序列但是不是列表"><a href="#1）、字典-key-gt-获取字典所有的key并且返回，返回的数据类型是序列但是不是列表" class="headerlink" title="1）、字典.key() -&gt; 获取字典所有的key并且返回，返回的数据类型是序列但是不是列表"></a>1）、字典.key() -&gt; 获取字典所有的key并且返回，返回的数据类型是序列但是不是列表</h3><h3 id="2）、字典-values-gt-获取字典所有的value并且返回，返回的数据类型是序列但是不是列表"><a href="#2）、字典-values-gt-获取字典所有的value并且返回，返回的数据类型是序列但是不是列表" class="headerlink" title="2）、字典.values() -&gt; 获取字典所有的value并且返回，返回的数据类型是序列但是不是列表"></a>2）、字典.values() -&gt; 获取字典所有的value并且返回，返回的数据类型是序列但是不是列表</h3><h3 id="3）、字典-items-gt-同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值"><a href="#3）、字典-items-gt-同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值" class="headerlink" title="3）、字典.items() -&gt; 同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值"></a>3）、字典.items() -&gt; 同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值</h3><h2 id="8、字典-setdefault-key-value-字典中添加键值对（key值存在时不会修改）"><a href="#8、字典-setdefault-key-value-字典中添加键值对（key值存在时不会修改）" class="headerlink" title="8、字典.setdefault(key, value) - 字典中添加键值对（key值存在时不会修改）"></a>8、字典.setdefault(key, value) - 字典中添加键值对（key值存在时不会修改）</h2><h2 id="9、字典1-update-字典2-将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）"><a href="#9、字典1-update-字典2-将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）" class="headerlink" title="9、字典1.update(字典2)   -   将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）"></a>9、字典1.update(字典2)   -   将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）</h2><h3 id="练习-1"><a href="#练习-1" class="headerlink" title="练习"></a>练习</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 练习2：设计数据保存一个班的信息：</span></span><br><span class="line"><span class="comment"># 名字：python1906；</span></span><br><span class="line"><span class="comment"># 所有老师（名字，性别，联系方式，职位）：</span></span><br><span class="line"><span class="comment"># 所有学生（姓名，毕业学校，电话，性别，年龄，紧急联系人（姓名，电话，关系））</span></span><br><span class="line">class_1906 = &#123;</span><br><span class="line">  <span class="string">'class_name'</span> : <span class="string">'python_1906'</span>, </span><br><span class="line">  <span class="string">'all_teacher'</span> : [</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'张老师'</span>, <span class="string">'gender'</span> : <span class="string">'女'</span>, <span class="string">'职位'</span> : <span class="string">'班主任'</span>, <span class="string">'联系方式'</span> : <span class="string">'123451'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'余老师'</span>, <span class="string">'gender'</span> : <span class="string">'女'</span>, <span class="string">'职位'</span> : <span class="string">'讲师'</span>, <span class="string">'联系方式'</span> : <span class="string">'123452'</span>&#125;</span><br><span class="line">  ]</span><br><span class="line">  <span class="string">'all_student'</span> : [</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'张三'</span>, <span class="string">'gender'</span> : <span class="string">'男'</span>, <span class="string">'年龄'</span> : <span class="string">'25'</span>, <span class="string">'联系方式'</span> : <span class="string">'123453'</span>, <span class="string">'紧急联系人'</span> : &#123;<span class="string">'name'</span> : <span class="string">'李四'</span>, <span class="string">'关系'</span> : <span class="string">'父子'</span>, <span class="string">'联系方式'</span> : <span class="string">'12345678'</span>&#125;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">print(class_1906[all_student][<span class="number">-1</span>][<span class="string">'紧急联系人'</span>])</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python基础：7:数据类型之集合</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.7%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/</url>
-    <content><![CDATA[<h1 id="一、什么是集合"><a href="#一、什么是集合" class="headerlink" title="一、什么是集合"></a>一、什么是集合</h1><ul>
-<li>集合是容器型数据类型，将大括号{}作为容器标志，元素之间用逗号隔开<br>  <strong>{元素1，元素2，元素3…}</strong></li>
-<li>集合有可变性（支持增删改），无序性（不支持下标操作）</li>
-<li>集合中的元素：元素不可变性，元素唯一性（自带去重）</li>
-</ul>
-<h2 id="1、空集合"><a href="#1、空集合" class="headerlink" title="1、空集合"></a>1、空集合</h2><p>x = {} —（如果这样写，系统会默认为空字典而不是空集合）<br>空集合的正确写法：set1 = <strong>set()</strong></p>
-<h2 id="2、集合中的元素"><a href="#2、集合中的元素" class="headerlink" title="2、集合中的元素"></a>2、集合中的元素</h2><p>集合里的元素具有不可变性和唯一性</p>
-<h2 id="3、集合的基本操作"><a href="#3、集合的基本操作" class="headerlink" title="3、集合的基本操作"></a>3、集合的基本操作</h2><h3 id="1、查-—-只能遍历，不能单取或切片"><a href="#1、查-—-只能遍历，不能单取或切片" class="headerlink" title="(1、查   —   只能遍历，不能单取或切片"></a>(1、查   —   只能遍历，不能单取或切片</h3><h3 id="2、增"><a href="#2、增" class="headerlink" title="(2、增"></a>(2、增</h3><p>a.添加单个元素：<strong>集合.add(元素)</strong>   -   在集合中添加指定元素<br>b.<strong>集合.update(序列)</strong>   -   将序列中所有的元素都添加到集合中去</p>
-<h3 id="3、删"><a href="#3、删" class="headerlink" title="(3、删"></a>(3、删</h3><p>a.<strong>集合.remove(元素)</strong>—元素不存在报错<br>b.<strong>集合.discard(序列)</strong>—元素不存在不报错</p>
-<h2 id="4、其他"><a href="#4、其他" class="headerlink" title="4、其他"></a>4、其他</h2><h3 id="1、in-not-in"><a href="#1、in-not-in" class="headerlink" title="(1、in / not in"></a>(1、in / not in</h3><h3 id="2、len、set"><a href="#2、len、set" class="headerlink" title="(2、len、set"></a>(2、len、set</h3><p>set(序列)   -   所有的序列都可以转换成集合（元素不可变），自动去重</p>
-<br>
-
-<hr>
-<h1 id="二、集合运算"><a href="#二、集合运算" class="headerlink" title="二、集合运算"></a>二、集合运算</h1><p><strong>并集（+），交集（&amp;），差集（-），对称差集（^），&gt; / &lt;（包含关系）</strong></p>
-<h2 id="1、并集：集合1-集合2-gt-将两个集合合并在一起产生一个新的集合"><a href="#1、并集：集合1-集合2-gt-将两个集合合并在一起产生一个新的集合" class="headerlink" title="1、并集：集合1 | 集合2   -&gt;   将两个集合合并在一起产生一个新的集合"></a>1、并集：集合1 | 集合2   -&gt;   将两个集合合并在一起产生一个新的集合</h2><p>print(set1 | set2)</p>
-<h2 id="2、交集：集合1-amp-集合2-gt-获取两个集合的公共部分产生一个辛几何"><a href="#2、交集：集合1-amp-集合2-gt-获取两个集合的公共部分产生一个辛几何" class="headerlink" title="2、交集：集合1 &amp; 集合2   -&gt;   获取两个集合的公共部分产生一个辛几何"></a>2、交集：集合1 &amp; 集合2   -&gt;   获取两个集合的公共部分产生一个辛几何</h2><p>print(set1 &amp; set2)</p>
-<h2 id="3、差集：集合1-集合2-gt-获取集合1中去掉集合2剩下的部分"><a href="#3、差集：集合1-集合2-gt-获取集合1中去掉集合2剩下的部分" class="headerlink" title="3、差集：集合1 - 集合2   -&gt;   获取集合1中去掉集合2剩下的部分"></a>3、差集：集合1 - 集合2   -&gt;   获取集合1中去掉集合2剩下的部分</h2><p>print(set1 - set2)<br>print(set2 - set1)</p>
-<h2 id="4、对称差集：集合1-集合2-gt-获取集合1和集合2合并后去掉公共部分剩下的部分"><a href="#4、对称差集：集合1-集合2-gt-获取集合1和集合2合并后去掉公共部分剩下的部分" class="headerlink" title="4、对称差集：集合1 ^ 集合2 -&gt;  获取集合1和集合2合并后去掉公共部分剩下的部分"></a>4、对称差集：集合1 ^ 集合2 -&gt;  获取集合1和集合2合并后去掉公共部分剩下的部分</h2><p>print(set1 ^ set2)</p>
-<h2 id="5、集合1-gt-集合2-gt-判断集合1是否包含集合2"><a href="#5、集合1-gt-集合2-gt-判断集合1是否包含集合2" class="headerlink" title="5、集合1 &gt; 集合2        -&gt;    判断集合1是否包含集合2"></a>5、集合1 &gt; 集合2        -&gt;    判断集合1是否包含集合2</h2><p>&emsp; 集合2 &gt; 集合1        -&gt;    判断集合2是否包含集合1</p>
 ]]></content>
       <categories>
         <category>Python学录</category>
