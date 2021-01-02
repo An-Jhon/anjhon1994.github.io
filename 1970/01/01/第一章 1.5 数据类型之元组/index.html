@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Python基础：5:数据类型之元组 | Anjhon&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">首页</a>
+                
+                    <a class="menu-item" href="/category">归档</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/about">时间线</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">首页</a>
+                
+                    <a class="menu-item" href="/category">归档</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/about">时间线</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python基础：5:数据类型之元组</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;1970-01-01</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Python%E5%AD%A6%E5%BD%95/">&nbsp;&nbsp;Python学录</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、什么是元组"><a href="#一、什么是元组" class="headerlink" title="一、什么是元组"></a>一、什么是元组</h1><ul>
+<li>元组就是不可变的列表</li>
+<li>元组是将小括号 () 作为容器的标志；(元素1，元素2，…)</li>
+<li>元组不可变性，不能增、删、改，</li>
+<li>元组有序性，支持下标操作</li>
+<li>元组元素可以是任何类型的数据</li>
+</ul>
+<h1 id="二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"><a href="#二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）" class="headerlink" title="二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"></a>二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）</h1><h2 id="1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）"><a href="#1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）" class="headerlink" title="1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）"></a>1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tuple1 = (<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(tuple1[<span class="number">0</span>])</span><br><span class="line">print(tuple1[<span class="number">3</span>])</span><br><span class="line">print(tuple1[<span class="number">2</span>:<span class="number">4</span>:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="2、元组和列表相同的操作"><a href="#2、元组和列表相同的操作" class="headerlink" title="2、元组和列表相同的操作"></a>2、元组和列表相同的操作</h2><p><strong><em>+&emsp;、\</em>&emsp; == &emsp;!=&emsp; is&emsp; in &emsp; not in &emsp; len &emsp;max &emsp;min&emsp; sum &emsp;sorted*</strong></p>
+<h1 id="三、元组的独特操作"><a href="#三、元组的独特操作" class="headerlink" title="三、元组的独特操作"></a>三、元组的独特操作</h1><h2 id="1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型"><a href="#1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型" class="headerlink" title="1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)"></a>1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">list1 = [<span class="number">10</span>]</span><br><span class="line">print(list1, type(list1))   <span class="comment">#   [10] &lt;class 'list'&gt;</span></span><br><span class="line">tuple1 = (<span class="number">10</span>,)</span><br><span class="line">print(tuple1,type(tuple1))</span><br></pre></td></tr></table></figure>
+<h2 id="2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"><a href="#2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组" class="headerlink" title="2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"></a>2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tuple2 = <span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span></span><br></pre></td></tr></table></figure>
+<h2 id="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"><a href="#3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）" class="headerlink" title="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"></a>3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tuple3 = (<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">x,y = tuple3</span><br><span class="line">print(x,y)   <span class="comment">#   10 20</span></span><br></pre></td></tr></table></figure>
+<h2 id="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"><a href="#4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）" class="headerlink" title="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"></a>4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tuple4 = (<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">8</span>)</span><br><span class="line">x1 ,*x2 ,x3 = tuple4</span><br><span class="line">print(x1,x2,x3)</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.5%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/">Python基础：5:数据类型之元组</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/python/">✓ python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.4%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%88%97%E8%A1%A8/">Python基础：4:数据类型之列表</a>
+            
+            
+            <a class="next" rel="next" href="/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.6%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E5%85%B8/">Python基础：6:数据类型之字典</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

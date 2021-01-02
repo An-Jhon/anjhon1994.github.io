@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Python基础：17:内存管理, 拷贝,正则表达式 | Anjhon&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">首页</a>
+                
+                    <a class="menu-item" href="/category">归档</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/about">时间线</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">首页</a>
+                
+                    <a class="menu-item" href="/category">归档</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/about">时间线</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python基础：17:内存管理, 拷贝,正则表达式</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;1970-01-01</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Python%E5%AD%A6%E5%BD%95/">&nbsp;&nbsp;Python学录</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-内存管理"><a href="#一-内存管理" class="headerlink" title="一. 内存管理"></a>一. 内存管理</h1><h2 id="1-C语言中内存管理的概念"><a href="#1-C语言中内存管理的概念" class="headerlink" title="1. C语言中内存管理的概念"></a>1. C语言中内存管理的概念</h2><ul>
+<li>内存分为堆区间和栈区间</li>
+<li>C的栈区间的内存是系统自动申请和释放(自动管理)</li>
+<li>C的堆区间的内存需要调用malloc函数申请,调用free函数释放</li>
+</ul>
+<p><em>其他高级语言中的垃圾管理机制是针对堆区间的内存进行管理的</em></p>
+<h2 id="2-python的内存管理机制"><a href="#2-python的内存管理机制" class="headerlink" title="2. python的内存管理机制"></a>2. python的内存管理机制</h2><h3 id="1-内存的申请"><a href="#1-内存的申请" class="headerlink" title="1) 内存的申请"></a>1) 内存的申请</h3><p>python中所有的数据都是存在堆中的，变量是保存在栈区间的，变量中保存的是保存在堆中的数据的地址。</p>
+<p>重新给变量赋值，会先在内存开辟新的内存保存新的数据，然后将新的数据的地址重新保存到变量<br>但是如果使用数字或者字符串给变量赋值,不会直接开辟新的内存，而是先检查内存有没有这个数据，如果有直接将原来的数据的地址给变量</p>
+<h3 id="2-内存的释放-垃圾回收机制"><a href="#2-内存的释放-垃圾回收机制" class="headerlink" title="2)内存的释放(垃圾回收机制)"></a>2)内存的释放(垃圾回收机制)</h3><p>在python中一个数据对应的内存空间是否释放，就看这个数据的引用计数是否为0；如果引用计数为0，数据对应的内存就会被自动释放<br>循环引用问题: python的垃圾回收机制会自动处理循环引用问题</p>
+<p>增加引用计数: 增加数据的引用(让更多的变量来保存数据的地址)<br>减少引用计数: 删除引用，或者让引用去保存新的数据</p>
+<h3 id="3-查看引用次数"><a href="#3-查看引用次数" class="headerlink" title="3)查看引用次数"></a>3)查看引用次数</h3><p>导入sys模块中的getrefcount<br>print(getrefcount(list2))<br><strong>getrefcount函数在调用时会给形参赋值,所以打印的值会比我们需要的值多1</strong></p>
+<h2 id="3-循环引用"><a href="#3-循环引用" class="headerlink" title="3.循环引用"></a>3.循环引用</h2><ul>
+<li>堆中的数据相互间的引用,数据计数不为零,不被释放</li>
+<li>python的垃圾回收机制会自动解决循环引用的问题</li>
+</ul>
+<br>
+
+<hr>
+<h1 id="二-拷贝-需要导入copy模块"><a href="#二-拷贝-需要导入copy模块" class="headerlink" title="二. 拷贝(需要导入copy模块)"></a>二. 拷贝(需要导入copy模块)</h1><h2 id="1-直接赋值"><a href="#1-直接赋值" class="headerlink" title="1. 直接赋值"></a>1. 直接赋值</h2><p>一个变量给另外一个变量赋值时,两个变量的数据是同一个值</p>
+<h2 id="2-浅拷贝"><a href="#2-浅拷贝" class="headerlink" title="2.浅拷贝"></a>2.浅拷贝</h2><p>拷贝之后产生新的相同的数据,新的地址.但是若数据内有引用其他的数据,则其他数据的地址还是原来的地址,(相当于一个人的类,有一个狗的属性,浅拷贝之后,多个人对象拥有同一条狗(拷贝之后狗对象的地址不变,只是多了几次引用))</p>
+<h2 id="3-深拷贝"><a href="#3-深拷贝" class="headerlink" title="3.深拷贝"></a>3.深拷贝</h2><p>(多个人都拥有各自的狗)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> copy <span class="keyword">import</span> copy, deepcopy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, color=<span class="string">'黄色'</span>)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.color = color</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;%s __id: %s&gt;'</span> % (str(self.__dict__)[<span class="number">1</span>:<span class="number">-1</span>], id(self))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age=<span class="number">10</span>, gender=<span class="string">'男'</span>, dog=None)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">        self.gender = gender</span><br><span class="line">        self.dog = dog</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;%s __id: %s&gt;'</span> % (str(self.__dict__)[<span class="number">1</span>:<span class="number">-1</span>], id(self))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接赋值</span></span><br><span class="line">print(<span class="string">'直接赋值'</span>)</span><br><span class="line">p1 = Person(<span class="string">'小明'</span>, dog=Dog(<span class="string">'大黄'</span>))</span><br><span class="line">p2 = p1    <span class="comment"># 赋值后p1和p2指向是同一个Person对象</span></span><br><span class="line">print(<span class="string">'p1:'</span>, p1)</span><br><span class="line">print(<span class="string">'p2:'</span>, p2)</span><br><span class="line">p1.gender = <span class="string">'女'</span></span><br><span class="line">p1.dog.color = <span class="string">'白色'</span></span><br><span class="line">print(<span class="string">'p1:'</span>, p1)</span><br><span class="line">print(<span class="string">'p2:'</span>, p2)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'=============浅拷贝=============='</span>)</span><br><span class="line">p1 = Person(<span class="string">'小明'</span>, dog=Dog(<span class="string">'大黄'</span>))</span><br><span class="line">p2 = copy(p1)</span><br><span class="line">print(p1)</span><br><span class="line">print(p2)</span><br><span class="line">p1.gender = <span class="string">'女'</span></span><br><span class="line">p1.dog.color = <span class="string">'白色'</span></span><br><span class="line">print(<span class="string">'p1:'</span>, p1)</span><br><span class="line">print(<span class="string">'p2:'</span>, p2)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'=============深拷贝==========='</span>)</span><br><span class="line">p1 = Person(<span class="string">'小花'</span>, dog=Dog(<span class="string">'大黄'</span>))</span><br><span class="line">p2 = deepcopy(p1)</span><br><span class="line">print(<span class="string">'p1:'</span>, p1)</span><br><span class="line">print(<span class="string">'p2:'</span>, p2)</span><br><span class="line">p1.gender = <span class="string">'女'</span></span><br><span class="line">p1.dog.color = <span class="string">'白色'</span></span><br><span class="line">print(<span class="string">'p1:'</span>, p1)</span><br><span class="line">print(<span class="string">'p2:'</span>, p2)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>魔法方法(__repr__):自定义打印结果的显示<br>    def <strong>repr</strong>(self):<br>        return ‘&lt;%s <strong>id: %s&gt;’ % (str(self.</strong>dict__)[1:-1], id(self))</p>
+</blockquote>
+<br>
+
+<hr>
+<h1 id="三-正则表达式"><a href="#三-正则表达式" class="headerlink" title="三. 正则表达式"></a>三. 正则表达式</h1><h2 id="1-正则表达式"><a href="#1-正则表达式" class="headerlink" title="1.正则表达式"></a>1.正则表达式</h2><p>用正则符号来描述字符串规则让字符串匹配更简单(计算机语言基本支持正则,python通过re模块支持正则)</p>
+<h2 id="2-正则符号"><a href="#2-正则符号" class="headerlink" title="2. 正则符号"></a>2. 正则符号</h2><h3 id="1-匹配符号"><a href="#1-匹配符号" class="headerlink" title="1) 匹配符号"></a>1) 匹配符号</h3><p><strong>1).普通字符:在正则中没有特殊功能和意义的字符</strong></p>
+<p><strong>2).特殊字符:</strong><br>①:点(.)   -   代表任意字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a..b'</span>, <span class="string">'au9b'</span>))</span><br></pre></td></tr></table></figure>
+<p>②:(\w)   -   ASCII码表中只能匹配字母、数字或者下划线；ASCII码表以外的都可以匹配</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a\wb'</span>, <span class="string">'a8b'</span>))</span><br></pre></td></tr></table></figure>
+<p>③:(\d)   -   匹配任意一个数字字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a\d\db'</span>, <span class="string">'a33b'</span>))</span><br></pre></td></tr></table></figure>
+<p>④:(\s)   -   匹配任意一个空白字符(空格,缩进,换行…)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a\sb'</span>, <span class="string">'a\tb'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a\sb'</span>, <span class="string">'a\nb'</span>))</span><br></pre></td></tr></table></figure>
+<p>⑤:(\W \D \S)   -&gt;   功能和小写的相反<br>   \W   -   匹配ASCII码表任意非字母数字下划线<br>   \D   -   匹配任意非数字字符<br>   \S   -   匹配任意非空白字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a\Db\Sc\Wd'</span>, <span class="string">'aZb=c+d'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>⑥:[字符集]   -   匹配字符集中的任意一个字符(一个中括号只能匹配一个字符集)<br><strong>注意:前一个字符的编码值一定要比后一个字符的编码值要大</strong><br><strong>当字符集中有减号时,减号不能放中间</strong></p>
+<ul>
+<li>&emsp;[1-9]  - 匹配123456789中的任意一个字符</li>
+<li>&emsp;[0-9]  - \d</li>
+<li>&emsp;[a-z]  - 匹配任意一个小写字母</li>
+<li>&emsp;[A-Z]  - 匹配任意一个大写字母</li>
+<li>&emsp;[a-zA-Z] - 匹配任意一个字母</li>
+<li>&emsp;[\u4e00-\u9fa5]  - 匹配任意一个中文字符</li>
+<li>&emsp;[1-9abc] - 匹配1~9或者abc中的任意一个字符</li>
+<li>&emsp;[a-zA-Z0-9_]  - 匹配字母数字下划线</li>
+<li>&emsp;[\dxyz]  - 任意数字或者x、y、z</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a[xyz89?]b'</span>, <span class="string">'azb'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a[xyz]b'</span>, <span class="string">'anb'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a[23456789]b'</span>, <span class="string">r'a7b'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a[1-9abc]b'</span>, <span class="string">'aab'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a[abc1-9]b'</span>, <span class="string">'aab'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a[ac1-9b]b'</span>, <span class="string">'aab'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a[+*-]b'</span>, <span class="string">'a-b'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a[\dxyz]b'</span>, <span class="string">'axb'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a[\\dxyz]b'</span>, <span class="string">'a\\b'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>⑦:[^字符集]   -   匹配除了字符集以外的其他任意字符<br><strong>注意:符号^只能放在最前面!</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a[xyz^]b'</span>, <span class="string">'a^b'</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-检测符号"><a href="#2-检测符号" class="headerlink" title="2 检测符号"></a>2 检测符号</h3><p>①: \b   -   检测是否是单词结尾<br>单词结尾-所有可以区分出两个不同单词的符号都是单词结尾，其中字符串开头和字符串结尾<br>用法：检测\b所在的位置是否是单词结尾；不影响匹配的时候的字符串长度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">re_str = <span class="string">r'a\db\b'</span></span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'a7b'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>②:^   -   检测是否是字符开头</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">re_str = <span class="string">r'^\d\d\d'</span></span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'123'</span>))</span><br><span class="line">print(re.search(re_str, <span class="string">'k898ahs237khhj'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>③:$   -   检测是否是字符结尾</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">re_str = <span class="string">r'\d\d\d$'</span></span><br><span class="line">print(re.search(re_str, <span class="string">'123k898ahs237khhj990'</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-匹配次数"><a href="#3-匹配次数" class="headerlink" title="3 匹配次数"></a>3 匹配次数</h3><p>①:?   -   匹配0次或1次<br>    例: x?   -   x出现0次或1次<br>       \d?   -   数字出现0次或1次</p>
+<p>②:*   -   任意次数,0次也可以</p>
+<p>③:+   -   1次或多次</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'ax?b'</span>, <span class="string">'axb'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a\d*b'</span>, <span class="string">'a12b'</span>))</span><br><span class="line">print(re.fullmatch(<span class="string">r'a\d+b'</span>, <span class="string">'a1272937928329b'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>④:{}<br>a: {N}   -   匹配N次<br>b: {M,N}   -   匹配M到N次<br>b: {M,}   -   至少匹配M次<br>b: {,N}   -   最多匹配N次</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re_str = <span class="string">r'a\d&#123;3,5&#125;b'</span></span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'a78988b'</span>))</span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'a7898b'</span>))</span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'a789880b'</span>))   <span class="comment"># None</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 练习: 写一个正则表达式判断输入的内容是否是整数</span></span><br><span class="line"><span class="comment"># 123 -&gt; 成功!  123a -&gt; 失败!   -123  -&gt; 成功!   --123 -&gt; 失败!   +123 -&gt; 成功</span></span><br><span class="line">re_str = <span class="string">r'[+-]?[1-9]\d*'</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>贪婪和非贪婪</strong></p>
+</blockquote>
+<blockquote>
+<p>匹配次数不确定的时候有贪婪和非贪婪状态<br>? * + {M,} {M,N} {,N}   默认贪婪<br>在能匹配成功的前提下，尽可能多的匹配<br>?? *? +? {M,}? {M,N}? {,N}?   非贪婪<br>在能匹配成功的前提下，尽可能少的匹配</p>
+</blockquote>
+<h2 id="3-分支和分组"><a href="#3-分支和分组" class="headerlink" title="3. 分支和分组"></a>3. 分支和分组</h2><h3 id="1-分支"><a href="#1-分支" class="headerlink" title="1).分支"></a>1).分支</h3><p><strong>正则1 | 正则2</strong>      -       先让正则1匹配,再让正则2匹配;只要有一个匹配就能成功</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 匹配一个字符串: abc前是3个数字或者3个字母</span></span><br><span class="line"><span class="comment"># 123abc, uJhabc</span></span><br><span class="line">re_str = <span class="string">r'\d&#123;3&#125;abc|[a-zA-Z]&#123;3&#125;abc'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-分组"><a href="#2-分组" class="headerlink" title="2).分组"></a>2).分组</h3><p><strong>①:整体控制次数: ()匹配次数<br>②:将正则表达式作为一个整体操作</strong></p>
+<p>重复：带分组的正则表达式\M - 在\M的位置重前面第M个分组匹配到的内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 匹配一个字符串: abc前是3个数字或者3个字母</span></span><br><span class="line">re_str = <span class="string">r'(\d&#123;3&#125;|[a-z]&#123;3&#125;)abc'</span></span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'mskabc'</span>))</span><br><span class="line">re_str = <span class="string">r'(\d+)([a-z]+)=\2'</span></span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'6kh=kh'</span>))</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.17%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86,%20%E6%8B%B7%E8%B4%9D,%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">Python基础：17:内存管理, 拷贝,正则表达式</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/python/">✓ python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.16%20%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1(%E8%BF%9B%E9%98%B6)/">Python基础：16:类和对象(进阶)</a>
+            
+            
+            <a class="next" rel="next" href="/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.18%20re%E6%A8%A1%E5%9D%97/">Python基础：18:re模块</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

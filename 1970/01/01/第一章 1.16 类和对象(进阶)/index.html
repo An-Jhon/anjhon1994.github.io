@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Python基础：16:类和对象(进阶) | Anjhon&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">首页</a>
+                
+                    <a class="menu-item" href="/category">归档</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/about">时间线</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">首页</a>
+                
+                    <a class="menu-item" href="/category">归档</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/about">时间线</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python基础：16:类和对象(进阶)</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;1970-01-01</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Python%E5%AD%A6%E5%BD%95/">&nbsp;&nbsp;Python学录</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-类的继承"><a href="#一-类的继承" class="headerlink" title="一. 类的继承"></a>一. 类的继承</h1><p><strong>继承是让子类直接拥有父类的属性和方法</strong></p>
+<h2 id="1-用法"><a href="#1-用法" class="headerlink" title="1. 用法"></a>1. 用法</h2><blockquote>
+<p>class 类名(父类1,父类2,…)<br>&emsp;&emsp;类的内容</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></span><br><span class="line">    num = <span class="number">70</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.name = <span class="string">'小明'</span></span><br><span class="line">        self.age = <span class="number">18</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'静态方法'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(Person)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 子类直接使用父类的属性和方法</span></span><br><span class="line">stu1 = Student.num</span><br><span class="line">print(stu1)</span><br><span class="line"></span><br><span class="line">stu2 = Student()</span><br><span class="line">print(stu2.name, stu2.age)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-子类中添加属性和方法"><a href="#2-子类中添加属性和方法" class="headerlink" title="2. 子类中添加属性和方法"></a>2. 子类中添加属性和方法</h2><h3 id="1-添加方法和字段"><a href="#1-添加方法和字段" class="headerlink" title="1). 添加方法和字段"></a>1). 添加方法和字段</h3><p>在子类中直接声明新的字段和方法,若字段和方法与父类的重名,则父类的会被覆盖(重写)</p>
+<h3 id="2-添加对象属性"><a href="#2-添加对象属性" class="headerlink" title="2). 添加对象属性"></a>2). 添加对象属性</h3><p>用__initial__方法添加新的属性,并且通过 <strong>super().__init__</strong> 方法继承父类的对象属性</p>
+<ul>
+<li>可以在类的任何一个对象方法或者类方法中去通过super()调用父类的的对象方法或者类方法</li>
+<li>super(类1,类1的对象).方法()  -&gt;   调用类1的父类中的方法<br>super().方法() &lt;==&gt; super(当前类,当前类的对象)</li>
+<li>super(type, obj)  -&gt; 要求obj必须是type的对象或者是type的子类对象</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span>:</span></span><br><span class="line">    num = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.age = <span class="number">10</span></span><br><span class="line">        self.gender = <span class="string">'雌'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'动物类中的对象方法'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">(cls)</span>:</span></span><br><span class="line">        print(<span class="string">'动物类中的类方法'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'动物类中的静态方法'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span><span class="params">(Animal)</span>:</span></span><br><span class="line">    voice = <span class="string">'喵~'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()   <span class="comment"># 调用当前类的父类的__init__方法</span></span><br><span class="line">        self.color = <span class="string">'白'</span></span><br><span class="line">        self.breed = <span class="string">'加菲猫'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func4</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().func1()   <span class="comment"># 用super实现 子类Cat中的函数(方法)内调用父类Animal的方法</span></span><br><span class="line">        print(<span class="string">'猫类中的对象方法'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func5</span><span class="params">(cls)</span>:</span></span><br><span class="line">        super().func2()   <span class="comment"># 用super实现 子类Cat中的函数(方法)内调用父类Animal的方法</span></span><br><span class="line">        print(<span class="string">'猫类中的类方法'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func6</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'猫类中的静态方法'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 子类Cat继承父类Animal的属性和方法</span></span><br><span class="line"><span class="comment"># (父类的类方法和静态方法只能用子类的类调用,对象方法只能用对象调用)</span></span><br><span class="line">cat1 = Cat()</span><br><span class="line">print(cat1.color, cat1.breed, cat1.age, cat1.gender)</span><br><span class="line">cat1.func1()</span><br><span class="line">Cat.func2()</span><br><span class="line">Cat.func3()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用super实现 子类Cat中的函数(方法)内调用父类Animal的方法</span></span><br><span class="line">cat1.func4()</span><br><span class="line">Cat.func5()</span><br><span class="line">Cat.func6()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以上代码的执行结果:<br>白  加菲猫  10 雌<br>动物类中的对象方法<br>动物类中的类方法<br>动物类中的静态方法<br>动物类中的对象方法<br>猫类中的对象方法<br>动物类中的类方法<br>猫类中的类方法<br>猫类中的静态方法</p>
+</blockquote>
+<h2 id="3-多继承"><a href="#3-多继承" class="headerlink" title="3. 多继承"></a>3. 多继承</h2><blockquote>
+<p><strong>子类在继承多个父类时,对象属性只能继承第一个父类的对象属性</strong></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span>:</span></span><br><span class="line">    num = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, age=<span class="number">0</span>, gender=<span class="string">'雄'</span>)</span>:</span></span><br><span class="line">        self.age = age</span><br><span class="line">        self.gender = gender</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">a_func1</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'动物的对象方法'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">massage</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'this is Animal'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fly</span>:</span></span><br><span class="line">    flag = <span class="string">'飞行'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, height=<span class="number">1000</span>, time=<span class="number">3</span>)</span>:</span></span><br><span class="line">        self.height = height</span><br><span class="line">        self.time = time</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f_func1</span><span class="params">(cls)</span>:</span></span><br><span class="line">        print(<span class="string">'飞行的类方法'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bird</span><span class="params">(Animal, Fly)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">b1 = Bird()</span><br><span class="line">print(Bird.num, Bird.flag)</span><br><span class="line"></span><br><span class="line">b1.a_func1()</span><br><span class="line">Bird.f_func1()</span><br><span class="line"></span><br><span class="line">print(b1.age, b1.gender)</span><br><span class="line">print(b1.height, b1.time)   <span class="comment">#  第二个父类的属性不能继承,本行代码会报错</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/20010076-58b0961bef4d933f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="代码执行结果"></p>
+<h2 id="4-多继承的执行顺序"><a href="#4-多继承的执行顺序" class="headerlink" title="4. 多继承的执行顺序"></a>4. 多继承的执行顺序</h2><p>例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">massage</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'this is A'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">massage</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().massage()</span><br><span class="line">        print(<span class="string">'this is B'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(A)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">massage</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().massage()</span><br><span class="line">        print(<span class="string">'this is C'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(B, C)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">massage</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().massage()</span><br><span class="line">        print(<span class="string">'this is D'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">D().massage()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>代码执行结果:<br>this is A<br>this is C<br>this is B<br>this is D</p>
+</blockquote>
+<p><strong>说明:</strong>我也说不清,别喷我😭</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/20010076-d011e9259894990f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="执行顺序"></p>
+<br>
+
+<hr>
+<h1 id="二-私有化"><a href="#二-私有化" class="headerlink" title="二. 私有化"></a>二. 私有化</h1><h2 id="1-访问权限"><a href="#1-访问权限" class="headerlink" title="1. 访问权限"></a>1. 访问权限</h2><p>公开的(public):类的里面,外面都能用,也可以被继承<br>保护的(protect):类的里面可以用,也可以被继承<br>私有的(private):类的里面可以用,不能被继承</p>
+<h2 id="2-python中的权限"><a href="#2-python中的权限" class="headerlink" title="2. python中的权限"></a>2. python中的权限</h2><p>python类中的内容只有公开的,私有化是假的私有化</p>
+<h2 id="3-python私有化"><a href="#3-python私有化" class="headerlink" title="3.python私有化"></a>3.python私有化</h2><p>在方法名前或属性名前加两个下划线__<br>只是在 __方法名 前加了下划线类名(_类名),在外部加_类名可以调用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></span><br><span class="line">    num = <span class="number">61</span></span><br><span class="line">    __num2 = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age=<span class="number">18</span>)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">        self.gender = <span class="string">'男'</span></span><br><span class="line">        self.__gender = <span class="string">'男'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'%s今年%d岁'</span> % (self.name, self.age), self.__gender)</span><br><span class="line">        self.__func11()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__func11</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'私有的对象方法'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'我是静态方法1'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__func22</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'我是静态方法1'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">(cls)</span>:</span></span><br><span class="line">        print(cls.num)</span><br><span class="line">        print(cls.__num2)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="3-getter和setter"><a href="#3-getter和setter" class="headerlink" title="3. getter和setter"></a>3. getter和setter</h1><h2 id="1-什么时候用"><a href="#1-什么时候用" class="headerlink" title="1. 什么时候用"></a>1. 什么时候用</h2><p>如果希望在对象属性赋值前做点儿别的什么事情就给这个属性添加setter<br>如果希望在获取属性值之前做点儿别的什么事情就给这个属性添加getter</p>
+<h2 id="2-怎么用"><a href="#2-怎么用" class="headerlink" title="2. 怎么用"></a>2. 怎么用</h2><p><strong>getter：</strong><br>a. 将需要添加getter的属性名前加 _<br>b. 声明函数：声明前加@property；<br>           函数名不带_的属性名；<br>           函数需要一个返回值，返回值就是获取这个属性能够得到的值<br>c.在外面使用属性的时候不带下划线</p>
+<p><strong>setter:</strong><br>注意: 如果想要给属性添加setter必须先添加getter<br>a. 声明函数: 声明前加@getter名.setter;<br>            函数名不带_的属性名；<br>            函数不需要返回值，但是需要一个参数，这个参数就是给属性赋的值<br>b.在外面给属性赋值的时候不带下划线</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span>:</span></span><br><span class="line">    pi = <span class="number">3.1415926</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, r)</span>:</span></span><br><span class="line">        self.r = r</span><br><span class="line">        self._area = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Circle.pi * self.r * self.r</span><br><span class="line"></span><br><span class="line"><span class="meta">    @area.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        print(<span class="string">'给area属性赋值:'</span>, value)</span><br><span class="line">        <span class="keyword">raise</span> ValueError</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c1 = Circle(<span class="number">1</span>)</span><br><span class="line">print(c1.area)    <span class="comment"># 本质是在调用area函数: c1.area()</span></span><br><span class="line"></span><br><span class="line">c1.r = <span class="number">10</span></span><br><span class="line">print(c1.area)   <span class="comment"># 本质是在调用area函数: c1.area()</span></span><br><span class="line"></span><br><span class="line">c1.r = <span class="number">3</span></span><br><span class="line">print(c1.area)   <span class="comment"># 本质是在调用getter的area函数: c1.area()</span></span><br></pre></td></tr></table></figure>
+
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.16%20%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1(%E8%BF%9B%E9%98%B6)/">Python基础：16:类和对象(进阶)</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/python/">✓ python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.15%20%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1(%E5%9F%BA%E7%A1%80)/">Python基础：15:类和对象(基础)</a>
+            
+            
+            <a class="next" rel="next" href="/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.17%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86,%20%E6%8B%B7%E8%B4%9D,%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">Python基础：17:内存管理, 拷贝,正则表达式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>
