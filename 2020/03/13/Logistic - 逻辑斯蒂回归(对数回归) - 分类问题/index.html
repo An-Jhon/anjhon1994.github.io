@@ -95,15 +95,15 @@
             <div class="navbar-header header-logo"><a href="/">Anjhon&#39;s Blog</a></div>
             <div class="menu navbar-right">
                 
-                    <a class="menu-item" href="/archives">首页</a>
+                    <a class="menu-item" href="/archives">博文</a>
                 
-                    <a class="menu-item" href="/category">归档</a>
+                    <a class="menu-item" href="/category">分类</a>
                 
                     <a class="menu-item" href="/tag">标签</a>
                 
-                    <a class="menu-item" href="/about">关于</a>
+                    <a class="menu-item" href="/tag">归档</a>
                 
-                    <a class="menu-item" href="/about">时间线</a>
+                    <a class="menu-item" href="/about">关于</a>
                 
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
@@ -123,15 +123,15 @@
             </div>
             <div class="menu" id="mobile-menu">
                 
-                    <a class="menu-item" href="/archives">首页</a>
+                    <a class="menu-item" href="/archives">博文</a>
                 
-                    <a class="menu-item" href="/category">归档</a>
+                    <a class="menu-item" href="/category">分类</a>
                 
                     <a class="menu-item" href="/tag">标签</a>
                 
-                    <a class="menu-item" href="/about">关于</a>
+                    <a class="menu-item" href="/tag">归档</a>
                 
-                    <a class="menu-item" href="/about">时间线</a>
+                    <a class="menu-item" href="/about">关于</a>
                 
             </div>
         </div>
@@ -271,7 +271,10 @@
 <p>$$<br>矩阵模式: h_{\theta}(X)=\frac{1}{1+e^{-X\theta}}<br>$$</p>
 <h3 id="2-最大似然估计法求损失函数"><a href="#2-最大似然估计法求损失函数" class="headerlink" title="2: 最大似然估计法求损失函数"></a>2: 最大似然估计法求损失函数</h3><p><strong>最大似然估计公式求对数:</strong><br>$$<br>l(\theta) = ln(L(\theta)) =ln[ \prod_{i=1}^n(h_{\theta}(x_i))^{y_i}(1-h_\theta (x_i))^{1-{y_i}}]<br>$$<br><strong>乘积的对数可以转换成加法:</strong><br>$$<br>l(\theta)= \sum_{i=1}^n[y_iln(h_{\theta}(x_i))+(1-{y_i})ln(1-h_\theta (x_i))]<br>$$<br>最大似然估计就是要求得使 $l(\theta)$ 取最大值时的 $\theta$ ，其实这里可以使用梯度上升法求解，求得的 $\theta$ 就是要求的最佳参数</p>
 <p><strong>对似然函数对数化取反的表达式，即损失函数表达式</strong><br>$$<br>J(\theta) = -l(\theta) = -\sum_{i=1}^n[y_iln(h_{\theta}(x_i))+(1-{y_i})ln(1-h_\theta (x_i))]<br>$$</p>
-<p><strong>损失函数 $J(\theta)$ 对 $ \theta$ 求导:</strong><br>$$<br>J’(\theta) = \frac{\partial J(\theta)}{\partial\theta}<br>$$</p>
+<blockquote>
+<p><strong>损失函数 $J(\theta)$ 对 $ \theta$ 求导:</strong></p>
+</blockquote>
+<p>$$<br>J’(\theta) = \frac{\partial J(\theta)}{\partial\theta}<br>$$</p>
 <p>$$<br>\begin{aligned}<br>\frac{\partial J(\theta)}{\partial\theta}&amp; =  -\sum_{i=1}^n[y_i\frac{1}{h_{\theta}(x_i)}\frac{\partial h_\theta(x_i)}{\partial\theta}+(1-{y_i})\frac{1}{1-h_\theta (x_i)}\frac{\partial (1-h_\theta(x_i))}{\partial\theta}]\<br>&amp;\<br>&amp; 注释: ln(x)’=\frac{1}{x}\<br>&amp;\<br>&amp; =  -\sum_{i=1}^n[y_i\frac{1}{h_{\theta}(x_i)}\frac{\partial h_\theta(x_i)}{\partial\theta}-(1-{y_i})\frac{1}{1-h_\theta (x_i)}\frac{\partial h_\theta(x_i)}{\partial\theta}]\<br>&amp; =  -\sum_{i=1}^n[y_i\frac{1}{h_{\theta}(x_i)}-(1-{y_i})\frac{1}{1-h_\theta (x_i)}]\frac{\partial h_\theta(x_i)}{\partial\theta}\<br>&amp;\<br>&amp; 注释: \frac{\partial h_\theta(x_i)}{\partial\theta}的推导过程详见下文\<br>&amp;\<br>&amp; =  -\sum_{i=1}^n[y_i\frac{1}{h_{\theta}(x_i)}-(1-{y_i})\frac{1}{1-h_\theta (x_i)}]x_ih_\theta(x_i)(1-h_\theta(x_i))\<br>&amp; =  -\sum_{i=1}^n[y_i(1-h_\theta (x_i))-(1-{y_i})h_\theta (x_i)]x_i\<br>&amp; =  -\sum_{i=1}^n[y_i-h_\theta (x_i)]x_i\<br>&amp; =  \sum_{i=1}^n[h_\theta (x_i)-y_i]x_i\<br>\end{aligned}<br>$$</p>
 <p><strong>推导 $\frac{\partial h_\theta(x_i)}{\partial\theta}$ 的过程:</strong><br>$$<br>\begin{aligned}<br>\frac{\partial h_\theta(x_i)}{\partial\theta}&amp; =  h’_\theta(x_i)\<br>&amp; =  (\frac{1}{1+e^{-x_i\theta}})’\<br>&amp; =  (\frac{1}{1+e^{-\theta^Tx_i}})’\<br>&amp; =  [(1+e^{-\theta^Tx_i})^{-1}]’\<br>&amp; 注释: (e^x)’ = e^x \<br>&amp; =  -(1+e^{-\theta^Tx_i})^{-2}e^{-\theta^Tx_i}(-x_i)\<br>&amp; =  (1+e^{-\theta^Tx_i})^{-2}e^{-\theta^Tx_i}x_i\<br>&amp; =  x_i\frac{e^{-\theta^Tx_i}}{(1+e^{-\theta^Tx_i})^2}\<br>&amp; =  x_i\frac{1}{(1+e^{-\theta^Tx_i})}\frac{e^{-\theta^Tx_i}}{(1+e^{-\theta^Tx_i})}\<br>&amp; =  x_ih_\theta(x_i)\frac{e^{-\theta^Tx_i}}{(1+e^{-\theta^Tx_i})}\<br>&amp; =  x_ih_\theta(x_i)\frac{1+e^{-\theta^Tx_i}-1}{(1+e^{-\theta^Tx_i})}\<br>&amp; =  x_ih_\theta(x_i)[\frac{1+e^{-\theta^Tx_i}}{(1+e^{-\theta^Tx_i})}-\frac{1}{(1+e^{-\theta^Tx_i})}]\<br>&amp; =  x_ih_\theta(x_i)[1-\frac{1}{(1+e^{-\theta^Tx_i})}]\<br>&amp; =  x_ih_\theta(x_i)(1-h_\theta(x_i))\<br>\end{aligned}<br>$$</p>
 <p><strong>此时使用梯度下降优化算法, 其系数的更新规则为:</strong><br>$$<br>\theta = \theta - \epsilon\frac{\partial J(\theta)}{\partial\theta}<br>$$</p>
@@ -348,13 +351,26 @@
     </article>
 </div>
 
+			
         </div>
+		
         <footer id="footer" class="footer">
     <div class="copyright">
-        <span>© Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+		
+		
+		</span>
     </div>
 </footer>
 
     </div>
+	
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
 </html>
