@@ -200,11 +200,11 @@
 <p><strong>根据最小二乘法的公式, 推导得出</strong></p>
 <p>$$w = (X^TX)^{-1}X^Ty$$</p>
 <p><strong>向量的1-范数(表示各个元素的绝对值的和)</strong></p>
-<p>$$||X||<em>1 = \sum\limits</em>{i=1}^n |x_i|$$</p>
+<p>$$||X||_1 = \sum\limits_{i=1}^n |x_i|$$</p>
 <p><strong>向量的2-范数(表示每个元素的平方和再开平方)</strong></p>
-<p>$$||X||<em>2 = \sqrt{\sum\limits</em>{i=1}^n x_i^2}$$</p>
+<p>$$||X||_2 = \sqrt{\sum\limits_{i=1}^n x_i^2}$$</p>
 <p><strong>向量的无穷范数(所有向量元素绝对值中的最大值)</strong></p>
-<p>$$||X||<em>{\infty} = \max\limits</em>{1 \geq i \leq n}|X_i|$$</p>
+<p>$$||X||_{\infty} = \max\limits_{1 \geq i \leq n}|X_i|$$</p>
 <h2 id="扩展二-导数-偏导数"><a href="#扩展二-导数-偏导数" class="headerlink" title="扩展二: 导数, 偏导数"></a>扩展二: 导数, 偏导数</h2><p><strong>导数:</strong><br>对函数$f(x) = x^2+3x+8$ 求导得: $f(x)’ = 2x+3$</p>
 <p>求导规则: </p>
 <ul>
@@ -230,6 +230,10 @@
 <li><p>梯度下降</p>
 </li>
 </ol>
+<br>
+
+
+
 <h1 id="二-正规方程"><a href="#二-正规方程" class="headerlink" title="二: 正规方程"></a>二: 正规方程</h1><h2 id="一-损失函数"><a href="#一-损失函数" class="headerlink" title="(一): 损失函数"></a>(一): 损失函数</h2><p><strong>最小二乘法:</strong></p>
 <p>$$\min\limits_{w}||Xw-y||_2^2$$</p>
 <p><strong>当X和y都是常数时,按照向量2范数将上面的最小二乘法解开:</strong></p>
@@ -306,7 +310,7 @@
 
 
 
-
+<br>
 
 
 
@@ -339,6 +343,10 @@
 <h2 id="四-随机梯度下降-矩阵-从所有样本中随机获取指定数量的样本"><a href="#四-随机梯度下降-矩阵-从所有样本中随机获取指定数量的样本" class="headerlink" title="(四): 随机梯度下降(矩阵) - 从所有样本中随机获取指定数量的样本"></a>(四): 随机梯度下降(矩阵) - 从所有样本中随机获取指定数量的样本</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造数据</span></span><br><span class="line">X = np.linspace(<span class="number">-2</span>,<span class="number">12</span>,<span class="number">40</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">w = np.random.randint(<span class="number">2</span>,<span class="number">12</span>,size = <span class="number">1</span>)</span><br><span class="line">b = np.random.randint(<span class="number">-10</span>,<span class="number">10</span>,size = <span class="number">1</span>)</span><br><span class="line">y = X*w + b + np.random.randn(<span class="number">40</span>,<span class="number">1</span>)*<span class="number">2.5</span></span><br><span class="line"><span class="comment"># 将y.reshape(-1)一维的</span></span><br><span class="line">y = y.reshape(<span class="number">-1</span>)</span><br><span class="line">plt.scatter(X,y,color = <span class="string">'red'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义梯度下降类</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradient_descent</span><span class="params">(X,y)</span>:</span></span><br><span class="line">    m = <span class="number">10</span>   <span class="comment"># 随机样本数量</span></span><br><span class="line">    theta = np.random.randn(<span class="number">2</span>) <span class="comment"># theta中既有斜率，又有截距</span></span><br><span class="line">    last_theta = theta + <span class="number">0.1</span> <span class="comment">#记录theta更新后，和上一步的误差</span></span><br><span class="line">    precision = <span class="number">1e-4</span> <span class="comment">#精确度</span></span><br><span class="line">    epsilon = <span class="number">0.01</span> <span class="comment">#步幅</span></span><br><span class="line">    count= <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 当斜率和截距误差小于万分之一时，退出</span></span><br><span class="line">        <span class="keyword">if</span> (np.abs(theta - last_theta) &lt; precision).all():</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> count &gt; <span class="number">3000</span>:<span class="comment">#死循环执行了3000次</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="comment"># 更新</span></span><br><span class="line">        last_theta = theta.copy()</span><br><span class="line">        <span class="comment"># 随机梯度下降，梯度是矩阵计算返回的</span></span><br><span class="line">        index = np.random.choice(np.arange(<span class="number">40</span>),size = m)<span class="comment"># index索引，根据随机索引从原数据中取数据</span></span><br><span class="line">        grad = <span class="number">2</span>/m*X[index].T.dot(X[index].dot(theta) - y[index])</span><br><span class="line">        theta -= epsilon*grad</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> theta</span><br><span class="line">w_,b_ = gradient_descent(X_train,y)</span><br><span class="line">j = <span class="keyword">lambda</span> x : w_*x + b_</span><br><span class="line">plt.scatter(X[:,<span class="number">0</span>],y,color = <span class="string">'red'</span>)</span><br><span class="line">x_test = np.linspace(<span class="number">-2</span>,<span class="number">12</span>,<span class="number">1024</span>) </span><br><span class="line">y_ = j(x_test)</span><br><span class="line">plt.plot(x_test,y_,color = <span class="string">'green'</span>)</span><br></pre></td></tr></table></figure>
 
 <p><font color=red>若随机样本的数量为1, 则是完全随机梯度下降</font></p>
+<br>
+
+
+
 <h1 id="四-岭回归"><a href="#四-岭回归" class="headerlink" title="四: 岭回归"></a>四: 岭回归</h1><h2 id="一-岭回归和线性回归的模型对比"><a href="#一-岭回归和线性回归的模型对比" class="headerlink" title="(一): 岭回归和线性回归的模型对比"></a>(一): 岭回归和线性回归的模型对比</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, Ridge</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"></span><br><span class="line">X, y = datasets.load_boston(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 线性回归</span></span><br><span class="line">linear = LinearRegression()</span><br><span class="line">linear.fit(X, y)</span><br><span class="line">w_ = linear.coef_</span><br><span class="line">b_ = linear.intercept_</span><br><span class="line">print(<span class="string">'普通线性回归斜率:\n'</span>, w_)</span><br><span class="line">print(<span class="string">'普通线性回归截距:'</span>, b_)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">普通线性回归斜率:</span></span><br><span class="line"><span class="string"> [-1.08011358e-01  4.64204584e-02  2.05586264e-02  2.68673382e+00</span></span><br><span class="line"><span class="string"> -1.77666112e+01  3.80986521e+00  6.92224640e-04 -1.47556685e+00</span></span><br><span class="line"><span class="string">  3.06049479e-01 -1.23345939e-02 -9.52747232e-01  9.31168327e-03</span></span><br><span class="line"><span class="string"> -5.24758378e-01]</span></span><br><span class="line"><span class="string">普通线性回归截距: 36.45948838509001</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 岭回归</span></span><br><span class="line">ridge = Ridge(alpha=<span class="number">10</span>)</span><br><span class="line">ridge.fit(X, y)</span><br><span class="line">w_ = ridge.coef_</span><br><span class="line">b_ = ridge.intercept_</span><br><span class="line">print(<span class="string">'岭回归斜率:\n'</span>, w_)</span><br><span class="line">print(<span class="string">'岭回归截距:'</span>, b_)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">岭回归斜率:</span></span><br><span class="line"><span class="string"> [-0.10143535  0.0495791  -0.0429624   1.95202082 -2.37161896  3.70227207</span></span><br><span class="line"><span class="string"> -0.01070735 -1.24880821  0.2795956  -0.01399313 -0.79794498  0.01003684</span></span><br><span class="line"><span class="string"> -0.55936642]</span></span><br><span class="line"><span class="string">岭回归截距: 27.467884964141252</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
@@ -350,6 +358,150 @@
         <tag>基础</tag>
         <tag>sklearn</tag>
         <tag>线性回归</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>KNN近邻算法</title>
+    <url>/2020/02/13/KNN%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="一-KNN算法概述"><a href="#一-KNN算法概述" class="headerlink" title="一: KNN算法概述"></a>一: KNN算法概述</h1><p><strong>K nearest neighbors (k邻近算法)</strong></p>
+<p>KNN是通过测量不同特征值之间的<strong>距离</strong>进行分类。</p>
+<p>KNN做分类预测时，一般是选择多数表决法，即训练集里和预测的样本特征最近的K个样本，预测为里面有最多类别数的类别。而KNN做回归时，一般是选择平均法，即最近的K个样本的样本输出的平均值作为回归预测值。</p>
+<p>它的思路是：如果一个样本在特征空间中的k个最相似(即特征空间中最邻近)的样本中的大多数属于某一个类别，则该样本也属于这个类别; 其中K通常是不大于20的整数。KNN算法中，所选择的邻居都是已经正确分类的对象。该方法在定类决策上只依据最邻近的一个或者几个样本的类别来决定待分样本所属的类别。</p>
+<p>KNN方法既可以做分类，也可以做回归</p>
+<p><strong>举例说明</strong></p>
+<p><strong>例- 1 : 图片中分三类$$w_1 红色圆圈，w_2 蓝色三角，w_3 绿色的方块$$，请问数据$$X_u$$属于哪个类别</strong></p>
+<img src="https://bkimg.cdn.bcebos.com/pic/03087bf40ad162d95867202e15dfa9ec8a13cd73?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5" style="zoom:33%;" />
+
+<p>设置k=5, 4个邻居是红色，1个邻居是绿色的; 所以是红色的概率为80%, 是绿色的概率是20%</p>
+<p><strong>例 - 2: 如下图，绿色圆要被决定赋予哪个类，是红色三角形还是蓝色四方形？</strong></p>
+<p><img src="https://bkimg.cdn.bcebos.com/pic/bf096b63f6246b60f20ccd5aebf81a4c510fa29a?x-bce-process=image/resize,m_lfit,w_268,limit_1" alt=""></p>
+<p>如果K=3，由于红色三角形所占比例为2/3，绿色圆将被赋予红色三角形那个类，如果K=5，由于蓝色四方形比例为3/5，因此绿色圆被赋予蓝色四方形类。</p>
+<p><strong>由此也说明了KNN算法的结果很大程度取决于K的选择。</strong></p>
+<br>
+
+
+
+
+<h1 id="二-KNN算法三要素"><a href="#二-KNN算法三要素" class="headerlink" title="二: KNN算法三要素"></a>二: KNN算法三要素</h1><p>KNN算法三要素: <strong>k值的选取</strong>，<strong>距离度量的方式</strong>和<strong>分类决策规则</strong></p>
+<h2 id="一-K值得选取"><a href="#一-K值得选取" class="headerlink" title="(一): K值得选取"></a>(一): K值得选取</h2><p>对于k值的选择，没有一个固定的经验，一般根据样本的分布，选择一个较小的值，可以通过交叉验证选择一个合适的k值。</p>
+<p>选择较小的k值，就相当于用较小的领域中的训练实例进行预测，训练误差会减小，只有与输入实例较近或相似的训练实例才会对预测结果起作用，与此同时带来的问题是泛化误差会增大，换句话说，K值的减小就意味着整体模型变得复杂，容易发生过拟合；<br>　　选择较大的k值，就相当于用较大领域中的训练实例进行预测，其优点是可以减少泛化误差，但缺点是训练误差会增大。这时候，与输入实例较远（不相似的）训练实例也会对预测器作用，使预测发生错误，且K值的增大就意味着整体的模型变得简单。<br>　　一个极端是k等于样本数m，则完全没有分类，此时无论输入实例是什么，都只是简单的预测它属于在训练实例中最多的类，模型过于简单。</p>
+<h2 id="二-距离的度量方式-常用欧式距离"><a href="#二-距离的度量方式-常用欧式距离" class="headerlink" title="(二): 距离的度量方式(常用欧式距离)"></a>(二): 距离的度量方式(常用欧式距离)</h2><p><strong>欧式距离:</strong><br>$$<br>d(x, y) =\sqrt{(x_1−y_1)^2+(x_2−y_2)^2+…+(x_n−y_n)^2}=\sqrt{\sum\limits_{i=1}^n(x_i - y_i)^2}<br>$$</p>
+<p><strong>曼哈顿距离:</strong><br>$$<br>d(x, y) = |x_1−y_1|+|x_2−y_2|+…+|x_n−y_n|=\sum\limits_{i=1}^n\vert x_i - y_i\vert<br>$$</p>
+<p><strong>闵可夫斯基距离:</strong><br>$$<br>d(x,y)= \sqrt[p]{(|x_1−y_1|)^p+(|x_2−y_2|)^p+…+(|x_n−y_n|)^p}=\sqrt[p]{\sum_{i=1}^n(|x_i−y_i|)^p}<br>$$<br>可以看出，欧式距离是闵可夫斯基距离距离在p=2时的特例，而曼哈顿距离是p=1时的特例。</p>
+<p><strong>方差和标准差:</strong></p>
+<p><img src="https://bkimg.cdn.bcebos.com/pic/472309f79052982281674d51ddca7bcb0b46d4c8?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U5Mg==,xp_5,yp_5" alt=""></p>
+<h2 id="三-分类决策规则"><a href="#三-分类决策规则" class="headerlink" title="(三): 分类决策规则"></a>(三): 分类决策规则</h2><p>一般都是使用前面提到的多数表决法。</p>
+<br>
+
+
+<h1 id="三-KNN算法的实现方式"><a href="#三-KNN算法的实现方式" class="headerlink" title="三: KNN算法的实现方式"></a>三: KNN算法的实现方式</h1><h2 id="一-蛮力实现"><a href="#一-蛮力实现" class="headerlink" title="(一): 蛮力实现"></a>(一): 蛮力实现</h2><p>既然我们要找到k个最近的邻居来做预测，那么我们只需要计算预测样本和所有训练集中的样本的距离，然后计算出最小的k个距离即可，接着多数表决，很容易做出预测。这个方法的确简单直接，在样本量少，样本特征少的时候有效。但是在实际运用中很多时候用不上，为什么呢？因为我们经常碰到样本的特征数有上千以上，样本量有几十万以上，如果我们这要去预测少量的测试集样本，算法的时间效率很成问题。因此，这个方法我们一般称之为蛮力实现。比较适合于少量样本的简单模型的时候用。</p>
+<h2 id="二-KD树实现原理"><a href="#二-KD树实现原理" class="headerlink" title="(二): KD树实现原理"></a>(二): KD树实现原理</h2><p>KD树算法没有一开始就尝试对测试样本分类，而是先对训练集建模，建立的模型就是KD树，建好了模型再对测试集做预测。所谓的KD树就是K个特征维度的树，注意这里的K和KNN中的K的意思不同。KNN中的K代表最近的K个样本，KD树中的K代表样本特征的维数。为了防止混淆，后面我们称特征维数为n。</p>
+<p>KD树算法包括三步，第一步是建树，第二部是搜索最近邻，最后一步是预测。</p>
+<h3 id="1-KD树建立"><a href="#1-KD树建立" class="headerlink" title="1: KD树建立"></a>1: KD树建立</h3><p>我们首先来看建树的方法。KD树建树采用的是从m个样本的n维特征中，分别计算n个特征的取值的方差，用方差最大的第k维特征$n_k$来作为根节点。对于这个特征，我们选择特征$n_k$的取值的中位数$n_{kv}$对应的样本作为划分点，对于所有第k维特征的取值小于$n_{kv}$的样本，我们划入左子树，对于第k维特征的取值大于等于$n_{kv}$的样本，我们划入右子树，对于左子树和右子树，我们采用和刚才同样的办法来找方差最大的特征来做更节点，递归的生成KD树。</p>
+<p>比如我们有二维样本6个，{(2,3)，(5,4)，(9,6)，(4,7)，(8,1)，(7,2)}，构建kd树的具体步骤为：</p>
+<ul>
+<li><p>1）找到划分的特征。6个数据点在x，y维度上的数据方差分别为6.97，5.37，所以在x轴上方差更大，用第1维特征建树。</p>
+</li>
+<li><p>2）确定划分点（7,2）。根据x维上的值将数据排序，6个数据的中值(所谓中值，即中间大小的值)为7，所以划分点的数据是（7,2）。这样，该节点的分割超平面就是通过（7,2）并垂直于：划分点维度的直线x=7；</p>
+</li>
+<li><p>3）确定左子空间和右子空间。 分割超平面x=7将整个空间分为两部分：x&lt;=7的部分为左子空间，包含3个节点={(2,3),(5,4),(4,7)}；另一部分为右子空间，包含2个节点={(9,6)，(8,1)}。</p>
+</li>
+<li><p>4）用同样的办法划分左子树的节点{(2,3),(5,4),(4,7)}和右子树的节点{(9,6)，(8,1)}。最终得到KD树。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1042406/201611/1042406-20161114151317201-1936126361.jpg" alt=""></p>
+</li>
+</ul>
+<h3 id="2-KD树搜索最近邻"><a href="#2-KD树搜索最近邻" class="headerlink" title="2: KD树搜索最近邻"></a>2: KD树搜索最近邻</h3><p>当我们生成KD树以后，就可以去预测测试集里面的样本目标点了。对于一个目标点，我们首先在KD树里面找到包含目标点的叶子节点。以目标点为圆心，以目标点到叶子节点样本实例的距离为半径，得到一个超球体，最近邻的点一定在这个超球体内部。然后返回叶子节点的父节点，检查另一个子节点包含的超矩形体是否和超球体相交，如果相交就到这个子节点寻找是否有更加近的近邻,有的话就更新最近邻。如果不相交那就简单了，我们直接返回父节点的父节点，在另一个子树继续搜索最近邻。当回溯到根节点时，算法结束，此时保存的最近邻节点就是最终的最近邻。</p>
+<p>从上面的描述可以看出，KD树划分后可以大大减少无效的最近邻搜索，很多样本点由于所在的超矩形体和超球体不相交，根本不需要计算距离。大大节省了计算时间。</p>
+<p>先进行二叉查找，先从（7,2）查找到（5,4）节点，在进行查找时是由y = 4为分割超平面的，由于查找点为y值为4.5，因此进入右子空间查找到（4,7），形成搜索路径&lt;(7,2)，(5,4)，(4,7)&gt;，但 （4,7）与目标查找点的距离为3.202，而（5,4）与查找点之间的距离为3.041，所以（5,4）为查询点的最近点； 以（2，4.5）为圆心，以3.041为半径作圆，如下图所示。可见该圆和y = 4超平面交割，所以需要进入（5,4）左子空间进行查找，也就是将（2,3）节点加入搜索路径中得&lt;(7,2)，(2,3)&gt;；于是接着搜索至（2,3）叶子节点，（2,3）距离（2,4.5）比（5,4）要近，所以最近邻点更新为（2，3），最近距离更新为1.5；回溯查找至（5,4），直到最后回溯到根结点（7,2）的时候，以（2,4.5）为圆心1.5为半径作圆，并不和x = 7分割超平面交割，如下图所示。至此，搜索路径回溯完，返回最近邻点（2,3），最近距离1.5。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1042406/201611/1042406-20161114165145763-428195796.jpg" alt=""></p>
+<h3 id="3-KD树预测"><a href="#3-KD树预测" class="headerlink" title="3: KD树预测"></a>3: KD树预测</h3><p>有了KD树搜索最近邻的办法，KD树的预测就很简单了，在KD树搜索最近邻的基础上，我们选择到了第一个最近邻样本，就把它置为已选。在第二轮中，我们忽略置为已选的样本，重新选择最近邻，这样跑k次，就得到了目标的K个最近邻，然后根据多数表决法，如果是KNN分类，预测为K个最近邻里面有最多类别数的类别。如果是KNN回归，用K个最近邻样本输出的平均值作为回归预测值。</p>
+<h2 id="三-球树实现原理"><a href="#三-球树实现原理" class="headerlink" title="(三): 球树实现原理"></a>(三): 球树实现原理</h2><p><strong>KD树和球树类似，主要区别在于球树得到的是节点样本组成的最小超球体，而KD得到的是节点样本组成的超矩形体，这个超球体要与对应的KD树的超矩形体小，这样在做最近邻搜索的时候，可以避免一些无谓的搜索。</strong></p>
+<h3 id="1-球树建立"><a href="#1-球树建立" class="headerlink" title="1: 球树建立"></a>1: 球树建立</h3><p>1)  先构建一个超球体，这个超球体是可以包含所有样本的最小球体。</p>
+<p>2) 从球中选择一个离球的中心最远的点，然后选择第二个点离第一个点最远，将球中所有的点分配到离这两个聚类中心最近的一个上，然后计算每个聚类的中心，以及聚类能够包含它所有数据点所需的最小半径。这样我们得到了两个子超球体，和KD树里面的左右子树对应。</p>
+<p>3) 对于这两个子超球体，递归执行步骤2). 最终得到了一个球树。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1042406/201611/1042406-20161114172004185-213758204.jpg" alt=""></p>
+<h3 id="2-球树搜索最近邻"><a href="#2-球树搜索最近邻" class="headerlink" title="2: 球树搜索最近邻"></a>2: 球树搜索最近邻</h3><p>使用球树找出给定目标点的最近邻方法是首先自上而下贯穿整棵树找出包含目标点所在的叶子，并在这个球里找出与目标点最邻近的点，这将<strong>确定出目标点距离它的最近邻点的一个上限值</strong>，然后跟KD树查找一样，检查兄弟结点，如果<font color=red>目标点到兄弟结点中心的距离超过兄弟结点的半径与当前的上限值之和</font>，那么兄弟结点里<strong>不可能</strong>存在一个更近的点；<font color=red>如果上诉描述相反,说明有可能存在,也有可能不存在，</font><strong>必须进一步检查位于兄弟结点以下的子树。</strong></p>
+<p>检查完兄弟节点后，我们向父节点回溯，继续搜索最小邻近值。当回溯到根节点时，此时的最小邻近值就是最终的搜索结果。</p>
+<p>从上面的描述可以看出，<strong>KD树在搜索路径优化时使用的是两点之间的距离来判断，而球树使用的是两边之和大于第三边来判断，相对来说球树的判断更加复杂，但是却避免了更多的搜索，这是一个权衡。</strong></p>
+<br>
+
+
+<h1 id="四-KNN算法的思想总结"><a href="#四-KNN算法的思想总结" class="headerlink" title="四: KNN算法的思想总结"></a>四: KNN算法的思想总结</h1><p>就是在训练集中数据和标签已知的情况下，输入测试数据，将测试数据的特征与训练集中对应的特征进行相互比较，找到训练集中与之最为相似的前K个数据，则该测试数据对应的类别就是K个数据中出现次数最多的那个分类，其算法的描述为：</p>
+<ul>
+<li><p>计算测试数据与各个训练数据之间的距离；</p>
+</li>
+<li><p>按照距离的递增关系进行排序；</p>
+</li>
+<li><p>选取距离最小的K个点；</p>
+</li>
+<li><p>确定前K个点所在类别的出现频率；</p>
+</li>
+<li><p>返回前K个点中出现频率最高的类别作为测试数据的预测分类。</p>
+</li>
+</ul>
+<br>
+
+
+<h1 id="五-KNN算法应用"><a href="#五-KNN算法应用" class="headerlink" title="五: KNN算法应用"></a>五: KNN算法应用</h1><h2 id="一-分类应用"><a href="#一-分类应用" class="headerlink" title="(一): 分类应用"></a>(一): 分类应用</h2><h3 id="1-KNN算法实现鸢尾花分类"><a href="#1-KNN算法实现鸢尾花分类" class="headerlink" title="1: KNN算法实现鸢尾花分类"></a>1: KNN算法实现鸢尾花分类</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score   <span class="comment"># 准确率计算</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X, y = datasets.load_iris(<span class="literal">True</span>)   <span class="comment"># True表示只获取数据和目标值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认划分比例是 4:1</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=<span class="number">1024</span>)   <span class="comment"># random_state=1024设置固定的随机</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=<span class="number">5</span>)   <span class="comment"># n_neighbors=5设置k值</span></span><br><span class="line">knn.fit(X_train, y_train)</span><br><span class="line">y_ = knn.predict(X_test)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'预测值:\n'</span>, y_)</span><br><span class="line">print(<span class="string">'实际值:\n'</span>, y_test)</span><br><span class="line">print(<span class="string">'准确率1:\n'</span>, accuracy_score(y_test, y_))</span><br><span class="line">print(<span class="string">'准确率2:\n'</span>, knn.score(X_test, y_test))</span><br><span class="line">print(<span class="string">'人工准确率:\n'</span>, (y_ == y_test).mean())</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">预测值:</span></span><br><span class="line"><span class="string"> [1 0 2 2 0 0 1 2 1 0 0 0 1 2 2 0 1 0 2 0 2 0 1 0 2 1 2 2 2 2 1 2 2 2 1 2 1</span></span><br><span class="line"><span class="string"> 1]</span></span><br><span class="line"><span class="string">实际值:</span></span><br><span class="line"><span class="string"> [1 0 2 2 0 0 1 2 1 0 0 0 1 2 1 0 1 0 2 0 2 0 1 0 2 1 2 2 2 2 1 2 2 2 1 1 1</span></span><br><span class="line"><span class="string"> 1]</span></span><br><span class="line"><span class="string">准确率1:</span></span><br><span class="line"><span class="string"> 0.9473684210526315</span></span><br><span class="line"><span class="string">准确率2:</span></span><br><span class="line"><span class="string"> 0.9473684210526315</span></span><br><span class="line"><span class="string">人工准确率:</span></span><br><span class="line"><span class="string"> 0.9473684210526315</span></span><br><span class="line"><span class="string"> '''</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-KNN算法诊断癌症"><a href="#2-KNN算法诊断癌症" class="headerlink" title="2: KNN算法诊断癌症"></a>2: KNN算法诊断癌症</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data = pd.read_csv(<span class="string">'./cancer.csv'</span>, sep=<span class="string">'\t'</span>)   <span class="comment"># sep='\t'分隔符是table键</span></span><br><span class="line">y = data[<span class="string">'Diagnosis'</span>]</span><br><span class="line">X = data.iloc[:, <span class="number">2</span>:]</span><br><span class="line">display(y.head(), X.head())   <span class="comment"># 细胞的各项指标</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=<span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># for循环寻找最准确的k值</span></span><br><span class="line">score = []</span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> np.arange(<span class="number">2</span>, <span class="number">16</span>):</span><br><span class="line">    knn = KNeighborsClassifier(n_neighbors=k, weights=<span class="string">'uniform'</span>, algorithm=<span class="string">'kd_tree'</span>)</span><br><span class="line">    <span class="comment"># n_neighbors选取的邻居的数量, 默认为5(一般小于总样本呢量的开平放), 例如 样本数为100, 邻居数量小于10</span></span><br><span class="line">    <span class="comment"># weights='distance'各样本权重的不同(最后计算平均值); weights='uniform'各样本的权重统一(默认)(最后计算平均值)</span></span><br><span class="line">    <span class="comment"># algorithm='kd_tree' 寻找邻居的方式为KD树, algorithm=brute(蛮力-计算所有样本到目标值的距离)</span></span><br><span class="line">    knn.fit(X_train, y_train)</span><br><span class="line">    s = knn.score(X_test, y_test)</span><br><span class="line">    score.append([k,s])</span><br><span class="line">score = pd.DataFrame(score, columns=[<span class="string">'k'</span>, <span class="string">'accuracy'</span>])</span><br><span class="line">print(score)</span><br><span class="line">acc = score[<span class="string">'accuracy'</span>]</span><br><span class="line">index = acc.idxmax()   <span class="comment"># 获取accuracy最大时对应的k值</span></span><br><span class="line">print(<span class="string">'最合适的k数量:'</span>, score[<span class="string">'k'</span>][index])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">     k  accuracy</span></span><br><span class="line"><span class="string">0    2  0.923077</span></span><br><span class="line"><span class="string">1    3  0.916084</span></span><br><span class="line"><span class="string">2    4  0.923077</span></span><br><span class="line"><span class="string">3    5  0.916084</span></span><br><span class="line"><span class="string">4    6  0.937063</span></span><br><span class="line"><span class="string">5    7  0.916084</span></span><br><span class="line"><span class="string">6    8  0.937063</span></span><br><span class="line"><span class="string">7    9  0.937063</span></span><br><span class="line"><span class="string">8   10  0.937063</span></span><br><span class="line"><span class="string">9   11  0.937063</span></span><br><span class="line"><span class="string">10  12  0.937063</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">11  13  0.944056</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">12  14  0.930070</span></span><br><span class="line"><span class="string">13  15  0.937063</span></span><br><span class="line"><span class="string">最合适的邻居数量: 13</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">当k=<span class="number">13</span>时, 预测诊断的效果最好;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二-回归应用"><a href="#二-回归应用" class="headerlink" title="(二): 回归应用"></a>(二): 回归应用</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsRegressor <span class="comment"># 回归</span></span><br><span class="line"><span class="comment"># 魔法指令，预加载,显示画图(新版本不需要)</span></span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X = np.linspace(<span class="number">0</span>,<span class="number">2</span>*np.pi, <span class="number">60</span>).reshape(<span class="number">-1</span>, <span class="number">1</span>)   <span class="comment"># 元数据只是1维的,算法使用的数据的结构必须是二维的</span></span><br><span class="line">X_test = np.linspace(<span class="number">0</span>,<span class="number">2</span>*np.pi, <span class="number">256</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">y = np.sin(X)</span><br><span class="line">plt.scatter(X,y)</span><br><span class="line"></span><br><span class="line">knn = KNeighborsRegressor(weights=<span class="string">'distance'</span>)   </span><br><span class="line"><span class="comment"># distance每个样本的权重不一样, 计算带权重的平均值</span></span><br><span class="line"><span class="comment"># uniform每个样本的权重一样, 计算平均值</span></span><br><span class="line">knn.fit(X, y)</span><br><span class="line">y_ = knn.predict(X_test)</span><br><span class="line">plt.plot(X_test, y_, color=<span class="string">'red'</span>)</span><br><span class="line">plt.scatter(X,y, color=<span class="string">'green'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="三-交叉表"><a href="#三-交叉表" class="headerlink" title="(三): 交叉表"></a>(三): 交叉表</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pd.crosstab(index = y_test, columns=y_, rownames=[<span class="string">'确诊'</span>], colnames=[<span class="string">'预测'</span>],margins=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://images.cnblogs.com/cnblogs_com/anjhon/1913094/o_210107150155pandas%E4%BA%A4%E5%8F%89%E8%A1%A8.png" alt="交叉表详解"></p>
+<br>
+
+
+<h1 id="六-数据预处理"><a href="#六-数据预处理" class="headerlink" title="六: 数据预处理"></a>六: 数据预处理</h1><h2 id="一-数据归一化"><a href="#一-数据归一化" class="headerlink" title="(一): 数据归一化"></a>(一): 数据归一化</h2><h3 id="1-最大值最小值归一化"><a href="#1-最大值最小值归一化" class="headerlink" title="1: 最大值最小值归一化"></a>1: 最大值最小值归一化</h3><p>也称为离差标准化，是对原始数据的线性变换，使结果值映射到[0 - 1]之间。</p>
+<p><strong>转换函数如下：</strong><br>$$<br>x_{normalization} = \frac{x - min}{max-min}<br>$$<br><strong>优化上面癌症诊断的例子:</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方法一: 手写最大值最小值归一化</span></span><br><span class="line">X1 = (X - X.min())/(X.max()-X.min())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二: 直接调用最大值最小值归一化</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler   <span class="comment"># 最小值最大值归一化方法</span></span><br><span class="line">scaler = MinMaxScaler()</span><br><span class="line">X1 = scaler.fit_transform(X)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练并诊断(1000次取平均)</span></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    X_train, X_test, y_train, y_test = train_test_split(X1, y)</span><br><span class="line">    knn = KNeighborsClassifier()</span><br><span class="line">    knn.fit(X_train, y_train)</span><br><span class="line">    score += knn.score(X_test, y_test)/<span class="number">1000</span></span><br><span class="line">print(score)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0.9674265734265755</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">可见,诊断准确率明显提高</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-Z-score归一化"><a href="#2-Z-score归一化" class="headerlink" title="2: Z-score归一化"></a>2: Z-score归一化</h3><p>这种方法给予原始数据的均值（mean）和标准差（standard deviation）进行数据的标准化。经过处理的数据符合标准正态分布，即均值为0，标准差为1</p>
+<p>转化函数为：<br>$$<br>x_{normalization} = \frac{x - \mu}{\sigma}<br>$$<br>$\mu$是平均值<br>        $\sigma$是标准差</p>
+<p><strong>优化上面癌症诊断的例子:</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方法一: 手写Z-score归一化</span></span><br><span class="line">X2 = (X - X.mean())/(X.std())   <span class="comment"># std是标准差,求每个属性的平均值</span></span><br><span class="line">X2.std()   <span class="comment"># Z-score归一化返回的结果的标准差是1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二: 调用Z-score归一化</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">X2 = scaler.fit_transform(X)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    X_train, X_test, y_train, y_test = train_test_split(X2, y)</span><br><span class="line">    knn = KNeighborsClassifier()</span><br><span class="line">    knn.fit(X_train, y_train)</span><br><span class="line">    score += knn.score(X_test, y_test)/<span class="number">1000</span></span><br><span class="line">print(score)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0.9649860139860167</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="3-sigmoid归一化"><a href="#3-sigmoid归一化" class="headerlink" title="3: sigmoid归一化"></a>3: sigmoid归一化</h3><p>转换函数:<br>$$<br>x_{normalization} = \frac{1}{1+e^{-x}}<br>$$<br>代码略</p>
+<p>sigmoid函数对本组数据优化效果不好,说明并不适用于本组数据</p>
+<h2 id="二-3-sigma剔除异常值"><a href="#二-3-sigma剔除异常值" class="headerlink" title="(二): 3 sigma剔除异常值"></a>(二): 3 sigma剔除异常值</h2><p>原理:<br>$$<br>|𝑋−𝜇|&gt;3𝜎<br>$$</p>
+<p>$\mu$是平均值</p>
+<p>$\sigma是标准差$</p>
+<p>满足以上判断条件的值为异常值</p>
+<p><strong>代码实现(剔除异常癌症数据):</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier   <span class="comment"># knn</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler, MinMaxScaler   <span class="comment"># 归一化方法</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取数据</span></span><br><span class="line">data = pd.read_csv(<span class="string">'./cancer.csv'</span>, sep=<span class="string">'\t'</span>)</span><br><span class="line">X = data.iloc[:, <span class="number">2</span>:]</span><br><span class="line">y = data.iloc[:, <span class="number">1</span>]</span><br><span class="line"><span class="comment"># 归一化</span></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">X = scaler.fit_transform(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 异常值处理</span></span><br><span class="line"><span class="comment"># 正常值</span></span><br><span class="line">cond = np.abs(X-X.mean(axis=<span class="number">0</span>)) &lt; <span class="number">4</span>*X.std(axis=<span class="number">0</span>)   <span class="comment"># 根据数据调整sigema的系数</span></span><br><span class="line">cond = cond.all(axis=<span class="number">1</span>)  </span><br><span class="line">X1 = X[cond]</span><br><span class="line">y1 = y[cond]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 异常值</span></span><br><span class="line">cond = np.abs(X-X.mean(axis=<span class="number">0</span>)) &gt; <span class="number">4</span>*X.std(axis=<span class="number">0</span>)</span><br><span class="line">cond = cond.any(axis=<span class="number">1</span>)  </span><br><span class="line">X2 = X[cond]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    X_train, X_test, y_train, y_test = train_test_split(X1, y1)</span><br><span class="line">    knn = KNeighborsClassifier()</span><br><span class="line">    knn.fit(X_train, y_train)</span><br><span class="line">    score += knn.score(X_test, y_test)/<span class="number">1000</span></span><br><span class="line">print(<span class="string">'数据清洗后的准确率:'</span>, score)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">数据清洗后的准确率: 0.964276119402978</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><a href="https://www.cnblogs.com/pinard/p/6061661.html" target="_blank" rel="noopener">借鉴文章 - K近邻法(KNN)原理小结 - 刘建平</a></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>基础</tag>
+        <tag>KNN</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -976,9 +1128,9 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
         <category>Git &amp; Shell</category>
       </categories>
       <tags>
+        <tag>基础</tag>
         <tag>shell</tag>
         <tag>脚本</tag>
-        <tag>基础</tag>
         <tag>编程语言</tag>
       </tags>
   </entry>
@@ -1199,9 +1351,9 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
         <category>Git &amp; Shell</category>
       </categories>
       <tags>
-        <tag>指令</tag>
         <tag>git</tag>
         <tag>技术文档</tag>
+        <tag>指令</tag>
       </tags>
   </entry>
   <entry>
@@ -1220,6 +1372,49 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
         <tag>Linux</tag>
         <tag>shell</tag>
         <tag>脚本</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用指令集</title>
+    <url>/2019/01/20/Linux%E5%92%8CGit%E5%91%BD%E4%BB%A4%E9%9B%86/</url>
+    <content><![CDATA[<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p><strong>对本地实施版本控制并同步到服务器:</strong></p>
+<ol>
+<li>git init   —&gt;   将普通文件夹变成版本仓库</li>
+<li>git add .   —&gt;   将文件从工作区同步到暂存区</li>
+<li>git commit -m ‘项目描述信息’   —&gt;   将文件提交到本地仓库</li>
+<li>git status   —&gt;  查看当前的执行状态(经常用)</li>
+<li>git log   —&gt;   查看版本</li>
+<li>git reflog   —&gt;   </li>
+<li>git reset –hard 版本号   —&gt;   去到指定版本</li>
+<li>git tag v0.1 —&gt; 添加版本号0.1</li>
+<li>git remote add origin <url>   —&gt;   绑定远端仓库</li>
+<li>git remote -v   —&gt;   查看是否已经连接远端仓库</li>
+<li>git push -u origin master   —&gt;   将本地代码推到服务器仓库(第一次绑定才需要加 -U 为了指定上行流,要把代码推到哪里去)</li>
+<li>git pull</li>
+<li>git pull –allow-unrelated-histories origin master   —&gt;   当远端和本地版本不同时,将远端的东西pull下来和本地合并</li>
+<li>git reset –hard HEAD^   —&gt;   回到上一版本</li>
+<li>git clone –depth=1 gitegitee.com:jackfrued/djangocase.git djangocse2    —&gt;   克隆djangocase,只克隆最新版本–depth=1, 重命名为djangocase2, </li>
+<li>git remote remove origin ： 删除与远端仓库的关联</li>
+<li>git revert 版本号    ： 可以修改版本信息</li>
+<li>git diff</li>
+<li>在空文件夹内加.gitkeep文件,则空文件夹在版本控制时不会被忽略</li>
+</ol>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -vE   ---&gt;   -v表示不搜什么,E表示正则表达式</span><br><span class="line">感叹号加历史记录的编号   -&gt;   将历史命令重新执行一遍</span><br><span class="line">!v   -&gt;   将历史记录中最近的以v开头的命令执行一遍</span><br><span class="line"><span class="keyword">history</span> -<span class="keyword">c</span>   -&gt;   将历史记录全部清除</span><br><span class="line">alias <span class="string">'ll=ls -l'</span>   -&gt;   命令别名</span><br><span class="line">unalias <span class="keyword">ll</span>   -&gt;   取消别名</span><br><span class="line">yum <span class="keyword">update</span>   -&gt;   更新库内能更新的包</span><br><span class="line">nohup <span class="keyword">make</span> &gt;&gt; ~/install.<span class="built_in">log</span> &amp;   -&gt;   将程序放到后台运行,并且不接受中断信号</span><br><span class="line">chmod <span class="keyword">u</span>+<span class="keyword">x</span>,g+<span class="keyword">x</span>,<span class="keyword">o</span>+<span class="keyword">x</span> test.<span class="keyword">py</span>  =  chmod <span class="number">755</span> test.<span class="keyword">py</span></span><br><span class="line">etc目录是专门放配置文件的</span><br><span class="line">在.<span class="keyword">py</span>文件内加入以下代码,写了文件名就能执行文件</span><br><span class="line">#!/usr/bin/<span class="keyword">python3</span> </span><br><span class="line"># -*- codin<span class="variable">g:</span> utf-<span class="number">8</span> -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 查看当前登录的用户信息</span><br><span class="line">who   看所有</span><br><span class="line"><span class="keyword">w</span>   能看到最详细的登录信息</span><br><span class="line">who <span class="keyword">am</span> i   看自己</span><br><span class="line">whoami   看自己用户名</span><br><span class="line"><span class="keyword">last</span>   查看最近登录的用户</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 关机系列</span><br><span class="line">shutdown   关机</span><br><span class="line">shutdown now   立即关机</span><br><span class="line">shutdown -r   重启</span><br><span class="line">shutdown -h   关机后关闭电源</span><br><span class="line">halt   关机关电源</span><br><span class="line">reboot   重启</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 其他</span><br><span class="line">logout   登出</span><br><span class="line"><span class="keyword">cal</span>   查看日历</span><br><span class="line">date   查看当前时间</span><br><span class="line">man   查看命令帮助手册</span><br><span class="line">su(switch user) 用户名   切换用户</span><br><span class="line"><span class="keyword">exit</span>   退出当前用户</span><br><span class="line">adduser / passwd / userdel   创建用户(-g指定分组) / 修改密码 / 删除用户</span><br><span class="line">date / <span class="keyword">cal</span>   查看时间</span><br><span class="line"><span class="keyword">write</span> / <span class="keyword">wall</span> / mesg   发消息</span><br><span class="line">clear   清屏</span><br><span class="line">man / info / --<span class="keyword">help</span>   参看帮助</span><br><span class="line"><span class="keyword">history</span>   历史命令</span><br><span class="line">    -<span class="keyword">c</span>   清除历史命令</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 文件相关命令</span><br><span class="line"><span class="number">1</span>. <span class="keyword">pwd</span></span><br><span class="line"><span class="number">2</span>. <span class="keyword">cd</span></span><br><span class="line"><span class="number">3</span>. <span class="keyword">ls</span></span><br><span class="line">    -<span class="keyword">l</span>   长格式查看</span><br><span class="line">    -<span class="keyword">a</span>   所有文件</span><br><span class="line">    -R   递归查看</span><br><span class="line">    -d   只看文件夹</span><br><span class="line"><span class="number">4</span>. <span class="keyword">cat</span> </span><br><span class="line">    -n   给文件添加行号查看</span><br><span class="line"><span class="number">5</span>. touch   创建空文件</span><br><span class="line"><span class="number">6</span>. <span class="built_in">mkdir</span>   创建文件夹</span><br><span class="line">    -<span class="keyword">p</span>   创建父文件夹</span><br><span class="line"><span class="number">7</span>. rm   删除</span><br><span class="line">    -<span class="keyword">f</span>   强制删除</span><br><span class="line">    -r   递归删除</span><br><span class="line"><span class="number">8</span>. rmdir   删除空文件夹</span><br><span class="line"><span class="number">9</span>. wget   通过网络获取文件</span><br><span class="line">    - O   下下来重命名</span><br><span class="line">    - 例 wget http<span class="variable">s:</span>//www.baidu.<span class="keyword">com</span></span><br><span class="line"><span class="number">10</span>. gzip / gunzip   压缩 / 解压缩</span><br><span class="line"><span class="number">11</span>. xz</span><br><span class="line">    -<span class="keyword">z</span> 压缩</span><br><span class="line">    -d 解压缩</span><br><span class="line"><span class="number">12</span>. tar </span><br><span class="line">    -xvf 解归档</span><br><span class="line">    -cvf 归档</span><br><span class="line"><span class="number">13</span>. <span class="keyword">sort</span> 排序</span><br><span class="line"><span class="number">14</span>. uniq 文件去重</span><br><span class="line"><span class="number">15</span>. more 分页查看文件</span><br><span class="line"><span class="number">16</span>. <span class="keyword">cp</span></span><br><span class="line"><span class="keyword">cp</span> 文件名 路径   拷贝文件到路径</span><br><span class="line"><span class="keyword">cp</span> 文件名 路径+文件名   拷贝文件到路径并重命名</span><br><span class="line"><span class="keyword">cp</span> -r 文件夹 路径   拷贝文件夹到路径</span><br><span class="line"><span class="number">17</span>. mv</span><br><span class="line">mv 文件名 路径   移动文件到路径</span><br><span class="line">mv 文件夹 路径   移动文件夹到路径</span><br><span class="line">mv 文件名 路径+文件名   移动文件到路径并重命名</span><br><span class="line">mv 文件名<span class="number">1</span> 文件名<span class="number">2</span>   重命名</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">| 管道:将多个进程连接起来,将上一个命令的输出作为下一个命令的输入</span><br><span class="line">&gt; 重定向</span><br><span class="line">&gt;&gt; 追加重定向</span><br><span class="line"><span class="number">2</span>&gt; 错误输出重定向</span><br><span class="line"><span class="number">2</span>&gt;&gt; 错误追加输出重定向</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="keyword">vim</span>编辑器的使用</span><br><span class="line">dd   删除一行</span><br><span class="line"><span class="number">100</span> dd   删除<span class="number">100</span>行</span><br><span class="line">:<span class="keyword">set</span> <span class="keyword">nu</span>    显示行号</span><br><span class="line">:<span class="keyword">set</span> nonu   不显示行号</span><br><span class="line">:<span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>   设置<span class="keyword">tabl</span>键为<span class="number">4</span>个空格</span><br><span class="line">uu   撤销</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>的三种模式:</span><br><span class="line">- 命令模式-按键代表命令   ---i或者<span class="keyword">a</span>---&gt;编辑模式</span><br><span class="line">                        ---:或者/--&gt;未行模式</span><br><span class="line">    ~ G - 光标移到文件末尾 / <span class="number">500</span>G - 光标移到第<span class="number">500</span>行 / gg-光标移到行首 / hjkL-左下右上（前面可以加数字）</span><br><span class="line">    ~ CtrL+<span class="keyword">y</span> / Ctrl+<span class="keyword">e</span>  - 移动一行</span><br><span class="line">    ~ CtrL+<span class="keyword">f</span> / Ctrl+<span class="keyword">b</span>  - 翻一页</span><br><span class="line">    ~ <span class="number">0</span> - 光标到行首 / $ - 光标到行尾 / <span class="keyword">w</span> - 光标移到下一个单词</span><br><span class="line">    ~ dd - 删除光标所在行 / <span class="number">100</span>dd - 从光标所在行向下删除<span class="number">100</span>行</span><br><span class="line">    ~ yy - 复制光标所在行 / <span class="number">10</span>yy - 从光标所在行开始复制<span class="number">10</span>行</span><br><span class="line">    ~ <span class="keyword">p</span> - 粘贴 / <span class="number">5</span><span class="keyword">p</span>-粘贴<span class="number">5</span>遍</span><br><span class="line">    ~ <span class="keyword">u</span> - 撤销 / ctrl+r - 恢复</span><br><span class="line">- 编辑模式-键入内容   ---Esc---&gt;命令模式</span><br><span class="line">- 末行模式-搜索/配置/执行系统命令   ---Enter---&gt;命令模式</span><br><span class="line">    ~ <span class="keyword">set</span> <span class="keyword">nu</span>-显示行号-<span class="keyword">set</span> nonu</span><br><span class="line">    ~ <span class="keyword">syntax</span> <span class="keyword">on</span>-显示高亮语法-<span class="keyword">syntax</span> off</span><br><span class="line">    ~ <span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>-修改制表键的空格数</span><br><span class="line">    ~ <span class="keyword">set</span> ruler-显示光标所在的位置-<span class="keyword">set</span> noruler</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>配置</span><br><span class="line">创建文件 .vimrc</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">nu</span>   设位置行号</span><br><span class="line"><span class="keyword">syntax</span> <span class="keyword">on</span>   语法高亮</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>   设置制表键为<span class="number">4</span>个空格</span><br><span class="line"><span class="keyword">set</span> expandtab   将制表键转换成空格</span><br><span class="line"><span class="keyword">set</span> autoindent   自动缩进</span><br><span class="line"><span class="keyword">set</span> ruler   显示光标</span><br><span class="line"><span class="keyword">set</span> nohls   设置高亮</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 题外话</span><br><span class="line">配置<span class="keyword">python3</span>环境变量</span><br><span class="line"><span class="number">1</span>. 注册PATH环境变量</span><br><span class="line"><span class="keyword">cd</span>~</span><br><span class="line"><span class="keyword">vim</span>.bash_profile</span><br><span class="line">PATH=...：/usr/Local/python37/bin</span><br><span class="line"><span class="number">2</span>. 激活环境变量</span><br><span class="line"><span class="keyword">source</span>.bash_profile</span><br><span class="line"><span class="number">3</span>. 测试安装是否成功</span><br><span class="line"><span class="keyword">python3</span>--<span class="keyword">version</span></span><br><span class="line"></span><br><span class="line">## 命令别名</span><br><span class="line">alias <span class="keyword">ll</span>=<span class="string">'ls -l'</span>   将<span class="keyword">ls</span> -<span class="keyword">l</span> 命名为<span class="keyword">ll</span></span><br><span class="line">unalias <span class="keyword">ll</span>   取消别名</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>宏操作</span><br><span class="line">~ 录制宏: <span class="keyword">qa</span>（<span class="keyword">a</span>是寄存器的名字）- 在录制宏是左下角会显示 recoding</span><br><span class="line">~ 结束录制: q</span><br><span class="line">~ 播放宏: @a（<span class="keyword">a</span>是寄存器的名字）- 前面可以加数值,表示播放几遍</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><figure class="highlight xl"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">select</span> user,host from mysql.user;   ---&gt;</span>   查询所有的用户和登录主机</span><br><span class="line"><span class="function"><span class="title">select</span> current_user();   ---&gt;</span>   查询当前用户</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">mysql</span> -u root -p   ---&gt;</span>   登录mysql数据库</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">redis</span>-server --requirepass 119148 --port 6379 &gt;&gt; redis.<span class="built_in">log</span> &amp;   ---&gt;</span>   启动redis服务器,设置连接密码,指定redis端口,将日志文件写到redis.<span class="built_in">log</span>文件,并且后台运行</span><br><span class="line"><span class="function"><span class="title">redis</span>-cli   ---&gt;</span>   登录redis</span><br><span class="line"><span class="function"><span class="title">auth</span>:   ---&gt;</span>   输入密码</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>git</tag>
+        <tag>配置</tag>
+        <tag>技术文档</tag>
       </tags>
   </entry>
   <entry>
@@ -1247,10 +1442,10 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
         <category>Linux</category>
       </categories>
       <tags>
+        <tag>配置</tag>
         <tag>技术文档</tag>
         <tag>Linux软件</tag>
         <tag>服务器</tag>
-        <tag>配置</tag>
       </tags>
   </entry>
   <entry>
@@ -1524,6 +1719,62 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
+    <title>Python基础：13:文件操作</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.13%20%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="一-文件操作"><a href="#一-文件操作" class="headerlink" title="一 . 文件操作"></a>一 . 文件操作</h1><h2 id="1-数据的存储"><a href="#1-数据的存储" class="headerlink" title="1. 数据的存储"></a>1. 数据的存储</h2><h3 id="1-数据存储"><a href="#1-数据存储" class="headerlink" title="1).数据存储"></a>1).数据存储</h3><p>计算机存储分为运行内存和硬盘存储<br>运行内存是用来存储程序运行过程中产生的数据,程序结束,数据销毁<br>硬盘存储的文件则一直存在</p>
+<h3 id="2-常用的文件"><a href="#2-常用的文件" class="headerlink" title="2).常用的文件"></a>2).常用的文件</h3><p>文本文件: txt, json(前后端), plist(页面), 数据库文件<br>二进制文件: 图片文件: png, jpg… ;音频文件: mp3, wav…; exe文件等</p>
+<h2 id="2-文件操作"><a href="#2-文件操作" class="headerlink" title="2. 文件操作"></a>2. 文件操作</h2><p><strong>文件内容操作基本步骤 : 打开文件 -&gt; 操作文件(读, 写) -&gt; 关闭文件</strong></p>
+<h3 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1) . 打开文件"></a>1) . 打开文件</h3><p><strong>open(file, mode=’r’, encoding=None)</strong></p>
+<p>open(文件地址, 读写方式, 文本编码方式) - 以指定方式打开指定文件返回文件对象</p>
+<p><strong>说明:</strong><br><strong>file ——&gt; 文件路径(相对路径或绝对路径)</strong><br>相对路径: ./  -  表示当前目录<br>&emsp;&emsp;&emsp;&emsp;../  -  表示当前目录的上层目录</p>
+<p><strong>mode ——&gt; 文件打开方式,决定打开文件后的操作权限(读-r , 写-w)操作文件的数据类型(文本-t, 二进制-b)</strong><br>文本文件在读取的时候可以用rt, rb,但是二进制文件只能用rb读取<br>a - 只写(a和w的区别就是,a打开文件不会删除源文件,w会)<br>&gt;&gt;&gt; a和w打开文件的时候,若文件不存在,会创建新文件<br>r打开文件时,若文件不存在,报错</p>
+<p><strong>encoding -  文本文件编码方式,只能用t打开文本文件的时候才能赋值</strong><br>一般采用’utf-8’的编码方式编码,保证同一文件读和写的编码方式一样</p>
+<h3 id="2-文件操作-1"><a href="#2-文件操作-1" class="headerlink" title="2).文件操作"></a>2).文件操作</h3><p><strong>a.读操作</strong><br>文件对象.read()   -   读指定文件,返回文件中的内容(所有文件)<br>文件对象.readline()   -   读指定文件的1行内容(只支持文本文件)<br>文件对象.close()   -   关闭操作好的文件</p>
+<p><strong>文件读完之后,光标会停在最后读取的位置,再继续读取的话接着上次的位置继续</strong><br><strong>b.写操作</strong><br>文件对象.write(内容)   -   将指定的功能写入到指定的文件中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">o3 = open(<span class="string">r'../test/诗.txt'</span>, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    line = o3.readline()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    print(line)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="二-数据持久化"><a href="#二-数据持久化" class="headerlink" title="二 . 数据持久化"></a>二 . 数据持久化</h1><h2 id="1-数据持久化"><a href="#1-数据持久化" class="headerlink" title="1. 数据持久化"></a>1. 数据持久化</h2><p>1).需要持久化的数据要存到文件中<br>2).需要数据的时候不直接赋值,从文件中读取数据<br>3).若数据的值发生改变,则将新数据更新到文件中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在程序中用一个变量来记录当前程序启动的次数</span></span><br><span class="line"><span class="comment"># count</span></span><br><span class="line"></span><br><span class="line">f = open(<span class="string">r'../test/num.txt'</span>, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">count = int(f.read())</span><br><span class="line">print(count)</span><br><span class="line"></span><br><span class="line">count += <span class="number">1</span></span><br><span class="line">f = open(<span class="string">r'../test/num.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">f.write(str(count))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-文件域"><a href="#2-文件域" class="headerlink" title="2. 文件域"></a>2. 文件域</h2><p><strong><em>with open(文件路径,打开方式,编码方式) as 文件对象</em></strong><br>文件路径可以是绝对路径也可以是行对路径<br>相对路径中 ./ 代表当前目录 ; ../ 代表当前目录的上层目录,依次类推</p>
+<h2 id="3-容器字符串的转换-eval"><a href="#3-容器字符串的转换-eval" class="headerlink" title="3.容器字符串的转换:eval"></a>3.容器字符串的转换:eval</h2><p>当一个字符串内是一个完整的其他容器(列表,字典,集合,元组)时,eval(字符串)可将字符串转换成相应的容器</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">str1 = <span class="string">'[1, 2, 3, 4]'</span></span><br><span class="line">re1 = eval(str1)</span><br><span class="line">print(re1, type(re1))</span><br><span class="line"></span><br><span class="line">str2 = <span class="string">"&#123;'name': 2, 'age': 4&#125;"</span></span><br><span class="line">re2 = eval(str2)</span><br><span class="line">print(re2, type(re2))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="三-json"><a href="#三-json" class="headerlink" title="三 . json"></a>三 . json</h1><p><strong>json模块是python中专门用来支持json数据的模块</strong></p>
+<h2 id="1-json"><a href="#1-json" class="headerlink" title="1.json"></a>1.json</h2><p><strong>json是一种数据格式,专门用来解决各个计算机语言间数据不能互通的问题</strong></p>
+<h3 id="1-一个json只有一个数据"><a href="#1-一个json只有一个数据" class="headerlink" title="1).一个json只有一个数据"></a>1).一个json只有一个数据</h3><h3 id="2-唯一的这个数据必须是json支持的数据类型"><a href="#2-唯一的这个数据必须是json支持的数据类型" class="headerlink" title="2).唯一的这个数据必须是json支持的数据类型"></a>2).唯一的这个数据必须是json支持的数据类型</h3><p><strong>json支持的数据类型:</strong></p>
+<ul>
+<li>a.数字类型(number) ——&gt; 所有数字,支持科学计数法,直接写</li>
+<li>b.字符串(string) ——&gt; 文本数据,只能用双引号引起来,并且支持转义字符<pre><code>&quot;abc&quot;, &quot;sadhuwe&quot;, ...</code></pre></li>
+<li>c.布尔值(boolean) ——&gt; true/false(直接写)</li>
+<li>d.空值 ——&gt; null(直接写)</li>
+<li>e.数组(array) ——&gt; [元素1, 元素2, 元素3,…]  元素可以是json支持的任何数据类型</li>
+<li>f.字典(dictionary) ——&gt; {key1:value, key2:value, key3:value, …} key必须是字符串,value可以是json支持的任何类型</li>
+</ul>
+<h2 id="2-json转python"><a href="#2-json转python" class="headerlink" title="2.json转python"></a>2.json转python</h2><h3 id="1-转换规律"><a href="#1-转换规律" class="headerlink" title="1).转换规律"></a>1).转换规律</h3><p>json ——&gt; python<br>数据 ——&gt; int/float<br>字符串 ——&gt; 字符串;双引号可能变为单引号<br>布尔 ——&gt; 布尔:True/False<br>null ——&gt; None<br>数组 ——&gt; 列表<br>字典 ——&gt; 字典</p>
+<h3 id="2-转换方法"><a href="#2-转换方法" class="headerlink" title="2).转换方法"></a>2).转换方法</h3><p>json.loads(字符串) ——&gt; 将json字符串转换成python的字符串</p>
+<p><strong>注意:要求字符串内的内容必须是json格式的数据</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = json.loads(<span class="string">'1'</span>)</span><br><span class="line">print(result, type(result))</span><br><span class="line"></span><br><span class="line">result = json.loads(<span class="string">'[123, "ads", true]'</span>)</span><br><span class="line">print(result, type(result))</span><br><span class="line"></span><br><span class="line">result = json.loads(<span class="string">'&#123;"name": "an", "age": 20&#125;'</span>)</span><br><span class="line">print(result, type(result))</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-python转json"><a href="#3-python转json" class="headerlink" title="3.python转json"></a>3.python转json</h2><h3 id="1-转换规律-1"><a href="#1-转换规律-1" class="headerlink" title="1).转换规律"></a>1).转换规律</h3><p>python ——&gt; json<br>int/float ——&gt; 数字<br>字符串 ——&gt; 字符串;单引号变成双引号<br>布尔值 ——&gt; 布尔值;true/false<br>None ——&gt; null<br>列表/元组 ——&gt; 数组<br>字典 ——&gt; 字典</p>
+<h3 id="2-方法"><a href="#2-方法" class="headerlink" title="2).方法"></a>2).方法</h3><p>json.dumps(数据) ——&gt; 将python数据转换成json类型的python字符串</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = json.dumps(<span class="number">100</span>)</span><br><span class="line">print([result])</span><br><span class="line"></span><br><span class="line">result = json.dumps((<span class="number">10</span>, <span class="string">'ahs'</span>, <span class="literal">False</span>))</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础：12:生成器和模块</title>
     <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.12%20%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E6%A8%A1%E5%9D%97/</url>
     <content><![CDATA[<h1 id="一-生成器"><a href="#一-生成器" class="headerlink" title="一. 生成器"></a>一. 生成器</h1><h2 id="1-生成器"><a href="#1-生成器" class="headerlink" title="1.生成器"></a>1.生成器</h2><ul>
@@ -1603,105 +1854,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Python基础：13:文件操作</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.13%20%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h1 id="一-文件操作"><a href="#一-文件操作" class="headerlink" title="一 . 文件操作"></a>一 . 文件操作</h1><h2 id="1-数据的存储"><a href="#1-数据的存储" class="headerlink" title="1. 数据的存储"></a>1. 数据的存储</h2><h3 id="1-数据存储"><a href="#1-数据存储" class="headerlink" title="1).数据存储"></a>1).数据存储</h3><p>计算机存储分为运行内存和硬盘存储<br>运行内存是用来存储程序运行过程中产生的数据,程序结束,数据销毁<br>硬盘存储的文件则一直存在</p>
-<h3 id="2-常用的文件"><a href="#2-常用的文件" class="headerlink" title="2).常用的文件"></a>2).常用的文件</h3><p>文本文件: txt, json(前后端), plist(页面), 数据库文件<br>二进制文件: 图片文件: png, jpg… ;音频文件: mp3, wav…; exe文件等</p>
-<h2 id="2-文件操作"><a href="#2-文件操作" class="headerlink" title="2. 文件操作"></a>2. 文件操作</h2><p><strong>文件内容操作基本步骤 : 打开文件 -&gt; 操作文件(读, 写) -&gt; 关闭文件</strong></p>
-<h3 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1) . 打开文件"></a>1) . 打开文件</h3><p><strong>open(file, mode=’r’, encoding=None)</strong></p>
-<p>open(文件地址, 读写方式, 文本编码方式) - 以指定方式打开指定文件返回文件对象</p>
-<p><strong>说明:</strong><br><strong>file ——&gt; 文件路径(相对路径或绝对路径)</strong><br>相对路径: ./  -  表示当前目录<br>&emsp;&emsp;&emsp;&emsp;../  -  表示当前目录的上层目录</p>
-<p><strong>mode ——&gt; 文件打开方式,决定打开文件后的操作权限(读-r , 写-w)操作文件的数据类型(文本-t, 二进制-b)</strong><br>文本文件在读取的时候可以用rt, rb,但是二进制文件只能用rb读取<br>a - 只写(a和w的区别就是,a打开文件不会删除源文件,w会)<br>&gt;&gt;&gt; a和w打开文件的时候,若文件不存在,会创建新文件<br>r打开文件时,若文件不存在,报错</p>
-<p><strong>encoding -  文本文件编码方式,只能用t打开文本文件的时候才能赋值</strong><br>一般采用’utf-8’的编码方式编码,保证同一文件读和写的编码方式一样</p>
-<h3 id="2-文件操作-1"><a href="#2-文件操作-1" class="headerlink" title="2).文件操作"></a>2).文件操作</h3><p><strong>a.读操作</strong><br>文件对象.read()   -   读指定文件,返回文件中的内容(所有文件)<br>文件对象.readline()   -   读指定文件的1行内容(只支持文本文件)<br>文件对象.close()   -   关闭操作好的文件</p>
-<p><strong>文件读完之后,光标会停在最后读取的位置,再继续读取的话接着上次的位置继续</strong><br><strong>b.写操作</strong><br>文件对象.write(内容)   -   将指定的功能写入到指定的文件中</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">o3 = open(<span class="string">r'../test/诗.txt'</span>, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    line = o3.readline()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    print(line)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<hr>
-<h1 id="二-数据持久化"><a href="#二-数据持久化" class="headerlink" title="二 . 数据持久化"></a>二 . 数据持久化</h1><h2 id="1-数据持久化"><a href="#1-数据持久化" class="headerlink" title="1. 数据持久化"></a>1. 数据持久化</h2><p>1).需要持久化的数据要存到文件中<br>2).需要数据的时候不直接赋值,从文件中读取数据<br>3).若数据的值发生改变,则将新数据更新到文件中</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在程序中用一个变量来记录当前程序启动的次数</span></span><br><span class="line"><span class="comment"># count</span></span><br><span class="line"></span><br><span class="line">f = open(<span class="string">r'../test/num.txt'</span>, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">count = int(f.read())</span><br><span class="line">print(count)</span><br><span class="line"></span><br><span class="line">count += <span class="number">1</span></span><br><span class="line">f = open(<span class="string">r'../test/num.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">f.write(str(count))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-文件域"><a href="#2-文件域" class="headerlink" title="2. 文件域"></a>2. 文件域</h2><p><strong><em>with open(文件路径,打开方式,编码方式) as 文件对象</em></strong><br>文件路径可以是绝对路径也可以是行对路径<br>相对路径中 ./ 代表当前目录 ; ../ 代表当前目录的上层目录,依次类推</p>
-<h2 id="3-容器字符串的转换-eval"><a href="#3-容器字符串的转换-eval" class="headerlink" title="3.容器字符串的转换:eval"></a>3.容器字符串的转换:eval</h2><p>当一个字符串内是一个完整的其他容器(列表,字典,集合,元组)时,eval(字符串)可将字符串转换成相应的容器</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">str1 = <span class="string">'[1, 2, 3, 4]'</span></span><br><span class="line">re1 = eval(str1)</span><br><span class="line">print(re1, type(re1))</span><br><span class="line"></span><br><span class="line">str2 = <span class="string">"&#123;'name': 2, 'age': 4&#125;"</span></span><br><span class="line">re2 = eval(str2)</span><br><span class="line">print(re2, type(re2))</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<hr>
-<h1 id="三-json"><a href="#三-json" class="headerlink" title="三 . json"></a>三 . json</h1><p><strong>json模块是python中专门用来支持json数据的模块</strong></p>
-<h2 id="1-json"><a href="#1-json" class="headerlink" title="1.json"></a>1.json</h2><p><strong>json是一种数据格式,专门用来解决各个计算机语言间数据不能互通的问题</strong></p>
-<h3 id="1-一个json只有一个数据"><a href="#1-一个json只有一个数据" class="headerlink" title="1).一个json只有一个数据"></a>1).一个json只有一个数据</h3><h3 id="2-唯一的这个数据必须是json支持的数据类型"><a href="#2-唯一的这个数据必须是json支持的数据类型" class="headerlink" title="2).唯一的这个数据必须是json支持的数据类型"></a>2).唯一的这个数据必须是json支持的数据类型</h3><p><strong>json支持的数据类型:</strong></p>
-<ul>
-<li>a.数字类型(number) ——&gt; 所有数字,支持科学计数法,直接写</li>
-<li>b.字符串(string) ——&gt; 文本数据,只能用双引号引起来,并且支持转义字符<pre><code>&quot;abc&quot;, &quot;sadhuwe&quot;, ...</code></pre></li>
-<li>c.布尔值(boolean) ——&gt; true/false(直接写)</li>
-<li>d.空值 ——&gt; null(直接写)</li>
-<li>e.数组(array) ——&gt; [元素1, 元素2, 元素3,…]  元素可以是json支持的任何数据类型</li>
-<li>f.字典(dictionary) ——&gt; {key1:value, key2:value, key3:value, …} key必须是字符串,value可以是json支持的任何类型</li>
-</ul>
-<h2 id="2-json转python"><a href="#2-json转python" class="headerlink" title="2.json转python"></a>2.json转python</h2><h3 id="1-转换规律"><a href="#1-转换规律" class="headerlink" title="1).转换规律"></a>1).转换规律</h3><p>json ——&gt; python<br>数据 ——&gt; int/float<br>字符串 ——&gt; 字符串;双引号可能变为单引号<br>布尔 ——&gt; 布尔:True/False<br>null ——&gt; None<br>数组 ——&gt; 列表<br>字典 ——&gt; 字典</p>
-<h3 id="2-转换方法"><a href="#2-转换方法" class="headerlink" title="2).转换方法"></a>2).转换方法</h3><p>json.loads(字符串) ——&gt; 将json字符串转换成python的字符串</p>
-<p><strong>注意:要求字符串内的内容必须是json格式的数据</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = json.loads(<span class="string">'1'</span>)</span><br><span class="line">print(result, type(result))</span><br><span class="line"></span><br><span class="line">result = json.loads(<span class="string">'[123, "ads", true]'</span>)</span><br><span class="line">print(result, type(result))</span><br><span class="line"></span><br><span class="line">result = json.loads(<span class="string">'&#123;"name": "an", "age": 20&#125;'</span>)</span><br><span class="line">print(result, type(result))</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-python转json"><a href="#3-python转json" class="headerlink" title="3.python转json"></a>3.python转json</h2><h3 id="1-转换规律-1"><a href="#1-转换规律-1" class="headerlink" title="1).转换规律"></a>1).转换规律</h3><p>python ——&gt; json<br>int/float ——&gt; 数字<br>字符串 ——&gt; 字符串;单引号变成双引号<br>布尔值 ——&gt; 布尔值;true/false<br>None ——&gt; null<br>列表/元组 ——&gt; 数组<br>字典 ——&gt; 字典</p>
-<h3 id="2-方法"><a href="#2-方法" class="headerlink" title="2).方法"></a>2).方法</h3><p>json.dumps(数据) ——&gt; 将python数据转换成json类型的python字符串</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = json.dumps(<span class="number">100</span>)</span><br><span class="line">print([result])</span><br><span class="line"></span><br><span class="line">result = json.dumps((<span class="number">10</span>, <span class="string">'ahs'</span>, <span class="literal">False</span>))</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python基础：14:异常捕获</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.14%20%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/</url>
-    <content><![CDATA[<h1 id="一-异常"><a href="#一-异常" class="headerlink" title="一. 异常"></a>一. 异常</h1><p><strong>程序在运行过程中的报错就叫异常</strong></p>
-<br>
-
-<hr>
-<h1 id="二-异常捕获"><a href="#二-异常捕获" class="headerlink" title="二. 异常捕获"></a>二. 异常捕获</h1><h2 id="1-使用异常捕获的场景"><a href="#1-使用异常捕获的场景" class="headerlink" title="1. 使用异常捕获的场景"></a>1. 使用异常捕获的场景</h2><p><strong>在知道某个位置可能会出现异常,但开发者无法控制时使用</strong></p>
-<h2 id="2-捕获异常"><a href="#2-捕获异常" class="headerlink" title="2. 捕获异常"></a>2. 捕获异常</h2><p><strong>①:捕获任何异常</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except:</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">finally:</span></span><br><span class="line"><span class="string">    代码块三</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>先执行代码块1,如果异常,直接执行代码块2,依次往后执行;若代码块1没有异常,不执行代码块2,往后执行</li>
-</ul>
-<p><strong>②:捕获针对异常</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except 异常类型:</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>先执行代码块1,如果异常,检查该异常是否和except后的异常类型是否一致若一致,执行代码块2,依次往后执行;若不一致,程序崩溃.</li>
-</ul>
-<p><strong>③:捕获多个异常一(相同处理)</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except (异常类型1, 异常类型2...):</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>④:捕获多个异常一(不同处理)</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except (异常类型1):</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">except (异常类型2):</span></span><br><span class="line"><span class="string">    代码块三(对异常进行处理)</span></span><br><span class="line"><span class="string">except (异常类型3):</span></span><br><span class="line"><span class="string">    代码块四(对异常进行处理)</span></span><br><span class="line"><span class="string">    ...  </span></span><br><span class="line"><span class="string">其他代码</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-<br>
-
-<hr>
-<h1 id="三-关键字finally"><a href="#三-关键字finally" class="headerlink" title="三. 关键字finally"></a>三. 关键字finally</h1><p>在以上四个捕获异常的方法中都可以在最后加上finally关键字,它的作用是:<strong>不管try中的代码出现任何情况,finally后的代码都会执行</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    print(&#123;<span class="string">'name'</span>: <span class="string">'an'</span>, <span class="string">'age'</span>: <span class="number">29</span>&#125;[<span class="string">'gender'</span>])</span><br><span class="line">    print(<span class="string">'hello'</span>[<span class="number">19</span>])</span><br><span class="line">    print(max([<span class="number">10</span>, <span class="string">'asd'</span>, <span class="literal">True</span>]))</span><br><span class="line"><span class="keyword">except</span> IndexError:</span><br><span class="line">    print(<span class="string">'出现异常'</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'写遗书'</span>)</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="四-抛出异常"><a href="#四-抛出异常" class="headerlink" title="四. 抛出异常"></a>四. 抛出异常</h1><p><strong>raise 异常类型</strong></p>
-]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python基础：15:类和对象(基础)</title>
     <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.15%20%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1(%E5%9F%BA%E7%A1%80)/</url>
     <content><![CDATA[<h1 id="一-类和对象"><a href="#一-类和对象" class="headerlink" title="一. 类和对象"></a>一. 类和对象</h1><h2 id="1-先来两句废话"><a href="#1-先来两句废话" class="headerlink" title="1. 先来两句废话"></a>1. 先来两句废话</h2><ul>
@@ -1769,6 +1921,49 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
 <hr>
 <h1 id="四-内置属性"><a href="#四-内置属性" class="headerlink" title="四. 内置属性"></a>四. 内置属性</h1><p><strong>举例说明!</strong></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span>:</span></span><br><span class="line">    <span class="string">"""狗类"""</span></span><br><span class="line">    num = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># __slots__ = ('name', 'age', 'gender', 'height')  # 限制对象的属性</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age, gender)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">        self.gender = gender</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'对象方法'</span>, self.name)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">(cls)</span>:</span></span><br><span class="line">        print(<span class="string">'类方法'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'静态方法'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog1 = Dog(<span class="string">'大黄'</span>, <span class="number">2</span>, <span class="string">'公'</span>)</span><br><span class="line"><span class="comment"># 1. 类.__name__   --&gt;   获取类名</span></span><br><span class="line">print(Dog.__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 对象.__class__   --&gt;   获取对象对应的类(type(对象)功能一样)</span></span><br><span class="line">print(type(Dog))</span><br><span class="line">print(dog1.__class__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 类.__doc__  --&gt;   获取类的说明文档</span></span><br><span class="line">print(Dog.__doc__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. __dict__</span></span><br><span class="line"><span class="comment"># 1) 类.__dict__   --&gt;   获取类中所有的字段和字段对应的值,以字典的形式返回</span></span><br><span class="line">print(Dog.__dict__)</span><br><span class="line"><span class="comment"># 2) 对象.__dict__   --&gt;   获取对象中所有的属性和属性对应的值,以字典的形式返回(不能和__slots__并用)</span></span><br><span class="line">print(dog1.__dict__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 类.__module__   --&gt;  获取类所在得模块</span></span><br><span class="line">print(Dog.__module__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. 类.__bases__   --&gt;   获取当前类得父类</span></span><br><span class="line"><span class="comment"># object 是python中所有类得基类</span></span><br><span class="line">print(Dog.__bases__)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python基础：14:异常捕获</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.14%20%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/</url>
+    <content><![CDATA[<h1 id="一-异常"><a href="#一-异常" class="headerlink" title="一. 异常"></a>一. 异常</h1><p><strong>程序在运行过程中的报错就叫异常</strong></p>
+<br>
+
+<hr>
+<h1 id="二-异常捕获"><a href="#二-异常捕获" class="headerlink" title="二. 异常捕获"></a>二. 异常捕获</h1><h2 id="1-使用异常捕获的场景"><a href="#1-使用异常捕获的场景" class="headerlink" title="1. 使用异常捕获的场景"></a>1. 使用异常捕获的场景</h2><p><strong>在知道某个位置可能会出现异常,但开发者无法控制时使用</strong></p>
+<h2 id="2-捕获异常"><a href="#2-捕获异常" class="headerlink" title="2. 捕获异常"></a>2. 捕获异常</h2><p><strong>①:捕获任何异常</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except:</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">finally:</span></span><br><span class="line"><span class="string">    代码块三</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>先执行代码块1,如果异常,直接执行代码块2,依次往后执行;若代码块1没有异常,不执行代码块2,往后执行</li>
+</ul>
+<p><strong>②:捕获针对异常</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except 异常类型:</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>先执行代码块1,如果异常,检查该异常是否和except后的异常类型是否一致若一致,执行代码块2,依次往后执行;若不一致,程序崩溃.</li>
+</ul>
+<p><strong>③:捕获多个异常一(相同处理)</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except (异常类型1, 异常类型2...):</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>④:捕获多个异常一(不同处理)</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except (异常类型1):</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">except (异常类型2):</span></span><br><span class="line"><span class="string">    代码块三(对异常进行处理)</span></span><br><span class="line"><span class="string">except (异常类型3):</span></span><br><span class="line"><span class="string">    代码块四(对异常进行处理)</span></span><br><span class="line"><span class="string">    ...  </span></span><br><span class="line"><span class="string">其他代码</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="三-关键字finally"><a href="#三-关键字finally" class="headerlink" title="三. 关键字finally"></a>三. 关键字finally</h1><p>在以上四个捕获异常的方法中都可以在最后加上finally关键字,它的作用是:<strong>不管try中的代码出现任何情况,finally后的代码都会执行</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    print(&#123;<span class="string">'name'</span>: <span class="string">'an'</span>, <span class="string">'age'</span>: <span class="number">29</span>&#125;[<span class="string">'gender'</span>])</span><br><span class="line">    print(<span class="string">'hello'</span>[<span class="number">19</span>])</span><br><span class="line">    print(max([<span class="number">10</span>, <span class="string">'asd'</span>, <span class="literal">True</span>]))</span><br><span class="line"><span class="keyword">except</span> IndexError:</span><br><span class="line">    print(<span class="string">'出现异常'</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'写遗书'</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="四-抛出异常"><a href="#四-抛出异常" class="headerlink" title="四. 抛出异常"></a>四. 抛出异常</h1><p><strong>raise 异常类型</strong></p>
+]]></content>
       <categories>
         <category>Python学录</category>
       </categories>
@@ -2229,6 +2424,30 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
+    <title>Python基础：5:数据类型之元组</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.5%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/</url>
+    <content><![CDATA[<h1 id="一、什么是元组"><a href="#一、什么是元组" class="headerlink" title="一、什么是元组"></a>一、什么是元组</h1><ul>
+<li>元组就是不可变的列表</li>
+<li>元组是将小括号 () 作为容器的标志；(元素1，元素2，…)</li>
+<li>元组不可变性，不能增、删、改，</li>
+<li>元组有序性，支持下标操作</li>
+<li>元组元素可以是任何类型的数据</li>
+</ul>
+<h1 id="二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"><a href="#二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）" class="headerlink" title="二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"></a>二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）</h1><h2 id="1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）"><a href="#1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）" class="headerlink" title="1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）"></a>1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple1 = (<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(tuple1[<span class="number">0</span>])</span><br><span class="line">print(tuple1[<span class="number">3</span>])</span><br><span class="line">print(tuple1[<span class="number">2</span>:<span class="number">4</span>:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="2、元组和列表相同的操作"><a href="#2、元组和列表相同的操作" class="headerlink" title="2、元组和列表相同的操作"></a>2、元组和列表相同的操作</h2><p><strong><em>+&emsp;、\</em>&emsp; == &emsp;!=&emsp; is&emsp; in &emsp; not in &emsp; len &emsp;max &emsp;min&emsp; sum &emsp;sorted*</strong></p>
+<h1 id="三、元组的独特操作"><a href="#三、元组的独特操作" class="headerlink" title="三、元组的独特操作"></a>三、元组的独特操作</h1><h2 id="1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型"><a href="#1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型" class="headerlink" title="1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)"></a>1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list1 = [<span class="number">10</span>]</span><br><span class="line">print(list1, type(list1))   <span class="comment">#   [10] &lt;class 'list'&gt;</span></span><br><span class="line">tuple1 = (<span class="number">10</span>,)</span><br><span class="line">print(tuple1,type(tuple1))</span><br></pre></td></tr></table></figure>
+<h2 id="2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"><a href="#2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组" class="headerlink" title="2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"></a>2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple2 = <span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span></span><br></pre></td></tr></table></figure>
+<h2 id="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"><a href="#3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）" class="headerlink" title="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"></a>3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple3 = (<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">x,y = tuple3</span><br><span class="line">print(x,y)   <span class="comment">#   10 20</span></span><br></pre></td></tr></table></figure>
+<h2 id="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"><a href="#4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）" class="headerlink" title="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"></a>4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple4 = (<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">8</span>)</span><br><span class="line">x1 ,*x2 ,x3 = tuple4</span><br><span class="line">print(x1,x2,x3)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础：4:数据类型之列表</title>
     <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.4%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%88%97%E8%A1%A8/</url>
     <content><![CDATA[<h1 id="一、什么是列表"><a href="#一、什么是列表" class="headerlink" title="一、什么是列表"></a>一、什么是列表</h1><h2 id="1、列表"><a href="#1、列表" class="headerlink" title="1、列表"></a>1、列表</h2><p>列表是python提供的容器型数据类型；以中括号[]作为容器标志；<br>里面多个元素用逗号隔开：[1,2,3,4,5,6],元素的个数就是列表的长度<br>列表是可变的、 有序的 ；</p>
@@ -2323,30 +2542,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
 <li>sorted(序列，reverse=True)    从大到小</li>
 </ul>
 ]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python基础：5:数据类型之元组</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.5%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/</url>
-    <content><![CDATA[<h1 id="一、什么是元组"><a href="#一、什么是元组" class="headerlink" title="一、什么是元组"></a>一、什么是元组</h1><ul>
-<li>元组就是不可变的列表</li>
-<li>元组是将小括号 () 作为容器的标志；(元素1，元素2，…)</li>
-<li>元组不可变性，不能增、删、改，</li>
-<li>元组有序性，支持下标操作</li>
-<li>元组元素可以是任何类型的数据</li>
-</ul>
-<h1 id="二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"><a href="#二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）" class="headerlink" title="二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"></a>二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）</h1><h2 id="1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）"><a href="#1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）" class="headerlink" title="1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）"></a>1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple1 = (<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(tuple1[<span class="number">0</span>])</span><br><span class="line">print(tuple1[<span class="number">3</span>])</span><br><span class="line">print(tuple1[<span class="number">2</span>:<span class="number">4</span>:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-<h2 id="2、元组和列表相同的操作"><a href="#2、元组和列表相同的操作" class="headerlink" title="2、元组和列表相同的操作"></a>2、元组和列表相同的操作</h2><p><strong><em>+&emsp;、\</em>&emsp; == &emsp;!=&emsp; is&emsp; in &emsp; not in &emsp; len &emsp;max &emsp;min&emsp; sum &emsp;sorted*</strong></p>
-<h1 id="三、元组的独特操作"><a href="#三、元组的独特操作" class="headerlink" title="三、元组的独特操作"></a>三、元组的独特操作</h1><h2 id="1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型"><a href="#1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型" class="headerlink" title="1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)"></a>1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list1 = [<span class="number">10</span>]</span><br><span class="line">print(list1, type(list1))   <span class="comment">#   [10] &lt;class 'list'&gt;</span></span><br><span class="line">tuple1 = (<span class="number">10</span>,)</span><br><span class="line">print(tuple1,type(tuple1))</span><br></pre></td></tr></table></figure>
-<h2 id="2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"><a href="#2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组" class="headerlink" title="2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"></a>2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple2 = <span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span></span><br></pre></td></tr></table></figure>
-<h2 id="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"><a href="#3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）" class="headerlink" title="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"></a>3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple3 = (<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">x,y = tuple3</span><br><span class="line">print(x,y)   <span class="comment">#   10 20</span></span><br></pre></td></tr></table></figure>
-<h2 id="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"><a href="#4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）" class="headerlink" title="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"></a>4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple4 = (<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">8</span>)</span><br><span class="line">x1 ,*x2 ,x3 = tuple4</span><br><span class="line">print(x1,x2,x3)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Python学录</category>
       </categories>
