@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>朴素贝叶斯 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">朴素贝叶斯</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2019-08-10</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;机器学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-贝叶斯定理"><a href="#一-贝叶斯定理" class="headerlink" title="一: 贝叶斯定理"></a>一: 贝叶斯定理</h1><p>贝叶斯定理（英语：Bayes’ theorem）是几率论中的一个定理，描述在已知一些条件下，某事件的发生几率。通常，事件A在事件B已发生的条件下发生的几率，与事件B在事件A已发生的条件下发生的几率是不一样的。然而，这两者是有确定的关系的，贝叶斯定理就是这种关系的陈述。贝叶斯公式的一个用途，即透过已知的三个几率而推出第四个几率。</p>
+<p><strong>贝叶斯公式:</strong><br>$$<br>P(A|B) = \frac{P(A)P(B|A)}{P(B)}<br>$$</p>
+<p>$P(A|B)$ <strong>的意思是在事件$B$发生的条件下发生事件$A$的概率</strong></p>
+<p>接下来我们通过两个例子来更好的理解贝叶斯公式</p>
+<h2 id="例1"><a href="#例1" class="headerlink" title="例1:"></a>例1:</h2><p>现分别有 甲,乙 两个容器，在容器 甲 里分别有 7 个红球和 3 个白球，在容器 乙 里有 1 个红球和 9 个白球，现已知从这两个容器里任意抽出了一个球，且是红球，问这个红球是来自容器 甲 的概率是多少?</p>
+<p><strong>方便理解: 若乙中0个红球,10个白球,则红球来自A的概率为100%</strong></p>
+<p><strong>思路:</strong></p>
+<p>选中甲容器的概率: P(A) = 1/2</p>
+<p>选中红球的概率: P(B) = 8/20</p>
+<p>甲中红球的概率: P(B|A) = 7/10</p>
+<p>选中的红球是甲中的概率: </p>
+<p>$P(A|B) = \frac{P(A)P(B|A)}{P(B)}= \frac{(1/2)*(7/10)}{8/20}= \frac{7}{8}$</p>
+<h2 id="例2"><a href="#例2" class="headerlink" title="例2:"></a>例2:</h2><p>一座别墅在过去的 20 年里一共发生过 2 次被盗，别墅的主人有一条狗，狗平均每周晚上叫 3 次，在盗贼入侵时狗叫的概率被估计为 0.9，问题是：在狗叫的时候发生入侵的概率是多少？</p>
+<p>狗叫的概率: P(A) = 3/7</p>
+<p>被盗的概率: P(B) = 2 / (20*365) </p>
+<p>被盗时狗叫的概率: P(A|B) = 0.9</p>
+<p>狗叫时被盗的概率: $P(B|A) = \frac{P(B)P(A|B)}{P(A)} = \frac{(2/(20\times365))\times 0.9}{3/7}$</p>
+<p><strong>将贝叶斯公式 $P(A|B) = \frac{P(A)P(B|A)}{P(B)}$ 用到我们的数据分析中则可以理解为,B是特征, A是对应的类别;</strong> </p>
+<br>
+
+<h1 id="二-Sklearn中的朴素贝叶斯"><a href="#二-Sklearn中的朴素贝叶斯" class="headerlink" title="二: Sklearn中的朴素贝叶斯"></a>二: Sklearn中的朴素贝叶斯</h1><p><font color=purple> <strong>当特征数量为一时, 表现出来的就是我们的贝叶斯公式;</strong> </font></p>
+<h2 id="一-理解朴素贝叶斯"><a href="#一-理解朴素贝叶斯" class="headerlink" title="(一): 理解朴素贝叶斯"></a>(一): 理解朴素贝叶斯</h2><p><strong>屌丝逆袭实例:</strong></p>
+<p>大学的时候，某男生经常去007自习室上晚自习，发现他喜欢的那个女生也常去那个自习室，心中窃喜，于是每天买点好吃点在那个自习室蹲点等她来，可是人家女生不一定每天都来，眼看天气渐渐炎热，自习室又不开空调，如果那个女生没有去自习室，该男生也就不去，每次男生鼓足勇气说：“嘿，你明天还来不？”,“啊，不知道，看情况”。然后该男生每天就把她去自习室与否以及一些其他情况做一下记录，<strong>用Y表示该女生是否去自习室，即Y={去，不去}，X是跟去自习室有关联的一系列条件，比如当天上了哪门主课，</strong>蹲点统计了一段时间后，该男生打算今天不再蹲点，而是先预测一下她会不会去，现在已经知道了今天上了常微分方法这么主课，于是计算<strong>$P(Y=去|常微分方程)$</strong>与<strong>$P(Y=不去|常微分方程)$</strong>，看哪个概率大，如果<strong>$P(Y=去|常微分方程) &gt;P(Y=不去|常微分方程)$</strong>，那这个男生不管多热都屁颠屁颠去自习室了，否则不就去自习室受罪了。P(Y=去|常微分方程)的计算可以转为计算以前她去的情况下，那天主课是常微分的概率P(常微分方程|Y=去)，注意公式右边的分母对每个类别（去/不去）都是一样的，所以计算的时候忽略掉分母，这样虽然得到的概率值已经不再是0~1之间，但是<strong>通过比较大小还是能选择类别</strong>。后来他发现还有一些其他条件可以挖，<strong>比如当天星期几、当天的天气，以及上一次与她在自修室的气氛</strong>，统计了一段时间后，该男子一计算，发现不好算了，因为总结历史的公式：<br>$$<br>P(X=x|Y=C_k) = P(X^{(1)}=x^{(1)}, X^{(2)}=x^{(2)}, …, X^{(n)}=x^{(n)} | Y=C_k)<br>$$<br><strong>这里n=4，x(1)表示主课，x(2)表示天气，x(3)表示星期几，x(4)表示气氛，Y仍然是{去，不去}，现在主课有8门，天气有晴、雨、阴三种、气氛有A+,A,B+,B，C五种，那么总共需要估计的参数有8×3×7×5×2=1680个，</strong>每天只能收集到一条数据，那么等凑齐1680条数据，大学都毕业了，男生大呼不妙</p>
+<p><font color=purple><strong>当特征数量为多个时, 多个条件之间互相影响, 增加了数据复杂度, 最终决定对应的类别;</strong></font></p>
+<p>于是做了一个<font color=red><strong>独立性假设，假设这些影响她去自习室的原因是独立互不相关的:</strong></font><br>$$<br>\begin{aligned}<br>P(X=x|Y=C_k) &amp;= P(X^{(1)}=x^{(1)}, X^{(2)}=x^{(2)}, …, X^{(n)}=x^{(n)} | Y=C_k)\<br>&amp; = P(X^{(1)}=x^{(1)} | Y=C_k) \times P(X^{(2)}=x^{(2)} | Y=C_k) \times …\times P(X^{(n)}=x^{(n)} | Y=C_k)\<br>&amp;=\prod_{i=1}^n P(X^{(i)}=x^{(i)} | Y=C_k)\<br>\end{aligned}<br>$$<br>有了这个独立假设后，需要估计的参数就变为，(8+3+7+5)×2 = 46个了，而且每天收集的一条数据，可以提供4个参数，这样该男生就预测越来越准了</p>
+<p>通过上面这个屌丝逆袭的例子我们可以简单的总结一下: </p>
+<p><strong><font color=red> sklearn中的朴素贝叶斯其实就是将贝叶斯中的各属性看成是独立的,不相互影响的</font></strong></p>
+<p>那么朴素贝叶斯又是怎么判断类别的呢?</p>
+<p>别急, 继续往下看.</p>
+<h2 id="二-朴素贝叶斯的工作原理"><a href="#二-朴素贝叶斯的工作原理" class="headerlink" title="(二): 朴素贝叶斯的工作原理"></a>(二): 朴素贝叶斯的工作原理</h2><p><strong>又是一个例子:</strong></p>
+<p>如果一对男女朋友，男生向女生求婚，男生的四个特点分别是不帅，性格不好，身高矮，不上进，请你判断一下女生是嫁还是不嫁？</p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgn7r1riwj20t40f8adw.jpg" alt="嫁不嫁算例.png"></p>
+<p>首先,我们用<strong>贝叶斯公式</strong>将这个时间的概率表示出来:<br>$$<br>P(嫁 | 不帅、性格不好、身高矮、不上进)=\frac{P(不帅、性格不好、身高矮、不上进|嫁) \times P(嫁)}{P(不帅、性格不好、身高矮、不上进)}<br>$$<br>将贝叶斯转换成<strong>朴素贝叶斯</strong><br>$$<br>\begin{aligned}<br>P(嫁 | 不帅、性格不好、身高矮、不上进)&amp;=\frac{P(不帅、性格不好、身高矮、不上进|嫁) \times P(嫁)}{P(不帅、性格不好、身高矮、不上进)}\<br>&amp;= \frac{P(不帅|嫁) \times P(性格不好|嫁) \times P(身高矮|嫁) \times P(不上进|嫁) \times P(嫁)}{P(不帅) \times P(性格不好) \times P(身高矮) \times P(不上进)}\<br>\end{aligned}<br>$$</p>
+<p>此时,我们就可以轻易的看出:</p>
+<p>$P(不帅|嫁)$ 的概率为: 1/2</p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgn88b2jlj218u0jsjwl.jpg" alt="嫁不帅的概率.png"></p>
+<p>$P(嫁)$ 的概率为: 1/2</p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgn8kwovhj21a00lbn3c.jpg" alt="嫁的概率.png"></p>
+<p>依次类推, 可以计算出其他的独立事件的概率, 即可算出嫁或则不嫁的概率分别时多少, 然后<strong>比较相同条件下嫁和不嫁的概率的大小来决定是否出嫁</strong></p>
+<p><font color=red>注意: 朴素贝叶斯的结果可能会大于一, 至于嫁与不嫁只需要比较计算出来的结果即可,结果之和不等于1 </font></p>
+<h2 id="三-朴素贝叶斯的算法模型"><a href="#三-朴素贝叶斯的算法模型" class="headerlink" title="(三): 朴素贝叶斯的算法模型"></a>(三): 朴素贝叶斯的算法模型</h2><p>这里主要介绍三种, 分别是: 高斯分布, 伯努利分布, 多项式分布</p>
+<p><strong>高斯分布又称正态分布:</strong></p>
+<p>曲线高峰位于正中央，即均数所在的位置; 曲线由均数所在处开始，分别向左右两侧逐渐均匀下降</p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgn8vr7jfj22801f40xn.jpg" alt="高斯分布.png"></p>
+<p>正态曲线呈钟型，两头低，中间高，左右对称因其曲线呈钟形，因此人们又经常称之为钟形曲线。</p>
+<p><strong>伯努利分布</strong></p>
+<p>在概率论和统计学中，二项分布（英语：Binomial distribution）是n个独立的是/非试验中成功的次数的离散概率分布，其中每次试验的成功概率为p。这样的单次成功/失败试验又称为伯努利试验。<strong>实际上，当n = 1时，二项分布就是伯努利分布。</strong>二项分布是显著性差异的二项试验的基础。</p>
+<p><strong>多项式分布</strong></p>
+<p>在概率论中，多项式分布是二项式分布的推广。例如，它模拟了n次轧制的k面模具每侧计数的概率。对于n个独立试验，每个试验都能准确地为k个类别中的一个成功，并且每个类别具有给定的固定成功概率，多项式分布给出了各个类别成功次数的任何特定组合的概率。</p>
+<p><strong>当k为2且n为1时，多项式分布为伯努利分布。当k为2且n大于1时，它是二项分布。当k大于2且n为1时，它是分类分布。</strong></p>
+<br>
+
+
+<h1 id="三-朴素贝叶斯对垃圾邮件进行分类"><a href="#三-朴素贝叶斯对垃圾邮件进行分类" class="headerlink" title="三: 朴素贝叶斯对垃圾邮件进行分类"></a>三: 朴素贝叶斯对垃圾邮件进行分类</h1><ol>
+<li>导包获取数据</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> GaussianNB,BernoulliNB,BaseDiscreteNB,MultinomialNB</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sms = pd.read_csv(<span class="string">'./SMSSpamCollection.csv'</span>, sep=<span class="string">'\t'</span>, header=<span class="literal">None</span>)</span><br><span class="line">sms.rename(&#123;<span class="number">0</span>:<span class="string">'label'</span>, <span class="number">1</span>:<span class="string">'message'</span>&#125;, axis = <span class="number">1</span>, inplace=<span class="literal">True</span>)  <span class="comment"># 该表头</span></span><br><span class="line">display(sms.shape, sms.head())</span><br><span class="line">X = sms[[<span class="string">'message'</span>]]   <span class="comment"># 机器学习要求数据是二维的,若只有一个中括号则数据类型的Serios</span></span><br><span class="line">y = sms[[<span class="string">'label'</span>]]</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>对邮件文本内容(字符串)进行量化</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># feature_extraction特征提取</span></span><br><span class="line"><span class="comment"># CountVectorizer统计词频</span></span><br><span class="line"><span class="comment"># 中文词频统计包: 结巴分词(pip install jieba)</span></span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cv = CountVectorizer()</span><br><span class="line">X_ = cv.fit_transform(sms[<span class="string">'message'</span>])  <span class="comment"># 稀松矩阵</span></span><br><span class="line"><span class="comment"># 返回sparse matrix稀松矩阵,节省内存</span></span><br><span class="line"><span class="comment"># 5572x8713表示5572条短信中提取到8713个词</span></span><br><span class="line"><span class="comment"># cv.vocabulary_   查看单词在稀松矩阵中的例数</span></span><br><span class="line"><span class="comment"># (0, 3571)	1   表示第一行(第一封邮件)第3571列代表的词有一个</span></span><br><span class="line"><span class="comment"># (0, 8084)	1   表示第一行(第一封邮件)第8084列代表的词有一个</span></span><br><span class="line"><span class="comment"># 以此类推</span></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">sparse.save_npz(<span class="string">'./sms.npz'</span>, X_)   <span class="comment"># 稀松矩阵只有100KB大小</span></span><br><span class="line">X = X_.toarray()   <span class="comment"># 常规矩阵</span></span><br><span class="line">np.savez(<span class="string">'./sms2.npz'</span>, X)   <span class="comment"># 常规矩阵有388MB大小</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sparse.csc_matrix() 方法可以将常规矩阵转换成稀松矩阵</span></span><br><span class="line"><span class="comment"># toarray() 方法可以将稀松矩阵转回正常矩阵</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>分数据</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 常规数据</span></span><br><span class="line">X_train,X_test, y_train,y_test = train_test_split(X,y,test_size=<span class="number">0.2</span>,random_state=<span class="number">1187</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 稀松矩阵的数据</span></span><br><span class="line">X_train_,X_test_, y_train,y_test = train_test_split(X_,y,test_size=<span class="number">0.2</span>,random_state=<span class="number">1187</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>用不同的模型进行分类</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line"><span class="comment"># 高斯分布</span></span><br><span class="line">gNB = GaussianNB()   <span class="comment"># 数据必须是正常矩阵</span></span><br><span class="line">gNB.fit(X_train, y_train)</span><br><span class="line">gNB.score(X_test, y_test)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Wall time: 1.51 s</span></span><br><span class="line"><span class="string">0.8914798206278027</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line"><span class="comment"># 伯努利分布</span></span><br><span class="line">bNB = BernoulliNB()   <span class="comment"># 数据支持稀松举证(提高运行效率)</span></span><br><span class="line">bNB.fit(X_train_, y_train)</span><br><span class="line">bNB.score(X_test_, y_test)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Wall time: 20 ms</span></span><br><span class="line"><span class="string">0.9730941704035875</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line"><span class="comment"># 多项式分布</span></span><br><span class="line">mNB = MultinomialNB()   <span class="comment"># 数据支持稀松举证(提高运行效率)</span></span><br><span class="line">mNB.fit(X_train_, y_train)</span><br><span class="line">mNB.score(X_test_, y_test)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Wall time: 20.9 ms</span></span><br><span class="line"><span class="string">0.979372197309417</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="四-应用"><a href="#四-应用" class="headerlink" title="四: 应用"></a>四: 应用</h1><p>朴素贝叶斯在文本分类和情感分析中应用最为广泛</p>
+<ol>
+<li><strong>文本分类（Text Categorization）</strong>是指计算机将一片文档归于预先给定的某一类或几类的过程。文本分类的<strong>特征提取</strong>过程是<strong>分词</strong>。目前比较好的中文分词器有中科院的ictclas，庖丁，IK等等。经过分词后，每个词就是一个特征。分词中可以自己配置停用词库，扩展词库等。<strong>特征选择</strong>有诸如TF-IDF，CHI等特征选择算法，就不在此赘述。</li>
+<li>朴素贝叶斯计算先验概率P（C）和条件概率P（X|C）的方法有两种：<strong>多项式模型</strong>和<strong>伯努利模型</strong>。两者在计算的时候有两点差别：多项式会统计词频，而伯努利认为单词出现就记为1，没出现记为0，<strong>可以看到一个是基于词频，一个是基于文档频率</strong>；伯努利在分类时，将词库中的<strong>没有出现在待分类文本的词作为反方考虑</strong>。/</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2019/08/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">朴素贝叶斯</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">✓ 机器学习</a>
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">✓ 算法</a>
+                    
+                        <a href="/tags/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">✓ 朴素贝叶斯</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">Linux定时任务</a>
+            
+            
+            <a class="next" rel="next" href="/2019/03/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/">逻辑斯蒂回归(Logistic)</a>
+            
+        </section>
+
+		
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:30px;padding:10px;background:#fff}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			  </style>
+			  <div class="valine_comment"></div>
+<!--载入js，在<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'd8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz',
+      app_key: 'ePiIX7dqVFpzeKkr4T1ixiah',
+      placeholder: '请君发言。。。',
+      notify: 'false',
+      verify: 'false',
+    });
+</script>
+
+			</section>
+		
+		
+		
+		<span id="/2019/08/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" class="leancloud-visitors view" data-flag-title="朴素贝叶斯">
+		  <em class="post-meta-item-text">阅读量:</em>
+		  <i class="leancloud-visitors-count">1</i>
+		</span>
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

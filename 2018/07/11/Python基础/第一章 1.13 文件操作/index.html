@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Python基础：13:文件操作 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python基础：13:文件操作</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2018-07-11</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Python%E5%AD%A6%E5%BD%95/">&nbsp;&nbsp;Python学录</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-文件操作"><a href="#一-文件操作" class="headerlink" title="一 . 文件操作"></a>一 . 文件操作</h1><h2 id="1-数据的存储"><a href="#1-数据的存储" class="headerlink" title="1. 数据的存储"></a>1. 数据的存储</h2><h3 id="1-数据存储"><a href="#1-数据存储" class="headerlink" title="1).数据存储"></a>1).数据存储</h3><p>计算机存储分为运行内存和硬盘存储<br>运行内存是用来存储程序运行过程中产生的数据,程序结束,数据销毁<br>硬盘存储的文件则一直存在</p>
+<h3 id="2-常用的文件"><a href="#2-常用的文件" class="headerlink" title="2).常用的文件"></a>2).常用的文件</h3><p>文本文件: txt, json(前后端), plist(页面), 数据库文件<br>二进制文件: 图片文件: png, jpg… ;音频文件: mp3, wav…; exe文件等</p>
+<h2 id="2-文件操作"><a href="#2-文件操作" class="headerlink" title="2. 文件操作"></a>2. 文件操作</h2><p><strong>文件内容操作基本步骤 : 打开文件 -&gt; 操作文件(读, 写) -&gt; 关闭文件</strong></p>
+<h3 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1) . 打开文件"></a>1) . 打开文件</h3><p><strong>open(file, mode=’r’, encoding=None)</strong></p>
+<p>open(文件地址, 读写方式, 文本编码方式) - 以指定方式打开指定文件返回文件对象</p>
+<p><strong>说明:</strong><br><strong>file ——&gt; 文件路径(相对路径或绝对路径)</strong><br>相对路径: ./  -  表示当前目录<br>&emsp;&emsp;&emsp;&emsp;../  -  表示当前目录的上层目录</p>
+<p><strong>mode ——&gt; 文件打开方式,决定打开文件后的操作权限(读-r , 写-w)操作文件的数据类型(文本-t, 二进制-b)</strong><br>文本文件在读取的时候可以用rt, rb,但是二进制文件只能用rb读取<br>a - 只写(a和w的区别就是,a打开文件不会删除源文件,w会)<br>&gt;&gt;&gt; a和w打开文件的时候,若文件不存在,会创建新文件<br>r打开文件时,若文件不存在,报错</p>
+<p><strong>encoding -  文本文件编码方式,只能用t打开文本文件的时候才能赋值</strong><br>一般采用’utf-8’的编码方式编码,保证同一文件读和写的编码方式一样</p>
+<h3 id="2-文件操作-1"><a href="#2-文件操作-1" class="headerlink" title="2).文件操作"></a>2).文件操作</h3><p><strong>a.读操作</strong><br>文件对象.read()   -   读指定文件,返回文件中的内容(所有文件)<br>文件对象.readline()   -   读指定文件的1行内容(只支持文本文件)<br>文件对象.close()   -   关闭操作好的文件</p>
+<p><strong>文件读完之后,光标会停在最后读取的位置,再继续读取的话接着上次的位置继续</strong><br><strong>b.写操作</strong><br>文件对象.write(内容)   -   将指定的功能写入到指定的文件中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">o3 = open(<span class="string">r'../test/诗.txt'</span>, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    line = o3.readline()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    print(line)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="二-数据持久化"><a href="#二-数据持久化" class="headerlink" title="二 . 数据持久化"></a>二 . 数据持久化</h1><h2 id="1-数据持久化"><a href="#1-数据持久化" class="headerlink" title="1. 数据持久化"></a>1. 数据持久化</h2><p>1).需要持久化的数据要存到文件中<br>2).需要数据的时候不直接赋值,从文件中读取数据<br>3).若数据的值发生改变,则将新数据更新到文件中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在程序中用一个变量来记录当前程序启动的次数</span></span><br><span class="line"><span class="comment"># count</span></span><br><span class="line"></span><br><span class="line">f = open(<span class="string">r'../test/num.txt'</span>, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">count = int(f.read())</span><br><span class="line">print(count)</span><br><span class="line"></span><br><span class="line">count += <span class="number">1</span></span><br><span class="line">f = open(<span class="string">r'../test/num.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">f.write(str(count))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-文件域"><a href="#2-文件域" class="headerlink" title="2. 文件域"></a>2. 文件域</h2><p><strong><em>with open(文件路径,打开方式,编码方式) as 文件对象</em></strong><br>文件路径可以是绝对路径也可以是行对路径<br>相对路径中 ./ 代表当前目录 ; ../ 代表当前目录的上层目录,依次类推</p>
+<h2 id="3-容器字符串的转换-eval"><a href="#3-容器字符串的转换-eval" class="headerlink" title="3.容器字符串的转换:eval"></a>3.容器字符串的转换:eval</h2><p>当一个字符串内是一个完整的其他容器(列表,字典,集合,元组)时,eval(字符串)可将字符串转换成相应的容器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">'[1, 2, 3, 4]'</span></span><br><span class="line">re1 = eval(str1)</span><br><span class="line">print(re1, type(re1))</span><br><span class="line"></span><br><span class="line">str2 = <span class="string">"&#123;'name': 2, 'age': 4&#125;"</span></span><br><span class="line">re2 = eval(str2)</span><br><span class="line">print(re2, type(re2))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="三-json"><a href="#三-json" class="headerlink" title="三 . json"></a>三 . json</h1><p><strong>json模块是python中专门用来支持json数据的模块</strong></p>
+<h2 id="1-json"><a href="#1-json" class="headerlink" title="1.json"></a>1.json</h2><p><strong>json是一种数据格式,专门用来解决各个计算机语言间数据不能互通的问题</strong></p>
+<h3 id="1-一个json只有一个数据"><a href="#1-一个json只有一个数据" class="headerlink" title="1).一个json只有一个数据"></a>1).一个json只有一个数据</h3><h3 id="2-唯一的这个数据必须是json支持的数据类型"><a href="#2-唯一的这个数据必须是json支持的数据类型" class="headerlink" title="2).唯一的这个数据必须是json支持的数据类型"></a>2).唯一的这个数据必须是json支持的数据类型</h3><p><strong>json支持的数据类型:</strong></p>
+<ul>
+<li>a.数字类型(number) ——&gt; 所有数字,支持科学计数法,直接写</li>
+<li>b.字符串(string) ——&gt; 文本数据,只能用双引号引起来,并且支持转义字符<pre><code>&quot;abc&quot;, &quot;sadhuwe&quot;, ...</code></pre></li>
+<li>c.布尔值(boolean) ——&gt; true/false(直接写)</li>
+<li>d.空值 ——&gt; null(直接写)</li>
+<li>e.数组(array) ——&gt; [元素1, 元素2, 元素3,…]  元素可以是json支持的任何数据类型</li>
+<li>f.字典(dictionary) ——&gt; {key1:value, key2:value, key3:value, …} key必须是字符串,value可以是json支持的任何类型</li>
+</ul>
+<h2 id="2-json转python"><a href="#2-json转python" class="headerlink" title="2.json转python"></a>2.json转python</h2><h3 id="1-转换规律"><a href="#1-转换规律" class="headerlink" title="1).转换规律"></a>1).转换规律</h3><p>json ——&gt; python<br>数据 ——&gt; int/float<br>字符串 ——&gt; 字符串;双引号可能变为单引号<br>布尔 ——&gt; 布尔:True/False<br>null ——&gt; None<br>数组 ——&gt; 列表<br>字典 ——&gt; 字典</p>
+<h3 id="2-转换方法"><a href="#2-转换方法" class="headerlink" title="2).转换方法"></a>2).转换方法</h3><p>json.loads(字符串) ——&gt; 将json字符串转换成python的字符串</p>
+<p><strong>注意:要求字符串内的内容必须是json格式的数据</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">result = json.loads(<span class="string">'1'</span>)</span><br><span class="line">print(result, type(result))</span><br><span class="line"></span><br><span class="line">result = json.loads(<span class="string">'[123, "ads", true]'</span>)</span><br><span class="line">print(result, type(result))</span><br><span class="line"></span><br><span class="line">result = json.loads(<span class="string">'&#123;"name": "an", "age": 20&#125;'</span>)</span><br><span class="line">print(result, type(result))</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-python转json"><a href="#3-python转json" class="headerlink" title="3.python转json"></a>3.python转json</h2><h3 id="1-转换规律-1"><a href="#1-转换规律-1" class="headerlink" title="1).转换规律"></a>1).转换规律</h3><p>python ——&gt; json<br>int/float ——&gt; 数字<br>字符串 ——&gt; 字符串;单引号变成双引号<br>布尔值 ——&gt; 布尔值;true/false<br>None ——&gt; null<br>列表/元组 ——&gt; 数组<br>字典 ——&gt; 字典</p>
+<h3 id="2-方法"><a href="#2-方法" class="headerlink" title="2).方法"></a>2).方法</h3><p>json.dumps(数据) ——&gt; 将python数据转换成json类型的python字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">result = json.dumps(<span class="number">100</span>)</span><br><span class="line">print([result])</span><br><span class="line"></span><br><span class="line">result = json.dumps((<span class="number">10</span>, <span class="string">'ahs'</span>, <span class="literal">False</span>))</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2018/07/11/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.13%20%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">Python基础：13:文件操作</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/python/">✓ python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/07/14/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.14%20%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/">Python基础：14:异常捕获</a>
+            
+            
+            <a class="next" rel="next" href="/2018/07/08/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.12%20%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E6%A8%A1%E5%9D%97/">Python基础：12:生成器和模块</a>
+            
+        </section>
+
+		
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:30px;padding:10px;background:#fff}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			  </style>
+			  <div class="valine_comment"></div>
+<!--载入js，在<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'd8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz',
+      app_key: 'ePiIX7dqVFpzeKkr4T1ixiah',
+      placeholder: '请君发言。。。',
+      notify: 'false',
+      verify: 'false',
+    });
+</script>
+
+			</section>
+		
+		
+		
+		<span id="/2018/07/11/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.13%20%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" class="leancloud-visitors view" data-flag-title="Python基础：13:文件操作">
+		  <em class="post-meta-item-text">阅读量:</em>
+		  <i class="leancloud-visitors-count">1</i>
+		</span>
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

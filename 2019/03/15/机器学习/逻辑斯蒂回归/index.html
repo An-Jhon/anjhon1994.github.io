@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>逻辑斯蒂回归(Logistic) | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">逻辑斯蒂回归(Logistic)</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2019-03-15</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;机器学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-逻辑斯蒂回归原理"><a href="#一-逻辑斯蒂回归原理" class="headerlink" title="一: 逻辑斯蒂回归原理"></a>一: 逻辑斯蒂回归原理</h1><h2 id="一-似然函数"><a href="#一-似然函数" class="headerlink" title="(一): 似然函数"></a>(一): 似然函数</h2><p>每个样本的概率:<br>$$<br>P(y|x;\theta)=(h_{\theta}(x))^y(1-h_\theta (x))^{1-y}<br>$$<br>事件的概率(所有样本属于真实标记的概率)<br>$$<br>L(\theta)= \prod_{i=1}^nP(y_i|x_i;\theta)<br>$$</p>
+<p>$$<br>L(\theta)= \prod_{i=1}^n(h_{\theta}(x_i))^{y_i}(1-h_\theta (x_i))^{1-{y_i}}<br>$$</p>
+<p><strong>似然函数解决二分类问题:</strong></p>
+<p>当y=1时:<br>$$<br>P(1|x_i;\theta)=(h_{\theta}(x_i))^1(1-h_\theta (x_i))^{1-1}<br>$$</p>
+<p>$$<br>P(1|x_i;\theta)=h_{\theta}(x_i)<br>$$</p>
+<p>当y=0时:<br>$$<br>P(0|x_i;\theta)=(h_{\theta}(x_i))^0(1-h_\theta (x_i))^{1-0}<br>$$</p>
+<p>$$<br>P(0|x_i;\theta)=1-h_\theta (x_i)<br>$$</p>
+<p><strong>举个栗子:</strong> </p>
+<p>假如有一个罐子，里面有黑白两种颜色的球，数目多少不知，两种颜色的比例也不知。我们想知道罐中白球和黑球的比例，但我们不能把罐中的球全部拿出来数。现在我们可以每次任意从已经摇匀的罐中拿一个球出来，记录球的颜色，然后把拿出来的球再放回罐中。这个过程可以重复，我们可以用记录的球的颜色来估计罐中黑白球的比例。假如在前面的一百次重复记录中，有七十次是白球，请问罐中白球所占的比例最有可能是多少？</p>
+<p>解: </p>
+<p>设每次取到白球的概率为p, 则取到黑球的概率为(1-p), 则100次中70次取到白球的概率为:<br>$$<br>P=C_{100}^{70}p^{70}(1-p)^{30}<br>$$</p>
+<p>$$<br>P’=(p^{70})’(1-p)^{30}+p^{70}((1-p)^{30})’\times(1-p)’<br>$$</p>
+<p>$$<br>P’=70p^{69}(1-p)^{30}-p^{70}30(1-p)^{29}<br>$$</p>
+<p>此时令导数为零求最大值:<br>$$<br>0=70p^{69}(1-p)^{30}-p^{70}30(1-p)^{29}<br>$$<br>化简:<br>$$<br>0=70(1-p)-30p<br>$$</p>
+<p>$$<br>100p=70<br>$$</p>
+<p>所以:<br>$$<br>p=70\div100<br>$$</p>
+<h2 id="二-逻辑斯蒂回归原理和损失函数"><a href="#二-逻辑斯蒂回归原理和损失函数" class="headerlink" title="(二): 逻辑斯蒂回归原理和损失函数"></a>(二): 逻辑斯蒂回归原理和损失函数</h2><p>分类问题其实都是概率问题, 逻辑斯蒂函数就是概率函数,无论给的值多大多小都会转变到0-1之间进行比较,并得出概率进行分类</p>
+<p><strong>sigmoid函数:</strong><br>$$<br>S(t) = \frac{1}{1+e^{-t}}<br>$$<br><strong>线性回归方程:</strong><br>$$<br>一般模式: f(x) = {\theta}x+b<br>$$</p>
+<p>$$<br>矩阵模式: f(X) = \sum\limits _{i=1}^nx_i{\theta}_i+b<br>$$</p>
+<h3 id="1-逻辑斯蒂回归原理"><a href="#1-逻辑斯蒂回归原理" class="headerlink" title="1: 逻辑斯蒂回归原理"></a>1: 逻辑斯蒂回归原理</h3><p><font color=red><strong>逻辑斯蒂回归 = 线性回归 + sigmoid</strong></font></p>
+<p><strong>方程结合 - 预测函数:</strong><br>$$<br>一般形式: h_{\theta}(x)=\frac{1}{1+e^{-x\theta}}<br>$$</p>
+<p>$$<br>矩阵模式: h_{\theta}(X)=\frac{1}{1+e^{-X\theta}}<br>$$</p>
+<h3 id="2-最大似然估计法求损失函数"><a href="#2-最大似然估计法求损失函数" class="headerlink" title="2: 最大似然估计法求损失函数"></a>2: 最大似然估计法求损失函数</h3><p><strong>最大似然估计公式求对数:</strong><br>$$<br>l(\theta) = ln(L(\theta)) =ln[ \prod_{i=1}^n(h_{\theta}(x_i))^{y_i}(1-h_\theta (x_i))^{1-{y_i}}]<br>$$<br><strong>乘积的对数可以转换成加法:</strong><br>$$<br>l(\theta)= \sum_{i=1}^n[y_iln(h_{\theta}(x_i))+(1-{y_i})ln(1-h_\theta (x_i))]<br>$$<br>最大似然估计就是要求得使 $l(\theta)$ 取最大值时的 $\theta$ ，其实这里可以使用梯度上升法求解，求得的 $\theta$ 就是要求的最佳参数</p>
+<p><strong>对似然函数对数化取反的表达式，即损失函数表达式</strong><br>$$<br>J(\theta) = -l(\theta) = -\sum_{i=1}^n[y_iln(h_{\theta}(x_i))+(1-{y_i})ln(1-h_\theta (x_i))]<br>$$</p>
+<blockquote>
+<p><strong>损失函数 $J(\theta)$ 对 $ \theta$ 求导:</strong></p>
+</blockquote>
+<p>$$<br>J’(\theta) = \frac{\partial J(\theta)}{\partial\theta}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>\frac{\partial J(\theta)}{\partial\theta}&amp; =  -\sum_{i=1}^n[y_i\frac{1}{h_{\theta}(x_i)}\frac{\partial h_\theta(x_i)}{\partial\theta}+(1-{y_i})\frac{1}{1-h_\theta (x_i)}\frac{\partial (1-h_\theta(x_i))}{\partial\theta}]\<br>&amp;\<br>&amp; 注释: ln(x)’=\frac{1}{x}\<br>&amp;\<br>&amp; =  -\sum_{i=1}^n[y_i\frac{1}{h_{\theta}(x_i)}\frac{\partial h_\theta(x_i)}{\partial\theta}-(1-{y_i})\frac{1}{1-h_\theta (x_i)}\frac{\partial h_\theta(x_i)}{\partial\theta}]\<br>&amp; =  -\sum_{i=1}^n[y_i\frac{1}{h_{\theta}(x_i)}-(1-{y_i})\frac{1}{1-h_\theta (x_i)}]\frac{\partial h_\theta(x_i)}{\partial\theta}\<br>&amp;\<br>&amp; 注释: \frac{\partial h_\theta(x_i)}{\partial\theta}的推导过程详见下文\<br>&amp;\<br>&amp; =  -\sum_{i=1}^n[y_i\frac{1}{h_{\theta}(x_i)}-(1-{y_i})\frac{1}{1-h_\theta (x_i)}]x_ih_\theta(x_i)(1-h_\theta(x_i))\<br>&amp; =  -\sum_{i=1}^n[y_i(1-h_\theta (x_i))-(1-{y_i})h_\theta (x_i)]x_i\<br>&amp; =  -\sum_{i=1}^n[y_i-h_\theta (x_i)]x_i\<br>&amp; =  \sum_{i=1}^n[h_\theta (x_i)-y_i]x_i\<br>\end{aligned}<br>$$</p>
+<p><strong>推导 $\frac{\partial h_\theta(x_i)}{\partial\theta}$ 的过程:</strong><br>$$<br>\begin{aligned}<br>\frac{\partial h_\theta(x_i)}{\partial\theta}&amp; =  h’_\theta(x_i)\<br>&amp; =  (\frac{1}{1+e^{-x_i\theta}})’\<br>&amp; =  (\frac{1}{1+e^{-\theta^Tx_i}})’\<br>&amp; =  [(1+e^{-\theta^Tx_i})^{-1}]’\<br>&amp; 注释: (e^x)’ = e^x \<br>&amp; =  -(1+e^{-\theta^Tx_i})^{-2}e^{-\theta^Tx_i}(-x_i)\<br>&amp; =  (1+e^{-\theta^Tx_i})^{-2}e^{-\theta^Tx_i}x_i\<br>&amp; =  x_i\frac{e^{-\theta^Tx_i}}{(1+e^{-\theta^Tx_i})^2}\<br>&amp; =  x_i\frac{1}{(1+e^{-\theta^Tx_i})}\frac{e^{-\theta^Tx_i}}{(1+e^{-\theta^Tx_i})}\<br>&amp; =  x_ih_\theta(x_i)\frac{e^{-\theta^Tx_i}}{(1+e^{-\theta^Tx_i})}\<br>&amp; =  x_ih_\theta(x_i)\frac{1+e^{-\theta^Tx_i}-1}{(1+e^{-\theta^Tx_i})}\<br>&amp; =  x_ih_\theta(x_i)[\frac{1+e^{-\theta^Tx_i}}{(1+e^{-\theta^Tx_i})}-\frac{1}{(1+e^{-\theta^Tx_i})}]\<br>&amp; =  x_ih_\theta(x_i)[1-\frac{1}{(1+e^{-\theta^Tx_i})}]\<br>&amp; =  x_ih_\theta(x_i)(1-h_\theta(x_i))\<br>\end{aligned}<br>$$</p>
+<p><strong>此时使用梯度下降优化算法, 其系数的更新规则为:</strong><br>$$<br>\theta = \theta - \epsilon\frac{\partial J(\theta)}{\partial\theta}<br>$$</p>
+<h1 id="二-逻辑斯蒂回归的应用"><a href="#二-逻辑斯蒂回归的应用" class="headerlink" title="二: 逻辑斯蒂回归的应用"></a>二: 逻辑斯蒂回归的应用</h1><h2 id="一-简单应用-鸢尾花分类"><a href="#一-简单应用-鸢尾花分类" class="headerlink" title="(一): 简单应用 - 鸢尾花分类"></a>(一): 简单应用 - 鸢尾花分类</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, metrics</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 鸢尾花数据</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 花萼长度, 花萼宽度, 花瓣长度, 花瓣宽度</span></span><br><span class="line">X = iris[<span class="string">'data'</span>]</span><br><span class="line">y = iris[<span class="string">'target'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># train_test_split随机打乱数据顺序, random_state使得每次随机的数值是一样的</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.2</span>, random_state=<span class="number">512</span>)</span><br><span class="line"></span><br><span class="line">lr = LogisticRegression(max_iter=<span class="number">1000</span>)   <span class="comment"># max_iter=1000, 学习次数</span></span><br><span class="line">lr.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_ = lr.predict(X_test)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'实际数据:y_test:\n'</span>, y_test)</span><br><span class="line">print(<span class="string">'预测数据:y_:\n'</span>, y_)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">实际数据:y_test:</span></span><br><span class="line"><span class="string"> [0 1 1 1 2 0 0 2 0 2 1 1 1 0 2 0 2 0 1 1 0 1 0 1 0 2 1 1 1 2]</span></span><br><span class="line"><span class="string">预测数据:y_:</span></span><br><span class="line"><span class="string"> [0 1 1 2 2 0 0 2 0 2 1 1 1 0 2 0 2 0 1 1 0 1 0 2 0 2 1 1 1 2]</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二-二分类问题"><a href="#二-二分类问题" class="headerlink" title="(二): 二分类问题"></a>(二): 二分类问题</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X,y = datasets.load_iris(<span class="literal">True</span>)   <span class="comment"># True代表只获取数据和目标值</span></span><br><span class="line"></span><br><span class="line">cond = y!=<span class="number">0</span>   <span class="comment"># 只留下两个类别,将类别0 删除</span></span><br><span class="line">X = X[cond]</span><br><span class="line">y = y[cond]</span><br><span class="line"></span><br><span class="line">lr = LogisticRegression()</span><br><span class="line">lr.fit(X,y)  <span class="comment"># 算法，训练数据，找X和y之间的规律，方程</span></span><br><span class="line">y_ = lr.predict(X)  <span class="comment"># 规律找到之后，使用规律，进行计算</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将类别减少之后, 分类后的结果和真实值相差很小,说明类别越少,分类的准确度越高</span></span><br><span class="line"></span><br><span class="line">(y_ == y).mean()   <span class="comment"># 计算准确率</span></span><br><span class="line">print(y_)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1,</span></span><br><span class="line"><span class="string">       1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span></span><br><span class="line"><span class="string">       1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2,</span></span><br><span class="line"><span class="string">       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,</span></span><br><span class="line"><span class="string">       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">proba_ = lr.predict_proba(X)   <span class="comment"># 计算的概率</span></span><br><span class="line">proba_[:<span class="number">10</span>]   <span class="comment"># 将概率转化成类别</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([[0.99153216, 0.00846784],</span></span><br><span class="line"><span class="string">       [0.9908928 , 0.0091072 ],</span></span><br><span class="line"><span class="string">       [0.99355185, 0.00644815],</span></span><br><span class="line"><span class="string">       [0.99086387, 0.00913613],</span></span><br><span class="line"><span class="string">       [0.99219814, 0.00780186],</span></span><br><span class="line"><span class="string">       [0.98268555, 0.01731445],</span></span><br><span class="line"><span class="string">       [0.99252002, 0.00747998],</span></span><br><span class="line"><span class="string">       [0.9899949 , 0.0100051 ],</span></span><br><span class="line"><span class="string">       [0.99259338, 0.00740662],</span></span><br><span class="line"><span class="string">       [0.99028393, 0.00971607]])</span></span><br><span class="line"><span class="string">每组数据有两种分类的可能性, 每种可能性对应的概率不同,系统在判别的时候会选择概率较大的那个类别</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">proba_.argmax(axis=<span class="number">1</span>)+<span class="number">1</span>   <span class="comment"># 将概率转换为类别; .argmax(axis=1)获取同一行中较大的值(概率)的下标;加1是因为之前的类别0已经被删除了,而这里的下标还有可能是0</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1,</span></span><br><span class="line"><span class="string">       1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span></span><br><span class="line"><span class="string">       1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2,</span></span><br><span class="line"><span class="string">       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,</span></span><br><span class="line"><span class="string">       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], dtype=int64)</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以上是用算法模型得出的分类结果(y_)和概率手动计算概率(proba_)，现在我们用代码实现以上效果:</span></span><br><span class="line">w_ = lr.coef_</span><br><span class="line">b_ = lr.intercept_</span><br><span class="line">print(<span class="string">'方程系数'</span>,lr.coef_)</span><br><span class="line">print(<span class="string">'方程截距'</span>,lr.intercept_)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">方程系数 [[ 0.48498493 -0.34086327  1.8278232   0.83365156]]</span></span><br><span class="line"><span class="string">方程截距 [-8.76905997]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">(X)</span>:</span><span class="comment">#线性方程，矩阵，批量计算</span></span><br><span class="line">    <span class="keyword">return</span> X.dot(w_[<span class="number">0</span>]) + b_[<span class="number">0</span>]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(x)</span>:</span><span class="comment">#fun就是线性方程的返回值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>/(<span class="number">1</span>+np.e**-x)</span><br><span class="line"></span><br><span class="line">f = fun(X)</span><br><span class="line">p_1 = sigmoid(f)   <span class="comment"># 求出二分类中一类的概率</span></span><br><span class="line">p_0 = <span class="number">1</span> - p_1   <span class="comment"># 求出二分类中另外一类的概率(二分类中凌总可能性的和为1)</span></span><br><span class="line">p_ = np.c_[p_0,p_1]   <span class="comment"># 将两个概率连接起来</span></span><br><span class="line"><span class="comment"># np.r_：是按列连接两个矩阵，就是把两矩阵上下相加，要求列数相等，类似于pandas中的concat()。</span></span><br><span class="line"><span class="comment"># np.c_：是按行连接两个矩阵，就是把两矩阵左右相加，要求行数相等，类似于pandas中的merge()。</span></span><br><span class="line"></span><br><span class="line">p_[:<span class="number">10</span>]</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([[0.99153216, 0.00846784],</span></span><br><span class="line"><span class="string">       [0.9908928 , 0.0091072 ],</span></span><br><span class="line"><span class="string">       [0.99355185, 0.00644815],</span></span><br><span class="line"><span class="string">       [0.99086387, 0.00913613],</span></span><br><span class="line"><span class="string">       [0.99219814, 0.00780186],</span></span><br><span class="line"><span class="string">       [0.98268555, 0.01731445],</span></span><br><span class="line"><span class="string">       [0.99252002, 0.00747998],</span></span><br><span class="line"><span class="string">       [0.9899949 , 0.0100051 ],</span></span><br><span class="line"><span class="string">       [0.99259338, 0.00740662],</span></span><br><span class="line"><span class="string">       [0.99028393, 0.00971607]])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 对比发现p_和proba_所得到的结果是一致的;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三-多分类问题"><a href="#三-多分类问题" class="headerlink" title="(三): 多分类问题"></a>(三): 多分类问题</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, metrics</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X,y = datasets.load_iris(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打乱顺序</span></span><br><span class="line">index = np.arange(<span class="number">150</span>)</span><br><span class="line">np.random.shuffle(index)</span><br><span class="line">X = X[index]</span><br><span class="line">y = y[index]</span><br><span class="line"></span><br><span class="line">lr = LogisticRegression(max_iter=<span class="number">200</span>)   <span class="comment"># 定义模型</span></span><br><span class="line">lr.fit(X,y)   <span class="comment"># 训练模型</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是3分类问题, 三个方程(每一类对应一个方程),三组斜率,每组斜率有4个属性; 三个截距, </span></span><br><span class="line">w_ = lr.coef_</span><br><span class="line">b_ = lr.intercept_</span><br><span class="line">print(<span class="string">'斜率:\n'</span>,w_)</span><br><span class="line">print(<span class="string">'截距:\n'</span>,b_)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">斜率:</span></span><br><span class="line"><span class="string"> [[-0.42294389  0.9669724  -2.51691851 -1.08061335]</span></span><br><span class="line"><span class="string"> [ 0.53406236 -0.32159608 -0.20649198 -0.94361292]</span></span><br><span class="line"><span class="string"> [-0.11111847 -0.64537632  2.72341049  2.02422627]]</span></span><br><span class="line"><span class="string">截距:</span></span><br><span class="line"><span class="string"> [  9.84788649   2.2391674  -12.08705389]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">y_ = lr.predict(X)</span><br><span class="line">proba_ = lr.predict_proba(X)   <span class="comment"># 概率</span></span><br><span class="line">print(<span class="string">'y_:\n'</span>, y_)</span><br><span class="line">print(<span class="string">'proba_:\n'</span>, proba_)</span><br><span class="line">print(proba_.argmax(axis = <span class="number">1</span>))   <span class="comment"># argmax获取最大值的下标(类别)</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">y_:</span></span><br><span class="line"><span class="string"> [2 0 1 2 1 1 0 0 2 1 2 2 1 1 1 0 0 0 0 1 2 1 2 2 2 2 2 0 1 0 2 1 1 1 2 0 0</span></span><br><span class="line"><span class="string"> 2 0 1 2 1 2 0 1 2 2 0 1 0 0 2 0 2 0 1 1 1 0 0 0 2 1 1 1 0 0 2 0 2 2 2 2 1</span></span><br><span class="line"><span class="string"> 0 1 0 1 2 1 0 2 1 1 2 0 2 1 0 2 1 2 0 1 0 0 2 1 2 1 0 1 0 0 0 1 1 2 1 2 1</span></span><br><span class="line"><span class="string"> 1 1 2 0 2 0 2 1 0 0 2 0 0 2 1 0 0 2 1 1 2 0 2 2 2 0 1 2 2 0 0 0 2 2 0 1 2</span></span><br><span class="line"><span class="string"> 1 2]</span></span><br><span class="line"><span class="string">proba_:</span></span><br><span class="line"><span class="string"> [[2.42893049e-04 1.62572543e-01 8.37184564e-01]</span></span><br><span class="line"><span class="string"> [9.76236359e-01 2.37636218e-02 1.93734447e-08]</span></span><br><span class="line"><span class="string"> [1.02308731e-02 7.50874989e-01 2.38894138e-01]</span></span><br><span class="line"><span class="string"> [6.22245105e-07 2.13422648e-02 9.78657113e-01]</span></span><br><span class="line"><span class="string"> ......</span></span><br><span class="line"><span class="string"> [9.08742683e-03 9.76589206e-01 1.43233676e-02]</span></span><br><span class="line"><span class="string"> [1.06469379e-06 2.91941988e-02 9.70804737e-01]</span></span><br><span class="line"><span class="string"> [2.43372229e-01 7.55336793e-01 1.29097800e-03]</span></span><br><span class="line"><span class="string"> [2.27109807e-04 2.51919829e-01 7.47853061e-01]]</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> proba_.argmax(axis = 1):</span></span><br><span class="line"><span class="string"> array([2, 0, 1, 2, 1, 1, 0, 0, 2, 1, 2, 2, 1, 1, 1, 0, 0, 0, 0, 1, 2, 1,</span></span><br><span class="line"><span class="string">       2, 2, 2, 2, 2, 0, 1, 0, 2, 1, 1, 1, 2, 0, 0, 2, 0, 1, 2, 1, 2, 0,</span></span><br><span class="line"><span class="string">       1, 2, 2, 0, 1, 0, 0, 2, 0, 2, 0, 1, 1, 1, 0, 0, 0, 2, 1, 1, 1, 0,</span></span><br><span class="line"><span class="string">       0, 2, 0, 2, 2, 2, 2, 1, 0, 1, 0, 1, 2, 1, 0, 2, 1, 1, 2, 0, 2, 1,</span></span><br><span class="line"><span class="string">       0, 2, 1, 2, 0, 1, 0, 0, 2, 1, 2, 1, 0, 1, 0, 0, 0, 1, 1, 2, 1, 2,</span></span><br><span class="line"><span class="string">       1, 1, 1, 2, 0, 2, 0, 2, 1, 0, 0, 2, 0, 0, 2, 1, 0, 0, 2, 1, 1, 2,</span></span><br><span class="line"><span class="string">       0, 2, 2, 2, 0, 1, 2, 2, 0, 0, 0, 2, 2, 0, 1, 2, 1, 2], dtype=int64)</span></span><br><span class="line"><span class="string">       </span></span><br><span class="line"><span class="string">以上proba_.argmax(axis = 1)的分类结果和模型预测的结果一致;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动计算</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义线性函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linear</span><span class="params">(x)</span>:</span></span><br><span class="line">    y = x.dot(w_.T)+b_</span><br><span class="line">    <span class="keyword">return</span> y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将的到的目标值转换成概率(同一组目标值内的概率和为1)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">softmax</span><span class="params">(x)</span>:</span>   <span class="comment"># 详细公式见下文</span></span><br><span class="line">    <span class="keyword">return</span> np.e**x/((np.e**x).sum(axis=<span class="number">1</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>))</span><br><span class="line">    <span class="comment"># reshape之后分母的形状由单独的一行,变成一列;变成一列之后回根据分子的形状由第一列进行广播(广播出来的列和原来的一列相同,只是为了对应分支的数据形状,方便进行运算)</span></span><br><span class="line">    <span class="comment"># 如果我只需要特定的行数，列数我无所谓多少，我只需要指定行数，列数用-1代替就行了，计算机帮我算应该有多少列，反之亦然。所以-1在这里应该可以理解为一个正整数通配符，它代替任何正整数。</span></span><br><span class="line">    </span><br><span class="line">y_pred = linear(X)</span><br><span class="line">y_pred = softmax(y_pred)</span><br><span class="line">y_pred[:<span class="number">10</span>]</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([[2.42893049e-04, 1.62572543e-01, 8.37184564e-01],</span></span><br><span class="line"><span class="string">       [9.76236359e-01, 2.37636218e-02, 1.93734447e-08],</span></span><br><span class="line"><span class="string">       [1.02308731e-02, 7.50874989e-01, 2.38894138e-01],</span></span><br><span class="line"><span class="string">       [6.22245105e-07, 2.13422648e-02, 9.78657113e-01],</span></span><br><span class="line"><span class="string">       [8.71627591e-03, 7.74658724e-01, 2.16625000e-01],</span></span><br><span class="line"><span class="string">       [5.07829679e-03, 9.20088614e-01, 7.48330891e-02],</span></span><br><span class="line"><span class="string">       [9.84437320e-01, 1.55626715e-02, 8.01740090e-09],</span></span><br><span class="line"><span class="string">       [9.85693639e-01, 1.43063452e-02, 1.55226004e-08],</span></span><br><span class="line"><span class="string">       [9.96558465e-05, 1.20579040e-01, 8.79321304e-01],</span></span><br><span class="line"><span class="string">       [2.39486316e-02, 9.59459247e-01, 1.65921216e-02]])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 得到的概率和模型计算的概率相同</span></span><br></pre></td></tr></table></figure>
+
+<p>以上代码段中softmax(x)用到的公式:</p>
+<p>softmax函数的计算原理 :<br>$$<br>e^{x_i}\div\sum_{i=1}^n e^{x_i}<br>$$<br><img src="https://img-blog.csdn.net/20171127214016170?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGlhb3h1ZXpob25n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2019/03/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/">逻辑斯蒂回归(Logistic)</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">✓ 机器学习</a>
+                    
+                        <a href="/tags/sklearn/">✓ sklearn</a>
+                    
+                        <a href="/tags/Logistic%E5%9B%9E%E5%BD%92/">✓ Logistic回归</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">朴素贝叶斯</a>
+            
+            
+            <a class="next" rel="next" href="/2019/02/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/KNN%E7%AE%97%E6%B3%95/">KNN近邻算法</a>
+            
+        </section>
+
+		
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:30px;padding:10px;background:#fff}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			  </style>
+			  <div class="valine_comment"></div>
+<!--载入js，在<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'd8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz',
+      app_key: 'ePiIX7dqVFpzeKkr4T1ixiah',
+      placeholder: '请君发言。。。',
+      notify: 'false',
+      verify: 'false',
+    });
+</script>
+
+			</section>
+		
+		
+		
+		<span id="/2019/03/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/" class="leancloud-visitors view" data-flag-title="逻辑斯蒂回归(Logistic)">
+		  <em class="post-meta-item-text">阅读量:</em>
+		  <i class="leancloud-visitors-count">1</i>
+		</span>
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

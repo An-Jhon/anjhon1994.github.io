@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Python基础：3:循环结构与分支结构 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python基础：3:循环结构与分支结构</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2018-04-18</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Python%E5%AD%A6%E5%BD%95/">&nbsp;&nbsp;Python学录</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、分支结构"><a href="#一、分支结构" class="headerlink" title="一、分支结构"></a>一、分支结构</h1><h3 id="1、if-结构-（满足条件就执行某个操作，不满足就不执行。）"><a href="#1、if-结构-（满足条件就执行某个操作，不满足就不执行。）" class="headerlink" title="1、if 结构 （满足条件就执行某个操作，不满足就不执行。）"></a>1、if 结构 （满足条件就执行某个操作，不满足就不执行。）</h3><h6 id="1）、语法结构"><a href="#1）、语法结构" class="headerlink" title="1）、语法结构"></a>1）、语法结构</h6><p><strong><em>if 条件语句：<br>&emsp;代码段</em></strong></p>
+<h6 id="2）、说明"><a href="#2）、说明" class="headerlink" title="2）、说明"></a>2）、说明</h6><ul>
+<li>if——&gt;关键字，固定写法</li>
+<li>条件语句——&gt;任何有结果的表达式都可以：数据，已经声明过的变量，运算表达式；<strong><em>不能是赋值</em></strong></li>
+<li>:（冒号） ——&gt;固定写法，（一般出现冒号的位置，后面一般都会产生缩进）</li>
+<li>代码段——&gt;和if保持一个缩进的一条或多条语句；需要满足条件才执行的代码</li>
+</ul>
+<h6 id="3-执行过程"><a href="#3-执行过程" class="headerlink" title="3)执行过程"></a>3)执行过程</h6><p>先判断条件语句的结果是否为True（如果条件语句的结果不是布尔值，就先转换成布尔值）<br>如果为True就执行代码段，否则代码段不执行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">11</span></span><br><span class="line"><span class="keyword">if</span> num &amp; <span class="number">1</span> == <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'偶数'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、if-else-结构（满足条件执行操作，不满足条件执行另外一个操作）"><a href="#2、if-else-结构（满足条件执行操作，不满足条件执行另外一个操作）" class="headerlink" title="2、if - else 结构（满足条件执行操作，不满足条件执行另外一个操作）"></a>2、if - else 结构（满足条件执行操作，不满足条件执行另外一个操作）</h3><h6 id="1）、语法结构-1"><a href="#1）、语法结构-1" class="headerlink" title="1）、语法结构"></a>1）、语法结构</h6><p><strong><em>if 条件语句：<br>&emsp;代码段1 （满足条件执行）<br>else：<br>&emsp;代码段2 （不满足条件执行）</em></strong></p>
+<h6 id="2）、说明-1"><a href="#2）、说明-1" class="headerlink" title="2）、说明"></a>2）、说明</h6><p>先判断条件语句的结果是否为True（如果条件语句的结果不是布尔值，就先转换成布尔值）<br>如果为True就执行代码段1，否则执行代码段2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">20</span></span><br><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">    print(<span class="string">'已成年'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'未成年'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、if-elif-else-结构"><a href="#3、if-elif-else-结构" class="headerlink" title="3、if - elif - else 结构"></a>3、if - elif - else 结构</h3><h6 id="1）、语法结构-2"><a href="#1）、语法结构-2" class="headerlink" title="1）、语法结构"></a>1）、语法结构</h6><p><strong><em>if 条件语句：<br>&emsp;代码段1<br>elif 条件语句：<br>&emsp;代码段2<br>&emsp;&emsp;.<br>&emsp;&emsp;.<br>&emsp;&emsp;.<br>else:<br>&emsp;代码段N<br>其他代码</em></strong></p>
+<h6 id="2）、执行过程"><a href="#2）、执行过程" class="headerlink" title="2）、执行过程"></a>2）、执行过程</h6><p>先判断田间语句1 是否为True，为True就执行代码段1，然后整个if-elif-else结构结束<br>如果为False，就判断条件语句2是否为True，为True就执行代码段2，然后整个if-elif-else结构结束<br>以此类推<br>如果所有条件语句都不成立，执行else后面的代码段</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据年龄范围打印：少年(14以下)、青年(14~25)、壮年(26~35)、中年(36~50)、老年(50以上)</span></span><br><span class="line">age = int(input(<span class="string">'请输入你的年龄：'</span>))</span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">0</span> <span class="keyword">or</span> age &gt;<span class="number">150</span>:</span><br><span class="line">    print(<span class="string">'年龄不合法'</span>)</span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">14</span>:</span><br><span class="line">    print(<span class="string">'少年'</span>)</span><br><span class="line"><span class="keyword">elif</span> <span class="number">14</span> &lt; age &lt;= <span class="number">25</span>:</span><br><span class="line">    print(<span class="string">'青年'</span>)</span><br><span class="line"><span class="keyword">elif</span> <span class="number">26</span> &lt; age &lt;= <span class="number">35</span>:</span><br><span class="line">    print(<span class="string">'壮年'</span>)</span><br><span class="line"><span class="keyword">elif</span> <span class="number">36</span> &lt; age &lt;= <span class="number">50</span>:</span><br><span class="line">    print(<span class="string">'中年'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'老年'</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="4、if-的嵌套"><a href="#4、if-的嵌套" class="headerlink" title="4、if 的嵌套"></a>4、if 的嵌套</h3><p><strong>if结构中的代码段中可以再出现其他的if语句</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断一个数是否是偶数，并且再判断这个数是否是4的倍数，并打出结论</span></span><br><span class="line">num = <span class="number">9</span></span><br><span class="line"><span class="keyword">if</span> num % <span class="number">2</span> == <span class="number">0</span>:   <span class="comment"># if num &amp; 1 == 0:</span></span><br><span class="line">    print(<span class="string">'偶数'</span>)</span><br><span class="line">    <span class="keyword">if</span> num % <span class="number">4</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'是4的倍数'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'奇数'</span>)</span><br><span class="line">    <span class="keyword">if</span> num % <span class="number">10</span> == <span class="number">3</span>:</span><br><span class="line">        print(<span class="string">'个位数是3'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<hr>
+<h1 id="二、循环结构"><a href="#二、循环结构" class="headerlink" title="二、循环结构"></a>二、循环结构</h1><h3 id="1、for-循环"><a href="#1、for-循环" class="headerlink" title="1、for 循环"></a>1、for 循环</h3><h6 id="1）、语法结构-3"><a href="#1）、语法结构-3" class="headerlink" title="1）、语法结构"></a>1）、语法结构</h6><p>for 变量 in 序列：<br>&emsp;循环体</p>
+<h6 id="2）、说明-2"><a href="#2）、说明-2" class="headerlink" title="2）、说明"></a>2）、说明</h6><ul>
+<li>for——&gt;关键字，固定写法</li>
+<li>变量名——&gt;标识符，声明变量的要求一样（当这个变量在循环中用不到时可以用下划线命名）</li>
+<li>in——&gt;关键字，固定写法</li>
+<li>序列——&gt;结果是容器型数据；字符串，列表，字典，元组，集合，迭代器，生成器，range</li>
+<li>：（冒号）——&gt;固定写法</li>
+<li>循环体——&gt;和for保持一个缩进的一条或者多条语句：需要重复执行的语句</li>
+</ul>
+<h6 id="3）、执行过程"><a href="#3）、执行过程" class="headerlink" title="3）、执行过程"></a>3）、执行过程</h6><p>让变量取序列中取值，每取一个值，执行一次循环体<br>(for循环可以通过控制序列中元素的数量来控制循环的次数)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'abcd'</span>:</span><br><span class="line">    print(<span class="string">'==='</span>)</span><br></pre></td></tr></table></figure>
+<p><strong><em>注意：在for循环中，如果变量取出来的值用不到，则可以用下划线（_）给变量命名</em></strong></p>
+<h3 id="2、range-函数-（控制for循环的次数）"><a href="#2、range-函数-（控制for循环的次数）" class="headerlink" title="2、range 函数 （控制for循环的次数）"></a>2、range 函数 （控制for循环的次数）</h3><h6 id="1）、range函数的作用"><a href="#1）、range函数的作用" class="headerlink" title="1）、range函数的作用"></a>1）、range函数的作用</h6><ul>
+<li>1、产生指定的数字序列</li>
+<li>2、控制循环次数</li>
+</ul>
+<h6 id="2）、range-函数的用法"><a href="#2）、range-函数的用法" class="headerlink" title="2）、range 函数的用法"></a>2）、range 函数的用法</h6><p>&emsp;N 是正整数</p>
+<ul>
+<li><strong>1、range(N)          -     产生0~N-1的数字序列</strong><br>range(4) -&gt; 0,1,2,3<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">4</span>):</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></li>
+<li><strong>2、range(M,N)        -     产生M~N-1的数字序列</strong><br>range(3,10) -&gt; 3,4,5,6,7,8,9<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">3</span>,<span class="number">10</span>):</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></li>
+<li><strong>3、range(M,N,step)   -     从M开始每隔step产生下一个数字，到N前一个数为止</strong><br>range(0,10,2) -&gt; 0,2,4,6,8<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">10</span>,<span class="number">2</span>):</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h4 id="练习："><a href="#练习：" class="headerlink" title="练习："></a>练习：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 练习1，打印0-100中所有能被3整除的数</span></span><br><span class="line"><span class="comment"># 方法1：</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">101</span>):</span><br><span class="line">    <span class="keyword">if</span> x % <span class="number">3</span> == <span class="number">0</span>:</span><br><span class="line">        print(x)</span><br><span class="line"><span class="comment"># 方法2：</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">101</span>,<span class="number">3</span>):</span><br><span class="line">    print(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习2，统计1-100中能被4整除并且个位数是2的数字的个数</span></span><br><span class="line">num = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">101</span>):</span><br><span class="line">    <span class="keyword">if</span> x % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> x % <span class="number">10</span> == <span class="number">2</span>:</span><br><span class="line">        num += <span class="number">1</span></span><br><span class="line">print(num)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习3.计算1+2+3+...+100</span></span><br><span class="line">sum = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">101</span>):</span><br><span class="line">    sum += x</span><br><span class="line">print(sum)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、while-循环"><a href="#3、while-循环" class="headerlink" title="3、while 循环"></a>3、while 循环</h3><h6 id="1）、语法结构-4"><a href="#1）、语法结构-4" class="headerlink" title="1）、语法结构"></a>1）、语法结构</h6><p><strong><em>while 条件语句：<br>&emsp;循环体</em></strong></p>
+<h6 id="2）、说明-3"><a href="#2）、说明-3" class="headerlink" title="2）、说明"></a>2）、说明</h6><ul>
+<li>while——&gt;关键字，固定写法</li>
+<li>条件语句——&gt;任何有结果的表达式：数据，声明过的变量，运算表达式等（不能是赋值语句）</li>
+<li>：(冒号)——&gt;固定写法</li>
+<li>循环体——&gt;和while保持一个缩进的一条或者多条语句；（需要重复执行的额语句）</li>
+</ul>
+<h6 id="3）、执行过程-1"><a href="#3）、执行过程-1" class="headerlink" title="3）、执行过程"></a>3）、执行过程</h6><p>先判断条件语句是否为True，如果为True就执行循环体，执行完循环体再判断条件语句是否为True<br>为True又执行循环体，以此类推，直到循环体的结果是Fals循环结束</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> num &lt; <span class="number">5</span>:</span><br><span class="line">  print(<span class="string">'我爱你'</span>)</span><br><span class="line">  num += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="思考：什么时候用-for-，什么时候用-while-？"><a href="#思考：什么时候用-for-，什么时候用-while-？" class="headerlink" title="思考：什么时候用 for ，什么时候用 while ？"></a>思考：什么时候用 for ，什么时候用 while ？</h4><ul>
+<li><strong>用 for 循环的情况：</strong><br>当循环次数确定<br>遍历元素的时候</li>
+<li><strong>用 while 循环的情况</strong><br>死循环<br>循环次数不确定</li>
+</ul>
+<h4 id="练习：猜数字"><a href="#练习：猜数字" class="headerlink" title="练习：猜数字"></a>练习：猜数字</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randint</span><br><span class="line"></span><br><span class="line">num1 = randint(<span class="number">100</span>)</span><br><span class="line">num2 = int(input(<span class="string">'请输入数字'</span>))</span><br><span class="line"><span class="keyword">while</span> num1 != num2:</span><br><span class="line">  <span class="keyword">if</span> num1 &gt; num2:</span><br><span class="line">    print(<span class="string">'这个数小了'</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'这个数大了'</span>)</span><br><span class="line">  num2 = int(input(<span class="string">'请输入数字'</span>))</span><br><span class="line">print(<span class="string">'恭喜你答对了'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4、循环结构中的关键字"><a href="#4、循环结构中的关键字" class="headerlink" title="4、循环结构中的关键字"></a>4、循环结构中的关键字</h3><h6 id="1）、continue"><a href="#1）、continue" class="headerlink" title="1）、continue"></a>1）、continue</h6><p><strong>当执行循环体的时候，如果遇到continue那么此循环直接结束，直接进入下次循环的判断</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">  print(<span class="string">'x'</span>)</span><br><span class="line">  print(<span class="string">'我是循环结果1'</span>)</span><br><span class="line">  <span class="keyword">continue</span></span><br><span class="line">  print(<span class="string">'我是循环结果2'</span></span><br></pre></td></tr></table></figure>
+<h6 id="2）、break"><a href="#2）、break" class="headerlink" title="2）、break"></a>2）、break</h6><p><strong>当执行循环体时，如果遇到break，那么整个循环直接结束，执行循环后的其他代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sum = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">  x = int(input(<span class="string">'请输入数字'</span>))</span><br><span class="line">  <span class="keyword">if</span> x == <span class="number">0</span>:</span><br><span class="line">     <span class="keyword">break</span></span><br><span class="line">  <span class="keyword">if</span> x &amp; <span class="number">1</span> == <span class="number">0</span></span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  sum += x</span><br><span class="line">print(sum)</span><br></pre></td></tr></table></figure>
+<h6 id="3）、else"><a href="#3）、else" class="headerlink" title="3）、else"></a>3）、else</h6><ul>
+<li>1）、完整的for循环</li>
+</ul>
+<p><strong><em>for 变量 in 序列：<br>&emsp;循环体<br>else：<br>&emsp;代码段</em></strong></p>
+<ul>
+<li>2）、完整的while循环</li>
+</ul>
+<p><strong><em>while 条件语句：<br>&emsp;循环体<br>else：<br>&emsp;代码段</em></strong></p>
+<p>else中的代码段：当循环自然死亡（for后的变量数据取完了，while后的条件为False）else后面的代码会在循环结束后执行,如果循环是在遇到break后结束的，那么else后的代码段就不会执行</p>
+<p>else的意义：<br>可以通过判断else中的代码有没有执行来判断循环有没有遇到break</p>
+<h6 id="4）、while死循环的用法："><a href="#4）、while死循环的用法：" class="headerlink" title="4）、while死循环的用法："></a>4）、while死循环的用法：</h6><p><strong><em>while True:<br>&emsp;需要执行的代码<br>&emsp;if 退出循环的条件：<br>&emsp;&emsp;break</em></strong></p>
+<h3 id="5、循环嵌套"><a href="#5、循环嵌套" class="headerlink" title="5、循环嵌套"></a>5、循环嵌套</h3><h4 id="练习：计算：1！-2！-3！-…-10！"><a href="#练习：计算：1！-2！-3！-…-10！" class="headerlink" title="练习：计算：1！+2！+3！+…+10！"></a>练习：计算：1！+2！+3！+…+10！</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法1</span></span><br><span class="line">sum = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> x1 <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>):</span><br><span class="line">  pro = <span class="number">1</span></span><br><span class="line">  <span class="keyword">for</span> x2 <span class="keyword">in</span> range(<span class="number">1</span>,x1 + <span class="number">1</span>):</span><br><span class="line">    pro *= x2</span><br><span class="line">  sum += pro</span><br><span class="line">print(sum)</span><br><span class="line"></span><br><span class="line"><span class="comment">#方法2</span></span><br><span class="line">sum = <span class="number">0</span></span><br><span class="line">pro = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>)</span><br><span class="line">  pro *= x</span><br><span class="line">  sum += pro</span><br><span class="line">print(sum)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2018/04/18/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.3%20%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84/">Python基础：3:循环结构与分支结构</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/python/">✓ python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/05/01/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.4%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%88%97%E8%A1%A8/">Python基础：4:数据类型之列表</a>
+            
+            
+            <a class="next" rel="next" href="/2018/04/05/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.2%20%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/">Python基础：2:变量和运算符</a>
+            
+        </section>
+
+		
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:30px;padding:10px;background:#fff}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			  </style>
+			  <div class="valine_comment"></div>
+<!--载入js，在<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'd8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz',
+      app_key: 'ePiIX7dqVFpzeKkr4T1ixiah',
+      placeholder: '请君发言。。。',
+      notify: 'false',
+      verify: 'false',
+    });
+</script>
+
+			</section>
+		
+		
+		
+		<span id="/2018/04/18/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.3%20%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84/" class="leancloud-visitors view" data-flag-title="Python基础：3:循环结构与分支结构">
+		  <em class="post-meta-item-text">阅读量:</em>
+		  <i class="leancloud-visitors-count">1</i>
+		</span>
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Python基础：8:数据类型之字符串 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python基础：8:数据类型之字符串</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2018-06-06</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Python%E5%AD%A6%E5%BD%95/">&nbsp;&nbsp;Python学录</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、字符串"><a href="#一、字符串" class="headerlink" title="一、字符串"></a>一、字符串</h1><ul>
+<li>字符串(str)是容器型数据类型，他是将单引号(‘’)、双引号(“”)、三个单引号或三个双引号(‘’’ ‘’’/“”” “””)作为容器标志</li>
+<li>字符串有不可变性（不支持增删改）、有序性（支持下标操作）</li>
+</ul>
+<h2 id="1、字符串的元素-—字符"><a href="#1、字符串的元素-—字符" class="headerlink" title="1、字符串的元素 —字符"></a>1、字符串的元素 —字符</h2><p>python中只有字符概念，<strong>没有字符类型</strong>。引号中只有一个元素的字符串可以看成一个字符；字符串又叫字符集。</p>
+<h3 id="1）、字符"><a href="#1）、字符" class="headerlink" title="1）、字符"></a>1）、字符</h3><p>原则上任何可以通过键盘输入或者从其他地方复制粘贴的所有符号都可以作为字符</p>
+<h3 id="2）、普通字符"><a href="#2）、普通字符" class="headerlink" title="2）、普通字符"></a>2）、普通字符</h3><p>在字符串中能够代表符号本身的字符（没有特殊意义和特殊功能的符号）</p>
+<h3 id="3）、转义字符"><a href="#3）、转义字符" class="headerlink" title="3）、转义字符"></a>3）、转义字符</h3><p>在字符串中有特殊意义和特殊功能的字符的组合，一般是以斜杠\开头的<br><strong>常见的转义字符：</strong><br><strong>\n</strong> ——&gt; 表示换行<br><strong>\t</strong> ——&gt; 表示一个缩进（Tab）<br><strong>\\</strong> ——&gt; 表示斜杠本身<br><strong>&#39;</strong> ——&gt; 表示单引号<br><strong>&quot;</strong> ——&gt; 表示双引号<br><strong>\u四位16进制数</strong> ——&gt; 编码字符（获取四位16进制数作为编码值对应的值）</p>
+<p><strong>所有的转义字符长度都是1</strong></p>
+<h3 id="4）、阻止转义"><a href="#4）、阻止转义" class="headerlink" title="4）、阻止转义"></a>4）、阻止转义</h3><p>在字符串最前面加r或R可以让当前字符串中所有的转义字符失效（所有的符号在字符串中都表示这个符号本身）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str6 = <span class="string">'\tsd\n\'ds123'</span></span><br><span class="line">str7 = <span class="string">r'\tsd\n\'ds123'</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2、字符编码"><a href="#2、字符编码" class="headerlink" title="2、字符编码"></a>2、字符编码</h2><h3 id="1）、计算机不能直接存储符号，只能存储数字，为了能够存储字符，把每个字符关联了一个固定的数字（这个固定的数字就是对应字符的编码）"><a href="#1）、计算机不能直接存储符号，只能存储数字，为了能够存储字符，把每个字符关联了一个固定的数字（这个固定的数字就是对应字符的编码）" class="headerlink" title="1）、计算机不能直接存储符号，只能存储数字，为了能够存储字符，把每个字符关联了一个固定的数字（这个固定的数字就是对应字符的编码）"></a>1）、计算机不能直接存储符号，只能存储数字，为了能够存储字符，把每个字符关联了一个固定的数字（这个固定的数字就是对应字符的编码）</h3><h3 id="2）、ASCII表在计算机中采用一个字节保存一个字符（128个字符），字符包含了所有的字母、数字和英文常用符号"><a href="#2）、ASCII表在计算机中采用一个字节保存一个字符（128个字符），字符包含了所有的字母、数字和英文常用符号" class="headerlink" title="2）、ASCII表在计算机中采用一个字节保存一个字符（128个字符），字符包含了所有的字母、数字和英文常用符号"></a>2）、ASCII表在计算机中采用一个字节保存一个字符（128个字符），字符包含了所有的字母、数字和英文常用符号</h3><p>&emsp; 0-9：编码值依次增加 ； 0对应48<br>&emsp;   A-Z：编码值以此增加 ； A对应65<br>&emsp;   a-z：编码值依次增加 ； a对应97</p>
+<h3 id="3）、Unicode编码表是ASCII表的扩展，包含了世界上所有国家所有语言对应的符号（总共有65536个符号）"><a href="#3）、Unicode编码表是ASCII表的扩展，包含了世界上所有国家所有语言对应的符号（总共有65536个符号）" class="headerlink" title="3）、Unicode编码表是ASCII表的扩展，包含了世界上所有国家所有语言对应的符号（总共有65536个符号）"></a>3）、Unicode编码表是ASCII表的扩展，包含了世界上所有国家所有语言对应的符号（总共有65536个符号）</h3><p>&emsp;  ASCII表范围：0 - 127<br>&emsp;  <strong>中文的编码范围：4e00 - 9fa5</strong></p>
+<h3 id="方法："><a href="#方法：" class="headerlink" title="方法："></a>方法：</h3><p><strong>①：编码字符：\u4位16进制数<br>②：chr(编码值(可以是任何进制)) - 获取编码值对应的字符<br>③：ord(字符) - 获取指定字符对应的编码值</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取所有的中文字符</span></span><br><span class="line">num = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">0x4e00</span>, <span class="number">0x9fa5</span>):</span><br><span class="line">  print(chr(x))</span><br><span class="line">  <span class="keyword">if</span> num % <span class="number">35</span> == <span class="number">0</span>:</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+<br>
+
+<hr>
+<h1 id="二、字符串的查（字符串有不可变性（不支持增删改））"><a href="#二、字符串的查（字符串有不可变性（不支持增删改））" class="headerlink" title="二、字符串的查（字符串有不可变性（不支持增删改））"></a>二、字符串的查（字符串有不可变性（不支持增删改））</h1><h2 id="1、获取单个字符：字符串-下标"><a href="#1、获取单个字符：字符串-下标" class="headerlink" title="1、获取单个字符：字符串[下标]"></a>1、获取单个字符：字符串[下标]</h2><p><strong>一个空格是一个字符；tab键是4个字符；\t是一个字符</strong></p>
+<h2 id="2、获取多个字符：切片—字符串-开始下标：结束下标：步长"><a href="#2、获取多个字符：切片—字符串-开始下标：结束下标：步长" class="headerlink" title="2、获取多个字符：切片—字符串[开始下标：结束下标：步长]"></a>2、获取多个字符：切片—字符串[开始下标：结束下标：步长]</h2><h2 id="3、遍历：遍历元素，遍历下标"><a href="#3、遍历：遍历元素，遍历下标" class="headerlink" title="3、遍历：遍历元素，遍历下标"></a>3、遍历：遍历元素，遍历下标</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">'hello python'</span></span><br><span class="line">print(str1[<span class="number">-4</span>])</span><br><span class="line">print(str1[<span class="number">5</span>])</span><br><span class="line">print(str1[<span class="number">2</span>:])</span><br><span class="line">print(str1[:<span class="number">-2</span>:])</span><br></pre></td></tr></table></figure>
+<br>
+
+<hr>
+<h1 id="三、字符串的运算和函数"><a href="#三、字符串的运算和函数" class="headerlink" title="三、字符串的运算和函数"></a>三、字符串的运算和函数</h1><h2 id="1、运算符"><a href="#1、运算符" class="headerlink" title="1、运算符"></a>1、运算符</h2><h3 id="1）、加-乘"><a href="#1）、加-乘" class="headerlink" title="1）、加 +,  乘 *"></a>1）、加 +,  乘 *</h3><h3 id="2）、等-不等"><a href="#2）、等-不等" class="headerlink" title="2）、等 ==,  不等 !="></a>2）、等 ==,  不等 !=</h3><h3 id="3）、-gt-lt-gt-lt"><a href="#3）、-gt-lt-gt-lt" class="headerlink" title="3）、&gt;, &lt;, &gt;=, &lt;="></a>3）、&gt;, &lt;, &gt;=, &lt;=</h3><p>字符串比较大小是比较编码值的大小，一个字符一个字符的比较<br>判断字符是否是小写字母：’a’&lt;= char &lt;=’z’<br>判断字符是否是大写字母：’A’&lt;= char &lt;=’Z’<br>判断字符是否是字母：’A’&lt;= char &lt;=’Z’ or ‘a’&lt;= char &lt;=’z’<br>判断字符是否是中文：’\u4e00’ &lt;= char &lt;= ‘\u9fa5’<br>判断字符是否是数字：’0’ &lt;= char &lt;= ‘9’</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 练习：输入一个字符串，判断这个字符串是否是中文字符串（全是中文）</span></span><br><span class="line">value = input(<span class="string">'请输入：'</span>)</span><br><span class="line"><span class="keyword">for</span> char <span class="keyword">in</span> value:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="string">'\u4e00 &lt;= char &lt;=\u9fa5'</span>:</span><br><span class="line">        print(<span class="string">'不是中文字符串'</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'是中文字符串'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、in-和-not-in"><a href="#2、in-和-not-in" class="headerlink" title="2、in 和 not in"></a>2、in 和 not in</h2><p>字符串1 in 字符串2  -&gt;  判断字符串2中是否包含字符串1<br>print(‘a’ in ‘abcdf’)<br>print(‘abc’ in ‘abcdf’)   <strong>子串必须是连续的</strong></p>
+<h2 id="3、相关函数"><a href="#3、相关函数" class="headerlink" title="3、相关函数"></a>3、相关函数</h2><p>①、len(字符串)<br>print(len(‘\tsdse\ndsdwds\u4e00’))<br>②、str(数据)<br>print(list(str([10,20,30])))<br>③、sorted(字符串) 从小到大排序<br>str1 = ‘python’<br>print(sorted(str1))<br>④、reversed(字符串)倒序</p>
+<br>
+
+<hr>
+<h1 id="四、格式字符串"><a href="#四、格式字符串" class="headerlink" title="四、格式字符串"></a>四、格式字符串</h1><h2 id="1、格式占位符"><a href="#1、格式占位符" class="headerlink" title="1、格式占位符"></a>1、格式占位符</h2><h3 id="1）、语法：包含格式占位符的字符串-（值1，值2，值3，…）"><a href="#1）、语法：包含格式占位符的字符串-（值1，值2，值3，…）" class="headerlink" title="1）、语法：包含格式占位符的字符串 % （值1，值2，值3，…）"></a>1）、语法：包含格式占位符的字符串 % （值1，值2，值3，…）</h3><h3 id="2）、说明："><a href="#2）、说明：" class="headerlink" title="2）、说明："></a>2）、说明：</h3><p>%   -   固定写法<br>()    -   若值只有一个，可省略<br>值   -   任何有结果的表达式，值得个数和类型要与前面的占位符的个数和类型相同</p>
+<p><strong>格式占位符 - 格式占位符使用的时候和字符串中变化的数据类型相关</strong></p>
+<ul>
+<li>&emsp;%s - 字符串（任何类型都可以）</li>
+<li>&emsp;%d - 整型；</li>
+<li>&emsp;%-Nd - 整型；N约束数字的长度，如果不够，空格来凑（后面）。如果超了，不能约束</li>
+<li>&emsp;%-Nd - 整型；N约束数字的长度，如果不够，空格来凑（前面）。如果超了，不能约束</li>
+<li>&emsp;%f - 浮点数；小数点后保留6位</li>
+<li>&emsp;%.Nf - 浮点数；N约束小数点的位数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name = input(<span class="string">'请输入姓名：'</span>)</span><br><span class="line">age = int(input(<span class="string">'请输入年纪：'</span>))</span><br><span class="line">print(<span class="string">'你好，我是'</span>+ name +<span class="string">'今年'</span>,str(age)+<span class="string">'岁'</span>)</span><br><span class="line">print(<span class="string">'你好，我是%s，今年%d，工资%s'</span> % (name, age, <span class="number">200</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、format"><a href="#2、format" class="headerlink" title="2、format"></a>2、format</h2><h3 id="1）、语法：一个带有-的字符串-format-值1，值2，…"><a href="#1）、语法：一个带有-的字符串-format-值1，值2，…" class="headerlink" title="1）、语法：一个带有{}的字符串.format(值1，值2，…)"></a>1）、语法：一个带有{}的字符串.format(值1，值2，…)</h3><h3 id="2）、用法："><a href="#2）、用法：" class="headerlink" title="2）、用法："></a>2）、用法：</h3><p><strong>①、大括号的个数和后面的数值个数一样</strong><br>print(‘我是{}，今年{}岁’.format(‘安’, 20))</p>
+<p><strong>②、{N} - N从0开始以此增加、分别表示format中第0个值，第一个值。。。</strong><br>print(‘我是{0}，年纪是{1}，今年{1}岁’.format(‘安’, 20))<br>print(‘数据1：{1}，数据2：{0}，数据3：{1}，’.format(10, 20))</p>
+<p><strong>③、[key]</strong><br>‘{key1},{key1}’.format(key1=值1，key2=值2)<br>print(‘我是{name}，年纪是{age}，今年{age}岁’.format(name=’安’, age=20))</p>
+<p><strong>④、用列表给占位符赋值</strong><br>list1 = [10, 20, 30, 40]<br>print(‘{0[3]}, {0[2]}, {0[1]}’.format(list1))</p>
+<p><strong>⑤、用字典给占位符赋值</strong><br>student = {‘name’: ‘小明’, ‘age’:20, ‘id’: ‘001’, ‘score’:100}<br>print(‘{name}今年{age}岁，学号:{id},考了{score}’.format(student))</p>
+<p><strong>⑥、其他写法</strong><br>print(‘圆周率:{:.2f}’.format(3.141592654))</p>
+<p><strong>- 约束宽度</strong><br>print(‘整数:{:0&gt;4d}’.format(25))<br>print(‘整数:{:+&gt;4d}’.format(26))<br>print(‘整数:{:-&lt;4d}’.format(27))</p>
+<p><strong>- 数字分隔</strong><br>print(‘大整数:{:,}’.format(10000000000))</p>
+<p><strong>- 百分比</strong><br>print(‘百分比:{:.1%}’.format(0.2))</p>
+<br>
+
+<hr>
+<h1 id="五、字符串的相关操作"><a href="#五、字符串的相关操作" class="headerlink" title="五、字符串的相关操作"></a>五、字符串的相关操作</h1><h2 id="1、字符串-capitalize-将字符串的首字母变成大写字母"><a href="#1、字符串-capitalize-将字符串的首字母变成大写字母" class="headerlink" title="1、字符串.capitalize() - 将字符串的首字母变成大写字母"></a>1、字符串.capitalize() - 将字符串的首字母变成大写字母</h2><h2 id="2、center-ljust-rjust-zfill"><a href="#2、center-ljust-rjust-zfill" class="headerlink" title="2、center / ljust / rjust / zfill"></a>2、center / ljust / rjust / zfill</h2><p><strong>字符串.center(宽度，填充字符)</strong><br>print(‘abc’.center(5,’*‘))</p>
+<p><strong>字符串.ljust(宽度，填充字符)</strong><br>print(‘abc’.ljust(5,’*‘))</p>
+<p><strong>字符串.rjust(宽度，填充字符)</strong><br>print(‘abc’.rjust(5,’*‘))</p>
+<p><strong>字符串.zfill(宽度) == 字符串.zfill(宽度,’0’)</strong><br>print(‘abc’.zfill(5))</p>
+<h2 id="3、统计"><a href="#3、统计" class="headerlink" title="3、统计"></a>3、统计</h2><h3 id="1）、字符串1-count-字符串2"><a href="#1）、字符串1-count-字符串2" class="headerlink" title="1）、字符串1.count(字符串2)"></a>1）、字符串1.count(字符串2)</h3><h3 id="2）、字符串1-count-字符串2-开始下标-结束下标-统计开始到结束范围内字符串2出现的次数"><a href="#2）、字符串1-count-字符串2-开始下标-结束下标-统计开始到结束范围内字符串2出现的次数" class="headerlink" title="2）、字符串1.count(字符串2,开始下标,结束下标) - 统计开始到结束范围内字符串2出现的次数"></a>2）、字符串1.count(字符串2,开始下标,结束下标) - 统计开始到结束范围内字符串2出现的次数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str2 = <span class="string">'how are you? i am fine! thank you!'</span></span><br><span class="line">print(str2.count(<span class="string">'you'</span>))</span><br><span class="line">print(str2.count(<span class="string">'a'</span>))</span><br><span class="line">print(str2.count(<span class="string">'you'</span>, <span class="number">0</span>, <span class="number">15</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、判断str2是否以str1结尾"><a href="#4、判断str2是否以str1结尾" class="headerlink" title="4、判断str2是否以str1结尾"></a>4、判断str2是否以str1结尾</h2><p>print(str2[-len(str1):] == str1)</p>
+<h2 id="5、字符串查找"><a href="#5、字符串查找" class="headerlink" title="5、字符串查找"></a>5、字符串查找</h2><p><strong>获取一个字符串在另一个字符串中第一次出现的位置</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str2 = <span class="string">'how are you? i am fine! thank you!'</span></span><br><span class="line">print(str2.index(<span class="string">'you'</span>))</span><br><span class="line">print(str2.find(<span class="string">'you'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>当字符串不存在的时候：index报错，find返回-1</p>
+<h2 id="6、join"><a href="#6、join" class="headerlink" title="6、join"></a>6、join</h2><p><strong>字符串.join(序列) - 将序列中的元素用字符串连接在一起，产生新的字符串</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">str3 = <span class="string">'+'</span>.join(<span class="string">'abc'</span>)</span><br><span class="line">print(str3)</span><br><span class="line">str4 = <span class="string">''</span>.join(<span class="string">'234cc'</span>)</span><br><span class="line">print(str4)</span><br><span class="line">str5 = <span class="string">''</span>.join(&#123;<span class="string">'a'</span>: <span class="number">1</span>, <span class="string">'b'</span>: <span class="number">2</span>&#125;)</span><br><span class="line">print(str5)</span><br></pre></td></tr></table></figure>
+
+<h2 id="7、字符串替换"><a href="#7、字符串替换" class="headerlink" title="7、字符串替换"></a>7、字符串替换</h2><p><strong>字符串1.replace(字符串2，字符串3)——将字符串1中所有的字符串2都替换成字符串3</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str2 = <span class="string">'how are you? i am fine! thank you!'</span></span><br><span class="line">str2.replace(<span class="string">'you'</span>, <span class="string">'me'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>字符串1.maketrans(字符串2，字符串3)——创建字符串2和字符串3—一对应的映射表</strong><br><strong>字符串1.translate(替换映射表) ——将字符串1中所有的字符串2都替换成字符串3</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">table = str.maketrans(<span class="string">'a'</span>,<span class="string">'b'</span>)</span><br><span class="line">new_str2 = str2.translate(table)</span><br><span class="line">print(new_str2)</span><br></pre></td></tr></table></figure>
+
+<h2 id="8、切割"><a href="#8、切割" class="headerlink" title="8、切割"></a>8、切割</h2><p>字符串1.split(字符串2)——将字符串1中所有的字符串2作为切割点切成多分,切割点会被去掉并返回一个列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str2 = <span class="string">'how are you? i am fine! thank you!'</span></span><br><span class="line">print(str2.split(<span class="string">' '</span>))</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2018/06/06/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.8%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/">Python基础：8:数据类型之字符串</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/python/">✓ python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/06/17/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.9%20%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%80/">Python基础：9:函数基础</a>
+            
+            
+            <a class="next" rel="next" href="/2018/05/23/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.7%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/">Python基础：7:数据类型之集合</a>
+            
+        </section>
+
+		
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:30px;padding:10px;background:#fff}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			  </style>
+			  <div class="valine_comment"></div>
+<!--载入js，在<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'd8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz',
+      app_key: 'ePiIX7dqVFpzeKkr4T1ixiah',
+      placeholder: '请君发言。。。',
+      notify: 'false',
+      verify: 'false',
+    });
+</script>
+
+			</section>
+		
+		
+		
+		<span id="/2018/06/06/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.8%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="leancloud-visitors view" data-flag-title="Python基础：8:数据类型之字符串">
+		  <em class="post-meta-item-text">阅读量:</em>
+		  <i class="leancloud-visitors-count">1</i>
+		</span>
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

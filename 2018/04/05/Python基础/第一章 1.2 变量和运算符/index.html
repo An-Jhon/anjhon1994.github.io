@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="没有做不到的事,只是看你想不想做">
+
+
+
+<title>Python基础：2:变量和运算符 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                    <a class="menu-item" href="/movies">电影</a>
+                
+                    <a class="menu-item" href="/books">读书</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python基础：2:变量和运算符</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2018-04-05</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Python%E5%AD%A6%E5%BD%95/">&nbsp;&nbsp;Python学录</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、变量"><a href="#一、变量" class="headerlink" title="一、变量"></a>一、变量</h1><h3 id="1、变量"><a href="#1、变量" class="headerlink" title="1、变量"></a>1、变量</h3><ul>
+<li>变量是用来申请空间保存数据的<br>变量的公式：<strong>变量名 = 值</strong></li>
+</ul>
+<h3 id="2、说明"><a href="#2、说明" class="headerlink" title="2、说明"></a>2、说明</h3><ul>
+<li>变量名：自由命名，但要遵循一下要求和规范<br><strong>要求</strong>:<br>是标识符（1.由数字、字母和下划线组成；2.数字不能开头），不能是关键字<br><strong>规范</strong>:<br>1.见名知义：看到变量名，知道变量里存的什么数据<pre><code>2.满足PEP8命名规范：变量名内所有字母都小写，如果由多个单词组成变量名，则多个单词之间用下划线隔开
+3.不能用系统提供的函数名、类名、库名等系统相关的名来给变量命名</code></pre></li>
+<li>值：可以是任何有结果的表达式；例如：数据，已经赋值过的比那辆、运算表达式等</li>
+</ul>
+<h3 id="3、变量的使用"><a href="#3、变量的使用" class="headerlink" title="3、变量的使用"></a>3、变量的使用</h3><p>使用变量就是在使用变量里面的值;变量中的值可以修改大小和类型</p>
+<h3 id="4、同时声明多个变量"><a href="#4、同时声明多个变量" class="headerlink" title="4、同时声明多个变量"></a>4、同时声明多个变量</h3><ul>
+<li>同时声明多个变量赋相同的值<br>变量1 = 变量2 = 变量3 = … = 值</li>
+<li>同时声明多个变量赋不同的值<br>变量1，变量2，变量3，…=值1，值2，值3…</li>
+</ul>
+<h3 id="5、python声明变量的原理"><a href="#5、python声明变量的原理" class="headerlink" title="5、python声明变量的原理"></a>5、python声明变量的原理</h3><p>根据变量的大小申请的相应大小的内存，将变量名和数据对应的内存空间关联在一起；<br>在python中用一个变量给另外一个变量赋值的时候是将原来的变量的地址赋给另外一个变量，赋值完成后，数据只有一份。</p>
+<br>
+
+<p><strong>变量三要素：<br>1.类型  -  给变量复制的数据的类型  -  type（变量）<br>2.地址  -  给变量复制的数据在内存中的地址，也是正真存储的东西  -  id（变量）<br>3.值  -  给变量复制的数据</strong></p>
+<br>
+
+<hr>
+<h1 id="二、运算符"><a href="#二、运算符" class="headerlink" title="二、运算符"></a>二、运算符</h1><h3 id="一-、数学运算符"><a href="#一-、数学运算符" class="headerlink" title="(一)、数学运算符"></a>(一)、数学运算符</h3><h6 id="1、加减乘除：-emsp-emsp-emsp"><a href="#1、加减乘除：-emsp-emsp-emsp" class="headerlink" title="1、加减乘除：+&emsp;   -&emsp;   *&emsp;   /"></a>1、加减乘除：+&emsp;   -&emsp;   *&emsp;   /</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">10</span> + <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> - <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> * <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> / <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h6 id="2、取余-取模-求余数："><a href="#2、取余-取模-求余数：" class="headerlink" title="2、取余/取模/求余数：%"></a>2、取余/取模/求余数：%</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">123</span></span><br><span class="line">print(num % <span class="number">10</span>)   <span class="comment">#取个位</span></span><br><span class="line">print(num % <span class="number">100</span>)   <span class="comment">#取个位和十位</span></span><br></pre></td></tr></table></figure>
+<p>应用：<br>1、判断正数的奇偶性 - 判断该数对2取余结果是否为0<br>2、判断是否能整除<br>3、取低位数  </p>
+<h6 id="3、整除：-（商只取整数部分）"><a href="#3、整除：-（商只取整数部分）" class="headerlink" title="3、整除：//（商只取整数部分）"></a>3、整除：//（商只取整数部分）</h6><p>应用：取高位</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(num // <span class="number">100</span>)   <span class="comment">#取高位1</span></span><br></pre></td></tr></table></figure>
+<p><strong><em>注：负数的整除，取了结果之后减1</em></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">-9</span> // <span class="number">2</span>) = <span class="number">-5</span></span><br></pre></td></tr></table></figure>
+<h6 id="4、幂运算：-（x-y-–-x的y次方）"><a href="#4、幂运算：-（x-y-–-x的y次方）" class="headerlink" title="4、幂运算：**  （x**y –  x的y次方）"></a>4、幂运算：**  （x**y –  x的y次方）</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">2</span> ** <span class="number">3</span>)</span><br><span class="line">print(<span class="number">16</span> ** (<span class="number">1</span>/<span class="number">2</span>))   <span class="comment">#开方</span></span><br><span class="line">print(<span class="number">8</span> ** (<span class="number">1</span>/<span class="number">3</span>))   <span class="comment">#开方</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="（二）、比较运算符"><a href="#（二）、比较运算符" class="headerlink" title="（二）、比较运算符"></a>（二）、比较运算符</h3><p><strong><em>所有的比较运算符的运算结果都是布尔值</em></strong><br>1、大于、小于、大于等于、小于等于：&gt;  &lt;  &gt;=  &lt;=</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">30</span> &gt;= <span class="number">20</span>)</span><br><span class="line">print(<span class="number">30</span> &gt;= <span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+<p>2、等于、不等于：==  !=   –  判断两个值是否相等</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">10</span> == <span class="number">10</span>)</span><br><span class="line">print(<span class="number">10</span> != <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>3、python可以用连续的比较运算符表示范围</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">30</span></span><br><span class="line">print(<span class="number">28</span> &lt; age &lt; <span class="number">40</span>)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="（三）、逻辑运算符"><a href="#（三）、逻辑运算符" class="headerlink" title="（三）、逻辑运算符"></a>（三）、逻辑运算符</h3><p><strong><em>逻辑运算的对象和结果都是布尔值</em></strong><br><strong>1、and (逻辑与)</strong><br>1）、运算规则：两个都是True结果才是True，只要有一个是False结果就是False<br>2）、使用场景：需要多个条件同时满足</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断一个数是否能同时被3和7整除</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'是否能同时被3和7整除：'</span>,rem1 == <span class="number">0</span> <span class="keyword">and</span> rem2 == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>2、or (逻辑或)</strong><br>1）、运算规则：两个都是False结果才是False，只要有一个是True结果就是True<br>2）、使用场景：多个条件中有一个田间满足就行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断一个数是否能被3或被7整除</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'是否能被3或被7整除：'</span>,rem1 == <span class="number">0</span> <span class="keyword">or</span> rem2 == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>3、not (逻辑非)</strong><br>1）、运算规则：True变False，False变True<br>2）、使用场景：对一个条件进行否定</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一个数不能同时被3和7整除的条件</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'不能同时被3和7整除：'</span>,<span class="keyword">not</span> (rem1 == <span class="number">0</span> <span class="keyword">and</span> rem2 == <span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="（四）、赋值运算符"><a href="#（四）、赋值运算符" class="headerlink" title="（四）、赋值运算符"></a>（四）、赋值运算符</h3><p>= ， += ，-= ，<em>= ，/= ，%= ，//= ，*</em>=<br>所有赋值运算符的左边必须是变量，组合赋值运算符的左边除了是变量，这个变量还必须是已经声明过的。<br>1)、 变量 = 值  -&gt;  将右边的值赋给左边的变量<br>2)、 组合赋值运算符<br>已经声明过的变量 += 值  -&gt;  变量 = 变量 + 值</p>
+<hr>
+<p><strong><em>运算符优先级：</em></strong></p>
+<p>数学运算符 &gt; 比较运算符 &gt; 逻辑运算符 &gt; 赋值运算符</p>
+<p><strong><em>数学运算符优先级：</em></strong></p>
+<p>** &gt;  *,/,//,%(优先级相同)  &gt;   + ,-</p>
+<p>如果有括号则先算括号</p>
+<br>
+
+<h3 id="（五）、位运算"><a href="#（五）、位运算" class="headerlink" title="（五）、位运算"></a>（五）、位运算</h3><p><strong><em>所有的位运算都是针对数字的补码进行操作的</em></strong><br>位运算符：&amp;(与)、|(或)、~(取反)、^(异或)、&lt;&lt;(左移)、&gt;&gt;(右移)<br><strong>1、&amp;(按位与)</strong><br>1）、运算规则：补码每一位上的数都是1结果就是1，如果有一个0结果就是0<br>例：1110 &amp; 0111 = 0110<br>2）、运用：高效判断数字的奇偶性<br>&emsp;将数字和1进行按位与运算，判断结果是0（偶数）还是1（奇数）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">3</span> &amp; <span class="number">1</span>, <span class="number">7</span> &amp; <span class="number">1</span>,<span class="number">19</span> &amp; <span class="number">1</span>)</span><br><span class="line">print(<span class="number">4</span> &amp; <span class="number">1</span>, <span class="number">128</span> &amp; <span class="number">1</span>,<span class="number">800</span> &amp; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>2、| (按位或)</strong><br>1）、运算规则：补码每一位上的数都是0结果就是0，如果有一个1结果就是1<br>例：1110 | 0111 = 1111<br><strong>3、~ (按位取反)、单目运算</strong><br>例：~1101 =  0010<br><strong>4、^ (异或)</strong><br>运算规则：每一位上的数相同为0，不同为1<br>例：1110 ^ 0111 = 1001<br><strong>5、&lt;&lt; (左移)</strong><br><strong><em>数字 &lt;&lt; N</em></strong>   &emsp;指定的数字的补码整体向左移动N位；<br><strong><em>计算：数字*2**N</em></strong><br><strong>6、&gt;&gt; (右移)</strong><br><strong><em>数字 &gt;&gt; N</em></strong>   &emsp;指定的数字的补码整体向右移动N位；<br><strong><em>计算：数字//2**N</em></strong></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2018/04/05/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.2%20%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/">Python基础：2:变量和运算符</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%9F%BA%E7%A1%80/">✓ 基础</a>
+                    
+                        <a href="/tags/python/">✓ python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/04/18/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.3%20%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84/">Python基础：3:循环结构与分支结构</a>
+            
+            
+            <a class="next" rel="next" href="/2018/04/02/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.1%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8CPython%E5%9F%BA%E7%A1%80/">Python基础：1:基础</a>
+            
+        </section>
+
+		
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:30px;padding:10px;background:#fff}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			  </style>
+			  <div class="valine_comment"></div>
+<!--载入js，在<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'd8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz',
+      app_key: 'ePiIX7dqVFpzeKkr4T1ixiah',
+      placeholder: '请君发言。。。',
+      notify: 'false',
+      verify: 'false',
+    });
+</script>
+
+			</section>
+		
+		
+		
+		<span id="/2018/04/05/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.2%20%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/" class="leancloud-visitors view" data-flag-title="Python基础：2:变量和运算符">
+		  <em class="post-meta-item-text">阅读量:</em>
+		  <i class="leancloud-visitors-count">1</i>
+		</span>
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>
