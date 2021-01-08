@@ -16,7 +16,7 @@
 
 
 
-<title>KNN近邻算法 | Anjhon&#39;s Blog</title>
+<title>KNN近邻算法 | Anjhon</title>
 
 
 
@@ -250,11 +250,10 @@
 <p>KNN方法既可以做分类，也可以做回归</p>
 <p><strong>举例说明</strong></p>
 <p><strong>例- 1 : 图片中分三类$$w_1 红色圆圈，w_2 蓝色三角，w_3 绿色的方块$$，请问数据$$X_u$$属于哪个类别</strong></p>
-<img src="https://bkimg.cdn.bcebos.com/pic/03087bf40ad162d95867202e15dfa9ec8a13cd73?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5" style="zoom:33%;" />
-
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgmmdlhlrj20c80amq5j.jpg" alt="KNN-1.png"></p>
 <p>设置k=5, 4个邻居是红色，1个邻居是绿色的; 所以是红色的概率为80%, 是绿色的概率是20%</p>
 <p><strong>例 - 2: 如下图，绿色圆要被决定赋予哪个类，是红色三角形还是蓝色四方形？</strong></p>
-<p><img src="https://bkimg.cdn.bcebos.com/pic/bf096b63f6246b60f20ccd5aebf81a4c510fa29a?x-bce-process=image/resize,m_lfit,w_268,limit_1" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgmmzt8lkj205a04rmx3.jpg" alt="KNN-2.png"></p>
 <p>如果K=3，由于红色三角形所占比例为2/3，绿色圆将被赋予红色三角形那个类，如果K=5，由于蓝色四方形比例为3/5，因此绿色圆被赋予蓝色四方形类。</p>
 <p><strong>由此也说明了KNN算法的结果很大程度取决于K的选择。</strong></p>
 <br>
@@ -269,7 +268,7 @@
 <p><strong>曼哈顿距离:</strong><br>$$<br>d(x, y) = |x_1−y_1|+|x_2−y_2|+…+|x_n−y_n|=\sum\limits_{i=1}^n\vert x_i - y_i\vert<br>$$</p>
 <p><strong>闵可夫斯基距离:</strong><br>$$<br>d(x,y)= \sqrt[p]{(|x_1−y_1|)^p+(|x_2−y_2|)^p+…+(|x_n−y_n|)^p}=\sqrt[p]{\sum_{i=1}^n(|x_i−y_i|)^p}<br>$$<br>可以看出，欧式距离是闵可夫斯基距离距离在p=2时的特例，而曼哈顿距离是p=1时的特例。</p>
 <p><strong>方差和标准差:</strong></p>
-<p><img src="https://bkimg.cdn.bcebos.com/pic/472309f79052982281674d51ddca7bcb0b46d4c8?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U5Mg==,xp_5,yp_5" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgmnem8lqj20jh0da74i.jpg" alt="KNN-3.jpg"></p>
 <h2 id="三-分类决策规则"><a href="#三-分类决策规则" class="headerlink" title="(三): 分类决策规则"></a>(三): 分类决策规则</h2><p>一般都是使用前面提到的多数表决法。</p>
 <br>
 
@@ -287,19 +286,19 @@
 <li><p>3）确定左子空间和右子空间。 分割超平面x=7将整个空间分为两部分：x&lt;=7的部分为左子空间，包含3个节点={(2,3),(5,4),(4,7)}；另一部分为右子空间，包含2个节点={(9,6)，(8,1)}。</p>
 </li>
 <li><p>4）用同样的办法划分左子树的节点{(2,3),(5,4),(4,7)}和右子树的节点{(9,6)，(8,1)}。最终得到KD树。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1042406/201611/1042406-20161114151317201-1936126361.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgmnn1amuj2062064q2t.jpg" alt="KNN-4.jpg"></p>
 </li>
 </ul>
 <h3 id="2-KD树搜索最近邻"><a href="#2-KD树搜索最近邻" class="headerlink" title="2: KD树搜索最近邻"></a>2: KD树搜索最近邻</h3><p>当我们生成KD树以后，就可以去预测测试集里面的样本目标点了。对于一个目标点，我们首先在KD树里面找到包含目标点的叶子节点。以目标点为圆心，以目标点到叶子节点样本实例的距离为半径，得到一个超球体，最近邻的点一定在这个超球体内部。然后返回叶子节点的父节点，检查另一个子节点包含的超矩形体是否和超球体相交，如果相交就到这个子节点寻找是否有更加近的近邻,有的话就更新最近邻。如果不相交那就简单了，我们直接返回父节点的父节点，在另一个子树继续搜索最近邻。当回溯到根节点时，算法结束，此时保存的最近邻节点就是最终的最近邻。</p>
 <p>从上面的描述可以看出，KD树划分后可以大大减少无效的最近邻搜索，很多样本点由于所在的超矩形体和超球体不相交，根本不需要计算距离。大大节省了计算时间。</p>
 <p>先进行二叉查找，先从（7,2）查找到（5,4）节点，在进行查找时是由y = 4为分割超平面的，由于查找点为y值为4.5，因此进入右子空间查找到（4,7），形成搜索路径&lt;(7,2)，(5,4)，(4,7)&gt;，但 （4,7）与目标查找点的距离为3.202，而（5,4）与查找点之间的距离为3.041，所以（5,4）为查询点的最近点； 以（2，4.5）为圆心，以3.041为半径作圆，如下图所示。可见该圆和y = 4超平面交割，所以需要进入（5,4）左子空间进行查找，也就是将（2,3）节点加入搜索路径中得&lt;(7,2)，(2,3)&gt;；于是接着搜索至（2,3）叶子节点，（2,3）距离（2,4.5）比（5,4）要近，所以最近邻点更新为（2，3），最近距离更新为1.5；回溯查找至（5,4），直到最后回溯到根结点（7,2）的时候，以（2,4.5）为圆心1.5为半径作圆，并不和x = 7分割超平面交割，如下图所示。至此，搜索路径回溯完，返回最近邻点（2,3），最近距离1.5。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1042406/201611/1042406-20161114165145763-428195796.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgmnukl6vj20k80cr75i.jpg" alt="KNN-5.jpg"></p>
 <h3 id="3-KD树预测"><a href="#3-KD树预测" class="headerlink" title="3: KD树预测"></a>3: KD树预测</h3><p>有了KD树搜索最近邻的办法，KD树的预测就很简单了，在KD树搜索最近邻的基础上，我们选择到了第一个最近邻样本，就把它置为已选。在第二轮中，我们忽略置为已选的样本，重新选择最近邻，这样跑k次，就得到了目标的K个最近邻，然后根据多数表决法，如果是KNN分类，预测为K个最近邻里面有最多类别数的类别。如果是KNN回归，用K个最近邻样本输出的平均值作为回归预测值。</p>
 <h2 id="三-球树实现原理"><a href="#三-球树实现原理" class="headerlink" title="(三): 球树实现原理"></a>(三): 球树实现原理</h2><p><strong>KD树和球树类似，主要区别在于球树得到的是节点样本组成的最小超球体，而KD得到的是节点样本组成的超矩形体，这个超球体要与对应的KD树的超矩形体小，这样在做最近邻搜索的时候，可以避免一些无谓的搜索。</strong></p>
 <h3 id="1-球树建立"><a href="#1-球树建立" class="headerlink" title="1: 球树建立"></a>1: 球树建立</h3><p>1)  先构建一个超球体，这个超球体是可以包含所有样本的最小球体。</p>
 <p>2) 从球中选择一个离球的中心最远的点，然后选择第二个点离第一个点最远，将球中所有的点分配到离这两个聚类中心最近的一个上，然后计算每个聚类的中心，以及聚类能够包含它所有数据点所需的最小半径。这样我们得到了两个子超球体，和KD树里面的左右子树对应。</p>
 <p>3) 对于这两个子超球体，递归执行步骤2). 最终得到了一个球树。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1042406/201611/1042406-20161114172004185-213758204.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgmo2ma1kj20cc07y0sz.jpg" alt="KNN-6.jpg"></p>
 <h3 id="2-球树搜索最近邻"><a href="#2-球树搜索最近邻" class="headerlink" title="2: 球树搜索最近邻"></a>2: 球树搜索最近邻</h3><p>使用球树找出给定目标点的最近邻方法是首先自上而下贯穿整棵树找出包含目标点所在的叶子，并在这个球里找出与目标点最邻近的点，这将<strong>确定出目标点距离它的最近邻点的一个上限值</strong>，然后跟KD树查找一样，检查兄弟结点，如果<font color=red>目标点到兄弟结点中心的距离超过兄弟结点的半径与当前的上限值之和</font>，那么兄弟结点里<strong>不可能</strong>存在一个更近的点；<font color=red>如果上诉描述相反,说明有可能存在,也有可能不存在，</font><strong>必须进一步检查位于兄弟结点以下的子树。</strong></p>
 <p>检查完兄弟节点后，我们向父节点回溯，继续搜索最小邻近值。当回溯到根节点时，此时的最小邻近值就是最终的搜索结果。</p>
 <p>从上面的描述可以看出，<strong>KD树在搜索路径优化时使用的是两点之间的距离来判断，而球树使用的是两边之和大于第三边来判断，相对来说球树的判断更加复杂，但是却避免了更多的搜索，这是一个权衡。</strong></p>
@@ -340,7 +339,7 @@
 
 <h2 id="三-交叉表"><a href="#三-交叉表" class="headerlink" title="(三): 交叉表"></a>(三): 交叉表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.crosstab(index = y_test, columns=y_, rownames=[<span class="string">'确诊'</span>], colnames=[<span class="string">'预测'</span>],margins=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://images.cnblogs.com/cnblogs_com/anjhon/1913094/o_210107150155pandas%E4%BA%A4%E5%8F%89%E8%A1%A8.png" alt="交叉表详解"></p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgmdeb4a8j21ja0k9jvx.jpg" alt="pandas交叉表.png"></p>
 <br>
 
 
