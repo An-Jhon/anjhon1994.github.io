@@ -1449,6 +1449,149 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
+    <title>Python基础：11:高阶函数</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.11%20%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="一-实参高阶函数"><a href="#一-实参高阶函数" class="headerlink" title="一.实参高阶函数"></a>一.实参高阶函数</h1><h2 id="1-函数作为变量使用"><a href="#1-函数作为变量使用" class="headerlink" title="1.函数作为变量使用"></a>1.函数作为变量使用</h2><p>python中声明函数就是声明一个类型是function的变量,变量名就是函数名<br>普通变量能做的函数都能做:</p>
+<ul>
+<li>1).一个变量可以给另一个变量赋值,函数也可以赋值给一个变量</li>
+<li>2).变量的值可以修改,函数作为变量并被赋值后,函数原本的功能就消失了</li>
+<li>3).变量作为序列中的元素,函数也行</li>
+<li>4).变量作为函数的参数,函数也行</li>
+</ul>
+<p><strong>将函数作为另一个函数的参数,这就是实参高阶函数</strong></p>
+<h2 id="2-系统的实参高阶函数"><a href="#2-系统的实参高阶函数" class="headerlink" title="2.系统的实参高阶函数"></a>2.系统的实参高阶函数</h2><p><em>列表.sort(); sorted(); max(); min()   -&gt;   都有一个参数key,要求是一个函数</em></p>
+<p><strong>例:列表.sort()排序函数</strong></p>
+<p>sort()括号里面有key函数和revers,key函数确定了排序的规则,revers=True时倒序,revers=False时正序</p>
+<h3 id="1-排序函数-参数key要求是一个函数-作用是用来定制拍寻的规则"><a href="#1-排序函数-参数key要求是一个函数-作用是用来定制拍寻的规则" class="headerlink" title="1).排序函数;参数key要求是一个函数,作用是用来定制拍寻的规则"></a>1).排序函数;参数key要求是一个函数,作用是用来定制拍寻的规则</h3><p>key的要求:<br>①:key是一个函数<br>②:函数中有且只有一个参数,这个参数指向的是序列中的每个元素<br>③:函数需要一个返回值,这个返回值就是排序的时候比较大小的对象</p>
+<h3 id="2-最大值函数"><a href="#2-最大值函数" class="headerlink" title="2).最大值函数:"></a>2).最大值函数:</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 练习:进下面的列表按个位数的大小排序</span></span><br><span class="line">nums = [<span class="number">100</span>, <span class="number">39</span>, <span class="number">51</span>, <span class="number">62</span>, <span class="number">58</span>]</span><br><span class="line">nums.sort(key=<span class="keyword">lambda</span> item: item % <span class="number">10</span>)</span><br><span class="line">print(nums)</span><br><span class="line">print(max(nums, key = <span class="keyword">lambda</span> item: item % <span class="number">10</span>))</span><br><span class="line"><span class="comment"># 练习:将学生按成绩排序</span></span><br><span class="line">students = [</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'小明'</span>, <span class="string">'age'</span>: <span class="number">18</span>, <span class="string">'grade'</span>: <span class="number">90</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'小花'</span>, <span class="string">'age'</span>: <span class="number">28</span>, <span class="string">'grade'</span>: <span class="number">59</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'狗子'</span>, <span class="string">'age'</span>: <span class="number">8</span>, <span class="string">'grade'</span>: <span class="number">87</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'大黄'</span>, <span class="string">'age'</span>: <span class="number">45</span>, <span class="string">'grade'</span>: <span class="number">98</span>&#125;</span><br><span class="line">]</span><br><span class="line">students.sort(revers=<span class="literal">True</span>, key=<span class="keyword">lambda</span> item: item[<span class="string">'grade'</span>]</span><br><span class="line">print(students)</span><br><span class="line">print(max(students, key = <span class="keyword">lambda</span> item: item[<span class="string">'grade'</span>]</span><br><span class="line"><span class="comment"># 按学生年龄和分数的和排序</span></span><br><span class="line">students.sort(key = <span class="keyword">lambda</span> itme: item[<span class="string">'age'</span>] + item[<span class="string">'grade'</span>]</span><br><span class="line">print(students)</span><br><span class="line">print(max(students,key = <span class="keyword">lambda</span> item: item[<span class="string">'age'</span>] + item[<span class="string">'grade'</span>]</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="二-返回值高阶函数"><a href="#二-返回值高阶函数" class="headerlink" title="二.返回值高阶函数"></a>二.返回值高阶函数</h1><p><strong>1.函数作为函数的返回值   -   返回值高阶函数</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#func1就是一个返回值高阶函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'函数2'</span>)</span><br><span class="line">    <span class="keyword">return</span> func2</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.闭包 - 函数1中声明了函数2 ,函数2 中使用了函数1中的数据,则函数1就是一个闭包<br>特点:闭包函数中的数据不会因为函数调用结束而销毁</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">()</span>:</span></span><br><span class="line">    a = <span class="number">10</span></span><br><span class="line">    print(id(a))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func4</span><span class="params">()</span>:</span></span><br><span class="line">        print(a)</span><br><span class="line">        print(id(a))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> func4</span><br></pre></td></tr></table></figure>
+
+<h3 id="面试题练习"><a href="#面试题练习" class="headerlink" title="面试题练习:"></a>面试题练习:</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#不执行以下代码,问以下代码的执行结果</span></span><br><span class="line">list1 = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    list1.append(<span class="keyword">lambda</span> x: x*i)</span><br><span class="line"></span><br><span class="line">print(list1[<span class="number">1</span>](<span class="number">2</span>), list1[<span class="number">2</span>](<span class="number">2</span>), list1[<span class="number">3</span>](<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">(seq=[])</span>:</span></span><br><span class="line">    seq.append(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">return</span> seq</span><br><span class="line">print(func2())</span><br><span class="line">print(func2())</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="三-装饰器"><a href="#三-装饰器" class="headerlink" title="三.装饰器"></a>三.装饰器</h1><h2 id="1-什么是装饰器"><a href="#1-什么是装饰器" class="headerlink" title="1.什么是装饰器"></a>1.什么是装饰器</h2><p><strong>装饰器本质就是一个函数   装饰器 = 返回值高阶函数+实参高阶函数+糖语法</strong></p>
+<p>装饰器是python的三大神器之一：装饰器、迭代器、生成器</p>
+<p><strong>装饰器的作用:给已经写好的函数添加新的功能</strong></p>
+<h2 id="2-用函数给函数添加功能的方法"><a href="#2-用函数给函数添加功能的方法" class="headerlink" title="2.用函数给函数添加功能的方法"></a>2.用函数给函数添加功能的方法</h2><p><strong>方法一</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ①:给不需要参数的函数添加功能</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_time</span><span class="params">(fn)</span>:</span></span><br><span class="line">    star = time.time()</span><br><span class="line">    fn</span><br><span class="line">    end = time.time()</span><br><span class="line">    print(<span class="string">'函数执行时间:%fs'</span> % (end - star))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ②:给需要参数的函数添加功能</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_time2</span><span class="params">(fn, *args, **kwargs)</span>:</span></span><br><span class="line">    star = time.time()</span><br><span class="line">    fn(*args, **kwargs)</span><br><span class="line">    end = time.time()</span><br><span class="line">    print(<span class="string">'函数执行时间:%fs'</span> % (end - star))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'======'</span>)</span><br><span class="line">    print(<span class="string">'++++++'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'你好,python'</span>)</span><br><span class="line">    print(<span class="string">'你不好,python'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    print(<span class="string">'%d+%d=%d'</span> % (x, y, x+y))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(add_time(func1()))</span><br><span class="line">print(add_time(func2()))</span><br><span class="line">print(add_time2(func3, <span class="number">10</span>, <span class="number">20</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二(装饰器)</strong></p>
+<p><strong>无参装饰器函数:<br>def 函数名1(参数1):<br>&emsp;def 函数名2(*args, **kwargs):<br>&emsp;&emsp;参数1(*args, **kwargs)<br>&emsp;新功能对应的代码<br>&emsp;return 函数名2</strong></p>
+<p>说明:<br>函数名1        -        装饰器的名称;需要添加的共嗯名称<br>参数1          -        需要添加功能的函数,一般命名为fn<br>函数名2        -        随便命名,</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加统计函数执行时间的装饰器</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_time3</span><span class="params">(fn)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        star = time.time()</span><br><span class="line">        re =fn(*args, **kwargs)</span><br><span class="line">        end = time.time()</span><br><span class="line">        print(end - star)</span><br><span class="line">        <span class="keyword">return</span> re</span><br><span class="line">    <span class="keyword">return</span> test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exchange_hex</span><span class="params">(fn)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        re = fn(*args, **kwargs)</span><br><span class="line">        <span class="keyword">if</span> type(re) == int:</span><br><span class="line">            <span class="keyword">return</span> hex(re)</span><br><span class="line">        <span class="keyword">return</span> re</span><br><span class="line">    <span class="keyword">return</span> test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@exchange_hex</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diy_sum</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(diy_sum(<span class="number">10</span>, <span class="number">20</span>))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="四-迭代器"><a href="#四-迭代器" class="headerlink" title="四.迭代器"></a>四.迭代器</h1><h2 id="1-什么是迭代器-iter"><a href="#1-什么是迭代器-iter" class="headerlink" title="1.什么是迭代器(iter)"></a>1.什么是迭代器(iter)</h2><p>迭代器也是python提供的容器型数据类型<br>迭代器存储数据的特点:<br>    ①:一个迭代器能存多个数据<br>    ②:若要获取或查看数据必须要从迭代器中取出<br>    ③:取出来的数据不能再添加到迭代器</p>
+<h2 id="2-将数据存入迭代器"><a href="#2-将数据存入迭代器" class="headerlink" title="2.将数据存入迭代器"></a>2.将数据存入迭代器</h2><p>①:将其他序列转换成迭代器<br>②:创建一个生成器</p>
+<h2 id="3-获取迭代器中的元素"><a href="#3-获取迭代器中的元素" class="headerlink" title="3.获取迭代器中的元素"></a>3.获取迭代器中的元素</h2><p>迭代器中的元素只要取出(任何方式)那这个元素在迭代器中就不存在了</p>
+<h3 id="1-获取单个元素"><a href="#1-获取单个元素" class="headerlink" title="1).获取单个元素"></a>1).获取单个元素</h3><p><strong>next(迭代器)   -   取出迭代器中最上面的元素</strong><br>print(next(iter1))<br>print(next(iter1))<br>print(next(iter1))</p>
+<h3 id="2-遍历"><a href="#2-遍历" class="headerlink" title="2).遍历"></a>2).遍历</h3><figure class="highlight sas"><table><tr><td class="code"><pre><span class="line">for <span class="meta">x</span> <span class="meta">in</span> iter2:</span><br><span class="line">    p<span class="meta">rint(</span><span class="string">'x:'</span>, <span class="meta">x</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python基础：12:生成器和模块</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.12%20%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E6%A8%A1%E5%9D%97/</url>
+    <content><![CDATA[<h1 id="一-生成器"><a href="#一-生成器" class="headerlink" title="一. 生成器"></a>一. 生成器</h1><h2 id="1-生成器"><a href="#1-生成器" class="headerlink" title="1.生成器"></a>1.生成器</h2><ul>
+<li>生成器也是迭代器的一种;</li>
+<li>生成器作为容器它保存的不是数据,而是产生数据的算法</li>
+</ul>
+<h2 id="2-创建生成器"><a href="#2-创建生成器" class="headerlink" title="2.创建生成器"></a>2.创建生成器</h2><ul>
+<li>调用带有yield关键字的函数,就可以得到一个生成器</li>
+</ul>
+<p><strong>注:函数中只要有yield,不管会不会遇到(执行),则调用该函数,函数体都不会执行,并且得到一个生成器</strong></p>
+<h2 id="3-生成器产生数据"><a href="#3-生成器产生数据" class="headerlink" title="3.生成器产生数据"></a>3.生成器产生数据</h2><ul>
+<li>一个生成器能产生多少数据和什么数据,看执行完生成器关联的函数在执行完会遇到几次yield,</li>
+<li>能遇到几次yield就产生几个数据;每次遇到yield,后面的数据就是对应的元素</li>
+</ul>
+<h2 id="4-生成器产生数据的规律"><a href="#4-生成器产生数据的规律" class="headerlink" title="4.生成器产生数据的规律"></a>4.生成器产生数据的规律</h2><ul>
+<li>获取第一个元素的时候,从函数的第一条语句开始执行,遇到第一个yield停止,并且将yield后面的值作为当前获取到的元素;</li>
+<li>获取下一个元素的时候,接着上一个结束的地方执行,遇到下一个yield停止,并且将yield后面的值作为当前获取到的元素;</li>
+<li>以此类推…</li>
+<li>当函数体后面没有yield时,说明该生成器的数据已经被取完了,再次运行将会报错</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 例:</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'======'</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    print(<span class="string">'++++++'</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">10</span></span><br><span class="line">    print(<span class="string">'******'</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">100</span></span><br><span class="line"></span><br><span class="line">gen2 = func3()</span><br><span class="line">print(next(gen2))</span><br><span class="line">print(next(gen2))</span><br><span class="line">print(next(gen2))</span><br><span class="line">print(next(gen2))   <span class="comment"># 元素取完后报错</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习:写一个生成器能产生一个班所有学生的学号</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">students_num</span><span class="params">(n)</span>:</span></span><br><span class="line">    length = len(str(n))</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">1</span>,n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">yield</span> str(num).zfill(length)</span><br><span class="line"></span><br><span class="line">nums = students_num(<span class="number">50</span>)</span><br><span class="line"><span class="keyword">for</span> num1 <span class="keyword">in</span> nums:</span><br><span class="line">    print(num1)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-生成式"><a href="#5-生成式" class="headerlink" title="5.生成式"></a>5.生成式</h2><h3 id="1-生成式就是生成器-就像函数和匿名函数-只是写法简洁"><a href="#1-生成式就是生成器-就像函数和匿名函数-只是写法简洁" class="headerlink" title="1) 生成式就是生成器;就像函数和匿名函数,只是写法简洁"></a>1) 生成式就是生成器;就像函数和匿名函数,只是写法简洁</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">1)语法①:</span></span><br><span class="line"><span class="string">生成器 = (表达式 for 变量 in 序列)</span></span><br><span class="line"><span class="string"> 展开:</span></span><br><span class="line"><span class="string"> def 函数名():</span></span><br><span class="line"><span class="string">    for 变量 in 序列:</span></span><br><span class="line"><span class="string">        yield 表达式</span></span><br><span class="line"><span class="string">生成器 = 函数名()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"> 语法②:</span></span><br><span class="line"><span class="string"> 生成器 = (表达式 for 变量 in 序列 if 条件语句)</span></span><br><span class="line"><span class="string">  展开:</span></span><br><span class="line"><span class="string"> def 函数名():</span></span><br><span class="line"><span class="string">    for 变量 in 序列:</span></span><br><span class="line"><span class="string">        if 条件语句:</span></span><br><span class="line"><span class="string">            yield 表达式</span></span><br><span class="line"><span class="string">生成器 = 函数名()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">语法③:</span></span><br><span class="line"><span class="string"> 生成器 = (表达式 for 变量1 in 序列1 for 变量2 in 序列2)</span></span><br><span class="line"><span class="string">  展开:</span></span><br><span class="line"><span class="string"> def 函数名():</span></span><br><span class="line"><span class="string">    for 变量1 in 序列1:</span></span><br><span class="line"><span class="string">        for 变量2 in 序列2:</span></span><br><span class="line"><span class="string">            yield 表达式</span></span><br><span class="line"><span class="string">生成器 = 函数名()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例:</span></span><br><span class="line">gen1 = (num <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>))</span><br><span class="line"></span><br><span class="line">gen4 = (x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-列表生成式"><a href="#2-列表生成式" class="headerlink" title="2) 列表生成式"></a>2) 列表生成式</h3><ul>
+<li>将上面语法中所有的小括号编程中括号,结果就会变成列表</li>
+</ul>
+<br>
+
+<hr>
+<h1 id="二-模块"><a href="#二-模块" class="headerlink" title="二. 模块"></a>二. 模块</h1><h2 id="1-模块-python中-一个py文件就是一个模块"><a href="#1-模块-python中-一个py文件就是一个模块" class="headerlink" title="1.模块(python中,一个py文件就是一个模块)"></a>1.模块(python中,一个py文件就是一个模块)</h2><h2 id="2-模块间的相互引用-导入模块"><a href="#2-模块间的相互引用-导入模块" class="headerlink" title="2.模块间的相互引用(导入模块)"></a>2.模块间的相互引用(导入模块)</h2><p><strong>若要使用另外一个模块的内容,需要在当前模块中导入相应的模块</strong></p>
+<h3 id="1-模块导入方法-导入模块的代码一般放在文件最顶部-系统文件放最前面-第三方在中间-自己写的放最后"><a href="#1-模块导入方法-导入模块的代码一般放在文件最顶部-系统文件放最前面-第三方在中间-自己写的放最后" class="headerlink" title="1) 模块导入方法:(导入模块的代码一般放在文件最顶部, 系统文件放最前面,第三方在中间,自己写的放最后)"></a>1) 模块导入方法:(导入模块的代码一般放在文件最顶部, 系统文件放最前面,第三方在中间,自己写的放最后)</h3><p><strong>①:import 模块名</strong><br>     -   导入后可以使用被导入模块的所有全局变量<br>     -    以 ‘模块名.变量名’ 的方式使用相应模块</p>
+<p><strong>②:from 模块名 import 变量名1, 变量名2,…</strong><br>     -    导入后可以使用import后指定的变量<br>     -    使用时直接使用</p>
+<p><strong>③:from 模块名 import *</strong><br>    -    导入后可以使用被导入模块的所有全局变量<br>    -    使用时直接使用</p>
+<h3 id="2-对模块重命名"><a href="#2-对模块重命名" class="headerlink" title="2) 对模块重命名"></a>2) 对模块重命名</h3><ul>
+<li>import 模块名 as 新模块名——&gt;有时候导入的模块名或函数名会与本模块内的一些参数名相同,则在模块中通过新名字来使用导入的模块</li>
+<li>也可以通过这种方式对模块中的变量进行重命名</li>
+</ul>
+<h3 id="3-阻止导入"><a href="#3-阻止导入" class="headerlink" title="3) 阻止导入"></a>3) 阻止导入</h3><ul>
+<li>当执行导入模块的代码时,系统会执行被导入模块的所有代码,为了防止执行所有代码造成的不必要消耗,需要用到阻止导入</li>
+<li><strong>阻止导入:</strong>将被导入模块内不需要被调用的代码放到 <strong>if <strong>name__ == ‘</strong>main__‘</strong> 语句中即可;在该if 语句中的代码不能被其他模块引用,但在本模块内可以运行.</li>
+<li><strong>阻止原理:</strong>模块在创建的时候,系统会为模块添加 __name__ 属性,用来保存该模块的名字; __name__ 默认是该文件的文件名,当直接运行该模块时, __name__ 会变成 __main__,此时if语句成立,执行后面的代码</li>
+</ul>
+<br>
+
+<hr>
+<h1 id="三-包-包是用来管理模块的"><a href="#三-包-包是用来管理模块的" class="headerlink" title="三. 包(包是用来管理模块的)"></a>三. 包(包是用来管理模块的)</h1><p><strong>包是包含 __init__.py文件的文件夹</strong></p>
+<h2 id="1-导入包内的模块"><a href="#1-导入包内的模块" class="headerlink" title="1 导入包内的模块"></a>1 导入包内的模块</h2><p><strong>①:import 包.模块   (可用as重命名)</strong><br>   包.模块.调用的代码名</p>
+<p><strong>②:from 包 import 模块1, 模块2, …</strong><br>   模块.调用的代码名</p>
+<p><strong>③:from 包.模块 import 调用的代码名</strong><br><strong>④:from 包.模块 import 变量</strong></p>
+<h2 id="2-init文件"><a href="#2-init文件" class="headerlink" title="2.init文件"></a>2.init文件</h2><ul>
+<li>导入包后,原始状态的包只会执行 __init__ 文件,需要在 __init__ 文件内导入包内的其他模块.</li>
+</ul>
+<br>
+
+<hr>
+<h1 id="四-hashlib模块"><a href="#四-hashlib模块" class="headerlink" title="四. hashlib模块"></a>四. hashlib模块</h1><h2 id="1-hashlib"><a href="#1-hashlib" class="headerlink" title="1.hashlib"></a>1.hashlib</h2><ul>
+<li>hashlib是python提供的用哈希算法进行加密的库</li>
+<li>哈希算法又叫离散算法,<strong>主要包含MD5,sha两类算法</strong></li>
+</ul>
+<h2 id="2-哈希算法加密特点"><a href="#2-哈希算法加密特点" class="headerlink" title="2.哈希算法加密特点"></a>2.哈希算法加密特点</h2><p><strong>1).加密后的的密文(摘要)是不可逆的<br>2).相同的数据通过通过相同的算法加密后的密文是相同的<br>3).不同长度的数据通过相同的算法加密后的密文长度是相同的</strong></p>
+<h2 id="3-产生密文-摘要-的过程-如何加密"><a href="#3-产生密文-摘要-的过程-如何加密" class="headerlink" title="3.产生密文(摘要)的过程 (如何加密)"></a>3.产生密文(摘要)的过程 (如何加密)</h2><p><strong>1).创建hashlib对象:  hashlib.算法名()<br>2).添加需要加密的数据:  哈希对象.update(数据(必须是二进制数据))<br>3).生成密文(摘要):  哈希对象.hexdigest()</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">hash = hashlib.md5()</span><br><span class="line">pw = <span class="string">'123456'</span></span><br><span class="line">hash.update(pw.encode())</span><br><span class="line">result = hash.hexdigest()</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><strong>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 知识扩展</strong></p>
+<p>bytes是二进制的数据类型<br><strong>1.字符串转二进制</strong><br>①:bytes(字符串, encoding=’utf-8’)<br>②:字符串.encode()</p>
+<p><strong>2.二进制转字符串</strong><br>①:str(二进制,encoding=’utf-8’)<br>②:二进制.decode(encoding=’utf-8’)</p>
+]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础：1:基础</title>
     <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.1%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8CPython%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h1 id="一、计算机基础"><a href="#一、计算机基础" class="headerlink" title="一、计算机基础"></a>一、计算机基础</h1><h3 id="1-1、进制"><a href="#1-1、进制" class="headerlink" title="1.1、进制"></a>1.1、进制</h3><p>计算机中的数字有四种存在形式，分别是：十进制、二进制、八进制和十六进制</p>
@@ -1655,70 +1798,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Python基础：11:高阶函数</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.11%20%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<h1 id="一-实参高阶函数"><a href="#一-实参高阶函数" class="headerlink" title="一.实参高阶函数"></a>一.实参高阶函数</h1><h2 id="1-函数作为变量使用"><a href="#1-函数作为变量使用" class="headerlink" title="1.函数作为变量使用"></a>1.函数作为变量使用</h2><p>python中声明函数就是声明一个类型是function的变量,变量名就是函数名<br>普通变量能做的函数都能做:</p>
-<ul>
-<li>1).一个变量可以给另一个变量赋值,函数也可以赋值给一个变量</li>
-<li>2).变量的值可以修改,函数作为变量并被赋值后,函数原本的功能就消失了</li>
-<li>3).变量作为序列中的元素,函数也行</li>
-<li>4).变量作为函数的参数,函数也行</li>
-</ul>
-<p><strong>将函数作为另一个函数的参数,这就是实参高阶函数</strong></p>
-<h2 id="2-系统的实参高阶函数"><a href="#2-系统的实参高阶函数" class="headerlink" title="2.系统的实参高阶函数"></a>2.系统的实参高阶函数</h2><p><em>列表.sort(); sorted(); max(); min()   -&gt;   都有一个参数key,要求是一个函数</em></p>
-<p><strong>例:列表.sort()排序函数</strong></p>
-<p>sort()括号里面有key函数和revers,key函数确定了排序的规则,revers=True时倒序,revers=False时正序</p>
-<h3 id="1-排序函数-参数key要求是一个函数-作用是用来定制拍寻的规则"><a href="#1-排序函数-参数key要求是一个函数-作用是用来定制拍寻的规则" class="headerlink" title="1).排序函数;参数key要求是一个函数,作用是用来定制拍寻的规则"></a>1).排序函数;参数key要求是一个函数,作用是用来定制拍寻的规则</h3><p>key的要求:<br>①:key是一个函数<br>②:函数中有且只有一个参数,这个参数指向的是序列中的每个元素<br>③:函数需要一个返回值,这个返回值就是排序的时候比较大小的对象</p>
-<h3 id="2-最大值函数"><a href="#2-最大值函数" class="headerlink" title="2).最大值函数:"></a>2).最大值函数:</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 练习:进下面的列表按个位数的大小排序</span></span><br><span class="line">nums = [<span class="number">100</span>, <span class="number">39</span>, <span class="number">51</span>, <span class="number">62</span>, <span class="number">58</span>]</span><br><span class="line">nums.sort(key=<span class="keyword">lambda</span> item: item % <span class="number">10</span>)</span><br><span class="line">print(nums)</span><br><span class="line">print(max(nums, key = <span class="keyword">lambda</span> item: item % <span class="number">10</span>))</span><br><span class="line"><span class="comment"># 练习:将学生按成绩排序</span></span><br><span class="line">students = [</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'小明'</span>, <span class="string">'age'</span>: <span class="number">18</span>, <span class="string">'grade'</span>: <span class="number">90</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'小花'</span>, <span class="string">'age'</span>: <span class="number">28</span>, <span class="string">'grade'</span>: <span class="number">59</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'狗子'</span>, <span class="string">'age'</span>: <span class="number">8</span>, <span class="string">'grade'</span>: <span class="number">87</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'大黄'</span>, <span class="string">'age'</span>: <span class="number">45</span>, <span class="string">'grade'</span>: <span class="number">98</span>&#125;</span><br><span class="line">]</span><br><span class="line">students.sort(revers=<span class="literal">True</span>, key=<span class="keyword">lambda</span> item: item[<span class="string">'grade'</span>]</span><br><span class="line">print(students)</span><br><span class="line">print(max(students, key = <span class="keyword">lambda</span> item: item[<span class="string">'grade'</span>]</span><br><span class="line"><span class="comment"># 按学生年龄和分数的和排序</span></span><br><span class="line">students.sort(key = <span class="keyword">lambda</span> itme: item[<span class="string">'age'</span>] + item[<span class="string">'grade'</span>]</span><br><span class="line">print(students)</span><br><span class="line">print(max(students,key = <span class="keyword">lambda</span> item: item[<span class="string">'age'</span>] + item[<span class="string">'grade'</span>]</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<hr>
-<h1 id="二-返回值高阶函数"><a href="#二-返回值高阶函数" class="headerlink" title="二.返回值高阶函数"></a>二.返回值高阶函数</h1><p><strong>1.函数作为函数的返回值   -   返回值高阶函数</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#func1就是一个返回值高阶函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'函数2'</span>)</span><br><span class="line">    <span class="keyword">return</span> func2</span><br></pre></td></tr></table></figure>
-
-<p><strong>2.闭包 - 函数1中声明了函数2 ,函数2 中使用了函数1中的数据,则函数1就是一个闭包<br>特点:闭包函数中的数据不会因为函数调用结束而销毁</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">()</span>:</span></span><br><span class="line">    a = <span class="number">10</span></span><br><span class="line">    print(id(a))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func4</span><span class="params">()</span>:</span></span><br><span class="line">        print(a)</span><br><span class="line">        print(id(a))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> func4</span><br></pre></td></tr></table></figure>
-
-<h3 id="面试题练习"><a href="#面试题练习" class="headerlink" title="面试题练习:"></a>面试题练习:</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#不执行以下代码,问以下代码的执行结果</span></span><br><span class="line">list1 = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    list1.append(<span class="keyword">lambda</span> x: x*i)</span><br><span class="line"></span><br><span class="line">print(list1[<span class="number">1</span>](<span class="number">2</span>), list1[<span class="number">2</span>](<span class="number">2</span>), list1[<span class="number">3</span>](<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">(seq=[])</span>:</span></span><br><span class="line">    seq.append(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">return</span> seq</span><br><span class="line">print(func2())</span><br><span class="line">print(func2())</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<hr>
-<h1 id="三-装饰器"><a href="#三-装饰器" class="headerlink" title="三.装饰器"></a>三.装饰器</h1><h2 id="1-什么是装饰器"><a href="#1-什么是装饰器" class="headerlink" title="1.什么是装饰器"></a>1.什么是装饰器</h2><p><strong>装饰器本质就是一个函数   装饰器 = 返回值高阶函数+实参高阶函数+糖语法</strong></p>
-<p>装饰器是python的三大神器之一：装饰器、迭代器、生成器</p>
-<p><strong>装饰器的作用:给已经写好的函数添加新的功能</strong></p>
-<h2 id="2-用函数给函数添加功能的方法"><a href="#2-用函数给函数添加功能的方法" class="headerlink" title="2.用函数给函数添加功能的方法"></a>2.用函数给函数添加功能的方法</h2><p><strong>方法一</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ①:给不需要参数的函数添加功能</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_time</span><span class="params">(fn)</span>:</span></span><br><span class="line">    star = time.time()</span><br><span class="line">    fn</span><br><span class="line">    end = time.time()</span><br><span class="line">    print(<span class="string">'函数执行时间:%fs'</span> % (end - star))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ②:给需要参数的函数添加功能</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_time2</span><span class="params">(fn, *args, **kwargs)</span>:</span></span><br><span class="line">    star = time.time()</span><br><span class="line">    fn(*args, **kwargs)</span><br><span class="line">    end = time.time()</span><br><span class="line">    print(<span class="string">'函数执行时间:%fs'</span> % (end - star))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'======'</span>)</span><br><span class="line">    print(<span class="string">'++++++'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'你好,python'</span>)</span><br><span class="line">    print(<span class="string">'你不好,python'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    print(<span class="string">'%d+%d=%d'</span> % (x, y, x+y))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(add_time(func1()))</span><br><span class="line">print(add_time(func2()))</span><br><span class="line">print(add_time2(func3, <span class="number">10</span>, <span class="number">20</span>))</span><br></pre></td></tr></table></figure>
-
-<p><strong>方法二(装饰器)</strong></p>
-<p><strong>无参装饰器函数:<br>def 函数名1(参数1):<br>&emsp;def 函数名2(*args, **kwargs):<br>&emsp;&emsp;参数1(*args, **kwargs)<br>&emsp;新功能对应的代码<br>&emsp;return 函数名2</strong></p>
-<p>说明:<br>函数名1        -        装饰器的名称;需要添加的共嗯名称<br>参数1          -        需要添加功能的函数,一般命名为fn<br>函数名2        -        随便命名,</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加统计函数执行时间的装饰器</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_time3</span><span class="params">(fn)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        star = time.time()</span><br><span class="line">        re =fn(*args, **kwargs)</span><br><span class="line">        end = time.time()</span><br><span class="line">        print(end - star)</span><br><span class="line">        <span class="keyword">return</span> re</span><br><span class="line">    <span class="keyword">return</span> test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exchange_hex</span><span class="params">(fn)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        re = fn(*args, **kwargs)</span><br><span class="line">        <span class="keyword">if</span> type(re) == int:</span><br><span class="line">            <span class="keyword">return</span> hex(re)</span><br><span class="line">        <span class="keyword">return</span> re</span><br><span class="line">    <span class="keyword">return</span> test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@exchange_hex</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diy_sum</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(diy_sum(<span class="number">10</span>, <span class="number">20</span>))</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<hr>
-<h1 id="四-迭代器"><a href="#四-迭代器" class="headerlink" title="四.迭代器"></a>四.迭代器</h1><h2 id="1-什么是迭代器-iter"><a href="#1-什么是迭代器-iter" class="headerlink" title="1.什么是迭代器(iter)"></a>1.什么是迭代器(iter)</h2><p>迭代器也是python提供的容器型数据类型<br>迭代器存储数据的特点:<br>    ①:一个迭代器能存多个数据<br>    ②:若要获取或查看数据必须要从迭代器中取出<br>    ③:取出来的数据不能再添加到迭代器</p>
-<h2 id="2-将数据存入迭代器"><a href="#2-将数据存入迭代器" class="headerlink" title="2.将数据存入迭代器"></a>2.将数据存入迭代器</h2><p>①:将其他序列转换成迭代器<br>②:创建一个生成器</p>
-<h2 id="3-获取迭代器中的元素"><a href="#3-获取迭代器中的元素" class="headerlink" title="3.获取迭代器中的元素"></a>3.获取迭代器中的元素</h2><p>迭代器中的元素只要取出(任何方式)那这个元素在迭代器中就不存在了</p>
-<h3 id="1-获取单个元素"><a href="#1-获取单个元素" class="headerlink" title="1).获取单个元素"></a>1).获取单个元素</h3><p><strong>next(迭代器)   -   取出迭代器中最上面的元素</strong><br>print(next(iter1))<br>print(next(iter1))<br>print(next(iter1))</p>
-<h3 id="2-遍历"><a href="#2-遍历" class="headerlink" title="2).遍历"></a>2).遍历</h3><figure class="highlight sas"><table><tr><td class="code"><pre><span class="line">for <span class="meta">x</span> <span class="meta">in</span> iter2:</span><br><span class="line">    p<span class="meta">rint(</span><span class="string">'x:'</span>, <span class="meta">x</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python基础：13:文件操作</title>
     <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.13%20%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<h1 id="一-文件操作"><a href="#一-文件操作" class="headerlink" title="一 . 文件操作"></a>一 . 文件操作</h1><h2 id="1-数据的存储"><a href="#1-数据的存储" class="headerlink" title="1. 数据的存储"></a>1. 数据的存储</h2><h3 id="1-数据存储"><a href="#1-数据存储" class="headerlink" title="1).数据存储"></a>1).数据存储</h3><p>计算机存储分为运行内存和硬盘存储<br>运行内存是用来存储程序运行过程中产生的数据,程序结束,数据销毁<br>硬盘存储的文件则一直存在</p>
@@ -1775,75 +1854,39 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Python基础：12:生成器和模块</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.12%20%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E6%A8%A1%E5%9D%97/</url>
-    <content><![CDATA[<h1 id="一-生成器"><a href="#一-生成器" class="headerlink" title="一. 生成器"></a>一. 生成器</h1><h2 id="1-生成器"><a href="#1-生成器" class="headerlink" title="1.生成器"></a>1.生成器</h2><ul>
-<li>生成器也是迭代器的一种;</li>
-<li>生成器作为容器它保存的不是数据,而是产生数据的算法</li>
-</ul>
-<h2 id="2-创建生成器"><a href="#2-创建生成器" class="headerlink" title="2.创建生成器"></a>2.创建生成器</h2><ul>
-<li>调用带有yield关键字的函数,就可以得到一个生成器</li>
-</ul>
-<p><strong>注:函数中只要有yield,不管会不会遇到(执行),则调用该函数,函数体都不会执行,并且得到一个生成器</strong></p>
-<h2 id="3-生成器产生数据"><a href="#3-生成器产生数据" class="headerlink" title="3.生成器产生数据"></a>3.生成器产生数据</h2><ul>
-<li>一个生成器能产生多少数据和什么数据,看执行完生成器关联的函数在执行完会遇到几次yield,</li>
-<li>能遇到几次yield就产生几个数据;每次遇到yield,后面的数据就是对应的元素</li>
-</ul>
-<h2 id="4-生成器产生数据的规律"><a href="#4-生成器产生数据的规律" class="headerlink" title="4.生成器产生数据的规律"></a>4.生成器产生数据的规律</h2><ul>
-<li>获取第一个元素的时候,从函数的第一条语句开始执行,遇到第一个yield停止,并且将yield后面的值作为当前获取到的元素;</li>
-<li>获取下一个元素的时候,接着上一个结束的地方执行,遇到下一个yield停止,并且将yield后面的值作为当前获取到的元素;</li>
-<li>以此类推…</li>
-<li>当函数体后面没有yield时,说明该生成器的数据已经被取完了,再次运行将会报错</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 例:</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func3</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'======'</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    print(<span class="string">'++++++'</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">10</span></span><br><span class="line">    print(<span class="string">'******'</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">100</span></span><br><span class="line"></span><br><span class="line">gen2 = func3()</span><br><span class="line">print(next(gen2))</span><br><span class="line">print(next(gen2))</span><br><span class="line">print(next(gen2))</span><br><span class="line">print(next(gen2))   <span class="comment"># 元素取完后报错</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习:写一个生成器能产生一个班所有学生的学号</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">students_num</span><span class="params">(n)</span>:</span></span><br><span class="line">    length = len(str(n))</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">1</span>,n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">yield</span> str(num).zfill(length)</span><br><span class="line"></span><br><span class="line">nums = students_num(<span class="number">50</span>)</span><br><span class="line"><span class="keyword">for</span> num1 <span class="keyword">in</span> nums:</span><br><span class="line">    print(num1)</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-生成式"><a href="#5-生成式" class="headerlink" title="5.生成式"></a>5.生成式</h2><h3 id="1-生成式就是生成器-就像函数和匿名函数-只是写法简洁"><a href="#1-生成式就是生成器-就像函数和匿名函数-只是写法简洁" class="headerlink" title="1) 生成式就是生成器;就像函数和匿名函数,只是写法简洁"></a>1) 生成式就是生成器;就像函数和匿名函数,只是写法简洁</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">1)语法①:</span></span><br><span class="line"><span class="string">生成器 = (表达式 for 变量 in 序列)</span></span><br><span class="line"><span class="string"> 展开:</span></span><br><span class="line"><span class="string"> def 函数名():</span></span><br><span class="line"><span class="string">    for 变量 in 序列:</span></span><br><span class="line"><span class="string">        yield 表达式</span></span><br><span class="line"><span class="string">生成器 = 函数名()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"> 语法②:</span></span><br><span class="line"><span class="string"> 生成器 = (表达式 for 变量 in 序列 if 条件语句)</span></span><br><span class="line"><span class="string">  展开:</span></span><br><span class="line"><span class="string"> def 函数名():</span></span><br><span class="line"><span class="string">    for 变量 in 序列:</span></span><br><span class="line"><span class="string">        if 条件语句:</span></span><br><span class="line"><span class="string">            yield 表达式</span></span><br><span class="line"><span class="string">生成器 = 函数名()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">语法③:</span></span><br><span class="line"><span class="string"> 生成器 = (表达式 for 变量1 in 序列1 for 变量2 in 序列2)</span></span><br><span class="line"><span class="string">  展开:</span></span><br><span class="line"><span class="string"> def 函数名():</span></span><br><span class="line"><span class="string">    for 变量1 in 序列1:</span></span><br><span class="line"><span class="string">        for 变量2 in 序列2:</span></span><br><span class="line"><span class="string">            yield 表达式</span></span><br><span class="line"><span class="string">生成器 = 函数名()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例:</span></span><br><span class="line">gen1 = (num <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>))</span><br><span class="line"></span><br><span class="line">gen4 = (x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-列表生成式"><a href="#2-列表生成式" class="headerlink" title="2) 列表生成式"></a>2) 列表生成式</h3><ul>
-<li>将上面语法中所有的小括号编程中括号,结果就会变成列表</li>
-</ul>
+    <title>Python基础：14:异常捕获</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.14%20%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/</url>
+    <content><![CDATA[<h1 id="一-异常"><a href="#一-异常" class="headerlink" title="一. 异常"></a>一. 异常</h1><p><strong>程序在运行过程中的报错就叫异常</strong></p>
 <br>
 
 <hr>
-<h1 id="二-模块"><a href="#二-模块" class="headerlink" title="二. 模块"></a>二. 模块</h1><h2 id="1-模块-python中-一个py文件就是一个模块"><a href="#1-模块-python中-一个py文件就是一个模块" class="headerlink" title="1.模块(python中,一个py文件就是一个模块)"></a>1.模块(python中,一个py文件就是一个模块)</h2><h2 id="2-模块间的相互引用-导入模块"><a href="#2-模块间的相互引用-导入模块" class="headerlink" title="2.模块间的相互引用(导入模块)"></a>2.模块间的相互引用(导入模块)</h2><p><strong>若要使用另外一个模块的内容,需要在当前模块中导入相应的模块</strong></p>
-<h3 id="1-模块导入方法-导入模块的代码一般放在文件最顶部-系统文件放最前面-第三方在中间-自己写的放最后"><a href="#1-模块导入方法-导入模块的代码一般放在文件最顶部-系统文件放最前面-第三方在中间-自己写的放最后" class="headerlink" title="1) 模块导入方法:(导入模块的代码一般放在文件最顶部, 系统文件放最前面,第三方在中间,自己写的放最后)"></a>1) 模块导入方法:(导入模块的代码一般放在文件最顶部, 系统文件放最前面,第三方在中间,自己写的放最后)</h3><p><strong>①:import 模块名</strong><br>     -   导入后可以使用被导入模块的所有全局变量<br>     -    以 ‘模块名.变量名’ 的方式使用相应模块</p>
-<p><strong>②:from 模块名 import 变量名1, 变量名2,…</strong><br>     -    导入后可以使用import后指定的变量<br>     -    使用时直接使用</p>
-<p><strong>③:from 模块名 import *</strong><br>    -    导入后可以使用被导入模块的所有全局变量<br>    -    使用时直接使用</p>
-<h3 id="2-对模块重命名"><a href="#2-对模块重命名" class="headerlink" title="2) 对模块重命名"></a>2) 对模块重命名</h3><ul>
-<li>import 模块名 as 新模块名——&gt;有时候导入的模块名或函数名会与本模块内的一些参数名相同,则在模块中通过新名字来使用导入的模块</li>
-<li>也可以通过这种方式对模块中的变量进行重命名</li>
+<h1 id="二-异常捕获"><a href="#二-异常捕获" class="headerlink" title="二. 异常捕获"></a>二. 异常捕获</h1><h2 id="1-使用异常捕获的场景"><a href="#1-使用异常捕获的场景" class="headerlink" title="1. 使用异常捕获的场景"></a>1. 使用异常捕获的场景</h2><p><strong>在知道某个位置可能会出现异常,但开发者无法控制时使用</strong></p>
+<h2 id="2-捕获异常"><a href="#2-捕获异常" class="headerlink" title="2. 捕获异常"></a>2. 捕获异常</h2><p><strong>①:捕获任何异常</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except:</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">finally:</span></span><br><span class="line"><span class="string">    代码块三</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>先执行代码块1,如果异常,直接执行代码块2,依次往后执行;若代码块1没有异常,不执行代码块2,往后执行</li>
 </ul>
-<h3 id="3-阻止导入"><a href="#3-阻止导入" class="headerlink" title="3) 阻止导入"></a>3) 阻止导入</h3><ul>
-<li>当执行导入模块的代码时,系统会执行被导入模块的所有代码,为了防止执行所有代码造成的不必要消耗,需要用到阻止导入</li>
-<li><strong>阻止导入:</strong>将被导入模块内不需要被调用的代码放到 <strong>if <strong>name__ == ‘</strong>main__‘</strong> 语句中即可;在该if 语句中的代码不能被其他模块引用,但在本模块内可以运行.</li>
-<li><strong>阻止原理:</strong>模块在创建的时候,系统会为模块添加 __name__ 属性,用来保存该模块的名字; __name__ 默认是该文件的文件名,当直接运行该模块时, __name__ 会变成 __main__,此时if语句成立,执行后面的代码</li>
+<p><strong>②:捕获针对异常</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except 异常类型:</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>先执行代码块1,如果异常,检查该异常是否和except后的异常类型是否一致若一致,执行代码块2,依次往后执行;若不一致,程序崩溃.</li>
 </ul>
+<p><strong>③:捕获多个异常一(相同处理)</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except (异常类型1, 异常类型2...):</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>④:捕获多个异常一(不同处理)</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except (异常类型1):</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">except (异常类型2):</span></span><br><span class="line"><span class="string">    代码块三(对异常进行处理)</span></span><br><span class="line"><span class="string">except (异常类型3):</span></span><br><span class="line"><span class="string">    代码块四(对异常进行处理)</span></span><br><span class="line"><span class="string">    ...  </span></span><br><span class="line"><span class="string">其他代码</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
 <br>
 
 <hr>
-<h1 id="三-包-包是用来管理模块的"><a href="#三-包-包是用来管理模块的" class="headerlink" title="三. 包(包是用来管理模块的)"></a>三. 包(包是用来管理模块的)</h1><p><strong>包是包含 __init__.py文件的文件夹</strong></p>
-<h2 id="1-导入包内的模块"><a href="#1-导入包内的模块" class="headerlink" title="1 导入包内的模块"></a>1 导入包内的模块</h2><p><strong>①:import 包.模块   (可用as重命名)</strong><br>   包.模块.调用的代码名</p>
-<p><strong>②:from 包 import 模块1, 模块2, …</strong><br>   模块.调用的代码名</p>
-<p><strong>③:from 包.模块 import 调用的代码名</strong><br><strong>④:from 包.模块 import 变量</strong></p>
-<h2 id="2-init文件"><a href="#2-init文件" class="headerlink" title="2.init文件"></a>2.init文件</h2><ul>
-<li>导入包后,原始状态的包只会执行 __init__ 文件,需要在 __init__ 文件内导入包内的其他模块.</li>
-</ul>
-<br>
+<h1 id="三-关键字finally"><a href="#三-关键字finally" class="headerlink" title="三. 关键字finally"></a>三. 关键字finally</h1><p>在以上四个捕获异常的方法中都可以在最后加上finally关键字,它的作用是:<strong>不管try中的代码出现任何情况,finally后的代码都会执行</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    print(&#123;<span class="string">'name'</span>: <span class="string">'an'</span>, <span class="string">'age'</span>: <span class="number">29</span>&#125;[<span class="string">'gender'</span>])</span><br><span class="line">    print(<span class="string">'hello'</span>[<span class="number">19</span>])</span><br><span class="line">    print(max([<span class="number">10</span>, <span class="string">'asd'</span>, <span class="literal">True</span>]))</span><br><span class="line"><span class="keyword">except</span> IndexError:</span><br><span class="line">    print(<span class="string">'出现异常'</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'写遗书'</span>)</span><br></pre></td></tr></table></figure>
 
-<hr>
-<h1 id="四-hashlib模块"><a href="#四-hashlib模块" class="headerlink" title="四. hashlib模块"></a>四. hashlib模块</h1><h2 id="1-hashlib"><a href="#1-hashlib" class="headerlink" title="1.hashlib"></a>1.hashlib</h2><ul>
-<li>hashlib是python提供的用哈希算法进行加密的库</li>
-<li>哈希算法又叫离散算法,<strong>主要包含MD5,sha两类算法</strong></li>
-</ul>
-<h2 id="2-哈希算法加密特点"><a href="#2-哈希算法加密特点" class="headerlink" title="2.哈希算法加密特点"></a>2.哈希算法加密特点</h2><p><strong>1).加密后的的密文(摘要)是不可逆的<br>2).相同的数据通过通过相同的算法加密后的密文是相同的<br>3).不同长度的数据通过相同的算法加密后的密文长度是相同的</strong></p>
-<h2 id="3-产生密文-摘要-的过程-如何加密"><a href="#3-产生密文-摘要-的过程-如何加密" class="headerlink" title="3.产生密文(摘要)的过程 (如何加密)"></a>3.产生密文(摘要)的过程 (如何加密)</h2><p><strong>1).创建hashlib对象:  hashlib.算法名()<br>2).添加需要加密的数据:  哈希对象.update(数据(必须是二进制数据))<br>3).生成密文(摘要):  哈希对象.hexdigest()</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">hash = hashlib.md5()</span><br><span class="line">pw = <span class="string">'123456'</span></span><br><span class="line">hash.update(pw.encode())</span><br><span class="line">result = hash.hexdigest()</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
 
-<br>
-
-<p><strong>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 知识扩展</strong></p>
-<p>bytes是二进制的数据类型<br><strong>1.字符串转二进制</strong><br>①:bytes(字符串, encoding=’utf-8’)<br>②:字符串.encode()</p>
-<p><strong>2.二进制转字符串</strong><br>①:str(二进制,encoding=’utf-8’)<br>②:二进制.decode(encoding=’utf-8’)</p>
+<h1 id="四-抛出异常"><a href="#四-抛出异常" class="headerlink" title="四. 抛出异常"></a>四. 抛出异常</h1><p><strong>raise 异常类型</strong></p>
 ]]></content>
       <categories>
         <category>Python学录</category>
@@ -1930,49 +1973,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Python基础：14:异常捕获</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.14%20%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/</url>
-    <content><![CDATA[<h1 id="一-异常"><a href="#一-异常" class="headerlink" title="一. 异常"></a>一. 异常</h1><p><strong>程序在运行过程中的报错就叫异常</strong></p>
-<br>
-
-<hr>
-<h1 id="二-异常捕获"><a href="#二-异常捕获" class="headerlink" title="二. 异常捕获"></a>二. 异常捕获</h1><h2 id="1-使用异常捕获的场景"><a href="#1-使用异常捕获的场景" class="headerlink" title="1. 使用异常捕获的场景"></a>1. 使用异常捕获的场景</h2><p><strong>在知道某个位置可能会出现异常,但开发者无法控制时使用</strong></p>
-<h2 id="2-捕获异常"><a href="#2-捕获异常" class="headerlink" title="2. 捕获异常"></a>2. 捕获异常</h2><p><strong>①:捕获任何异常</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except:</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">finally:</span></span><br><span class="line"><span class="string">    代码块三</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>先执行代码块1,如果异常,直接执行代码块2,依次往后执行;若代码块1没有异常,不执行代码块2,往后执行</li>
-</ul>
-<p><strong>②:捕获针对异常</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except 异常类型:</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>先执行代码块1,如果异常,检查该异常是否和except后的异常类型是否一致若一致,执行代码块2,依次往后执行;若不一致,程序崩溃.</li>
-</ul>
-<p><strong>③:捕获多个异常一(相同处理)</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except (异常类型1, 异常类型2...):</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">其他语句</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>④:捕获多个异常一(不同处理)</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">try:</span></span><br><span class="line"><span class="string">    代码块一(可能出现异常的代码)</span></span><br><span class="line"><span class="string">except (异常类型1):</span></span><br><span class="line"><span class="string">    代码块二(对异常进行处理)</span></span><br><span class="line"><span class="string">except (异常类型2):</span></span><br><span class="line"><span class="string">    代码块三(对异常进行处理)</span></span><br><span class="line"><span class="string">except (异常类型3):</span></span><br><span class="line"><span class="string">    代码块四(对异常进行处理)</span></span><br><span class="line"><span class="string">    ...  </span></span><br><span class="line"><span class="string">其他代码</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-<br>
-
-<hr>
-<h1 id="三-关键字finally"><a href="#三-关键字finally" class="headerlink" title="三. 关键字finally"></a>三. 关键字finally</h1><p>在以上四个捕获异常的方法中都可以在最后加上finally关键字,它的作用是:<strong>不管try中的代码出现任何情况,finally后的代码都会执行</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    print(&#123;<span class="string">'name'</span>: <span class="string">'an'</span>, <span class="string">'age'</span>: <span class="number">29</span>&#125;[<span class="string">'gender'</span>])</span><br><span class="line">    print(<span class="string">'hello'</span>[<span class="number">19</span>])</span><br><span class="line">    print(max([<span class="number">10</span>, <span class="string">'asd'</span>, <span class="literal">True</span>]))</span><br><span class="line"><span class="keyword">except</span> IndexError:</span><br><span class="line">    print(<span class="string">'出现异常'</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'写遗书'</span>)</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="四-抛出异常"><a href="#四-抛出异常" class="headerlink" title="四. 抛出异常"></a>四. 抛出异常</h1><p><strong>raise 异常类型</strong></p>
-]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python基础：16:类和对象(进阶)</title>
     <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.16%20%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1(%E8%BF%9B%E9%98%B6)/</url>
     <content><![CDATA[<h1 id="一-类的继承"><a href="#一-类的继承" class="headerlink" title="一. 类的继承"></a>一. 类的继承</h1><p><strong>继承是让子类直接拥有父类的属性和方法</strong></p>
@@ -2022,48 +2022,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span>:</span></span><br><span class="line">    pi = <span class="number">3.1415926</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, r)</span>:</span></span><br><span class="line">        self.r = r</span><br><span class="line">        self._area = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Circle.pi * self.r * self.r</span><br><span class="line"></span><br><span class="line"><span class="meta">    @area.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        print(<span class="string">'给area属性赋值:'</span>, value)</span><br><span class="line">        <span class="keyword">raise</span> ValueError</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c1 = Circle(<span class="number">1</span>)</span><br><span class="line">print(c1.area)    <span class="comment"># 本质是在调用area函数: c1.area()</span></span><br><span class="line"></span><br><span class="line">c1.r = <span class="number">10</span></span><br><span class="line">print(c1.area)   <span class="comment"># 本质是在调用area函数: c1.area()</span></span><br><span class="line"></span><br><span class="line">c1.r = <span class="number">3</span></span><br><span class="line">print(c1.area)   <span class="comment"># 本质是在调用getter的area函数: c1.area()</span></span><br></pre></td></tr></table></figure>
 
 
-]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python基础：18:re模块</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.18%20re%E6%A8%A1%E5%9D%97/</url>
-    <content><![CDATA[<h1 id="一：方法使用"><a href="#一：方法使用" class="headerlink" title="一：方法使用"></a>一：方法使用</h1><h2 id="1-compile-正则表达式-编译创建正则表达式对象"><a href="#1-compile-正则表达式-编译创建正则表达式对象" class="headerlink" title="1. compile(正则表达式)  - 编译创建正则表达式对象"></a>1. compile(正则表达式)  - 编译创建正则表达式对象</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">re_obj = re.compile(<span class="string">r'\d&#123;3&#125;'</span>)</span><br><span class="line">re_obj.fullmatch(<span class="string">'234'</span>)</span><br><span class="line"></span><br><span class="line">re.fullmatch(<span class="string">r'\d&#123;3&#125;'</span>, <span class="string">'345'</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>a.获取匹配结果:<br>匹配对象.group()   - 获取整个正则表达式匹配到的结果<br>匹配对象.group(N)  - 获取第N分组匹配到的结果</p>
-</li>
-<li><p>b.获取匹配结果在原字符串中的范围<br>匹配对象.span()</p>
-</li>
-<li><p>c.获取原字符串<br>匹配对象.string</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(result.group())   <span class="comment"># 234hksj</span></span><br><span class="line">print(result.group(<span class="number">1</span>))  <span class="comment"># 234</span></span><br><span class="line">print(result.group(<span class="number">2</span>))  <span class="comment"># hksj</span></span><br><span class="line"></span><br><span class="line">print(result.span())   <span class="comment"># (0, 7)</span></span><br><span class="line">print(result.span(<span class="number">2</span>))  <span class="comment"># (3, 7)</span></span><br><span class="line"></span><br><span class="line">print(result.string)   <span class="comment"># 234hksj</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="2-fullmatch-正则表达式-字符串-让正则表达式和整个字符串进行匹配；如果匹配成功返回匹配对象，匹配失败返回None"><a href="#2-fullmatch-正则表达式-字符串-让正则表达式和整个字符串进行匹配；如果匹配成功返回匹配对象，匹配失败返回None" class="headerlink" title="2. fullmatch(正则表达式, 字符串)  -  让正则表达式和整个字符串进行匹配；如果匹配成功返回匹配对象，匹配失败返回None"></a>2. fullmatch(正则表达式, 字符串)  -  让正则表达式和整个字符串进行匹配；如果匹配成功返回匹配对象，匹配失败返回None</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = re.fullmatch(<span class="string">r'(\d&#123;3&#125;)([a-z]&#123;4&#125;)'</span>, <span class="string">'234hksj'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-match-正则表达式-字符串-让字符串开头和正则表达式进行匹配-返回值是匹配对象或者None"><a href="#3-match-正则表达式-字符串-让字符串开头和正则表达式进行匹配-返回值是匹配对象或者None" class="headerlink" title="3.match(正则表达式, 字符串)  -  让字符串开头和正则表达式进行匹配; 返回值是匹配对象或者None"></a>3.match(正则表达式, 字符串)  -  让字符串开头和正则表达式进行匹配; 返回值是匹配对象或者None</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(re.match(<span class="string">r'\d&#123;3&#125;'</span>, <span class="string">'789佳的说法0023-==='</span>))</span><br><span class="line">print(re.match(<span class="string">r'\d&#123;3&#125;abc'</span>, <span class="string">'345ABC就开始大锅饭'</span>, flags=re.I))</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-search-正则表达式-字符串-在字符串中查找第一个满足正则表达式的子串；返回值是匹配对象或者None"><a href="#4-search-正则表达式-字符串-在字符串中查找第一个满足正则表达式的子串；返回值是匹配对象或者None" class="headerlink" title="4.search(正则表达式, 字符串)  - 在字符串中查找第一个满足正则表达式的子串；返回值是匹配对象或者None"></a>4.search(正则表达式, 字符串)  - 在字符串中查找第一个满足正则表达式的子串；返回值是匹配对象或者None</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(re.search(<span class="string">r'\d&#123;3&#125;'</span>, <span class="string">'时代峰峻34890shh==23992课时费'</span>))</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-findall-正则表达式-字符串-获取字符串中所有满足正则表达式的子串；返回值是列表，列表中的元素是字符串"><a href="#5-findall-正则表达式-字符串-获取字符串中所有满足正则表达式的子串；返回值是列表，列表中的元素是字符串" class="headerlink" title="5.findall(正则表达式,字符串)  - 获取字符串中所有满足正则表达式的子串；返回值是列表，列表中的元素是字符串"></a>5.findall(正则表达式,字符串)  - 获取字符串中所有满足正则表达式的子串；返回值是列表，列表中的元素是字符串</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(re.findall(<span class="string">r'\d+'</span>, <span class="string">'安抚348净宽度34920skdsf45烧开后09823hsd3sd89'</span>))</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-finditer-正则表达式-字符串-获取字符串中所有满足正则表达式的子串-返回值是迭代器，迭代器中的元素是匹配对象"><a href="#6-finditer-正则表达式-字符串-获取字符串中所有满足正则表达式的子串-返回值是迭代器，迭代器中的元素是匹配对象" class="headerlink" title="6.finditer(正则表达式,字符串) - 获取字符串中所有满足正则表达式的子串; 返回值是迭代器，迭代器中的元素是匹配对象"></a>6.finditer(正则表达式,字符串) - 获取字符串中所有满足正则表达式的子串; 返回值是迭代器，迭代器中的元素是匹配对象</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = re.finditer(<span class="string">r'(\d+)([a-z]&#123;2&#125;)'</span>, <span class="string">'安抚348净宽度34920skdsf45烧开后09823hsd3sd89'</span>)</span><br><span class="line">print(list(result))</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-split-正则表达式-字符串-以正则表达式匹配到的子串作为切割点，对字符串进行切割-返回值是列表，列表中的元素是字符串"><a href="#7-split-正则表达式-字符串-以正则表达式匹配到的子串作为切割点，对字符串进行切割-返回值是列表，列表中的元素是字符串" class="headerlink" title="7.split(正则表达式,字符串)  - 以正则表达式匹配到的子串作为切割点，对字符串进行切割; 返回值是列表，列表中的元素是字符串"></a>7.split(正则表达式,字符串)  - 以正则表达式匹配到的子串作为切割点，对字符串进行切割; 返回值是列表，列表中的元素是字符串</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = re.split(<span class="string">r'\d+'</span>, <span class="string">'暗红色的83大黄金黄色的9罚款0233s闪电发货890'</span>)</span><br><span class="line">print(result)   <span class="comment"># ['暗红色的', '大黄金黄色的', '罚款', 's闪电发货', '']</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="8-sub-正则表达式-字符串1-字符串2-将字符串2中满足正则表达式的子串全部替换成字符串1；返回值是替换后的字符串"><a href="#8-sub-正则表达式-字符串1-字符串2-将字符串2中满足正则表达式的子串全部替换成字符串1；返回值是替换后的字符串" class="headerlink" title="8.sub(正则表达式,字符串1,字符串2)  -  将字符串2中满足正则表达式的子串全部替换成字符串1；返回值是替换后的字符串"></a>8.sub(正则表达式,字符串1,字符串2)  -  将字符串2中满足正则表达式的子串全部替换成字符串1；返回值是替换后的字符串</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = re.sub(<span class="string">r'\d+'</span>, <span class="string">'and'</span>, <span class="string">'暗红色的83大黄金黄色的9罚款0233s闪电发货890'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-
-<h2 id="9-参数flags"><a href="#9-参数flags" class="headerlink" title="9.参数flags"></a>9.参数flags</h2><p>以上所有的函数都有一个参数flags, 可以加re.I表示匹配的时候忽略大小写；加re.S表示单行匹配(默认是多行匹配re.M)<br>多行和单行的主要区别: 多行匹配.不能和\n进行匹配；单行.可以和\n进行匹配</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a.b'</span>, <span class="string">'a\nb'</span>))   <span class="comment"># None</span></span><br><span class="line">print(re.fullmatch(<span class="string">r'a.b'</span>, <span class="string">'a\nb'</span>, flags=re.S))</span><br><span class="line"></span><br><span class="line">print(re.search(<span class="string">r'a.+b'</span>, <span class="string">'世纪东方anmb\n是否b大括号'</span>))</span><br><span class="line">print(re.search(<span class="string">r'a.+b'</span>, <span class="string">'世纪东方anmb\n是否b大括号'</span>, re.S))</span><br></pre></td></tr></table></figure>
-
-<h3 id="附上整理的表格"><a href="#附上整理的表格" class="headerlink" title="附上整理的表格"></a>附上整理的表格</h3><p><img src="https://upload-images.jianshu.io/upload_images/20010076-f46a5dcaef681b9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="整理表格"></p>
 ]]></content>
       <categories>
         <category>Python学录</category>
@@ -2166,6 +2124,48 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
 <h3 id="2-分组"><a href="#2-分组" class="headerlink" title="2).分组"></a>2).分组</h3><p><strong>①:整体控制次数: ()匹配次数<br>②:将正则表达式作为一个整体操作</strong></p>
 <p>重复：带分组的正则表达式\M - 在\M的位置重前面第M个分组匹配到的内容</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 匹配一个字符串: abc前是3个数字或者3个字母</span></span><br><span class="line">re_str = <span class="string">r'(\d&#123;3&#125;|[a-z]&#123;3&#125;)abc'</span></span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'mskabc'</span>))</span><br><span class="line">re_str = <span class="string">r'(\d+)([a-z]+)=\2'</span></span><br><span class="line">print(re.fullmatch(re_str, <span class="string">'6kh=kh'</span>))</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python基础：18:re模块</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.18%20re%E6%A8%A1%E5%9D%97/</url>
+    <content><![CDATA[<h1 id="一：方法使用"><a href="#一：方法使用" class="headerlink" title="一：方法使用"></a>一：方法使用</h1><h2 id="1-compile-正则表达式-编译创建正则表达式对象"><a href="#1-compile-正则表达式-编译创建正则表达式对象" class="headerlink" title="1. compile(正则表达式)  - 编译创建正则表达式对象"></a>1. compile(正则表达式)  - 编译创建正则表达式对象</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">re_obj = re.compile(<span class="string">r'\d&#123;3&#125;'</span>)</span><br><span class="line">re_obj.fullmatch(<span class="string">'234'</span>)</span><br><span class="line"></span><br><span class="line">re.fullmatch(<span class="string">r'\d&#123;3&#125;'</span>, <span class="string">'345'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>a.获取匹配结果:<br>匹配对象.group()   - 获取整个正则表达式匹配到的结果<br>匹配对象.group(N)  - 获取第N分组匹配到的结果</p>
+</li>
+<li><p>b.获取匹配结果在原字符串中的范围<br>匹配对象.span()</p>
+</li>
+<li><p>c.获取原字符串<br>匹配对象.string</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(result.group())   <span class="comment"># 234hksj</span></span><br><span class="line">print(result.group(<span class="number">1</span>))  <span class="comment"># 234</span></span><br><span class="line">print(result.group(<span class="number">2</span>))  <span class="comment"># hksj</span></span><br><span class="line"></span><br><span class="line">print(result.span())   <span class="comment"># (0, 7)</span></span><br><span class="line">print(result.span(<span class="number">2</span>))  <span class="comment"># (3, 7)</span></span><br><span class="line"></span><br><span class="line">print(result.string)   <span class="comment"># 234hksj</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-fullmatch-正则表达式-字符串-让正则表达式和整个字符串进行匹配；如果匹配成功返回匹配对象，匹配失败返回None"><a href="#2-fullmatch-正则表达式-字符串-让正则表达式和整个字符串进行匹配；如果匹配成功返回匹配对象，匹配失败返回None" class="headerlink" title="2. fullmatch(正则表达式, 字符串)  -  让正则表达式和整个字符串进行匹配；如果匹配成功返回匹配对象，匹配失败返回None"></a>2. fullmatch(正则表达式, 字符串)  -  让正则表达式和整个字符串进行匹配；如果匹配成功返回匹配对象，匹配失败返回None</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = re.fullmatch(<span class="string">r'(\d&#123;3&#125;)([a-z]&#123;4&#125;)'</span>, <span class="string">'234hksj'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-match-正则表达式-字符串-让字符串开头和正则表达式进行匹配-返回值是匹配对象或者None"><a href="#3-match-正则表达式-字符串-让字符串开头和正则表达式进行匹配-返回值是匹配对象或者None" class="headerlink" title="3.match(正则表达式, 字符串)  -  让字符串开头和正则表达式进行匹配; 返回值是匹配对象或者None"></a>3.match(正则表达式, 字符串)  -  让字符串开头和正则表达式进行匹配; 返回值是匹配对象或者None</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(re.match(<span class="string">r'\d&#123;3&#125;'</span>, <span class="string">'789佳的说法0023-==='</span>))</span><br><span class="line">print(re.match(<span class="string">r'\d&#123;3&#125;abc'</span>, <span class="string">'345ABC就开始大锅饭'</span>, flags=re.I))</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-search-正则表达式-字符串-在字符串中查找第一个满足正则表达式的子串；返回值是匹配对象或者None"><a href="#4-search-正则表达式-字符串-在字符串中查找第一个满足正则表达式的子串；返回值是匹配对象或者None" class="headerlink" title="4.search(正则表达式, 字符串)  - 在字符串中查找第一个满足正则表达式的子串；返回值是匹配对象或者None"></a>4.search(正则表达式, 字符串)  - 在字符串中查找第一个满足正则表达式的子串；返回值是匹配对象或者None</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(re.search(<span class="string">r'\d&#123;3&#125;'</span>, <span class="string">'时代峰峻34890shh==23992课时费'</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-findall-正则表达式-字符串-获取字符串中所有满足正则表达式的子串；返回值是列表，列表中的元素是字符串"><a href="#5-findall-正则表达式-字符串-获取字符串中所有满足正则表达式的子串；返回值是列表，列表中的元素是字符串" class="headerlink" title="5.findall(正则表达式,字符串)  - 获取字符串中所有满足正则表达式的子串；返回值是列表，列表中的元素是字符串"></a>5.findall(正则表达式,字符串)  - 获取字符串中所有满足正则表达式的子串；返回值是列表，列表中的元素是字符串</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(re.findall(<span class="string">r'\d+'</span>, <span class="string">'安抚348净宽度34920skdsf45烧开后09823hsd3sd89'</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-finditer-正则表达式-字符串-获取字符串中所有满足正则表达式的子串-返回值是迭代器，迭代器中的元素是匹配对象"><a href="#6-finditer-正则表达式-字符串-获取字符串中所有满足正则表达式的子串-返回值是迭代器，迭代器中的元素是匹配对象" class="headerlink" title="6.finditer(正则表达式,字符串) - 获取字符串中所有满足正则表达式的子串; 返回值是迭代器，迭代器中的元素是匹配对象"></a>6.finditer(正则表达式,字符串) - 获取字符串中所有满足正则表达式的子串; 返回值是迭代器，迭代器中的元素是匹配对象</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = re.finditer(<span class="string">r'(\d+)([a-z]&#123;2&#125;)'</span>, <span class="string">'安抚348净宽度34920skdsf45烧开后09823hsd3sd89'</span>)</span><br><span class="line">print(list(result))</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-split-正则表达式-字符串-以正则表达式匹配到的子串作为切割点，对字符串进行切割-返回值是列表，列表中的元素是字符串"><a href="#7-split-正则表达式-字符串-以正则表达式匹配到的子串作为切割点，对字符串进行切割-返回值是列表，列表中的元素是字符串" class="headerlink" title="7.split(正则表达式,字符串)  - 以正则表达式匹配到的子串作为切割点，对字符串进行切割; 返回值是列表，列表中的元素是字符串"></a>7.split(正则表达式,字符串)  - 以正则表达式匹配到的子串作为切割点，对字符串进行切割; 返回值是列表，列表中的元素是字符串</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = re.split(<span class="string">r'\d+'</span>, <span class="string">'暗红色的83大黄金黄色的9罚款0233s闪电发货890'</span>)</span><br><span class="line">print(result)   <span class="comment"># ['暗红色的', '大黄金黄色的', '罚款', 's闪电发货', '']</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-sub-正则表达式-字符串1-字符串2-将字符串2中满足正则表达式的子串全部替换成字符串1；返回值是替换后的字符串"><a href="#8-sub-正则表达式-字符串1-字符串2-将字符串2中满足正则表达式的子串全部替换成字符串1；返回值是替换后的字符串" class="headerlink" title="8.sub(正则表达式,字符串1,字符串2)  -  将字符串2中满足正则表达式的子串全部替换成字符串1；返回值是替换后的字符串"></a>8.sub(正则表达式,字符串1,字符串2)  -  将字符串2中满足正则表达式的子串全部替换成字符串1；返回值是替换后的字符串</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = re.sub(<span class="string">r'\d+'</span>, <span class="string">'and'</span>, <span class="string">'暗红色的83大黄金黄色的9罚款0233s闪电发货890'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-参数flags"><a href="#9-参数flags" class="headerlink" title="9.参数flags"></a>9.参数flags</h2><p>以上所有的函数都有一个参数flags, 可以加re.I表示匹配的时候忽略大小写；加re.S表示单行匹配(默认是多行匹配re.M)<br>多行和单行的主要区别: 多行匹配.不能和\n进行匹配；单行.可以和\n进行匹配</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(re.fullmatch(<span class="string">r'a.b'</span>, <span class="string">'a\nb'</span>))   <span class="comment"># None</span></span><br><span class="line">print(re.fullmatch(<span class="string">r'a.b'</span>, <span class="string">'a\nb'</span>, flags=re.S))</span><br><span class="line"></span><br><span class="line">print(re.search(<span class="string">r'a.+b'</span>, <span class="string">'世纪东方anmb\n是否b大括号'</span>))</span><br><span class="line">print(re.search(<span class="string">r'a.+b'</span>, <span class="string">'世纪东方anmb\n是否b大括号'</span>, re.S))</span><br></pre></td></tr></table></figure>
+
+<h3 id="附上整理的表格"><a href="#附上整理的表格" class="headerlink" title="附上整理的表格"></a>附上整理的表格</h3><p><img src="https://upload-images.jianshu.io/upload_images/20010076-f46a5dcaef681b9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="整理表格"></p>
+]]></content>
       <categories>
         <category>Python学录</category>
       </categories>
@@ -2308,6 +2308,30 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
+    <title>Python基础：5:数据类型之元组</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.5%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/</url>
+    <content><![CDATA[<h1 id="一、什么是元组"><a href="#一、什么是元组" class="headerlink" title="一、什么是元组"></a>一、什么是元组</h1><ul>
+<li>元组就是不可变的列表</li>
+<li>元组是将小括号 () 作为容器的标志；(元素1，元素2，…)</li>
+<li>元组不可变性，不能增、删、改，</li>
+<li>元组有序性，支持下标操作</li>
+<li>元组元素可以是任何类型的数据</li>
+</ul>
+<h1 id="二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"><a href="#二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）" class="headerlink" title="二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"></a>二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）</h1><h2 id="1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）"><a href="#1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）" class="headerlink" title="1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）"></a>1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple1 = (<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(tuple1[<span class="number">0</span>])</span><br><span class="line">print(tuple1[<span class="number">3</span>])</span><br><span class="line">print(tuple1[<span class="number">2</span>:<span class="number">4</span>:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="2、元组和列表相同的操作"><a href="#2、元组和列表相同的操作" class="headerlink" title="2、元组和列表相同的操作"></a>2、元组和列表相同的操作</h2><p><strong><em>+&emsp;、\</em>&emsp; == &emsp;!=&emsp; is&emsp; in &emsp; not in &emsp; len &emsp;max &emsp;min&emsp; sum &emsp;sorted*</strong></p>
+<h1 id="三、元组的独特操作"><a href="#三、元组的独特操作" class="headerlink" title="三、元组的独特操作"></a>三、元组的独特操作</h1><h2 id="1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型"><a href="#1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型" class="headerlink" title="1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)"></a>1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list1 = [<span class="number">10</span>]</span><br><span class="line">print(list1, type(list1))   <span class="comment">#   [10] &lt;class 'list'&gt;</span></span><br><span class="line">tuple1 = (<span class="number">10</span>,)</span><br><span class="line">print(tuple1,type(tuple1))</span><br></pre></td></tr></table></figure>
+<h2 id="2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"><a href="#2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组" class="headerlink" title="2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"></a>2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple2 = <span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span></span><br></pre></td></tr></table></figure>
+<h2 id="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"><a href="#3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）" class="headerlink" title="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"></a>3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple3 = (<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">x,y = tuple3</span><br><span class="line">print(x,y)   <span class="comment">#   10 20</span></span><br></pre></td></tr></table></figure>
+<h2 id="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"><a href="#4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）" class="headerlink" title="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"></a>4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple4 = (<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">8</span>)</span><br><span class="line">x1 ,*x2 ,x3 = tuple4</span><br><span class="line">print(x1,x2,x3)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础：3:循环结构与分支结构</title>
     <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.3%20%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<h1 id="一、分支结构"><a href="#一、分支结构" class="headerlink" title="一、分支结构"></a>一、分支结构</h1><h3 id="1、if-结构-（满足条件就执行某个操作，不满足就不执行。）"><a href="#1、if-结构-（满足条件就执行某个操作，不满足就不执行。）" class="headerlink" title="1、if 结构 （满足条件就执行某个操作，不满足就不执行。）"></a>1、if 结构 （满足条件就执行某个操作，不满足就不执行。）</h3><h6 id="1）、语法结构"><a href="#1）、语法结构" class="headerlink" title="1）、语法结构"></a>1）、语法结构</h6><p><strong><em>if 条件语句：<br>&emsp;代码段</em></strong></p>
@@ -2424,21 +2448,52 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Python基础：5:数据类型之元组</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.5%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/</url>
-    <content><![CDATA[<h1 id="一、什么是元组"><a href="#一、什么是元组" class="headerlink" title="一、什么是元组"></a>一、什么是元组</h1><ul>
-<li>元组就是不可变的列表</li>
-<li>元组是将小括号 () 作为容器的标志；(元素1，元素2，…)</li>
-<li>元组不可变性，不能增、删、改，</li>
-<li>元组有序性，支持下标操作</li>
-<li>元组元素可以是任何类型的数据</li>
+    <title>Python基础：6:数据类型之字典</title>
+    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.6%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E5%85%B8/</url>
+    <content><![CDATA[<h1 id="一、字典"><a href="#一、字典" class="headerlink" title="一、字典"></a>一、字典</h1><h2 id="1、什么是字典"><a href="#1、什么是字典" class="headerlink" title="1、什么是字典"></a>1、什么是字典</h2><h3 id="1）、字典："><a href="#1）、字典：" class="headerlink" title="1）、字典："></a>1）、字典：</h3><ul>
+<li>字典是容器型数据类型，将大括号{}作为容器的标志，里面多个元素用逗号隔开，字典中的元素只能是键值对：{键1:值1, 键2:值2, 键3:值3,…}</li>
+<li>字典的可变性(支持增删改)，无序性(不支持下标操作)</li>
 </ul>
-<h1 id="二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"><a href="#二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）" class="headerlink" title="二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"></a>二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）</h1><h2 id="1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）"><a href="#1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）" class="headerlink" title="1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）"></a>1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple1 = (<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(tuple1[<span class="number">0</span>])</span><br><span class="line">print(tuple1[<span class="number">3</span>])</span><br><span class="line">print(tuple1[<span class="number">2</span>:<span class="number">4</span>:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-<h2 id="2、元组和列表相同的操作"><a href="#2、元组和列表相同的操作" class="headerlink" title="2、元组和列表相同的操作"></a>2、元组和列表相同的操作</h2><p><strong><em>+&emsp;、\</em>&emsp; == &emsp;!=&emsp; is&emsp; in &emsp; not in &emsp; len &emsp;max &emsp;min&emsp; sum &emsp;sorted*</strong></p>
-<h1 id="三、元组的独特操作"><a href="#三、元组的独特操作" class="headerlink" title="三、元组的独特操作"></a>三、元组的独特操作</h1><h2 id="1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型"><a href="#1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型" class="headerlink" title="1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)"></a>1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list1 = [<span class="number">10</span>]</span><br><span class="line">print(list1, type(list1))   <span class="comment">#   [10] &lt;class 'list'&gt;</span></span><br><span class="line">tuple1 = (<span class="number">10</span>,)</span><br><span class="line">print(tuple1,type(tuple1))</span><br></pre></td></tr></table></figure>
-<h2 id="2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"><a href="#2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组" class="headerlink" title="2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"></a>2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple2 = <span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span></span><br></pre></td></tr></table></figure>
-<h2 id="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"><a href="#3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）" class="headerlink" title="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"></a>3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple3 = (<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">x,y = tuple3</span><br><span class="line">print(x,y)   <span class="comment">#   10 20</span></span><br></pre></td></tr></table></figure>
-<h2 id="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"><a href="#4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）" class="headerlink" title="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"></a>4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple4 = (<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">8</span>)</span><br><span class="line">x1 ,*x2 ,x3 = tuple4</span><br><span class="line">print(x1,x2,x3)</span><br></pre></td></tr></table></figure>]]></content>
+<h3 id="2）、键值对"><a href="#2）、键值对" class="headerlink" title="2）、键值对"></a>2）、键值对</h3><ul>
+<li>字典中所有元素都必须是键值对，键和值必须成对出现</li>
+<li>字典存数据存的是值，键只是用来区分不同的值的</li>
+<li>键 - 理论上是任何不可变的数据都可以，实际开发的时候一般将字符串作为键（key），在同一字典中键是唯一的</li>
+<li>值 - 可以是任何类型的数据<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dict1 = &#123;<span class="string">'dfg'</span>:<span class="number">34</span>, <span class="string">'a'</span>:<span class="literal">True</span>, <span class="string">'o'</span>:[<span class="number">1</span>,<span class="number">2</span>], <span class="string">'c'</span>:&#123;<span class="string">'name'</span>:<span class="string">'小明'</span>&#125;&#125;   <span class="comment">#   值可以是任何数据</span></span><br><span class="line">dict2 = &#123;<span class="number">10</span>:<span class="number">34</span>, <span class="string">'a'</span>:<span class="literal">True</span>, [<span class="number">1</span>,<span class="number">2</span>]:&#123;<span class="string">'name'</span>:<span class="string">'小明'</span>&#125;&#125;   <span class="comment">#   键只能是不可变数据：数字，元组，字符串</span></span><br></pre></td></tr></table></figure>
+<br>
+
+</li>
+</ul>
+<hr>
+<h1 id="二、字典的基本操作（增删改查）"><a href="#二、字典的基本操作（增删改查）" class="headerlink" title="二、字典的基本操作（增删改查）"></a>二、字典的基本操作（增删改查）</h1><h2 id="1、查-—-获取字典的值"><a href="#1、查-—-获取字典的值" class="headerlink" title="1、查 — 获取字典的值"></a>1、查 — 获取字典的值</h2><h3 id="1-、获取单个值"><a href="#1-、获取单个值" class="headerlink" title="1)、获取单个值"></a>1)、获取单个值</h3><p><strong>字典[key]</strong>——&gt;获取字典中指定key对应的值，若key值不存在，报错<br><strong>字典.get(key)</strong>——&gt;获取字典中指定key对应的值，若key值不存在，不报错，返回None<br><strong>字典.get(key，默认值)</strong>——&gt;获取字典中指定key对应的值，若key值不存在，不报错，返回指定的默认值</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">person = &#123;<span class="string">'name'</span>:<span class="string">'小明'</span>, <span class="string">'age'</span>:<span class="string">'18'</span>, <span class="string">'tel'</span>:<span class="string">'13888888888'</span>&#125;</span><br><span class="line">print(person[<span class="string">'age'</span>])</span><br><span class="line">print(person.get(<span class="string">'age'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="2-、遍历"><a href="#2-、遍历" class="headerlink" title="2)、遍历"></a>2)、遍历</h3><p><strong>for key in 字典:<br>&emsp;循环体</strong></p>
+<p>其他遍历方法<strong>（效率较低）</strong><br>for key,value in person.items():<br>&emsp;print(key, value)</p>
+<h2 id="2、增-改"><a href="#2、增-改" class="headerlink" title="2、增 / 改"></a>2、增 / 改</h2><p><strong>字典[key] = 值</strong></p>
+<ul>
+<li>若key在字典内存在，修改</li>
+<li>若key不在字典内，增加  ‘key’:’值’<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">person = &#123;<span class="string">'name'</span>:<span class="string">'小明'</span>, <span class="string">'age'</span>:<span class="string">'18'</span>, <span class="string">'tel'</span>:<span class="string">'13888888888'</span>&#125;</span><br><span class="line">person[<span class="string">'name'</span>] = <span class="string">'小花'</span></span><br><span class="line">person[<span class="string">'分数'</span>] = <span class="number">89</span></span><br><span class="line">print(person)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h2 id="3、删-—-删除键对"><a href="#3、删-—-删除键对" class="headerlink" title="3、删 — 删除键对"></a>3、删 — 删除键对</h2><h3 id="1）、del-字典-key-删除字典中指定key对应的键值对"><a href="#1）、del-字典-key-删除字典中指定key对应的键值对" class="headerlink" title="1）、del 字典[key]     -     删除字典中指定key对应的键值对"></a>1）、del 字典[key]     -     删除字典中指定key对应的键值对</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">del</span> person[<span class="string">'age'</span>]</span><br><span class="line">print(person)</span><br></pre></td></tr></table></figure>
+<h3 id="2）、字典-pop-key-取出字典中指定key对应的值（key对应的键值对会从字典消失）"><a href="#2）、字典-pop-key-取出字典中指定key对应的值（key对应的键值对会从字典消失）" class="headerlink" title="2）、字典.pop(key)     -     取出字典中指定key对应的值（key对应的键值对会从字典消失）"></a>2）、字典.pop(key)     -     取出字典中指定key对应的值（key对应的键值对会从字典消失）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">person.pop(<span class="string">'name'</span>)</span><br><span class="line">print(person)</span><br></pre></td></tr></table></figure>
+
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 练习，保存一个班的学生信息：姓名，学号，年龄，成绩，电话）一个班五个人</span></span><br><span class="line">all_student = [</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'tom'</span>, <span class="string">'age'</span>:<span class="number">20</span>, <span class="string">'score'</span>:<span class="number">80</span>, <span class="string">'tel'</span>:<span class="string">'13888888888'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'tony'</span>, <span class="string">'age'</span>:<span class="number">13</span>, <span class="string">'score'</span>:<span class="number">90</span>, <span class="string">'tel'</span>:<span class="string">'13888888883'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'john'</span>, <span class="string">'age'</span>:<span class="number">45</span>, <span class="string">'score'</span>:<span class="number">49</span>, <span class="string">'tel'</span>:<span class="string">'13888888884'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'tom2'</span>, <span class="string">'age'</span>:<span class="number">35</span>, <span class="string">'score'</span>:<span class="number">73</span>, <span class="string">'tel'</span>:<span class="string">'13888888885'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'tom3'</span>, <span class="string">'age'</span>:<span class="number">10</span>, <span class="string">'score'</span>:<span class="number">99</span>, <span class="string">'tel'</span>:<span class="string">'13888888886'</span>&#125;</span><br><span class="line">]</span><br><span class="line"><span class="comment"># 1）统计以上学生中不及格学生的人数</span></span><br><span class="line">n = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> student <span class="keyword">in</span> all_student:</span><br><span class="line">  <span class="keyword">if</span> student[score] &lt; <span class="number">60</span>:</span><br><span class="line">    n += <span class="number">1</span></span><br><span class="line">print(n)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2）将打印所有未成年人学生的姓名</span></span><br><span class="line"><span class="keyword">for</span> student <span class="keyword">in</span> all_student:</span><br><span class="line">  <span class="keyword">if</span> student[age] &lt; <span class="number">18</span>:</span><br><span class="line">    print(student[name])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3）将年龄为25岁以上的学生的电话号码设置为’保密’</span></span><br><span class="line"><span class="keyword">for</span> student <span class="keyword">in</span> all_student:</span><br><span class="line">   <span class="keyword">if</span> student[age] &gt; <span class="number">25</span>:</span><br><span class="line">     student[tel] = <span class="string">'保密'</span></span><br><span class="line">print(all_student)</span><br></pre></td></tr></table></figure>
+<br>
+
+<hr>
+<h1 id="三、字典的其他操作"><a href="#三、字典的其他操作" class="headerlink" title="三、字典的其他操作"></a>三、字典的其他操作</h1><h2 id="1、运算符：-（不支持：-lt-gt-lt-gt-运算）"><a href="#1、运算符：-（不支持：-lt-gt-lt-gt-运算）" class="headerlink" title="1、运算符：== !=（不支持：+ * &lt; &gt; &lt;= &gt;=运算）"></a>1、运算符：== !=（不支持：+ * &lt; &gt; &lt;= &gt;=运算）</h2><h2 id="2、in-not-in"><a href="#2、in-not-in" class="headerlink" title="2、in / not in"></a>2、in / not in</h2><p><strong>key in 字典 / key not in 字典   -   判断key是否存在于字典中</strong></p>
+<h2 id="3、len-dict"><a href="#3、len-dict" class="headerlink" title="3、len , dict"></a>3、len , dict</h2><p><strong>len(字典)</strong>——&gt;字典的长度，键值对的个数<br><strong>dict(数据)</strong>——&gt;将指定的数据转换成字典；</p>
+<p>数据的要求：</p>
+<ul>
+<li>1).数据本身是序列；</li>
+<li>2).序列中的元素也是序列;</li>
+<li>3).小序列中的元素智能有两个，第一个元素不可变</li>
+</ul>
+<p><strong>字典转换成列表  —  将字典所有的key取出来作为列表的元素</strong></p>
+<h2 id="4、字典-clear-清空字典"><a href="#4、字典-clear-清空字典" class="headerlink" title="4、字典.clear()   -   清空字典"></a>4、字典.clear()   -   清空字典</h2><h2 id="5、字典-copy-拷贝字典，返回新字典-相互不影响"><a href="#5、字典-copy-拷贝字典，返回新字典-相互不影响" class="headerlink" title="5、字典.copy()   -   拷贝字典，返回新字典(相互不影响)"></a>5、字典.copy()   -   拷贝字典，返回新字典(相互不影响)</h2><h2 id="6、dict-fromkeys-序列，值-创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典"><a href="#6、dict-fromkeys-序列，值-创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典" class="headerlink" title="6、dict.fromkeys(序列，值)   -   创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典"></a>6、dict.fromkeys(序列，值)   -   创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典</h2><h2 id="7、字典-items-字典-values-字典-keys"><a href="#7、字典-items-字典-values-字典-keys" class="headerlink" title="7、字典.items(),字典.values(),字典.keys()"></a>7、字典.items(),字典.values(),字典.keys()</h2><h3 id="1）、字典-key-gt-获取字典所有的key并且返回，返回的数据类型是序列但是不是列表"><a href="#1）、字典-key-gt-获取字典所有的key并且返回，返回的数据类型是序列但是不是列表" class="headerlink" title="1）、字典.key() -&gt; 获取字典所有的key并且返回，返回的数据类型是序列但是不是列表"></a>1）、字典.key() -&gt; 获取字典所有的key并且返回，返回的数据类型是序列但是不是列表</h3><h3 id="2）、字典-values-gt-获取字典所有的value并且返回，返回的数据类型是序列但是不是列表"><a href="#2）、字典-values-gt-获取字典所有的value并且返回，返回的数据类型是序列但是不是列表" class="headerlink" title="2）、字典.values() -&gt; 获取字典所有的value并且返回，返回的数据类型是序列但是不是列表"></a>2）、字典.values() -&gt; 获取字典所有的value并且返回，返回的数据类型是序列但是不是列表</h3><h3 id="3）、字典-items-gt-同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值"><a href="#3）、字典-items-gt-同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值" class="headerlink" title="3）、字典.items() -&gt; 同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值"></a>3）、字典.items() -&gt; 同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值</h3><h2 id="8、字典-setdefault-key-value-字典中添加键值对（key值存在时不会修改）"><a href="#8、字典-setdefault-key-value-字典中添加键值对（key值存在时不会修改）" class="headerlink" title="8、字典.setdefault(key, value) - 字典中添加键值对（key值存在时不会修改）"></a>8、字典.setdefault(key, value) - 字典中添加键值对（key值存在时不会修改）</h2><h2 id="9、字典1-update-字典2-将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）"><a href="#9、字典1-update-字典2-将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）" class="headerlink" title="9、字典1.update(字典2)   -   将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）"></a>9、字典1.update(字典2)   -   将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）</h2><h3 id="练习-1"><a href="#练习-1" class="headerlink" title="练习"></a>练习</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 练习2：设计数据保存一个班的信息：</span></span><br><span class="line"><span class="comment"># 名字：python1906；</span></span><br><span class="line"><span class="comment"># 所有老师（名字，性别，联系方式，职位）：</span></span><br><span class="line"><span class="comment"># 所有学生（姓名，毕业学校，电话，性别，年龄，紧急联系人（姓名，电话，关系））</span></span><br><span class="line">class_1906 = &#123;</span><br><span class="line">  <span class="string">'class_name'</span> : <span class="string">'python_1906'</span>, </span><br><span class="line">  <span class="string">'all_teacher'</span> : [</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'张老师'</span>, <span class="string">'gender'</span> : <span class="string">'女'</span>, <span class="string">'职位'</span> : <span class="string">'班主任'</span>, <span class="string">'联系方式'</span> : <span class="string">'123451'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'余老师'</span>, <span class="string">'gender'</span> : <span class="string">'女'</span>, <span class="string">'职位'</span> : <span class="string">'讲师'</span>, <span class="string">'联系方式'</span> : <span class="string">'123452'</span>&#125;</span><br><span class="line">  ]</span><br><span class="line">  <span class="string">'all_student'</span> : [</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'张三'</span>, <span class="string">'gender'</span> : <span class="string">'男'</span>, <span class="string">'年龄'</span> : <span class="string">'25'</span>, <span class="string">'联系方式'</span> : <span class="string">'123453'</span>, <span class="string">'紧急联系人'</span> : &#123;<span class="string">'name'</span> : <span class="string">'李四'</span>, <span class="string">'关系'</span> : <span class="string">'父子'</span>, <span class="string">'联系方式'</span> : <span class="string">'12345678'</span>&#125;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">print(class_1906[all_student][<span class="number">-1</span>][<span class="string">'紧急联系人'</span>])</span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
         <category>Python学录</category>
       </categories>
@@ -2541,61 +2596,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
 <h3 id="8、sorted-序列-——-gt-不修改原序列，排序后产生一个新的列表（从小到大）"><a href="#8、sorted-序列-——-gt-不修改原序列，排序后产生一个新的列表（从小到大）" class="headerlink" title="8、sorted(序列)——&gt;不修改原序列，排序后产生一个新的列表（从小到大）"></a>8、sorted(序列)——&gt;不修改原序列，排序后产生一个新的列表（从小到大）</h3><ul>
 <li>sorted(序列，reverse=True)    从大到小</li>
 </ul>
-]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python基础：6:数据类型之字典</title>
-    <url>/1970/01/01/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.6%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E5%85%B8/</url>
-    <content><![CDATA[<h1 id="一、字典"><a href="#一、字典" class="headerlink" title="一、字典"></a>一、字典</h1><h2 id="1、什么是字典"><a href="#1、什么是字典" class="headerlink" title="1、什么是字典"></a>1、什么是字典</h2><h3 id="1）、字典："><a href="#1）、字典：" class="headerlink" title="1）、字典："></a>1）、字典：</h3><ul>
-<li>字典是容器型数据类型，将大括号{}作为容器的标志，里面多个元素用逗号隔开，字典中的元素只能是键值对：{键1:值1, 键2:值2, 键3:值3,…}</li>
-<li>字典的可变性(支持增删改)，无序性(不支持下标操作)</li>
-</ul>
-<h3 id="2）、键值对"><a href="#2）、键值对" class="headerlink" title="2）、键值对"></a>2）、键值对</h3><ul>
-<li>字典中所有元素都必须是键值对，键和值必须成对出现</li>
-<li>字典存数据存的是值，键只是用来区分不同的值的</li>
-<li>键 - 理论上是任何不可变的数据都可以，实际开发的时候一般将字符串作为键（key），在同一字典中键是唯一的</li>
-<li>值 - 可以是任何类型的数据<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dict1 = &#123;<span class="string">'dfg'</span>:<span class="number">34</span>, <span class="string">'a'</span>:<span class="literal">True</span>, <span class="string">'o'</span>:[<span class="number">1</span>,<span class="number">2</span>], <span class="string">'c'</span>:&#123;<span class="string">'name'</span>:<span class="string">'小明'</span>&#125;&#125;   <span class="comment">#   值可以是任何数据</span></span><br><span class="line">dict2 = &#123;<span class="number">10</span>:<span class="number">34</span>, <span class="string">'a'</span>:<span class="literal">True</span>, [<span class="number">1</span>,<span class="number">2</span>]:&#123;<span class="string">'name'</span>:<span class="string">'小明'</span>&#125;&#125;   <span class="comment">#   键只能是不可变数据：数字，元组，字符串</span></span><br></pre></td></tr></table></figure>
-<br>
-
-</li>
-</ul>
-<hr>
-<h1 id="二、字典的基本操作（增删改查）"><a href="#二、字典的基本操作（增删改查）" class="headerlink" title="二、字典的基本操作（增删改查）"></a>二、字典的基本操作（增删改查）</h1><h2 id="1、查-—-获取字典的值"><a href="#1、查-—-获取字典的值" class="headerlink" title="1、查 — 获取字典的值"></a>1、查 — 获取字典的值</h2><h3 id="1-、获取单个值"><a href="#1-、获取单个值" class="headerlink" title="1)、获取单个值"></a>1)、获取单个值</h3><p><strong>字典[key]</strong>——&gt;获取字典中指定key对应的值，若key值不存在，报错<br><strong>字典.get(key)</strong>——&gt;获取字典中指定key对应的值，若key值不存在，不报错，返回None<br><strong>字典.get(key，默认值)</strong>——&gt;获取字典中指定key对应的值，若key值不存在，不报错，返回指定的默认值</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">person = &#123;<span class="string">'name'</span>:<span class="string">'小明'</span>, <span class="string">'age'</span>:<span class="string">'18'</span>, <span class="string">'tel'</span>:<span class="string">'13888888888'</span>&#125;</span><br><span class="line">print(person[<span class="string">'age'</span>])</span><br><span class="line">print(person.get(<span class="string">'age'</span>))</span><br></pre></td></tr></table></figure>
-<h3 id="2-、遍历"><a href="#2-、遍历" class="headerlink" title="2)、遍历"></a>2)、遍历</h3><p><strong>for key in 字典:<br>&emsp;循环体</strong></p>
-<p>其他遍历方法<strong>（效率较低）</strong><br>for key,value in person.items():<br>&emsp;print(key, value)</p>
-<h2 id="2、增-改"><a href="#2、增-改" class="headerlink" title="2、增 / 改"></a>2、增 / 改</h2><p><strong>字典[key] = 值</strong></p>
-<ul>
-<li>若key在字典内存在，修改</li>
-<li>若key不在字典内，增加  ‘key’:’值’<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">person = &#123;<span class="string">'name'</span>:<span class="string">'小明'</span>, <span class="string">'age'</span>:<span class="string">'18'</span>, <span class="string">'tel'</span>:<span class="string">'13888888888'</span>&#125;</span><br><span class="line">person[<span class="string">'name'</span>] = <span class="string">'小花'</span></span><br><span class="line">person[<span class="string">'分数'</span>] = <span class="number">89</span></span><br><span class="line">print(person)</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<h2 id="3、删-—-删除键对"><a href="#3、删-—-删除键对" class="headerlink" title="3、删 — 删除键对"></a>3、删 — 删除键对</h2><h3 id="1）、del-字典-key-删除字典中指定key对应的键值对"><a href="#1）、del-字典-key-删除字典中指定key对应的键值对" class="headerlink" title="1）、del 字典[key]     -     删除字典中指定key对应的键值对"></a>1）、del 字典[key]     -     删除字典中指定key对应的键值对</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">del</span> person[<span class="string">'age'</span>]</span><br><span class="line">print(person)</span><br></pre></td></tr></table></figure>
-<h3 id="2）、字典-pop-key-取出字典中指定key对应的值（key对应的键值对会从字典消失）"><a href="#2）、字典-pop-key-取出字典中指定key对应的值（key对应的键值对会从字典消失）" class="headerlink" title="2）、字典.pop(key)     -     取出字典中指定key对应的值（key对应的键值对会从字典消失）"></a>2）、字典.pop(key)     -     取出字典中指定key对应的值（key对应的键值对会从字典消失）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">person.pop(<span class="string">'name'</span>)</span><br><span class="line">print(person)</span><br></pre></td></tr></table></figure>
-
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 练习，保存一个班的学生信息：姓名，学号，年龄，成绩，电话）一个班五个人</span></span><br><span class="line">all_student = [</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'tom'</span>, <span class="string">'age'</span>:<span class="number">20</span>, <span class="string">'score'</span>:<span class="number">80</span>, <span class="string">'tel'</span>:<span class="string">'13888888888'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'tony'</span>, <span class="string">'age'</span>:<span class="number">13</span>, <span class="string">'score'</span>:<span class="number">90</span>, <span class="string">'tel'</span>:<span class="string">'13888888883'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'john'</span>, <span class="string">'age'</span>:<span class="number">45</span>, <span class="string">'score'</span>:<span class="number">49</span>, <span class="string">'tel'</span>:<span class="string">'13888888884'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'tom2'</span>, <span class="string">'age'</span>:<span class="number">35</span>, <span class="string">'score'</span>:<span class="number">73</span>, <span class="string">'tel'</span>:<span class="string">'13888888885'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span>:<span class="string">'tom3'</span>, <span class="string">'age'</span>:<span class="number">10</span>, <span class="string">'score'</span>:<span class="number">99</span>, <span class="string">'tel'</span>:<span class="string">'13888888886'</span>&#125;</span><br><span class="line">]</span><br><span class="line"><span class="comment"># 1）统计以上学生中不及格学生的人数</span></span><br><span class="line">n = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> student <span class="keyword">in</span> all_student:</span><br><span class="line">  <span class="keyword">if</span> student[score] &lt; <span class="number">60</span>:</span><br><span class="line">    n += <span class="number">1</span></span><br><span class="line">print(n)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2）将打印所有未成年人学生的姓名</span></span><br><span class="line"><span class="keyword">for</span> student <span class="keyword">in</span> all_student:</span><br><span class="line">  <span class="keyword">if</span> student[age] &lt; <span class="number">18</span>:</span><br><span class="line">    print(student[name])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3）将年龄为25岁以上的学生的电话号码设置为’保密’</span></span><br><span class="line"><span class="keyword">for</span> student <span class="keyword">in</span> all_student:</span><br><span class="line">   <span class="keyword">if</span> student[age] &gt; <span class="number">25</span>:</span><br><span class="line">     student[tel] = <span class="string">'保密'</span></span><br><span class="line">print(all_student)</span><br></pre></td></tr></table></figure>
-<br>
-
-<hr>
-<h1 id="三、字典的其他操作"><a href="#三、字典的其他操作" class="headerlink" title="三、字典的其他操作"></a>三、字典的其他操作</h1><h2 id="1、运算符：-（不支持：-lt-gt-lt-gt-运算）"><a href="#1、运算符：-（不支持：-lt-gt-lt-gt-运算）" class="headerlink" title="1、运算符：== !=（不支持：+ * &lt; &gt; &lt;= &gt;=运算）"></a>1、运算符：== !=（不支持：+ * &lt; &gt; &lt;= &gt;=运算）</h2><h2 id="2、in-not-in"><a href="#2、in-not-in" class="headerlink" title="2、in / not in"></a>2、in / not in</h2><p><strong>key in 字典 / key not in 字典   -   判断key是否存在于字典中</strong></p>
-<h2 id="3、len-dict"><a href="#3、len-dict" class="headerlink" title="3、len , dict"></a>3、len , dict</h2><p><strong>len(字典)</strong>——&gt;字典的长度，键值对的个数<br><strong>dict(数据)</strong>——&gt;将指定的数据转换成字典；</p>
-<p>数据的要求：</p>
-<ul>
-<li>1).数据本身是序列；</li>
-<li>2).序列中的元素也是序列;</li>
-<li>3).小序列中的元素智能有两个，第一个元素不可变</li>
-</ul>
-<p><strong>字典转换成列表  —  将字典所有的key取出来作为列表的元素</strong></p>
-<h2 id="4、字典-clear-清空字典"><a href="#4、字典-clear-清空字典" class="headerlink" title="4、字典.clear()   -   清空字典"></a>4、字典.clear()   -   清空字典</h2><h2 id="5、字典-copy-拷贝字典，返回新字典-相互不影响"><a href="#5、字典-copy-拷贝字典，返回新字典-相互不影响" class="headerlink" title="5、字典.copy()   -   拷贝字典，返回新字典(相互不影响)"></a>5、字典.copy()   -   拷贝字典，返回新字典(相互不影响)</h2><h2 id="6、dict-fromkeys-序列，值-创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典"><a href="#6、dict-fromkeys-序列，值-创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典" class="headerlink" title="6、dict.fromkeys(序列，值)   -   创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典"></a>6、dict.fromkeys(序列，值)   -   创建新的字典，将序列中的元素作为key，指定的值作为每个key的值，创建新字典</h2><h2 id="7、字典-items-字典-values-字典-keys"><a href="#7、字典-items-字典-values-字典-keys" class="headerlink" title="7、字典.items(),字典.values(),字典.keys()"></a>7、字典.items(),字典.values(),字典.keys()</h2><h3 id="1）、字典-key-gt-获取字典所有的key并且返回，返回的数据类型是序列但是不是列表"><a href="#1）、字典-key-gt-获取字典所有的key并且返回，返回的数据类型是序列但是不是列表" class="headerlink" title="1）、字典.key() -&gt; 获取字典所有的key并且返回，返回的数据类型是序列但是不是列表"></a>1）、字典.key() -&gt; 获取字典所有的key并且返回，返回的数据类型是序列但是不是列表</h3><h3 id="2）、字典-values-gt-获取字典所有的value并且返回，返回的数据类型是序列但是不是列表"><a href="#2）、字典-values-gt-获取字典所有的value并且返回，返回的数据类型是序列但是不是列表" class="headerlink" title="2）、字典.values() -&gt; 获取字典所有的value并且返回，返回的数据类型是序列但是不是列表"></a>2）、字典.values() -&gt; 获取字典所有的value并且返回，返回的数据类型是序列但是不是列表</h3><h3 id="3）、字典-items-gt-同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值"><a href="#3）、字典-items-gt-同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值" class="headerlink" title="3）、字典.items() -&gt; 同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值"></a>3）、字典.items() -&gt; 同时获取字典所有的key和value，返回一个序列，序列中元素是有两个元素的元祖，这两个元素分别是key和值</h3><h2 id="8、字典-setdefault-key-value-字典中添加键值对（key值存在时不会修改）"><a href="#8、字典-setdefault-key-value-字典中添加键值对（key值存在时不会修改）" class="headerlink" title="8、字典.setdefault(key, value) - 字典中添加键值对（key值存在时不会修改）"></a>8、字典.setdefault(key, value) - 字典中添加键值对（key值存在时不会修改）</h2><h2 id="9、字典1-update-字典2-将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）"><a href="#9、字典1-update-字典2-将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）" class="headerlink" title="9、字典1.update(字典2)   -   将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）"></a>9、字典1.update(字典2)   -   将字典2中的键值对添加到字典1中（不存在的就添加，存在的就覆盖）</h2><h3 id="练习-1"><a href="#练习-1" class="headerlink" title="练习"></a>练习</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 练习2：设计数据保存一个班的信息：</span></span><br><span class="line"><span class="comment"># 名字：python1906；</span></span><br><span class="line"><span class="comment"># 所有老师（名字，性别，联系方式，职位）：</span></span><br><span class="line"><span class="comment"># 所有学生（姓名，毕业学校，电话，性别，年龄，紧急联系人（姓名，电话，关系））</span></span><br><span class="line">class_1906 = &#123;</span><br><span class="line">  <span class="string">'class_name'</span> : <span class="string">'python_1906'</span>, </span><br><span class="line">  <span class="string">'all_teacher'</span> : [</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'张老师'</span>, <span class="string">'gender'</span> : <span class="string">'女'</span>, <span class="string">'职位'</span> : <span class="string">'班主任'</span>, <span class="string">'联系方式'</span> : <span class="string">'123451'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'余老师'</span>, <span class="string">'gender'</span> : <span class="string">'女'</span>, <span class="string">'职位'</span> : <span class="string">'讲师'</span>, <span class="string">'联系方式'</span> : <span class="string">'123452'</span>&#125;</span><br><span class="line">  ]</span><br><span class="line">  <span class="string">'all_student'</span> : [</span><br><span class="line">    &#123;<span class="string">'name'</span> : <span class="string">'张三'</span>, <span class="string">'gender'</span> : <span class="string">'男'</span>, <span class="string">'年龄'</span> : <span class="string">'25'</span>, <span class="string">'联系方式'</span> : <span class="string">'123453'</span>, <span class="string">'紧急联系人'</span> : &#123;<span class="string">'name'</span> : <span class="string">'李四'</span>, <span class="string">'关系'</span> : <span class="string">'父子'</span>, <span class="string">'联系方式'</span> : <span class="string">'12345678'</span>&#125;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">print(class_1906[all_student][<span class="number">-1</span>][<span class="string">'紧急联系人'</span>])</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Python学录</category>
