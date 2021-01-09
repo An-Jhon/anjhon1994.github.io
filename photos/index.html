@@ -69,8 +69,6 @@
                 
                     <a class="menu-item" href="/about">关于</a>
                 
-                    <a class="menu-item" href="/photos">相册</a>
-                
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
             </div>
@@ -96,8 +94,6 @@
                     <a class="menu-item" href="/tag">标签</a>
                 
                     <a class="menu-item" href="/about">关于</a>
-                
-                    <a class="menu-item" href="/photos">相册</a>
                 
             </div>
         </div>
@@ -347,125 +343,55 @@
 
 <!-- 主体部分 -->
 <div id="box" class="box"></div>
-
 <script type="text/javascript">
 
-function loadXMLDoc(xmlUrl) 
+<p>function loadXMLDoc(xmlUrl)<br>{<br>    try //Internet Explorer<br>    {<br>        xmlDoc=new ActiveXObject(“Microsoft.XMLDOM”);<br>    }<br>    catch(e)<br>    {<br>      try //Firefox, Mozilla, Opera, etc.<br>        {<br>          xmlDoc=document.implementation.createDocument(“”,””,null);<br>        }<br>      catch(e) {alert(e.message)}<br>    }</p>
+<pre><code>try 
 {
-    try //Internet Explorer
-    {
-        xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
-    }
-    catch(e)
-    {
-      try //Firefox, Mozilla, Opera, etc.
-        {
-          xmlDoc=document.implementation.createDocument("","",null);
-        }
-      catch(e) {alert(e.message)}
-    }
-
-    try 
-    {
-          xmlDoc.async=false;
-          xmlDoc.load(xmlUrl);
-    }
-    catch(e) {
-        try //Google Chrome  
-          {  
-            var chromeXml = new XMLHttpRequest();
-            chromeXml.open("GET", xmlUrl, false);
-            chromeXml.send(null);
-            xmlDoc = chromeXml.responseXML.documentElement;                 
-            //alert(xmlDoc.childNodes[0].nodeName);
-            //return xmlDoc;    
-          }  
-          catch(e)  
-          {  
-              alert(e.message)  
-          }                
-    }
-    return xmlDoc; 
+      xmlDoc.async=false;
+      xmlDoc.load(xmlUrl);
 }
-
-xmlDoc=loadXMLDoc("https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com");
-
-var urls = xmlDoc.getElementsByTagName('Key');
-var date = xmlDoc.getElementsByTagName('LastModified');
-var wid = 350;
-var showNum = 21; //每个相册一次展示多少照片
-if ((window.innerWidth) > 1200) { wid = (window.innerWidth * 3) / 18;}
-var box = document.getElementById('box');
-var i = 0;
-
-var content = new Array();
-var tmp=0;
-var kkk=-1;
-for (var t = 0; t < urls.length ; t++) {
-    var bucket=urls[t].innerHTML;
-    var length=bucket.indexOf('/');
-    if(length===bucket.length-1){
-        kkk++;
-        content[kkk]=new Array();
-        content[kkk][0]={'url':bucket,'date':date[t].innerHTML.substring(0,10)};
-        tmp=1;
-    }
-    else {
-        content[kkk][tmp++]={'url':bucket.substring(length+1),'date':date[t].innerHTML.substring(0,10)};
+catch(e) {
+    try //Google Chrome  
+      {  
+        var chromeXml = new XMLHttpRequest();
+        chromeXml.open(&quot;GET&quot;, xmlUrl, false);
+        chromeXml.send(null);
+        xmlDoc = chromeXml.responseXML.documentElement;                 
+        //alert(xmlDoc.childNodes[0].nodeName);
+        //return xmlDoc;    
+      }  
+      catch(e)  
+      {  
+          alert(e.message)  
+      }                
+}
+return xmlDoc; </code></pre><p>}</p>
+<p>xmlDoc=loadXMLDoc(“<a href="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/&quot;" target="_blank" rel="noopener">https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/&quot;</a>);</p>
+<p>var urls = xmlDoc.getElementsByTagName(‘Key’);<br>var date = xmlDoc.getElementsByTagName(‘LastModified’);<br>var wid = 350;<br>var showNum = 21; //每个相册一次展示多少照片<br>if ((window.innerWidth) &gt; 1200) { wid = (window.innerWidth * 3) / 18;}<br>var box = document.getElementById(‘box’);<br>var i = 0;</p>
+<p>var content = new Array();<br>var tmp=0;<br>var kkk=-1;<br>for (var t = 0; t &lt; urls.length ; t++) {<br>    var bucket=urls[t].innerHTML;<br>    var length=bucket.indexOf(‘/‘);<br>    if(length===bucket.length-1){<br>        kkk++;<br>        content[kkk]=new Array();<br>        content[kkk][0]={‘url’:bucket,’date’:date[t].innerHTML.substring(0,10)};<br>        tmp=1;<br>    }<br>    else {<br>        content[kkk][tmp++]={‘url’:bucket.substring(length+1),’date’:date[t].innerHTML.substring(0,10)};<br>    }<br>}</p>
+<p>for (var i = 0; i &lt; content.length; i++) {<br>    var conBox=document.createElement(“div”);<br>    conBox.id=’conBox’+i;<br>    box.appendChild(conBox);<br>    var item=document.createElement(“div”);<br>    var title=content[i][0].url;<br>    item.innerHTML=”&lt;button class=title style=background:url(<a href="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/&quot;" target="_blank" rel="noopener">https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/&quot;</a> + title + “封面.jpg”+”);background-repeat:no-repeat;&gt;<span style=display:inline;><strong style=color:#f0f3f6; >“ + title.substring(0,title.length - 1) + “</strong></span></button>“;<br>    conBox.appendChild(item);</p>
+<pre><code>    for (var j = 1; j &lt; content[i].length &amp;&amp; j &lt; showNum+1; j++) {
+        var con=content[i][j].url;
+    var item=document.createElement(&quot;li&quot;);
+    if(con.substring(0,con.length-4) != &quot;封面&quot;){
+        item.innerHTML=&quot;&lt;div class=imgbox id=imgbox style=height:&quot;+wid+&quot;px;&gt;&lt;img class=imgitem src=https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/ &quot; + title + con +&quot; alt=&quot; + con + &quot;&gt;&lt;/div&gt;&lt;span&gt;&quot; + con.substring(0,con.length-4);
+        conBox.appendChild(item);
     }
 }
-
-for (var i = 0; i < content.length; i++) {
-    var conBox=document.createElement("div");
-    conBox.id='conBox'+i;
-    box.appendChild(conBox);
-    var item=document.createElement("div");
-    var title=content[i][0].url;
-    item.innerHTML="<button class=title style=background:url(https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com" + title + "封面.jpg"+");background-repeat:no-repeat;><span style=display:inline;><strong style=color:#f0f3f6; >" + title.substring(0,title.length - 1) + "</strong></span></button>";
-    conBox.appendChild(item);
-
-        for (var j = 1; j < content[i].length && j < showNum+1; j++) {
-            var con=content[i][j].url;
-        var item=document.createElement("li");
-        if(con.substring(0,con.length-4) != "封面"){
-            item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src=https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com" + title + con +" alt=" + con + "></div><span>" + con.substring(0,con.length-4);
-            conBox.appendChild(item);
-        }
+if(content[i].length &gt; showNum){
+    var moreItem=document.createElement(&quot;button&quot;);
+    moreItem.className = &quot;btn-more-posts&quot;;
+    moreItem.id = &quot;more&quot; + i;
+    moreItem.value = showNum + 1;
+    let cur = i;
+    moreItem.onclick = function (){
+        moreClick(this,cur,content[cur],content[cur][0].url);
     }
-    if(content[i].length > showNum){
-        var moreItem=document.createElement("button");
-        moreItem.className = "btn-more-posts";
-        moreItem.id = "more" + i;
-        moreItem.value = showNum + 1;
-        let cur = i;
-        moreItem.onclick = function (){
-            moreClick(this,cur,content[cur],content[cur][0].url);
-        }
-        moreItem.innerHTML="<span style=display:inline;><strong style=color:#f0f3f6;>加载更多</strong></span>";
-        conBox.appendChild(moreItem);
-    }
-}
-
-function moreClick(obj,cur,cont,title){
-    var parent = obj.parentNode;
-    parent.removeChild(obj);
-    var j=obj.value;
-    var begin=j;
-    for ( ; j < cont.length && j < Number(showNum) + Number(begin); j++) {
-        var con=cont[j].url;
-        var item=document.createElement("li");
-        item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src=https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com "+title+con+" alt="+con+"></div><span>"+con.substring(0,con.length-4);
-        parent.appendChild(item);
-        var v=item.getElementsByTagName('img');
-        v[0].id=imgid;
-        imgid++;
-    }
-    if(cont.length > j){
-        obj.value=j;
-        parent.appendChild(obj);
-    }
-}
-</script>
+    moreItem.innerHTML=&quot;&lt;span style=display:inline;&gt;&lt;strong style=color:#f0f3f6;&gt;加载更多&lt;/strong&gt;&lt;/span&gt;&quot;;
+    conBox.appendChild(moreItem);
+}</code></pre><p>}</p>
+<p>function moreClick(obj,cur,cont,title){<br>    var parent = obj.parentNode;<br>    parent.removeChild(obj);<br>    var j=obj.value;<br>    var begin=j;<br>    for ( ; j &lt; cont.length &amp;&amp; j &lt; Number(showNum) + Number(begin); j++) {<br>        var con=cont[j].url;<br>        var item=document.createElement(“li”);<br>        item.innerHTML=”&lt;div class=imgbox id=imgbox style=height:”+wid+”px;&gt;&lt;img class=imgitem src=<a href="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/" target="_blank" rel="noopener">https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/</a> “+title+con+” alt=”+con+”&gt;</div><span>“+con.substring(0,con.length-4);<br>        parent.appendChild(item);<br>        var v=item.getElementsByTagName(‘img’);<br>        v[0].id=imgid;<br>        imgid++;<br>    }<br>    if(cont.length &gt; j){<br>        obj.value=j;<br>        parent.appendChild(obj);<br>    }<br>}<br></script></p>
 
         </section>
     </article>
@@ -480,10 +406,6 @@ function moreClick(obj,cur,cont,title){
 		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
 		
 		
-		
-		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
 		
 		
 		</span>

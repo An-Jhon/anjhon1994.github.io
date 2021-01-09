@@ -1,49 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>常用指令集</title>
-    <url>/2019/01/20/Linux%E5%92%8CGit%E5%91%BD%E4%BB%A4%E9%9B%86/</url>
-    <content><![CDATA[<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p><strong>对本地实施版本控制并同步到服务器:</strong></p>
-<ol>
-<li>git init   —&gt;   将普通文件夹变成版本仓库</li>
-<li>git add .   —&gt;   将文件从工作区同步到暂存区</li>
-<li>git commit -m ‘项目描述信息’   —&gt;   将文件提交到本地仓库</li>
-<li>git status   —&gt;  查看当前的执行状态(经常用)</li>
-<li>git log   —&gt;   查看版本</li>
-<li>git reflog   —&gt;   </li>
-<li>git reset –hard 版本号   —&gt;   去到指定版本</li>
-<li>git tag v0.1 —&gt; 添加版本号0.1</li>
-<li>git remote add origin <url>   —&gt;   绑定远端仓库</li>
-<li>git remote -v   —&gt;   查看是否已经连接远端仓库</li>
-<li>git push -u origin master   —&gt;   将本地代码推到服务器仓库(第一次绑定才需要加 -U 为了指定上行流,要把代码推到哪里去)</li>
-<li>git pull</li>
-<li>git pull –allow-unrelated-histories origin master   —&gt;   当远端和本地版本不同时,将远端的东西pull下来和本地合并</li>
-<li>git reset –hard HEAD^   —&gt;   回到上一版本</li>
-<li>git clone –depth=1 gitegitee.com:jackfrued/djangocase.git djangocse2    —&gt;   克隆djangocase,只克隆最新版本–depth=1, 重命名为djangocase2, </li>
-<li>git remote remove origin ： 删除与远端仓库的关联</li>
-<li>git revert 版本号    ： 可以修改版本信息</li>
-<li>git diff</li>
-<li>在空文件夹内加.gitkeep文件,则空文件夹在版本控制时不会被忽略</li>
-</ol>
-<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -vE   ---&gt;   -v表示不搜什么,E表示正则表达式</span><br><span class="line">感叹号加历史记录的编号   -&gt;   将历史命令重新执行一遍</span><br><span class="line">!v   -&gt;   将历史记录中最近的以v开头的命令执行一遍</span><br><span class="line"><span class="keyword">history</span> -<span class="keyword">c</span>   -&gt;   将历史记录全部清除</span><br><span class="line">alias <span class="string">'ll=ls -l'</span>   -&gt;   命令别名</span><br><span class="line">unalias <span class="keyword">ll</span>   -&gt;   取消别名</span><br><span class="line">yum <span class="keyword">update</span>   -&gt;   更新库内能更新的包</span><br><span class="line">nohup <span class="keyword">make</span> &gt;&gt; ~/install.<span class="built_in">log</span> &amp;   -&gt;   将程序放到后台运行,并且不接受中断信号</span><br><span class="line">chmod <span class="keyword">u</span>+<span class="keyword">x</span>,g+<span class="keyword">x</span>,<span class="keyword">o</span>+<span class="keyword">x</span> test.<span class="keyword">py</span>  =  chmod <span class="number">755</span> test.<span class="keyword">py</span></span><br><span class="line">etc目录是专门放配置文件的</span><br><span class="line">在.<span class="keyword">py</span>文件内加入以下代码,写了文件名就能执行文件</span><br><span class="line">#!/usr/bin/<span class="keyword">python3</span> </span><br><span class="line"># -*- codin<span class="variable">g:</span> utf-<span class="number">8</span> -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 查看当前登录的用户信息</span><br><span class="line">who   看所有</span><br><span class="line"><span class="keyword">w</span>   能看到最详细的登录信息</span><br><span class="line">who <span class="keyword">am</span> i   看自己</span><br><span class="line">whoami   看自己用户名</span><br><span class="line"><span class="keyword">last</span>   查看最近登录的用户</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 关机系列</span><br><span class="line">shutdown   关机</span><br><span class="line">shutdown now   立即关机</span><br><span class="line">shutdown -r   重启</span><br><span class="line">shutdown -h   关机后关闭电源</span><br><span class="line">halt   关机关电源</span><br><span class="line">reboot   重启</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 其他</span><br><span class="line">logout   登出</span><br><span class="line"><span class="keyword">cal</span>   查看日历</span><br><span class="line">date   查看当前时间</span><br><span class="line">man   查看命令帮助手册</span><br><span class="line">su(switch user) 用户名   切换用户</span><br><span class="line"><span class="keyword">exit</span>   退出当前用户</span><br><span class="line">adduser / passwd / userdel   创建用户(-g指定分组) / 修改密码 / 删除用户</span><br><span class="line">date / <span class="keyword">cal</span>   查看时间</span><br><span class="line"><span class="keyword">write</span> / <span class="keyword">wall</span> / mesg   发消息</span><br><span class="line">clear   清屏</span><br><span class="line">man / info / --<span class="keyword">help</span>   参看帮助</span><br><span class="line"><span class="keyword">history</span>   历史命令</span><br><span class="line">    -<span class="keyword">c</span>   清除历史命令</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 文件相关命令</span><br><span class="line"><span class="number">1</span>. <span class="keyword">pwd</span></span><br><span class="line"><span class="number">2</span>. <span class="keyword">cd</span></span><br><span class="line"><span class="number">3</span>. <span class="keyword">ls</span></span><br><span class="line">    -<span class="keyword">l</span>   长格式查看</span><br><span class="line">    -<span class="keyword">a</span>   所有文件</span><br><span class="line">    -R   递归查看</span><br><span class="line">    -d   只看文件夹</span><br><span class="line"><span class="number">4</span>. <span class="keyword">cat</span> </span><br><span class="line">    -n   给文件添加行号查看</span><br><span class="line"><span class="number">5</span>. touch   创建空文件</span><br><span class="line"><span class="number">6</span>. <span class="built_in">mkdir</span>   创建文件夹</span><br><span class="line">    -<span class="keyword">p</span>   创建父文件夹</span><br><span class="line"><span class="number">7</span>. rm   删除</span><br><span class="line">    -<span class="keyword">f</span>   强制删除</span><br><span class="line">    -r   递归删除</span><br><span class="line"><span class="number">8</span>. rmdir   删除空文件夹</span><br><span class="line"><span class="number">9</span>. wget   通过网络获取文件</span><br><span class="line">    - O   下下来重命名</span><br><span class="line">    - 例 wget http<span class="variable">s:</span>//www.baidu.<span class="keyword">com</span></span><br><span class="line"><span class="number">10</span>. gzip / gunzip   压缩 / 解压缩</span><br><span class="line"><span class="number">11</span>. xz</span><br><span class="line">    -<span class="keyword">z</span> 压缩</span><br><span class="line">    -d 解压缩</span><br><span class="line"><span class="number">12</span>. tar </span><br><span class="line">    -xvf 解归档</span><br><span class="line">    -cvf 归档</span><br><span class="line"><span class="number">13</span>. <span class="keyword">sort</span> 排序</span><br><span class="line"><span class="number">14</span>. uniq 文件去重</span><br><span class="line"><span class="number">15</span>. more 分页查看文件</span><br><span class="line"><span class="number">16</span>. <span class="keyword">cp</span></span><br><span class="line"><span class="keyword">cp</span> 文件名 路径   拷贝文件到路径</span><br><span class="line"><span class="keyword">cp</span> 文件名 路径+文件名   拷贝文件到路径并重命名</span><br><span class="line"><span class="keyword">cp</span> -r 文件夹 路径   拷贝文件夹到路径</span><br><span class="line"><span class="number">17</span>. mv</span><br><span class="line">mv 文件名 路径   移动文件到路径</span><br><span class="line">mv 文件夹 路径   移动文件夹到路径</span><br><span class="line">mv 文件名 路径+文件名   移动文件到路径并重命名</span><br><span class="line">mv 文件名<span class="number">1</span> 文件名<span class="number">2</span>   重命名</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">| 管道:将多个进程连接起来,将上一个命令的输出作为下一个命令的输入</span><br><span class="line">&gt; 重定向</span><br><span class="line">&gt;&gt; 追加重定向</span><br><span class="line"><span class="number">2</span>&gt; 错误输出重定向</span><br><span class="line"><span class="number">2</span>&gt;&gt; 错误追加输出重定向</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="keyword">vim</span>编辑器的使用</span><br><span class="line">dd   删除一行</span><br><span class="line"><span class="number">100</span> dd   删除<span class="number">100</span>行</span><br><span class="line">:<span class="keyword">set</span> <span class="keyword">nu</span>    显示行号</span><br><span class="line">:<span class="keyword">set</span> nonu   不显示行号</span><br><span class="line">:<span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>   设置<span class="keyword">tabl</span>键为<span class="number">4</span>个空格</span><br><span class="line">uu   撤销</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>的三种模式:</span><br><span class="line">- 命令模式-按键代表命令   ---i或者<span class="keyword">a</span>---&gt;编辑模式</span><br><span class="line">                        ---:或者/--&gt;未行模式</span><br><span class="line">    ~ G - 光标移到文件末尾 / <span class="number">500</span>G - 光标移到第<span class="number">500</span>行 / gg-光标移到行首 / hjkL-左下右上（前面可以加数字）</span><br><span class="line">    ~ CtrL+<span class="keyword">y</span> / Ctrl+<span class="keyword">e</span>  - 移动一行</span><br><span class="line">    ~ CtrL+<span class="keyword">f</span> / Ctrl+<span class="keyword">b</span>  - 翻一页</span><br><span class="line">    ~ <span class="number">0</span> - 光标到行首 / $ - 光标到行尾 / <span class="keyword">w</span> - 光标移到下一个单词</span><br><span class="line">    ~ dd - 删除光标所在行 / <span class="number">100</span>dd - 从光标所在行向下删除<span class="number">100</span>行</span><br><span class="line">    ~ yy - 复制光标所在行 / <span class="number">10</span>yy - 从光标所在行开始复制<span class="number">10</span>行</span><br><span class="line">    ~ <span class="keyword">p</span> - 粘贴 / <span class="number">5</span><span class="keyword">p</span>-粘贴<span class="number">5</span>遍</span><br><span class="line">    ~ <span class="keyword">u</span> - 撤销 / ctrl+r - 恢复</span><br><span class="line">- 编辑模式-键入内容   ---Esc---&gt;命令模式</span><br><span class="line">- 末行模式-搜索/配置/执行系统命令   ---Enter---&gt;命令模式</span><br><span class="line">    ~ <span class="keyword">set</span> <span class="keyword">nu</span>-显示行号-<span class="keyword">set</span> nonu</span><br><span class="line">    ~ <span class="keyword">syntax</span> <span class="keyword">on</span>-显示高亮语法-<span class="keyword">syntax</span> off</span><br><span class="line">    ~ <span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>-修改制表键的空格数</span><br><span class="line">    ~ <span class="keyword">set</span> ruler-显示光标所在的位置-<span class="keyword">set</span> noruler</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>配置</span><br><span class="line">创建文件 .vimrc</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">nu</span>   设位置行号</span><br><span class="line"><span class="keyword">syntax</span> <span class="keyword">on</span>   语法高亮</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>   设置制表键为<span class="number">4</span>个空格</span><br><span class="line"><span class="keyword">set</span> expandtab   将制表键转换成空格</span><br><span class="line"><span class="keyword">set</span> autoindent   自动缩进</span><br><span class="line"><span class="keyword">set</span> ruler   显示光标</span><br><span class="line"><span class="keyword">set</span> nohls   设置高亮</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 题外话</span><br><span class="line">配置<span class="keyword">python3</span>环境变量</span><br><span class="line"><span class="number">1</span>. 注册PATH环境变量</span><br><span class="line"><span class="keyword">cd</span>~</span><br><span class="line"><span class="keyword">vim</span>.bash_profile</span><br><span class="line">PATH=...：/usr/Local/python37/bin</span><br><span class="line"><span class="number">2</span>. 激活环境变量</span><br><span class="line"><span class="keyword">source</span>.bash_profile</span><br><span class="line"><span class="number">3</span>. 测试安装是否成功</span><br><span class="line"><span class="keyword">python3</span>--<span class="keyword">version</span></span><br><span class="line"></span><br><span class="line">## 命令别名</span><br><span class="line">alias <span class="keyword">ll</span>=<span class="string">'ls -l'</span>   将<span class="keyword">ls</span> -<span class="keyword">l</span> 命名为<span class="keyword">ll</span></span><br><span class="line">unalias <span class="keyword">ll</span>   取消别名</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>宏操作</span><br><span class="line">~ 录制宏: <span class="keyword">qa</span>（<span class="keyword">a</span>是寄存器的名字）- 在录制宏是左下角会显示 recoding</span><br><span class="line">~ 结束录制: q</span><br><span class="line">~ 播放宏: @a（<span class="keyword">a</span>是寄存器的名字）- 前面可以加数值,表示播放几遍</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><figure class="highlight xl"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">select</span> user,host from mysql.user;   ---&gt;</span>   查询所有的用户和登录主机</span><br><span class="line"><span class="function"><span class="title">select</span> current_user();   ---&gt;</span>   查询当前用户</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">mysql</span> -u root -p   ---&gt;</span>   登录mysql数据库</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">redis</span>-server --requirepass 119148 --port 6379 &gt;&gt; redis.<span class="built_in">log</span> &amp;   ---&gt;</span>   启动redis服务器,设置连接密码,指定redis端口,将日志文件写到redis.<span class="built_in">log</span>文件,并且后台运行</span><br><span class="line"><span class="function"><span class="title">redis</span>-cli   ---&gt;</span>   登录redis</span><br><span class="line"><span class="function"><span class="title">auth</span>:   ---&gt;</span>   输入密码</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>git</tag>
-        <tag>配置</tag>
-        <tag>技术文档</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Django入门之选课系统</title>
     <url>/2020/01/05/Django%E5%85%A5%E9%97%A8%E4%B9%8B%E9%80%89%E8%AF%BE%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<p>Django是高水准的Python编程语言驱动的一个开源框架</p>
@@ -204,24 +161,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Linux定时任务</title>
-    <url>/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
-    <content><![CDATA[<p>通过制定 <code>crontab -e</code> 编辑和开启定时任务</p>
-<a id="more"></a>
-
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建一个完整的定时任务，需要确定时间和任务</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1.时间</span></span><br><span class="line"> .---------------- minute (0 - 59)   # 分</span><br><span class="line"> |  .------------- hour (0 - 23)     # 时</span><br><span class="line"> |  |  .---------- day of month (1 - 31)  # 日</span><br><span class="line"> |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...  # 月</span><br><span class="line"> |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span><br><span class="line"> |  |  |  |  |</span><br><span class="line"> *  *  *  *  * user-name  command to be executed</span><br><span class="line"></span><br><span class="line"> * * * * *   		- 每分钟执行一次任务(每隔一分钟)</span><br><span class="line"> */1 * * * *        - 每分钟执行一次任务(每隔一分钟)</span><br><span class="line"> */2 * * * *        - 每2分钟执行一次任务(每隔2分钟)</span><br><span class="line"> * */1 * * *        - 每隔1小时</span><br><span class="line"> * * */1 * *        - 每隔1天</span><br><span class="line"> * * * */2 *        - 每隔两个月</span><br><span class="line"> * * * *  fri       - 每周五执行任务</span><br><span class="line"></span><br><span class="line"> 30 * * * *         - 时间点到30分的时候做</span><br><span class="line"> 0  * * * *         - 时间点到整点的时候执行任务</span><br><span class="line"> 30 2 * * *         - 时间到 02:30 的时候执行任务</span><br><span class="line"> 0  12 28 * *       - 每月28号12:00执行任务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2.任务</span></span><br><span class="line">写Linux指令, 指令如果有结果，结果看不到</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>shell</tag>
-        <tag>脚本</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Django进阶</title>
     <url>/2020/01/12/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<p>Django进阶和API接口</p>
@@ -320,6 +259,67 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
         <tag>框架</tag>
         <tag>后端</tag>
         <tag>Django</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用指令集</title>
+    <url>/2019/01/20/Linux%E5%92%8CGit%E5%91%BD%E4%BB%A4%E9%9B%86/</url>
+    <content><![CDATA[<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p><strong>对本地实施版本控制并同步到服务器:</strong></p>
+<ol>
+<li>git init   —&gt;   将普通文件夹变成版本仓库</li>
+<li>git add .   —&gt;   将文件从工作区同步到暂存区</li>
+<li>git commit -m ‘项目描述信息’   —&gt;   将文件提交到本地仓库</li>
+<li>git status   —&gt;  查看当前的执行状态(经常用)</li>
+<li>git log   —&gt;   查看版本</li>
+<li>git reflog   —&gt;   </li>
+<li>git reset –hard 版本号   —&gt;   去到指定版本</li>
+<li>git tag v0.1 —&gt; 添加版本号0.1</li>
+<li>git remote add origin <url>   —&gt;   绑定远端仓库</li>
+<li>git remote -v   —&gt;   查看是否已经连接远端仓库</li>
+<li>git push -u origin master   —&gt;   将本地代码推到服务器仓库(第一次绑定才需要加 -U 为了指定上行流,要把代码推到哪里去)</li>
+<li>git pull</li>
+<li>git pull –allow-unrelated-histories origin master   —&gt;   当远端和本地版本不同时,将远端的东西pull下来和本地合并</li>
+<li>git reset –hard HEAD^   —&gt;   回到上一版本</li>
+<li>git clone –depth=1 gitegitee.com:jackfrued/djangocase.git djangocse2    —&gt;   克隆djangocase,只克隆最新版本–depth=1, 重命名为djangocase2, </li>
+<li>git remote remove origin ： 删除与远端仓库的关联</li>
+<li>git revert 版本号    ： 可以修改版本信息</li>
+<li>git diff</li>
+<li>在空文件夹内加.gitkeep文件,则空文件夹在版本控制时不会被忽略</li>
+</ol>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -vE   ---&gt;   -v表示不搜什么,E表示正则表达式</span><br><span class="line">感叹号加历史记录的编号   -&gt;   将历史命令重新执行一遍</span><br><span class="line">!v   -&gt;   将历史记录中最近的以v开头的命令执行一遍</span><br><span class="line"><span class="keyword">history</span> -<span class="keyword">c</span>   -&gt;   将历史记录全部清除</span><br><span class="line">alias <span class="string">'ll=ls -l'</span>   -&gt;   命令别名</span><br><span class="line">unalias <span class="keyword">ll</span>   -&gt;   取消别名</span><br><span class="line">yum <span class="keyword">update</span>   -&gt;   更新库内能更新的包</span><br><span class="line">nohup <span class="keyword">make</span> &gt;&gt; ~/install.<span class="built_in">log</span> &amp;   -&gt;   将程序放到后台运行,并且不接受中断信号</span><br><span class="line">chmod <span class="keyword">u</span>+<span class="keyword">x</span>,g+<span class="keyword">x</span>,<span class="keyword">o</span>+<span class="keyword">x</span> test.<span class="keyword">py</span>  =  chmod <span class="number">755</span> test.<span class="keyword">py</span></span><br><span class="line">etc目录是专门放配置文件的</span><br><span class="line">在.<span class="keyword">py</span>文件内加入以下代码,写了文件名就能执行文件</span><br><span class="line">#!/usr/bin/<span class="keyword">python3</span> </span><br><span class="line"># -*- codin<span class="variable">g:</span> utf-<span class="number">8</span> -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 查看当前登录的用户信息</span><br><span class="line">who   看所有</span><br><span class="line"><span class="keyword">w</span>   能看到最详细的登录信息</span><br><span class="line">who <span class="keyword">am</span> i   看自己</span><br><span class="line">whoami   看自己用户名</span><br><span class="line"><span class="keyword">last</span>   查看最近登录的用户</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 关机系列</span><br><span class="line">shutdown   关机</span><br><span class="line">shutdown now   立即关机</span><br><span class="line">shutdown -r   重启</span><br><span class="line">shutdown -h   关机后关闭电源</span><br><span class="line">halt   关机关电源</span><br><span class="line">reboot   重启</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 其他</span><br><span class="line">logout   登出</span><br><span class="line"><span class="keyword">cal</span>   查看日历</span><br><span class="line">date   查看当前时间</span><br><span class="line">man   查看命令帮助手册</span><br><span class="line">su(switch user) 用户名   切换用户</span><br><span class="line"><span class="keyword">exit</span>   退出当前用户</span><br><span class="line">adduser / passwd / userdel   创建用户(-g指定分组) / 修改密码 / 删除用户</span><br><span class="line">date / <span class="keyword">cal</span>   查看时间</span><br><span class="line"><span class="keyword">write</span> / <span class="keyword">wall</span> / mesg   发消息</span><br><span class="line">clear   清屏</span><br><span class="line">man / info / --<span class="keyword">help</span>   参看帮助</span><br><span class="line"><span class="keyword">history</span>   历史命令</span><br><span class="line">    -<span class="keyword">c</span>   清除历史命令</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 文件相关命令</span><br><span class="line"><span class="number">1</span>. <span class="keyword">pwd</span></span><br><span class="line"><span class="number">2</span>. <span class="keyword">cd</span></span><br><span class="line"><span class="number">3</span>. <span class="keyword">ls</span></span><br><span class="line">    -<span class="keyword">l</span>   长格式查看</span><br><span class="line">    -<span class="keyword">a</span>   所有文件</span><br><span class="line">    -R   递归查看</span><br><span class="line">    -d   只看文件夹</span><br><span class="line"><span class="number">4</span>. <span class="keyword">cat</span> </span><br><span class="line">    -n   给文件添加行号查看</span><br><span class="line"><span class="number">5</span>. touch   创建空文件</span><br><span class="line"><span class="number">6</span>. <span class="built_in">mkdir</span>   创建文件夹</span><br><span class="line">    -<span class="keyword">p</span>   创建父文件夹</span><br><span class="line"><span class="number">7</span>. rm   删除</span><br><span class="line">    -<span class="keyword">f</span>   强制删除</span><br><span class="line">    -r   递归删除</span><br><span class="line"><span class="number">8</span>. rmdir   删除空文件夹</span><br><span class="line"><span class="number">9</span>. wget   通过网络获取文件</span><br><span class="line">    - O   下下来重命名</span><br><span class="line">    - 例 wget http<span class="variable">s:</span>//www.baidu.<span class="keyword">com</span></span><br><span class="line"><span class="number">10</span>. gzip / gunzip   压缩 / 解压缩</span><br><span class="line"><span class="number">11</span>. xz</span><br><span class="line">    -<span class="keyword">z</span> 压缩</span><br><span class="line">    -d 解压缩</span><br><span class="line"><span class="number">12</span>. tar </span><br><span class="line">    -xvf 解归档</span><br><span class="line">    -cvf 归档</span><br><span class="line"><span class="number">13</span>. <span class="keyword">sort</span> 排序</span><br><span class="line"><span class="number">14</span>. uniq 文件去重</span><br><span class="line"><span class="number">15</span>. more 分页查看文件</span><br><span class="line"><span class="number">16</span>. <span class="keyword">cp</span></span><br><span class="line"><span class="keyword">cp</span> 文件名 路径   拷贝文件到路径</span><br><span class="line"><span class="keyword">cp</span> 文件名 路径+文件名   拷贝文件到路径并重命名</span><br><span class="line"><span class="keyword">cp</span> -r 文件夹 路径   拷贝文件夹到路径</span><br><span class="line"><span class="number">17</span>. mv</span><br><span class="line">mv 文件名 路径   移动文件到路径</span><br><span class="line">mv 文件夹 路径   移动文件夹到路径</span><br><span class="line">mv 文件名 路径+文件名   移动文件到路径并重命名</span><br><span class="line">mv 文件名<span class="number">1</span> 文件名<span class="number">2</span>   重命名</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">| 管道:将多个进程连接起来,将上一个命令的输出作为下一个命令的输入</span><br><span class="line">&gt; 重定向</span><br><span class="line">&gt;&gt; 追加重定向</span><br><span class="line"><span class="number">2</span>&gt; 错误输出重定向</span><br><span class="line"><span class="number">2</span>&gt;&gt; 错误追加输出重定向</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="keyword">vim</span>编辑器的使用</span><br><span class="line">dd   删除一行</span><br><span class="line"><span class="number">100</span> dd   删除<span class="number">100</span>行</span><br><span class="line">:<span class="keyword">set</span> <span class="keyword">nu</span>    显示行号</span><br><span class="line">:<span class="keyword">set</span> nonu   不显示行号</span><br><span class="line">:<span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>   设置<span class="keyword">tabl</span>键为<span class="number">4</span>个空格</span><br><span class="line">uu   撤销</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>的三种模式:</span><br><span class="line">- 命令模式-按键代表命令   ---i或者<span class="keyword">a</span>---&gt;编辑模式</span><br><span class="line">                        ---:或者/--&gt;未行模式</span><br><span class="line">    ~ G - 光标移到文件末尾 / <span class="number">500</span>G - 光标移到第<span class="number">500</span>行 / gg-光标移到行首 / hjkL-左下右上（前面可以加数字）</span><br><span class="line">    ~ CtrL+<span class="keyword">y</span> / Ctrl+<span class="keyword">e</span>  - 移动一行</span><br><span class="line">    ~ CtrL+<span class="keyword">f</span> / Ctrl+<span class="keyword">b</span>  - 翻一页</span><br><span class="line">    ~ <span class="number">0</span> - 光标到行首 / $ - 光标到行尾 / <span class="keyword">w</span> - 光标移到下一个单词</span><br><span class="line">    ~ dd - 删除光标所在行 / <span class="number">100</span>dd - 从光标所在行向下删除<span class="number">100</span>行</span><br><span class="line">    ~ yy - 复制光标所在行 / <span class="number">10</span>yy - 从光标所在行开始复制<span class="number">10</span>行</span><br><span class="line">    ~ <span class="keyword">p</span> - 粘贴 / <span class="number">5</span><span class="keyword">p</span>-粘贴<span class="number">5</span>遍</span><br><span class="line">    ~ <span class="keyword">u</span> - 撤销 / ctrl+r - 恢复</span><br><span class="line">- 编辑模式-键入内容   ---Esc---&gt;命令模式</span><br><span class="line">- 末行模式-搜索/配置/执行系统命令   ---Enter---&gt;命令模式</span><br><span class="line">    ~ <span class="keyword">set</span> <span class="keyword">nu</span>-显示行号-<span class="keyword">set</span> nonu</span><br><span class="line">    ~ <span class="keyword">syntax</span> <span class="keyword">on</span>-显示高亮语法-<span class="keyword">syntax</span> off</span><br><span class="line">    ~ <span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>-修改制表键的空格数</span><br><span class="line">    ~ <span class="keyword">set</span> ruler-显示光标所在的位置-<span class="keyword">set</span> noruler</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>配置</span><br><span class="line">创建文件 .vimrc</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">nu</span>   设位置行号</span><br><span class="line"><span class="keyword">syntax</span> <span class="keyword">on</span>   语法高亮</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">ts</span>=<span class="number">4</span>   设置制表键为<span class="number">4</span>个空格</span><br><span class="line"><span class="keyword">set</span> expandtab   将制表键转换成空格</span><br><span class="line"><span class="keyword">set</span> autoindent   自动缩进</span><br><span class="line"><span class="keyword">set</span> ruler   显示光标</span><br><span class="line"><span class="keyword">set</span> nohls   设置高亮</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 题外话</span><br><span class="line">配置<span class="keyword">python3</span>环境变量</span><br><span class="line"><span class="number">1</span>. 注册PATH环境变量</span><br><span class="line"><span class="keyword">cd</span>~</span><br><span class="line"><span class="keyword">vim</span>.bash_profile</span><br><span class="line">PATH=...：/usr/Local/python37/bin</span><br><span class="line"><span class="number">2</span>. 激活环境变量</span><br><span class="line"><span class="keyword">source</span>.bash_profile</span><br><span class="line"><span class="number">3</span>. 测试安装是否成功</span><br><span class="line"><span class="keyword">python3</span>--<span class="keyword">version</span></span><br><span class="line"></span><br><span class="line">## 命令别名</span><br><span class="line">alias <span class="keyword">ll</span>=<span class="string">'ls -l'</span>   将<span class="keyword">ls</span> -<span class="keyword">l</span> 命名为<span class="keyword">ll</span></span><br><span class="line">unalias <span class="keyword">ll</span>   取消别名</span><br><span class="line"></span><br><span class="line"><span class="keyword">vim</span>宏操作</span><br><span class="line">~ 录制宏: <span class="keyword">qa</span>（<span class="keyword">a</span>是寄存器的名字）- 在录制宏是左下角会显示 recoding</span><br><span class="line">~ 结束录制: q</span><br><span class="line">~ 播放宏: @a（<span class="keyword">a</span>是寄存器的名字）- 前面可以加数值,表示播放几遍</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><figure class="highlight xl"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">select</span> user,host from mysql.user;   ---&gt;</span>   查询所有的用户和登录主机</span><br><span class="line"><span class="function"><span class="title">select</span> current_user();   ---&gt;</span>   查询当前用户</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">mysql</span> -u root -p   ---&gt;</span>   登录mysql数据库</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">redis</span>-server --requirepass 119148 --port 6379 &gt;&gt; redis.<span class="built_in">log</span> &amp;   ---&gt;</span>   启动redis服务器,设置连接密码,指定redis端口,将日志文件写到redis.<span class="built_in">log</span>文件,并且后台运行</span><br><span class="line"><span class="function"><span class="title">redis</span>-cli   ---&gt;</span>   登录redis</span><br><span class="line"><span class="function"><span class="title">auth</span>:   ---&gt;</span>   输入密码</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>git</tag>
+        <tag>配置</tag>
+        <tag>技术文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux定时任务</title>
+    <url>/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<p>通过制定 <code>crontab -e</code> 编辑和开启定时任务</p>
+<a id="more"></a>
+
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建一个完整的定时任务，需要确定时间和任务</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1.时间</span></span><br><span class="line"> .---------------- minute (0 - 59)   # 分</span><br><span class="line"> |  .------------- hour (0 - 23)     # 时</span><br><span class="line"> |  |  .---------- day of month (1 - 31)  # 日</span><br><span class="line"> |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...  # 月</span><br><span class="line"> |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span><br><span class="line"> |  |  |  |  |</span><br><span class="line"> *  *  *  *  * user-name  command to be executed</span><br><span class="line"></span><br><span class="line"> * * * * *   		- 每分钟执行一次任务(每隔一分钟)</span><br><span class="line"> */1 * * * *        - 每分钟执行一次任务(每隔一分钟)</span><br><span class="line"> */2 * * * *        - 每2分钟执行一次任务(每隔2分钟)</span><br><span class="line"> * */1 * * *        - 每隔1小时</span><br><span class="line"> * * */1 * *        - 每隔1天</span><br><span class="line"> * * * */2 *        - 每隔两个月</span><br><span class="line"> * * * *  fri       - 每周五执行任务</span><br><span class="line"></span><br><span class="line"> 30 * * * *         - 时间点到30分的时候做</span><br><span class="line"> 0  * * * *         - 时间点到整点的时候执行任务</span><br><span class="line"> 30 2 * * *         - 时间到 02:30 的时候执行任务</span><br><span class="line"> 0  12 28 * *       - 每月28号12:00执行任务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2.任务</span></span><br><span class="line">写Linux指令, 指令如果有结果，结果看不到</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>shell</tag>
+        <tag>脚本</tag>
       </tags>
   </entry>
   <entry>
@@ -602,35 +602,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>git常用指令</title>
-    <url>/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<p>git的基本常用指令集</p>
-<a id="more"></a>
-<h1 id="1-基本指令"><a href="#1-基本指令" class="headerlink" title="1.基本指令"></a>1.基本指令</h1><p>git init        ——&gt;新建git仓库<br>git add 文件/文件夹       ——&gt;  将文件添加到缓存区中<br>git add -A   ——&gt;  添加所有内容到缓存区中</p>
-<p>git status      ——&gt;    查看git状态<br>git commit -m  ‘提交信息’       ——&gt;  将缓存区中的内容全部提交到git本地仓库中<br>git log        ——&gt; 查看提交日志 </p>
-<p>git reset  – hard   HEAD       ——&gt;   让工作目录中的内容和仓库中的内容保持一致<br>git reset  –hard HEAD^  ——&gt;  回到上一个版本<br>git  reset  – hard 版本号  ——&gt;  回到指定的版本 </p>
-<p>git checkout  文件名   ——&gt;  从暂存区中恢复工作目录中的内容(让工作区中的指定文件，回到上次提交的时候的状态) </p>
-<p>git clone <url>    ——&gt;  将服务器上的项目(仓库)克隆 (使用https地址需要输入密码，使用ssh地址需要添加公钥) </p>
-<p>git remote add origin 地址    ——&gt;  关联远程仓库(只需要关联一次)</p>
-<p>git push [-u] origin master   ——&gt;  提交(-u在第一次提交分支的时候才用) </p>
-<p>git push   ——&gt;  将本地仓库的内容提交到远程仓库master分支上</p>
-<p>git push origin 分支名     ——&gt;  将本地仓库的内容提交到远程仓库对应的分支上, 如果分支不存在会自动创建</p>
-<p>git pull   ——&gt;  将远程仓库中的内容更新到本地仓库和工作区中</p>
-<h1 id="2-分之管理"><a href="#2-分之管理" class="headerlink" title="2.分之管理"></a>2.分之管理</h1><p>创建仓库会默认给我们创建一个master分之,这个分之一般作为提交和发布分之;开发一般会自己创建一个develop分之，用来开发和测试;多人协作的时候还可能根据不同的人或者(不同的功能)创建不同的分之，用来独立开发 </p>
-<p>常见分之： master(主要是合并develop), develop(主要合并下面的其他分支), 功能/人员分之(开发)  </p>
-<p>git branch [-a]   ——&gt;查看分之<br>git branch 分之名——&gt;创建分之<br>git checkout   分支名——&gt;  切换分之<br>git checkout -b 分之名    ——&gt;切换并创建新的分之<br>git diff  分之1  分之2——&gt;查看两个分之之间的差异<br>git merge 分之名——&gt;让当前分之和指定分之进行合并</p>
-<p>注意: 切换分之、push、pull，这些操作前要保证工作区是clean<br>怎么避免冲突：  不要发生多个分之对同一个文件在同一个版本下进行修改(和同伴确认和商量)</p>
-]]></content>
-      <categories>
-        <category>Git &amp; Shell</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-        <tag>技术文档</tag>
-        <tag>指令</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux中python相关软件安装记录</title>
     <url>/2019/01/20/linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<p>Linux中的Python, MySQL, Redis, Nginx安装,基础环境配置</p>
@@ -662,43 +633,32 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>vim基础使用教程</title>
-    <url>/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>vim日常使用</p>
+    <title>git常用指令</title>
+    <url>/2019/12/22/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<p>git的基本常用指令集</p>
 <a id="more"></a>
-
-<h1 id="1-vim的三种模式"><a href="#1-vim的三种模式" class="headerlink" title="1.vim的三种模式"></a>1.vim的三种模式</h1><ul>
-<li><strong>命令模式：</strong>未尾既没有插入的字样也没有冒号（在编辑模式和末行模式下按esc键可以进入命令模式）</li>
-<li><strong>编辑模式：</strong>末尾会显示’一插入一/-insert-，并且在编辑模式下可以对文件进行输入操作（可以编辑）（在命令模式下按i就可以进入编辑模式）</li>
-<li><strong>未行模式：</strong>未尾显示冒号，并且冒号后边可以输入内容（在命令模式下输入冒号就可以进入未行模式）</li>
-</ul>
-<h1 id="2-vim的配置"><a href="#2-vim的配置" class="headerlink" title="2.vim的配置"></a>2.vim的配置</h1><p>通过编辑  etc/vimrc 文件配置</p>
-<h1 id="3-基本操作"><a href="#3-基本操作" class="headerlink" title="3.基本操作"></a>3.基本操作</h1><h2 id="1-保存和退出"><a href="#1-保存和退出" class="headerlink" title="1)保存和退出"></a>1)保存和退出</h2><p><strong>所有的保存和退出都是在末行模式下进行的</strong><br>W   ——&gt;只保存(相当于ctr+s)<br>q   ——&gt;直接退出(只有当前文件的内容全部保存才能直接退出,如果不保存强制退出,需要在q加!)<br>Wq   ——&gt;先保存再退出<br>注意:强制执行在指令后加!</p>
-<h2 id="2-光标操作"><a href="#2-光标操作" class="headerlink" title="2)光标操作"></a>2)光标操作</h2><p><strong>所有光标操作对应的指令都是在命令模式下执行的</strong><br>^   ——&gt;直接将光标移动到行首<br>$   ——&gt;直接将光标移动到行尾<br>G   ——&gt;移动到文件未尾<br>gg   ——&gt;移动到文件开头<br>行号G    ——&gt;移动到指定行号的位到</p>
-<h2 id="3-文本操作"><a href="#3-文本操作" class="headerlink" title="3)文本操作"></a>3)文本操作</h2><p>以下指令前面如果没有冒号表示在命令模式下执行，有冒号的在未行模式下执行</p>
-<p>dd   ——&gt;删除当前光标所在的行<br>数字dd   ——&gt;数字如果是N，从光标所在的位置开始删N行<br>:%d     ——&gt;末行模式下输入%d，删除所有</p>
-<p>u   ——&gt;撤销<br>ctr+   r   ——&gt;反撤销</p>
-<p>yy   ——&gt;复制光标所在的行<br>数字yy   ——&gt;数字如果是N,从光标所在的位置开始复制N行<br>:%y   ——&gt;未行模式下输入%y,复制所有p-粘贴<br>p   ——&gt;粘贴<br>P   ——&gt;粘贴到上一行</p>
-<h2 id="4-查找和替换"><a href="#4-查找和替换" class="headerlink" title="4)查找和替换"></a>4)查找和替换</h2><p><strong>: /正则表达式</strong>——&gt;查找当前文件中符合正则表达式的内容(结果可以用n和N来切换)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim中正则表达式的要求:</span><br><span class="line">1)python正则中所有的语法都有效</span><br><span class="line">2)单独使用有特殊功能的符号，在使用的时候需要加\才有效</span><br><span class="line">r'\d+'    -&gt;  /\d\+</span><br><span class="line">r'\d&#123;3&#125;'  -&gt;  /\d\&#123;3&#125;</span><br><span class="line">r'and|or' -&gt;  /and\|or</span><br></pre></td></tr></table></figure>
-
-<p><strong>:1,$s/被替换的对象对应的正则/替换内容/参数</strong>——&gt;将文件中正则匹配到的内容替换成指定内容</p>
-<blockquote>
-<p>参数:<br>g——&gt;全局匹配(会替换所有符合要求的字符串,默认情况下一行只替换一个)<br>i——&gt;匹配的时候忽略大小写<br>c——&gt;替换的时候给出提示<br>e——&gt;忽略错误(忽略正则的错)</p>
-</blockquote>
-<h1 id="4高级操作"><a href="#4高级操作" class="headerlink" title="4高级操作"></a>4高级操作</h1><h2 id="1-比较文件"><a href="#1-比较文件" class="headerlink" title="1)比较文件"></a>1)比较文件</h2><p><strong>vim -d  文件路径1  文件路径2</strong></p>
-<h2 id="2-同时打开多个文件"><a href="#2-同时打开多个文件" class="headerlink" title="2)同时打开多个文件"></a>2)同时打开多个文件</h2><p><strong>vim  文件路径  文件路径 …</strong></p>
-<blockquote>
-<p>1.切换窗口内容<br>在末行模式下输入:<strong>ls</strong>——&gt;可以查看当前打开的所有的文件和文件对象的标号在末行模式下输入:<strong>b标号</strong>——&gt;可以将当前窗口中的内容切换到指定标号对应的文件的内容</p>
-<p>2.窗口的拆分<br>在未行模式下输入:<strong>sp/vs</strong>——&gt;可以将当前窗口垂直方向/水平方向进行拆分;拆分后可以在命令模式下按<strong>ctr+w</strong>来切换窗口</p>
-</blockquote>
+<h1 id="1-基本指令"><a href="#1-基本指令" class="headerlink" title="1.基本指令"></a>1.基本指令</h1><p>git init        ——&gt;新建git仓库<br>git add 文件/文件夹       ——&gt;  将文件添加到缓存区中<br>git add -A   ——&gt;  添加所有内容到缓存区中</p>
+<p>git status      ——&gt;    查看git状态<br>git commit -m  ‘提交信息’       ——&gt;  将缓存区中的内容全部提交到git本地仓库中<br>git log        ——&gt; 查看提交日志 </p>
+<p>git reset  – hard   HEAD       ——&gt;   让工作目录中的内容和仓库中的内容保持一致<br>git reset  –hard HEAD^  ——&gt;  回到上一个版本<br>git  reset  – hard 版本号  ——&gt;  回到指定的版本 </p>
+<p>git checkout  文件名   ——&gt;  从暂存区中恢复工作目录中的内容(让工作区中的指定文件，回到上次提交的时候的状态) </p>
+<p>git clone <url>    ——&gt;  将服务器上的项目(仓库)克隆 (使用https地址需要输入密码，使用ssh地址需要添加公钥) </p>
+<p>git remote add origin 地址    ——&gt;  关联远程仓库(只需要关联一次)</p>
+<p>git push [-u] origin master   ——&gt;  提交(-u在第一次提交分支的时候才用) </p>
+<p>git push   ——&gt;  将本地仓库的内容提交到远程仓库master分支上</p>
+<p>git push origin 分支名     ——&gt;  将本地仓库的内容提交到远程仓库对应的分支上, 如果分支不存在会自动创建</p>
+<p>git pull   ——&gt;  将远程仓库中的内容更新到本地仓库和工作区中</p>
+<h1 id="2-分之管理"><a href="#2-分之管理" class="headerlink" title="2.分之管理"></a>2.分之管理</h1><p>创建仓库会默认给我们创建一个master分之,这个分之一般作为提交和发布分之;开发一般会自己创建一个develop分之，用来开发和测试;多人协作的时候还可能根据不同的人或者(不同的功能)创建不同的分之，用来独立开发 </p>
+<p>常见分之： master(主要是合并develop), develop(主要合并下面的其他分支), 功能/人员分之(开发)  </p>
+<p>git branch [-a]   ——&gt;查看分之<br>git branch 分之名——&gt;创建分之<br>git checkout   分支名——&gt;  切换分之<br>git checkout -b 分之名    ——&gt;切换并创建新的分之<br>git diff  分之1  分之2——&gt;查看两个分之之间的差异<br>git merge 分之名——&gt;让当前分之和指定分之进行合并</p>
+<p>注意: 切换分之、push、pull，这些操作前要保证工作区是clean<br>怎么避免冲突：  不要发生多个分之对同一个文件在同一个版本下进行修改(和同伴确认和商量)</p>
 ]]></content>
       <categories>
-        <category>Linux</category>
+        <category>Git &amp; Shell</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
-        <tag>vim</tag>
+        <tag>git</tag>
+        <tag>技术文档</tag>
+        <tag>指令</tag>
       </tags>
   </entry>
   <entry>
@@ -843,6 +803,46 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
         <tag>脚本</tag>
         <tag>基础</tag>
         <tag>编程语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vim基础使用教程</title>
+    <url>/2019/12/23/vim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>vim日常使用</p>
+<a id="more"></a>
+
+<h1 id="1-vim的三种模式"><a href="#1-vim的三种模式" class="headerlink" title="1.vim的三种模式"></a>1.vim的三种模式</h1><ul>
+<li><strong>命令模式：</strong>未尾既没有插入的字样也没有冒号（在编辑模式和末行模式下按esc键可以进入命令模式）</li>
+<li><strong>编辑模式：</strong>末尾会显示’一插入一/-insert-，并且在编辑模式下可以对文件进行输入操作（可以编辑）（在命令模式下按i就可以进入编辑模式）</li>
+<li><strong>未行模式：</strong>未尾显示冒号，并且冒号后边可以输入内容（在命令模式下输入冒号就可以进入未行模式）</li>
+</ul>
+<h1 id="2-vim的配置"><a href="#2-vim的配置" class="headerlink" title="2.vim的配置"></a>2.vim的配置</h1><p>通过编辑  etc/vimrc 文件配置</p>
+<h1 id="3-基本操作"><a href="#3-基本操作" class="headerlink" title="3.基本操作"></a>3.基本操作</h1><h2 id="1-保存和退出"><a href="#1-保存和退出" class="headerlink" title="1)保存和退出"></a>1)保存和退出</h2><p><strong>所有的保存和退出都是在末行模式下进行的</strong><br>W   ——&gt;只保存(相当于ctr+s)<br>q   ——&gt;直接退出(只有当前文件的内容全部保存才能直接退出,如果不保存强制退出,需要在q加!)<br>Wq   ——&gt;先保存再退出<br>注意:强制执行在指令后加!</p>
+<h2 id="2-光标操作"><a href="#2-光标操作" class="headerlink" title="2)光标操作"></a>2)光标操作</h2><p><strong>所有光标操作对应的指令都是在命令模式下执行的</strong><br>^   ——&gt;直接将光标移动到行首<br>$   ——&gt;直接将光标移动到行尾<br>G   ——&gt;移动到文件未尾<br>gg   ——&gt;移动到文件开头<br>行号G    ——&gt;移动到指定行号的位到</p>
+<h2 id="3-文本操作"><a href="#3-文本操作" class="headerlink" title="3)文本操作"></a>3)文本操作</h2><p>以下指令前面如果没有冒号表示在命令模式下执行，有冒号的在未行模式下执行</p>
+<p>dd   ——&gt;删除当前光标所在的行<br>数字dd   ——&gt;数字如果是N，从光标所在的位置开始删N行<br>:%d     ——&gt;末行模式下输入%d，删除所有</p>
+<p>u   ——&gt;撤销<br>ctr+   r   ——&gt;反撤销</p>
+<p>yy   ——&gt;复制光标所在的行<br>数字yy   ——&gt;数字如果是N,从光标所在的位置开始复制N行<br>:%y   ——&gt;未行模式下输入%y,复制所有p-粘贴<br>p   ——&gt;粘贴<br>P   ——&gt;粘贴到上一行</p>
+<h2 id="4-查找和替换"><a href="#4-查找和替换" class="headerlink" title="4)查找和替换"></a>4)查找和替换</h2><p><strong>: /正则表达式</strong>——&gt;查找当前文件中符合正则表达式的内容(结果可以用n和N来切换)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim中正则表达式的要求:</span><br><span class="line">1)python正则中所有的语法都有效</span><br><span class="line">2)单独使用有特殊功能的符号，在使用的时候需要加\才有效</span><br><span class="line">r'\d+'    -&gt;  /\d\+</span><br><span class="line">r'\d&#123;3&#125;'  -&gt;  /\d\&#123;3&#125;</span><br><span class="line">r'and|or' -&gt;  /and\|or</span><br></pre></td></tr></table></figure>
+
+<p><strong>:1,$s/被替换的对象对应的正则/替换内容/参数</strong>——&gt;将文件中正则匹配到的内容替换成指定内容</p>
+<blockquote>
+<p>参数:<br>g——&gt;全局匹配(会替换所有符合要求的字符串,默认情况下一行只替换一个)<br>i——&gt;匹配的时候忽略大小写<br>c——&gt;替换的时候给出提示<br>e——&gt;忽略错误(忽略正则的错)</p>
+</blockquote>
+<h1 id="4高级操作"><a href="#4高级操作" class="headerlink" title="4高级操作"></a>4高级操作</h1><h2 id="1-比较文件"><a href="#1-比较文件" class="headerlink" title="1)比较文件"></a>1)比较文件</h2><p><strong>vim -d  文件路径1  文件路径2</strong></p>
+<h2 id="2-同时打开多个文件"><a href="#2-同时打开多个文件" class="headerlink" title="2)同时打开多个文件"></a>2)同时打开多个文件</h2><p><strong>vim  文件路径  文件路径 …</strong></p>
+<blockquote>
+<p>1.切换窗口内容<br>在末行模式下输入:<strong>ls</strong>——&gt;可以查看当前打开的所有的文件和文件对象的标号在末行模式下输入:<strong>b标号</strong>——&gt;可以将当前窗口中的内容切换到指定标号对应的文件的内容</p>
+<p>2.窗口的拆分<br>在未行模式下输入:<strong>sp/vs</strong>——&gt;可以将当前窗口垂直方向/水平方向进行拆分;拆分后可以在命令模式下按<strong>ctr+w</strong>来切换窗口</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>vim</tag>
       </tags>
   </entry>
   <entry>
@@ -1103,6 +1103,54 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
+    <title>Python基础：10:函数进阶</title>
+    <url>/2018/06/20/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.10%20%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/</url>
+    <content><![CDATA[<h1 id="一-函数返回值"><a href="#一-函数返回值" class="headerlink" title="一.函数返回值"></a>一.函数返回值</h1><ul>
+<li>1.返回值的作用:将函数里面的数据传到函数外(在函数里的打印只能看不能操作)</li>
+<li>2.怎么确定需不需要返回值:看函数的功能完成后会不会产生新的数据</li>
+<li>3.怎么确定函数的返回值:函数声明的时候return后面的值就是函数的返回值;如果没有return,函数的返回值就是None</li>
+</ul>
+<p><strong>return是关键字;只能出现在函数体中</strong><br>&emsp;作用:①.确定函数的返回值<br>&emsp;&emsp;&emsp;②.结束函数(执行函数体的时候若遇到return函数直接结束,同时将return后面的值作为函数的额返回值)</p>
+<ul>
+<li>4.怎么获取函数的返回值:函数调用表达式就是函数的返回值<pre><code>函数调用表达式:函数调用语句(普通数据能做的事,它都能做)</code></pre></li>
+</ul>
+<br>
+
+<hr>
+<h1 id="二-函数的调用"><a href="#二-函数的调用" class="headerlink" title="二.函数的调用"></a>二.函数的调用</h1><h2 id="1-函数调用过程"><a href="#1-函数调用过程" class="headerlink" title="1.函数调用过程:"></a>1.函数调用过程:</h2><p>①.回到函数声明的位置<br>②.传参 - 保证每个参数都有值<br>③.执行函数体<br>④.执行完函数体确认返回值:若遇到return,return后面的值就是返回值;若没有遇到,返回值就是None<br>⑤.回到函数调用的位置(函数表达式的值就是返回值)  </p>
+<h2 id="2-内存的变化"><a href="#2-内存的变化" class="headerlink" title="2.内存的变化:"></a>2.内存的变化:</h2><p>函数的调用过程事一个压栈的过程(系统会自动在栈区间开辟一个专用的内存区域,专门用来保存在函数内声明的变量和产生的数据(形参也是函数内的))    当函数调用结束的时候,这个内存区域会自动销毁(销毁前会将返回值送出)</p>
+<br>
+
+<hr>
+<h1 id="三-变量的作用域"><a href="#三-变量的作用域" class="headerlink" title="三.变量的作用域"></a>三.变量的作用域</h1><h2 id="1-全局变量"><a href="#1-全局变量" class="headerlink" title="1).全局变量"></a>1).全局变量</h2><p>没有生命在函数中或者类中的变量都是全局变量<br>作用域:全局变量从声明开始到文件结束任何地方都可以用</p>
+<h2 id="2-局部变量"><a href="#2-局部变量" class="headerlink" title="2).局部变量"></a>2).局部变量</h2><p>在函数内声明的变量就是局部变量;<br>作用域:从声明开始到函数结束可以使用(形参是声明在函数中的局部变量)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#a是全局变量</span></span><br><span class="line">a = <span class="number">10</span></span><br><span class="line"><span class="comment"># 循环内声明的变量也是全局变量(b和c)</span></span><br><span class="line"><span class="keyword">for</span> b <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    c = <span class="number">100</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="comment"># 在循环内部可以用</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    print(a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在函数中可以用</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'函数中:'</span>, a)</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.global</strong><br>若要在函数内改变全局变量的值,要先用global进行说明在函数中若要声明一个全局变量,也要在变量前加global<br>语法:global 变量名</p>
+<p><strong>2.nonlocal</strong><br>使用方法:在函数中给变量赋值前加:nonlocal 变量名<br>作用:在局部的局部中修改局部变量的值</p>
+<br>
+
+<hr>
+<h1 id="四-匿名函数"><a href="#四-匿名函数" class="headerlink" title="四.匿名函数"></a>四.匿名函数</h1><p>匿名函数还是函数,除了声明的语法和类型说明以外,其他语法基本都适用匿名函数</p>
+<h2 id="1-声明匿名函数"><a href="#1-声明匿名函数" class="headerlink" title="1.声明匿名函数"></a>1.声明匿名函数</h2><p><strong>变量(函数名) = lambda 参数列表:返回值<br>&emsp;def (参数列表):<br>&emsp;return 返回值</strong></p>
+<h2 id="2-说明"><a href="#2-说明" class="headerlink" title="2.说明:"></a>2.说明:</h2><p>lambda - 关键字,固定写法<br>参数列表 - 形参:参数名1,参数名2,…<br>:(冒号) - 固定写法<br>返回值 - 相当于普通函数中函数体中的return语句</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 用匿名函数求两个数的和</span></span><br><span class="line">func1 = <span class="keyword">lambda</span> num1, num2: num1 + num2</span><br><span class="line"><span class="comment"># 练习:写一个函数判断指定的年是否是闰年</span></span><br><span class="line">diy_year = <span class="keyword">lambda</span> year: year % <span class="number">400</span> == <span class="number">0</span> <span class="keyword">or</span> (year % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> year % <span class="number">100</span> != <span class="number">0</span>)</span><br><span class="line">print(diy_year(<span class="number">2008</span>))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<hr>
+<h1 id="五-递归函数"><a href="#五-递归函数" class="headerlink" title="五.递归函数"></a>五.递归函数</h1><h2 id="1-什么是递归函数"><a href="#1-什么是递归函数" class="headerlink" title="1.什么是递归函数"></a>1.什么是递归函数</h2><p>声明函数的时候调用函数本身<br>递归可以实现循环效果,除了死循环,其他的循环递归都可以实现</p>
+<h2 id="2-递归怎么用"><a href="#2-递归怎么用" class="headerlink" title="2.递归怎么用"></a>2.递归怎么用</h2><p><strong>使用递归的方法:<br>1).设置临界值 - 循环结束的条件(保证函数结束)<br>2).找关系 - 找f(n)和f(n-1)的关系(上一次循环和下一次循环的关系)<br>3).假设函数的功能已经实现,通过f(n-1)去实现f(n)的功能</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 写一个递归函数,计算1+2+3+...+n</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diy_sum</span><span class="params">(n)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">return</span> diy_sum(n<span class="number">-1</span>) + n</span><br><span class="line"></span><br><span class="line">print(diy_sum(<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写一个递归函数,计算斐波那契额数列的第n个数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diy_series</span><span class="params">(n)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">or</span> n == <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">  <span class="keyword">return</span> diy_series(n<span class="number">-1</span>) + diy_series(n<span class="number">-2</span>)</span><br><span class="line"></span><br><span class="line">print(diy_series(<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习:</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">n = 4</span></span><br><span class="line"><span class="string">*</span></span><br><span class="line"><span class="string">**</span></span><br><span class="line"><span class="string">***</span></span><br><span class="line"><span class="string">****</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">n = 3</span></span><br><span class="line"><span class="string">*</span></span><br><span class="line"><span class="string">**</span></span><br><span class="line"><span class="string">***</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diy_p</span><span class="params">(n)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">    print(<span class="string">'*'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  diy_p(n<span class="number">-1</span>)</span><br><span class="line">  print(n * <span class="string">'*'</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础：11:高阶函数</title>
     <url>/2018/06/26/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.11%20%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h1 id="一-实参高阶函数"><a href="#一-实参高阶函数" class="headerlink" title="一.实参高阶函数"></a>一.实参高阶函数</h1><h2 id="1-函数作为变量使用"><a href="#1-函数作为变量使用" class="headerlink" title="1.函数作为变量使用"></a>1.函数作为变量使用</h2><p>python中声明函数就是声明一个类型是function的变量,变量名就是函数名<br>普通变量能做的函数都能做:</p>
@@ -1158,54 +1206,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
 
 
 ]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python基础：10:函数进阶</title>
-    <url>/2018/06/20/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.10%20%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/</url>
-    <content><![CDATA[<h1 id="一-函数返回值"><a href="#一-函数返回值" class="headerlink" title="一.函数返回值"></a>一.函数返回值</h1><ul>
-<li>1.返回值的作用:将函数里面的数据传到函数外(在函数里的打印只能看不能操作)</li>
-<li>2.怎么确定需不需要返回值:看函数的功能完成后会不会产生新的数据</li>
-<li>3.怎么确定函数的返回值:函数声明的时候return后面的值就是函数的返回值;如果没有return,函数的返回值就是None</li>
-</ul>
-<p><strong>return是关键字;只能出现在函数体中</strong><br>&emsp;作用:①.确定函数的返回值<br>&emsp;&emsp;&emsp;②.结束函数(执行函数体的时候若遇到return函数直接结束,同时将return后面的值作为函数的额返回值)</p>
-<ul>
-<li>4.怎么获取函数的返回值:函数调用表达式就是函数的返回值<pre><code>函数调用表达式:函数调用语句(普通数据能做的事,它都能做)</code></pre></li>
-</ul>
-<br>
-
-<hr>
-<h1 id="二-函数的调用"><a href="#二-函数的调用" class="headerlink" title="二.函数的调用"></a>二.函数的调用</h1><h2 id="1-函数调用过程"><a href="#1-函数调用过程" class="headerlink" title="1.函数调用过程:"></a>1.函数调用过程:</h2><p>①.回到函数声明的位置<br>②.传参 - 保证每个参数都有值<br>③.执行函数体<br>④.执行完函数体确认返回值:若遇到return,return后面的值就是返回值;若没有遇到,返回值就是None<br>⑤.回到函数调用的位置(函数表达式的值就是返回值)  </p>
-<h2 id="2-内存的变化"><a href="#2-内存的变化" class="headerlink" title="2.内存的变化:"></a>2.内存的变化:</h2><p>函数的调用过程事一个压栈的过程(系统会自动在栈区间开辟一个专用的内存区域,专门用来保存在函数内声明的变量和产生的数据(形参也是函数内的))    当函数调用结束的时候,这个内存区域会自动销毁(销毁前会将返回值送出)</p>
-<br>
-
-<hr>
-<h1 id="三-变量的作用域"><a href="#三-变量的作用域" class="headerlink" title="三.变量的作用域"></a>三.变量的作用域</h1><h2 id="1-全局变量"><a href="#1-全局变量" class="headerlink" title="1).全局变量"></a>1).全局变量</h2><p>没有生命在函数中或者类中的变量都是全局变量<br>作用域:全局变量从声明开始到文件结束任何地方都可以用</p>
-<h2 id="2-局部变量"><a href="#2-局部变量" class="headerlink" title="2).局部变量"></a>2).局部变量</h2><p>在函数内声明的变量就是局部变量;<br>作用域:从声明开始到函数结束可以使用(形参是声明在函数中的局部变量)</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#a是全局变量</span></span><br><span class="line">a = <span class="number">10</span></span><br><span class="line"><span class="comment"># 循环内声明的变量也是全局变量(b和c)</span></span><br><span class="line"><span class="keyword">for</span> b <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    c = <span class="number">100</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="comment"># 在循环内部可以用</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    print(a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在函数中可以用</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'函数中:'</span>, a)</span><br></pre></td></tr></table></figure>
-
-<p><strong>1.global</strong><br>若要在函数内改变全局变量的值,要先用global进行说明在函数中若要声明一个全局变量,也要在变量前加global<br>语法:global 变量名</p>
-<p><strong>2.nonlocal</strong><br>使用方法:在函数中给变量赋值前加:nonlocal 变量名<br>作用:在局部的局部中修改局部变量的值</p>
-<br>
-
-<hr>
-<h1 id="四-匿名函数"><a href="#四-匿名函数" class="headerlink" title="四.匿名函数"></a>四.匿名函数</h1><p>匿名函数还是函数,除了声明的语法和类型说明以外,其他语法基本都适用匿名函数</p>
-<h2 id="1-声明匿名函数"><a href="#1-声明匿名函数" class="headerlink" title="1.声明匿名函数"></a>1.声明匿名函数</h2><p><strong>变量(函数名) = lambda 参数列表:返回值<br>&emsp;def (参数列表):<br>&emsp;return 返回值</strong></p>
-<h2 id="2-说明"><a href="#2-说明" class="headerlink" title="2.说明:"></a>2.说明:</h2><p>lambda - 关键字,固定写法<br>参数列表 - 形参:参数名1,参数名2,…<br>:(冒号) - 固定写法<br>返回值 - 相当于普通函数中函数体中的return语句</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 用匿名函数求两个数的和</span></span><br><span class="line">func1 = <span class="keyword">lambda</span> num1, num2: num1 + num2</span><br><span class="line"><span class="comment"># 练习:写一个函数判断指定的年是否是闰年</span></span><br><span class="line">diy_year = <span class="keyword">lambda</span> year: year % <span class="number">400</span> == <span class="number">0</span> <span class="keyword">or</span> (year % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> year % <span class="number">100</span> != <span class="number">0</span>)</span><br><span class="line">print(diy_year(<span class="number">2008</span>))</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<hr>
-<h1 id="五-递归函数"><a href="#五-递归函数" class="headerlink" title="五.递归函数"></a>五.递归函数</h1><h2 id="1-什么是递归函数"><a href="#1-什么是递归函数" class="headerlink" title="1.什么是递归函数"></a>1.什么是递归函数</h2><p>声明函数的时候调用函数本身<br>递归可以实现循环效果,除了死循环,其他的循环递归都可以实现</p>
-<h2 id="2-递归怎么用"><a href="#2-递归怎么用" class="headerlink" title="2.递归怎么用"></a>2.递归怎么用</h2><p><strong>使用递归的方法:<br>1).设置临界值 - 循环结束的条件(保证函数结束)<br>2).找关系 - 找f(n)和f(n-1)的关系(上一次循环和下一次循环的关系)<br>3).假设函数的功能已经实现,通过f(n-1)去实现f(n)的功能</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 写一个递归函数,计算1+2+3+...+n</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diy_sum</span><span class="params">(n)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">return</span> diy_sum(n<span class="number">-1</span>) + n</span><br><span class="line"></span><br><span class="line">print(diy_sum(<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写一个递归函数,计算斐波那契额数列的第n个数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diy_series</span><span class="params">(n)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">or</span> n == <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">  <span class="keyword">return</span> diy_series(n<span class="number">-1</span>) + diy_series(n<span class="number">-2</span>)</span><br><span class="line"></span><br><span class="line">print(diy_series(<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 练习:</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">n = 4</span></span><br><span class="line"><span class="string">*</span></span><br><span class="line"><span class="string">**</span></span><br><span class="line"><span class="string">***</span></span><br><span class="line"><span class="string">****</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">n = 3</span></span><br><span class="line"><span class="string">*</span></span><br><span class="line"><span class="string">**</span></span><br><span class="line"><span class="string">***</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diy_p</span><span class="params">(n)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">    print(<span class="string">'*'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  diy_p(n<span class="number">-1</span>)</span><br><span class="line">  print(n * <span class="string">'*'</span>)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Python学录</category>
       </categories>
@@ -1731,6 +1731,108 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
+    <title>Python基础：2:变量和运算符</title>
+    <url>/2018/04/05/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.2%20%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
+    <content><![CDATA[<h1 id="一、变量"><a href="#一、变量" class="headerlink" title="一、变量"></a>一、变量</h1><h3 id="1、变量"><a href="#1、变量" class="headerlink" title="1、变量"></a>1、变量</h3><ul>
+<li>变量是用来申请空间保存数据的<br>变量的公式：<strong>变量名 = 值</strong></li>
+</ul>
+<h3 id="2、说明"><a href="#2、说明" class="headerlink" title="2、说明"></a>2、说明</h3><ul>
+<li>变量名：自由命名，但要遵循一下要求和规范<br><strong>要求</strong>:<br>是标识符（1.由数字、字母和下划线组成；2.数字不能开头），不能是关键字<br><strong>规范</strong>:<br>1.见名知义：看到变量名，知道变量里存的什么数据<pre><code>2.满足PEP8命名规范：变量名内所有字母都小写，如果由多个单词组成变量名，则多个单词之间用下划线隔开
+3.不能用系统提供的函数名、类名、库名等系统相关的名来给变量命名</code></pre></li>
+<li>值：可以是任何有结果的表达式；例如：数据，已经赋值过的比那辆、运算表达式等</li>
+</ul>
+<h3 id="3、变量的使用"><a href="#3、变量的使用" class="headerlink" title="3、变量的使用"></a>3、变量的使用</h3><p>使用变量就是在使用变量里面的值;变量中的值可以修改大小和类型</p>
+<h3 id="4、同时声明多个变量"><a href="#4、同时声明多个变量" class="headerlink" title="4、同时声明多个变量"></a>4、同时声明多个变量</h3><ul>
+<li>同时声明多个变量赋相同的值<br>变量1 = 变量2 = 变量3 = … = 值</li>
+<li>同时声明多个变量赋不同的值<br>变量1，变量2，变量3，…=值1，值2，值3…</li>
+</ul>
+<h3 id="5、python声明变量的原理"><a href="#5、python声明变量的原理" class="headerlink" title="5、python声明变量的原理"></a>5、python声明变量的原理</h3><p>根据变量的大小申请的相应大小的内存，将变量名和数据对应的内存空间关联在一起；<br>在python中用一个变量给另外一个变量赋值的时候是将原来的变量的地址赋给另外一个变量，赋值完成后，数据只有一份。</p>
+<br>
+
+<p><strong>变量三要素：<br>1.类型  -  给变量复制的数据的类型  -  type（变量）<br>2.地址  -  给变量复制的数据在内存中的地址，也是正真存储的东西  -  id（变量）<br>3.值  -  给变量复制的数据</strong></p>
+<br>
+
+<hr>
+<h1 id="二、运算符"><a href="#二、运算符" class="headerlink" title="二、运算符"></a>二、运算符</h1><h3 id="一-、数学运算符"><a href="#一-、数学运算符" class="headerlink" title="(一)、数学运算符"></a>(一)、数学运算符</h3><h6 id="1、加减乘除：-emsp-emsp-emsp"><a href="#1、加减乘除：-emsp-emsp-emsp" class="headerlink" title="1、加减乘除：+&emsp;   -&emsp;   *&emsp;   /"></a>1、加减乘除：+&emsp;   -&emsp;   *&emsp;   /</h6><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">10</span> + <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> - <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> * <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> / <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h6 id="2、取余-取模-求余数："><a href="#2、取余-取模-求余数：" class="headerlink" title="2、取余/取模/求余数：%"></a>2、取余/取模/求余数：%</h6><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num = <span class="number">123</span></span><br><span class="line">print(num % <span class="number">10</span>)   <span class="comment">#取个位</span></span><br><span class="line">print(num % <span class="number">100</span>)   <span class="comment">#取个位和十位</span></span><br></pre></td></tr></table></figure>
+<p>应用：<br>1、判断正数的奇偶性 - 判断该数对2取余结果是否为0<br>2、判断是否能整除<br>3、取低位数  </p>
+<h6 id="3、整除：-（商只取整数部分）"><a href="#3、整除：-（商只取整数部分）" class="headerlink" title="3、整除：//（商只取整数部分）"></a>3、整除：//（商只取整数部分）</h6><p>应用：取高位</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(num // <span class="number">100</span>)   <span class="comment">#取高位1</span></span><br></pre></td></tr></table></figure>
+<p><strong><em>注：负数的整除，取了结果之后减1</em></strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">-9</span> // <span class="number">2</span>) = <span class="number">-5</span></span><br></pre></td></tr></table></figure>
+<h6 id="4、幂运算：-（x-y-–-x的y次方）"><a href="#4、幂运算：-（x-y-–-x的y次方）" class="headerlink" title="4、幂运算：**  （x**y –  x的y次方）"></a>4、幂运算：**  （x**y –  x的y次方）</h6><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">2</span> ** <span class="number">3</span>)</span><br><span class="line">print(<span class="number">16</span> ** (<span class="number">1</span>/<span class="number">2</span>))   <span class="comment">#开方</span></span><br><span class="line">print(<span class="number">8</span> ** (<span class="number">1</span>/<span class="number">3</span>))   <span class="comment">#开方</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="（二）、比较运算符"><a href="#（二）、比较运算符" class="headerlink" title="（二）、比较运算符"></a>（二）、比较运算符</h3><p><strong><em>所有的比较运算符的运算结果都是布尔值</em></strong><br>1、大于、小于、大于等于、小于等于：&gt;  &lt;  &gt;=  &lt;=</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">30</span> &gt;= <span class="number">20</span>)</span><br><span class="line">print(<span class="number">30</span> &gt;= <span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+<p>2、等于、不等于：==  !=   –  判断两个值是否相等</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">10</span> == <span class="number">10</span>)</span><br><span class="line">print(<span class="number">10</span> != <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>3、python可以用连续的比较运算符表示范围</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">age = <span class="number">30</span></span><br><span class="line">print(<span class="number">28</span> &lt; age &lt; <span class="number">40</span>)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="（三）、逻辑运算符"><a href="#（三）、逻辑运算符" class="headerlink" title="（三）、逻辑运算符"></a>（三）、逻辑运算符</h3><p><strong><em>逻辑运算的对象和结果都是布尔值</em></strong><br><strong>1、and (逻辑与)</strong><br>1）、运算规则：两个都是True结果才是True，只要有一个是False结果就是False<br>2）、使用场景：需要多个条件同时满足</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 判断一个数是否能同时被3和7整除</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'是否能同时被3和7整除：'</span>,rem1 == <span class="number">0</span> <span class="keyword">and</span> rem2 == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>2、or (逻辑或)</strong><br>1）、运算规则：两个都是False结果才是False，只要有一个是True结果就是True<br>2）、使用场景：多个条件中有一个田间满足就行</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 判断一个数是否能被3或被7整除</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'是否能被3或被7整除：'</span>,rem1 == <span class="number">0</span> <span class="keyword">or</span> rem2 == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>3、not (逻辑非)</strong><br>1）、运算规则：True变False，False变True<br>2）、使用场景：对一个条件进行否定</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 一个数不能同时被3和7整除的条件</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'不能同时被3和7整除：'</span>,<span class="keyword">not</span> (rem1 == <span class="number">0</span> <span class="keyword">and</span> rem2 == <span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="（四）、赋值运算符"><a href="#（四）、赋值运算符" class="headerlink" title="（四）、赋值运算符"></a>（四）、赋值运算符</h3><p>= ， += ，-= ，<em>= ，/= ，%= ，//= ，*</em>=<br>所有赋值运算符的左边必须是变量，组合赋值运算符的左边除了是变量，这个变量还必须是已经声明过的。<br>1)、 变量 = 值  -&gt;  将右边的值赋给左边的变量<br>2)、 组合赋值运算符<br>已经声明过的变量 += 值  -&gt;  变量 = 变量 + 值</p>
+<hr>
+<p><strong><em>运算符优先级：</em></strong></p>
+<p>数学运算符 &gt; 比较运算符 &gt; 逻辑运算符 &gt; 赋值运算符</p>
+<p><strong><em>数学运算符优先级：</em></strong></p>
+<p>** &gt;  *,/,//,%(优先级相同)  &gt;   + ,-</p>
+<p>如果有括号则先算括号</p>
+<br>
+
+<h3 id="（五）、位运算"><a href="#（五）、位运算" class="headerlink" title="（五）、位运算"></a>（五）、位运算</h3><p><strong><em>所有的位运算都是针对数字的补码进行操作的</em></strong><br>位运算符：&amp;(与)、|(或)、~(取反)、^(异或)、&lt;&lt;(左移)、&gt;&gt;(右移)<br><strong>1、&amp;(按位与)</strong><br>1）、运算规则：补码每一位上的数都是1结果就是1，如果有一个0结果就是0<br>例：1110 &amp; 0111 = 0110<br>2）、运用：高效判断数字的奇偶性<br>&emsp;将数字和1进行按位与运算，判断结果是0（偶数）还是1（奇数）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">3</span> &amp; <span class="number">1</span>, <span class="number">7</span> &amp; <span class="number">1</span>,<span class="number">19</span> &amp; <span class="number">1</span>)</span><br><span class="line">print(<span class="number">4</span> &amp; <span class="number">1</span>, <span class="number">128</span> &amp; <span class="number">1</span>,<span class="number">800</span> &amp; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>2、| (按位或)</strong><br>1）、运算规则：补码每一位上的数都是0结果就是0，如果有一个1结果就是1<br>例：1110 | 0111 = 1111<br><strong>3、~ (按位取反)、单目运算</strong><br>例：~1101 =  0010<br><strong>4、^ (异或)</strong><br>运算规则：每一位上的数相同为0，不同为1<br>例：1110 ^ 0111 = 1001<br><strong>5、&lt;&lt; (左移)</strong><br><strong><em>数字 &lt;&lt; N</em></strong>   &emsp;指定的数字的补码整体向左移动N位；<br><strong><em>计算：数字*2**N</em></strong><br><strong>6、&gt;&gt; (右移)</strong><br><strong><em>数字 &gt;&gt; N</em></strong>   &emsp;指定的数字的补码整体向右移动N位；<br><strong><em>计算：数字//2**N</em></strong></p>
+]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python基础：20:多线程基础</title>
+    <url>/2018/08/10/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.20%20%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<p><strong>一个应用程序在运行时就是一个进程,一个进程默认只有一个主线程,也可以有多个进程,同时执行不同的任务;本次课程主要是实现如何让进程可以进行多线程工作</strong></p>
+<blockquote>
+<p>一个进程就像一个工厂,多个进程就像工厂例的工人,每个工人之间的工作相互之间不影响</p>
+</blockquote>
+<p><strong>让一个进程多线程工作有两种实现方式:</strong><br>①.直接导入treading模块种的Tread类并创建子线程对象<br>②.导入treading模块种的Tread类,创建一个Tread的子类,并用这个子类创建子线程对象</p>
+<h1 id="一-在进程种创建Tread类的对象"><a href="#一-在进程种创建Tread类的对象" class="headerlink" title="一. 在进程种创建Tread类的对象"></a>一. 在进程种创建Tread类的对象</h1><h2 id="1-创建线程对象-子线程"><a href="#1-创建线程对象-子线程" class="headerlink" title="1. 创建线程对象 - 子线程"></a>1. 创建线程对象 - 子线程</h2><p><strong>线程对象 = Thread(target=函数, args=元组)</strong><br>说明:<br>target  -  函数，需要在子线程中执行的任务(会在子线程中调用)<br>args  -   target对应的函数在调用的时候传的参数</p>
+<h2 id="2-让子线程执行子线程中的任务"><a href="#2-让子线程执行子线程中的任务" class="headerlink" title="2. 让子线程执行子线程中的任务"></a>2. 让子线程执行子线程中的任务</h2><p><strong>线程对象.start()</strong><br>在子线程中调用target对用的函数，并且将args中的元素作为参数</p>
+<p>比如在一个进程中模拟下载电影:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> treading <span class="keyword">import</span> Tread</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(self, movie_name)</span></span></span><br><span class="line"><span class="function">	<span class="title">print</span><span class="params">(<span class="string">'%s开始下载了,开始时间是%s'</span> % <span class="params">(movie_name, datetime.time<span class="params">()</span>)</span>)</span></span></span><br><span class="line"><span class="function">	<span class="title">time</span>.<span class="title">sleep</span><span class="params">(<span class="number">5</span>)</span></span></span><br><span class="line"><span class="function">	<span class="title">print</span><span class="params">(<span class="string">'%s下载完成了,完成时间是%s'</span> % <span class="params">(movie_name, datetime.time<span class="params">()</span>)</span>)</span></span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function"># 创建线程对象 - 子线程</span></span><br><span class="line">t1 = Tread(target=download, args=('暮光之城'))</span><br><span class="line">t2 = Tread(target=download, args=(<span class="string">'两只老虎'</span>))</span><br><span class="line">t3 = Tread(target=download, args=(<span class="string">'卧虎藏龙'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 让子线程执行子线程中的任务</span></span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line">t3.start()</span><br></pre></td></tr></table></figure>
+
+<h1 id="二-在进程种创建Tread类的子类的对象"><a href="#二-在进程种创建Tread类的子类的对象" class="headerlink" title="二. 在进程种创建Tread类的子类的对象"></a>二. 在进程种创建Tread类的子类的对象</h1><p>还是下载电影的例子:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> treading <span class="keyword">import</span> Tread</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DownloadTread</span><span class="params">(Tread)</span>:</span> <span class="comment"># 创建Tread的子类</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, mvoie_name)</span> # 创建子类的对象属性</span></span><br><span class="line"><span class="function">	<span class="title">super</span><span class="params">()</span>.<span class="title">__init__</span><span class="params">()</span> # 继承父类的属性</span></span><br><span class="line">	self.movie_name = movie_name</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># run方法是在子线程中自动调用的,除了self之外不能有其他的参数</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">		print(<span class="string">'%s开始下载,开始时间是:%s'</span> % (self.movie_name, datetime.now()))</span><br><span class="line">		time.sleep(<span class="number">5</span>)</span><br><span class="line">		print(<span class="string">'%s下载结束,结束时间是:%s'</span> % (self.movie_name, datetime.now()))</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">t1 = DownloadTead(<span class="string">'暮光之城'</span>)</span><br><span class="line">t2 = DownloadTead(<span class="string">'两只老虎'</span>)</span><br><span class="line">t3 = DownloadTead(<span class="string">'卧虎藏龙'</span>)</span><br><span class="line"></span><br><span class="line">t1.start</span><br><span class="line">t3.start</span><br><span class="line">t2.start</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>join的用法<br>线程对象.join()<br>其他代码</p>
+</blockquote>
+<p>这儿的其他代码会在线程对象中的任务执行完后才执行</p>
+]]></content>
+      <categories>
+        <category>Python学录</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础：3:循环结构与分支结构</title>
     <url>/2018/04/18/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.3%20%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<h1 id="一、分支结构"><a href="#一、分支结构" class="headerlink" title="一、分支结构"></a>一、分支结构</h1><h3 id="1、if-结构-（满足条件就执行某个操作，不满足就不执行。）"><a href="#1、if-结构-（满足条件就执行某个操作，不满足就不执行。）" class="headerlink" title="1、if 结构 （满足条件就执行某个操作，不满足就不执行。）"></a>1、if 结构 （满足条件就执行某个操作，不满足就不执行。）</h3><h6 id="1）、语法结构"><a href="#1）、语法结构" class="headerlink" title="1）、语法结构"></a>1）、语法结构</h6><p><strong><em>if 条件语句：<br>&emsp;代码段</em></strong></p>
@@ -1847,30 +1949,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Python基础：5:数据类型之元组</title>
-    <url>/2018/05/07/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.5%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/</url>
-    <content><![CDATA[<h1 id="一、什么是元组"><a href="#一、什么是元组" class="headerlink" title="一、什么是元组"></a>一、什么是元组</h1><ul>
-<li>元组就是不可变的列表</li>
-<li>元组是将小括号 () 作为容器的标志；(元素1，元素2，…)</li>
-<li>元组不可变性，不能增、删、改，</li>
-<li>元组有序性，支持下标操作</li>
-<li>元组元素可以是任何类型的数据</li>
-</ul>
-<h1 id="二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"><a href="#二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）" class="headerlink" title="二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"></a>二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）</h1><h2 id="1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）"><a href="#1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）" class="headerlink" title="1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）"></a>1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple1 = (<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(tuple1[<span class="number">0</span>])</span><br><span class="line">print(tuple1[<span class="number">3</span>])</span><br><span class="line">print(tuple1[<span class="number">2</span>:<span class="number">4</span>:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-<h2 id="2、元组和列表相同的操作"><a href="#2、元组和列表相同的操作" class="headerlink" title="2、元组和列表相同的操作"></a>2、元组和列表相同的操作</h2><p><strong><em>+&emsp;、\</em>&emsp; == &emsp;!=&emsp; is&emsp; in &emsp; not in &emsp; len &emsp;max &emsp;min&emsp; sum &emsp;sorted*</strong></p>
-<h1 id="三、元组的独特操作"><a href="#三、元组的独特操作" class="headerlink" title="三、元组的独特操作"></a>三、元组的独特操作</h1><h2 id="1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型"><a href="#1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型" class="headerlink" title="1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)"></a>1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list1 = [<span class="number">10</span>]</span><br><span class="line">print(list1, type(list1))   <span class="comment">#   [10] &lt;class 'list'&gt;</span></span><br><span class="line">tuple1 = (<span class="number">10</span>,)</span><br><span class="line">print(tuple1,type(tuple1))</span><br></pre></td></tr></table></figure>
-<h2 id="2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"><a href="#2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组" class="headerlink" title="2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"></a>2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple2 = <span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span></span><br></pre></td></tr></table></figure>
-<h2 id="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"><a href="#3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）" class="headerlink" title="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"></a>3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple3 = (<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">x,y = tuple3</span><br><span class="line">print(x,y)   <span class="comment">#   10 20</span></span><br></pre></td></tr></table></figure>
-<h2 id="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"><a href="#4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）" class="headerlink" title="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"></a>4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple4 = (<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">8</span>)</span><br><span class="line">x1 ,*x2 ,x3 = tuple4</span><br><span class="line">print(x1,x2,x3)</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python基础：4:数据类型之列表</title>
     <url>/2018/05/01/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.4%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%88%97%E8%A1%A8/</url>
     <content><![CDATA[<h1 id="一、什么是列表"><a href="#一、什么是列表" class="headerlink" title="一、什么是列表"></a>一、什么是列表</h1><h2 id="1、列表"><a href="#1、列表" class="headerlink" title="1、列表"></a>1、列表</h2><p>列表是python提供的容器型数据类型；以中括号[]作为容器标志；<br>里面多个元素用逗号隔开：[1,2,3,4,5,6],元素的个数就是列表的长度<br>列表是可变的、 有序的 ；</p>
@@ -1974,26 +2052,21 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Python基础：20:多线程基础</title>
-    <url>/2018/08/10/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.20%20%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<p><strong>一个应用程序在运行时就是一个进程,一个进程默认只有一个主线程,也可以有多个进程,同时执行不同的任务;本次课程主要是实现如何让进程可以进行多线程工作</strong></p>
-<blockquote>
-<p>一个进程就像一个工厂,多个进程就像工厂例的工人,每个工人之间的工作相互之间不影响</p>
-</blockquote>
-<p><strong>让一个进程多线程工作有两种实现方式:</strong><br>①.直接导入treading模块种的Tread类并创建子线程对象<br>②.导入treading模块种的Tread类,创建一个Tread的子类,并用这个子类创建子线程对象</p>
-<h1 id="一-在进程种创建Tread类的对象"><a href="#一-在进程种创建Tread类的对象" class="headerlink" title="一. 在进程种创建Tread类的对象"></a>一. 在进程种创建Tread类的对象</h1><h2 id="1-创建线程对象-子线程"><a href="#1-创建线程对象-子线程" class="headerlink" title="1. 创建线程对象 - 子线程"></a>1. 创建线程对象 - 子线程</h2><p><strong>线程对象 = Thread(target=函数, args=元组)</strong><br>说明:<br>target  -  函数，需要在子线程中执行的任务(会在子线程中调用)<br>args  -   target对应的函数在调用的时候传的参数</p>
-<h2 id="2-让子线程执行子线程中的任务"><a href="#2-让子线程执行子线程中的任务" class="headerlink" title="2. 让子线程执行子线程中的任务"></a>2. 让子线程执行子线程中的任务</h2><p><strong>线程对象.start()</strong><br>在子线程中调用target对用的函数，并且将args中的元素作为参数</p>
-<p>比如在一个进程中模拟下载电影:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> treading <span class="keyword">import</span> Tread</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(self, movie_name)</span></span></span><br><span class="line"><span class="function">	<span class="title">print</span><span class="params">(<span class="string">'%s开始下载了,开始时间是%s'</span> % <span class="params">(movie_name, datetime.time<span class="params">()</span>)</span>)</span></span></span><br><span class="line"><span class="function">	<span class="title">time</span>.<span class="title">sleep</span><span class="params">(<span class="number">5</span>)</span></span></span><br><span class="line"><span class="function">	<span class="title">print</span><span class="params">(<span class="string">'%s下载完成了,完成时间是%s'</span> % <span class="params">(movie_name, datetime.time<span class="params">()</span>)</span>)</span></span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function"># 创建线程对象 - 子线程</span></span><br><span class="line">t1 = Tread(target=download, args=('暮光之城'))</span><br><span class="line">t2 = Tread(target=download, args=(<span class="string">'两只老虎'</span>))</span><br><span class="line">t3 = Tread(target=download, args=(<span class="string">'卧虎藏龙'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 让子线程执行子线程中的任务</span></span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line">t3.start()</span><br></pre></td></tr></table></figure>
-
-<h1 id="二-在进程种创建Tread类的子类的对象"><a href="#二-在进程种创建Tread类的子类的对象" class="headerlink" title="二. 在进程种创建Tread类的子类的对象"></a>二. 在进程种创建Tread类的子类的对象</h1><p>还是下载电影的例子:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> treading <span class="keyword">import</span> Tread</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DownloadTread</span><span class="params">(Tread)</span>:</span> <span class="comment"># 创建Tread的子类</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, mvoie_name)</span> # 创建子类的对象属性</span></span><br><span class="line"><span class="function">	<span class="title">super</span><span class="params">()</span>.<span class="title">__init__</span><span class="params">()</span> # 继承父类的属性</span></span><br><span class="line">	self.movie_name = movie_name</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># run方法是在子线程中自动调用的,除了self之外不能有其他的参数</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">		print(<span class="string">'%s开始下载,开始时间是:%s'</span> % (self.movie_name, datetime.now()))</span><br><span class="line">		time.sleep(<span class="number">5</span>)</span><br><span class="line">		print(<span class="string">'%s下载结束,结束时间是:%s'</span> % (self.movie_name, datetime.now()))</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">t1 = DownloadTead(<span class="string">'暮光之城'</span>)</span><br><span class="line">t2 = DownloadTead(<span class="string">'两只老虎'</span>)</span><br><span class="line">t3 = DownloadTead(<span class="string">'卧虎藏龙'</span>)</span><br><span class="line"></span><br><span class="line">t1.start</span><br><span class="line">t3.start</span><br><span class="line">t2.start</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>join的用法<br>线程对象.join()<br>其他代码</p>
-</blockquote>
-<p>这儿的其他代码会在线程对象中的任务执行完后才执行</p>
-]]></content>
+    <title>Python基础：5:数据类型之元组</title>
+    <url>/2018/05/07/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.5%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/</url>
+    <content><![CDATA[<h1 id="一、什么是元组"><a href="#一、什么是元组" class="headerlink" title="一、什么是元组"></a>一、什么是元组</h1><ul>
+<li>元组就是不可变的列表</li>
+<li>元组是将小括号 () 作为容器的标志；(元素1，元素2，…)</li>
+<li>元组不可变性，不能增、删、改，</li>
+<li>元组有序性，支持下标操作</li>
+<li>元组元素可以是任何类型的数据</li>
+</ul>
+<h1 id="二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"><a href="#二、元组的操作。-元组的操作和列表的相似度很大，有一些独特的操作已单独列出）" class="headerlink" title="二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）"></a>二、元组的操作。(元组的操作和列表的相似度很大，有一些独特的操作已单独列出）</h1><h2 id="1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）"><a href="#1、查-（元组的查和列表的基本相同；但元组不支持增、删、改）" class="headerlink" title="1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）"></a>1、查 （元组的查和列表的基本相同；但元组不支持增、删、改）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple1 = (<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(tuple1[<span class="number">0</span>])</span><br><span class="line">print(tuple1[<span class="number">3</span>])</span><br><span class="line">print(tuple1[<span class="number">2</span>:<span class="number">4</span>:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="2、元组和列表相同的操作"><a href="#2、元组和列表相同的操作" class="headerlink" title="2、元组和列表相同的操作"></a>2、元组和列表相同的操作</h2><p><strong><em>+&emsp;、\</em>&emsp; == &emsp;!=&emsp; is&emsp; in &emsp; not in &emsp; len &emsp;max &emsp;min&emsp; sum &emsp;sorted*</strong></p>
+<h1 id="三、元组的独特操作"><a href="#三、元组的独特操作" class="headerlink" title="三、元组的独特操作"></a>三、元组的独特操作</h1><h2 id="1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型"><a href="#1、单个元素的元组-单个元素后面要加一个逗号-不然打印不出类型" class="headerlink" title="1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)"></a>1、单个元素的元组(单个元素后面要加一个逗号,不然打印不出类型)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list1 = [<span class="number">10</span>]</span><br><span class="line">print(list1, type(list1))   <span class="comment">#   [10] &lt;class 'list'&gt;</span></span><br><span class="line">tuple1 = (<span class="number">10</span>,)</span><br><span class="line">print(tuple1,type(tuple1))</span><br></pre></td></tr></table></figure>
+<h2 id="2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"><a href="#2、单独使用的元组的值，-括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组" class="headerlink" title="2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组"></a>2、单独使用的元组的值， 括号（）可以省略；直接多个数据用逗号隔开表示的还是一个元组</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple2 = <span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span></span><br></pre></td></tr></table></figure>
+<h2 id="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"><a href="#3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）" class="headerlink" title="3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）"></a>3、可以通过让变量的个数和元组中元素的个数保持一致来分别获取元组中的元素（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple3 = (<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">x,y = tuple3</span><br><span class="line">print(x,y)   <span class="comment">#   10 20</span></span><br></pre></td></tr></table></figure>
+<h2 id="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"><a href="#4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号-；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）" class="headerlink" title="4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）"></a>4、同时申明多个变量获取元组元素，变量的个数可以比元组中元素的个数少，但是多个变量中的某一个变量前必须加星号*；带星号的变量可以获取不带星号的变量获取完剩下的部分。（列表也适用此方法）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tuple4 = (<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">8</span>)</span><br><span class="line">x1 ,*x2 ,x3 = tuple4</span><br><span class="line">print(x1,x2,x3)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Python学录</category>
       </categories>
@@ -2239,168 +2312,6 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       </tags>
   </entry>
   <entry>
-    <title>Python基础：2:变量和运算符</title>
-    <url>/2018/04/05/Python%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%B8%80%E7%AB%A0%201.2%20%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
-    <content><![CDATA[<h1 id="一、变量"><a href="#一、变量" class="headerlink" title="一、变量"></a>一、变量</h1><h3 id="1、变量"><a href="#1、变量" class="headerlink" title="1、变量"></a>1、变量</h3><ul>
-<li>变量是用来申请空间保存数据的<br>变量的公式：<strong>变量名 = 值</strong></li>
-</ul>
-<h3 id="2、说明"><a href="#2、说明" class="headerlink" title="2、说明"></a>2、说明</h3><ul>
-<li>变量名：自由命名，但要遵循一下要求和规范<br><strong>要求</strong>:<br>是标识符（1.由数字、字母和下划线组成；2.数字不能开头），不能是关键字<br><strong>规范</strong>:<br>1.见名知义：看到变量名，知道变量里存的什么数据<pre><code>2.满足PEP8命名规范：变量名内所有字母都小写，如果由多个单词组成变量名，则多个单词之间用下划线隔开
-3.不能用系统提供的函数名、类名、库名等系统相关的名来给变量命名</code></pre></li>
-<li>值：可以是任何有结果的表达式；例如：数据，已经赋值过的比那辆、运算表达式等</li>
-</ul>
-<h3 id="3、变量的使用"><a href="#3、变量的使用" class="headerlink" title="3、变量的使用"></a>3、变量的使用</h3><p>使用变量就是在使用变量里面的值;变量中的值可以修改大小和类型</p>
-<h3 id="4、同时声明多个变量"><a href="#4、同时声明多个变量" class="headerlink" title="4、同时声明多个变量"></a>4、同时声明多个变量</h3><ul>
-<li>同时声明多个变量赋相同的值<br>变量1 = 变量2 = 变量3 = … = 值</li>
-<li>同时声明多个变量赋不同的值<br>变量1，变量2，变量3，…=值1，值2，值3…</li>
-</ul>
-<h3 id="5、python声明变量的原理"><a href="#5、python声明变量的原理" class="headerlink" title="5、python声明变量的原理"></a>5、python声明变量的原理</h3><p>根据变量的大小申请的相应大小的内存，将变量名和数据对应的内存空间关联在一起；<br>在python中用一个变量给另外一个变量赋值的时候是将原来的变量的地址赋给另外一个变量，赋值完成后，数据只有一份。</p>
-<br>
-
-<p><strong>变量三要素：<br>1.类型  -  给变量复制的数据的类型  -  type（变量）<br>2.地址  -  给变量复制的数据在内存中的地址，也是正真存储的东西  -  id（变量）<br>3.值  -  给变量复制的数据</strong></p>
-<br>
-
-<hr>
-<h1 id="二、运算符"><a href="#二、运算符" class="headerlink" title="二、运算符"></a>二、运算符</h1><h3 id="一-、数学运算符"><a href="#一-、数学运算符" class="headerlink" title="(一)、数学运算符"></a>(一)、数学运算符</h3><h6 id="1、加减乘除：-emsp-emsp-emsp"><a href="#1、加减乘除：-emsp-emsp-emsp" class="headerlink" title="1、加减乘除：+&emsp;   -&emsp;   *&emsp;   /"></a>1、加减乘除：+&emsp;   -&emsp;   *&emsp;   /</h6><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">10</span> + <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> - <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> * <span class="number">3</span>)</span><br><span class="line">print(<span class="number">10</span> / <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<h6 id="2、取余-取模-求余数："><a href="#2、取余-取模-求余数：" class="headerlink" title="2、取余/取模/求余数：%"></a>2、取余/取模/求余数：%</h6><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num = <span class="number">123</span></span><br><span class="line">print(num % <span class="number">10</span>)   <span class="comment">#取个位</span></span><br><span class="line">print(num % <span class="number">100</span>)   <span class="comment">#取个位和十位</span></span><br></pre></td></tr></table></figure>
-<p>应用：<br>1、判断正数的奇偶性 - 判断该数对2取余结果是否为0<br>2、判断是否能整除<br>3、取低位数  </p>
-<h6 id="3、整除：-（商只取整数部分）"><a href="#3、整除：-（商只取整数部分）" class="headerlink" title="3、整除：//（商只取整数部分）"></a>3、整除：//（商只取整数部分）</h6><p>应用：取高位</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(num // <span class="number">100</span>)   <span class="comment">#取高位1</span></span><br></pre></td></tr></table></figure>
-<p><strong><em>注：负数的整除，取了结果之后减1</em></strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">-9</span> // <span class="number">2</span>) = <span class="number">-5</span></span><br></pre></td></tr></table></figure>
-<h6 id="4、幂运算：-（x-y-–-x的y次方）"><a href="#4、幂运算：-（x-y-–-x的y次方）" class="headerlink" title="4、幂运算：**  （x**y –  x的y次方）"></a>4、幂运算：**  （x**y –  x的y次方）</h6><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">2</span> ** <span class="number">3</span>)</span><br><span class="line">print(<span class="number">16</span> ** (<span class="number">1</span>/<span class="number">2</span>))   <span class="comment">#开方</span></span><br><span class="line">print(<span class="number">8</span> ** (<span class="number">1</span>/<span class="number">3</span>))   <span class="comment">#开方</span></span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h3 id="（二）、比较运算符"><a href="#（二）、比较运算符" class="headerlink" title="（二）、比较运算符"></a>（二）、比较运算符</h3><p><strong><em>所有的比较运算符的运算结果都是布尔值</em></strong><br>1、大于、小于、大于等于、小于等于：&gt;  &lt;  &gt;=  &lt;=</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">30</span> &gt;= <span class="number">20</span>)</span><br><span class="line">print(<span class="number">30</span> &gt;= <span class="number">30</span>)</span><br></pre></td></tr></table></figure>
-<p>2、等于、不等于：==  !=   –  判断两个值是否相等</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">10</span> == <span class="number">10</span>)</span><br><span class="line">print(<span class="number">10</span> != <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
-<p>3、python可以用连续的比较运算符表示范围</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">age = <span class="number">30</span></span><br><span class="line">print(<span class="number">28</span> &lt; age &lt; <span class="number">40</span>)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h3 id="（三）、逻辑运算符"><a href="#（三）、逻辑运算符" class="headerlink" title="（三）、逻辑运算符"></a>（三）、逻辑运算符</h3><p><strong><em>逻辑运算的对象和结果都是布尔值</em></strong><br><strong>1、and (逻辑与)</strong><br>1）、运算规则：两个都是True结果才是True，只要有一个是False结果就是False<br>2）、使用场景：需要多个条件同时满足</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 判断一个数是否能同时被3和7整除</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'是否能同时被3和7整除：'</span>,rem1 == <span class="number">0</span> <span class="keyword">and</span> rem2 == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<p><strong>2、or (逻辑或)</strong><br>1）、运算规则：两个都是False结果才是False，只要有一个是True结果就是True<br>2）、使用场景：多个条件中有一个田间满足就行</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 判断一个数是否能被3或被7整除</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'是否能被3或被7整除：'</span>,rem1 == <span class="number">0</span> <span class="keyword">or</span> rem2 == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<p><strong>3、not (逻辑非)</strong><br>1）、运算规则：True变False，False变True<br>2）、使用场景：对一个条件进行否定</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 一个数不能同时被3和7整除的条件</span></span><br><span class="line">num = input(<span class="string">'请输入数值：'</span>)</span><br><span class="line">rem1 = int(num) % <span class="number">3</span></span><br><span class="line">rem2 = int(num) % <span class="number">7</span></span><br><span class="line">print(<span class="string">'不能同时被3和7整除：'</span>,<span class="keyword">not</span> (rem1 == <span class="number">0</span> <span class="keyword">and</span> rem2 == <span class="number">0</span>))</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h3 id="（四）、赋值运算符"><a href="#（四）、赋值运算符" class="headerlink" title="（四）、赋值运算符"></a>（四）、赋值运算符</h3><p>= ， += ，-= ，<em>= ，/= ，%= ，//= ，*</em>=<br>所有赋值运算符的左边必须是变量，组合赋值运算符的左边除了是变量，这个变量还必须是已经声明过的。<br>1)、 变量 = 值  -&gt;  将右边的值赋给左边的变量<br>2)、 组合赋值运算符<br>已经声明过的变量 += 值  -&gt;  变量 = 变量 + 值</p>
-<hr>
-<p><strong><em>运算符优先级：</em></strong></p>
-<p>数学运算符 &gt; 比较运算符 &gt; 逻辑运算符 &gt; 赋值运算符</p>
-<p><strong><em>数学运算符优先级：</em></strong></p>
-<p>** &gt;  *,/,//,%(优先级相同)  &gt;   + ,-</p>
-<p>如果有括号则先算括号</p>
-<br>
-
-<h3 id="（五）、位运算"><a href="#（五）、位运算" class="headerlink" title="（五）、位运算"></a>（五）、位运算</h3><p><strong><em>所有的位运算都是针对数字的补码进行操作的</em></strong><br>位运算符：&amp;(与)、|(或)、~(取反)、^(异或)、&lt;&lt;(左移)、&gt;&gt;(右移)<br><strong>1、&amp;(按位与)</strong><br>1）、运算规则：补码每一位上的数都是1结果就是1，如果有一个0结果就是0<br>例：1110 &amp; 0111 = 0110<br>2）、运用：高效判断数字的奇偶性<br>&emsp;将数字和1进行按位与运算，判断结果是0（偶数）还是1（奇数）</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="number">3</span> &amp; <span class="number">1</span>, <span class="number">7</span> &amp; <span class="number">1</span>,<span class="number">19</span> &amp; <span class="number">1</span>)</span><br><span class="line">print(<span class="number">4</span> &amp; <span class="number">1</span>, <span class="number">128</span> &amp; <span class="number">1</span>,<span class="number">800</span> &amp; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p><strong>2、| (按位或)</strong><br>1）、运算规则：补码每一位上的数都是0结果就是0，如果有一个1结果就是1<br>例：1110 | 0111 = 1111<br><strong>3、~ (按位取反)、单目运算</strong><br>例：~1101 =  0010<br><strong>4、^ (异或)</strong><br>运算规则：每一位上的数相同为0，不同为1<br>例：1110 ^ 0111 = 1001<br><strong>5、&lt;&lt; (左移)</strong><br><strong><em>数字 &lt;&lt; N</em></strong>   &emsp;指定的数字的补码整体向左移动N位；<br><strong><em>计算：数字*2**N</em></strong><br><strong>6、&gt;&gt; (右移)</strong><br><strong><em>数字 &gt;&gt; N</em></strong>   &emsp;指定的数字的补码整体向右移动N位；<br><strong><em>计算：数字//2**N</em></strong></p>
-]]></content>
-      <categories>
-        <category>Python学录</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>岭回归(Ridge)和套索回归(Lasso)</title>
-    <url>/2018/11/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B2%AD%E5%9B%9E%E5%BD%92(Ridge)%E5%92%8C%E5%A5%97%E7%B4%A2%E5%9B%9E%E5%BD%92(Lasso)/</url>
-    <content><![CDATA[<h2 id="一-拟合"><a href="#一-拟合" class="headerlink" title="一: 拟合"></a>一: 拟合</h2><h3 id="一-过拟合与欠拟合"><a href="#一-过拟合与欠拟合" class="headerlink" title="(一): 过拟合与欠拟合"></a>(一): 过拟合与欠拟合</h3><p><strong>机器学习中一个重要的话题便是模型的泛化能力，泛化能力强的模型才是好模型</strong>，对于训练好的模型，若在训练集表现差，不必说在测试集表现同样会很差，这可能是欠拟合导致；若模型在训练集表现非常好，却在测试集上差强人意，则这便是过拟合导致的; 过拟合与欠拟合也可以用 Bias 与 Variance 的角度来解释，<strong>欠拟合会导致高 Bias; 过拟合会导致高 Variance ，所以模型需要在 Bias 与 Variance 之间做出一个权衡</strong></p>
-<p><strong>Bias 即为模型的期望输出与其真实输出之间的差异</strong>；</p>
-<p><strong>Variance 刻画了不同训练集得到的模型的输出与这些模型期望输出的差异</strong>。</p>
-<p>一般在模型效果差的第一个想法是增多数据，其实增多数据并不一定会有更好的结果，因为<strong>欠拟合时增多数据往往导致效果更差，而过拟合时增多数据会导致 Gap 的减小，效果不会好太多</strong>，所以当模型效果很差时，应该检查模型是否处于欠拟合或者过拟合的状态，而不要一味的增多数据量，关于过拟合与欠拟合，这里给出几个解决方法。</p>
-<h3 id="二-常用解决办法"><a href="#二-常用解决办法" class="headerlink" title="(二): 常用解决办法"></a>(二): 常用解决办法</h3><p><strong>(1)解决欠拟合的方法：</strong></p>
-<p>1、增加新特征，可以考虑加入进特征组合、高次特征，来增大假设空间;</p>
-<p>2、尝试非线性模型，比如核SVM 、决策树、DNN等模型;</p>
-<p>3、如果有正则项可以调小正则项参数 $\lambda$;</p>
-<p>4、Boosting ,Boosting 往往会有较小的 Bias，比如 Gradient Boosting 等.</p>
-<p><strong>(2)解决过拟合的方法：</strong></p>
-<p>1、交叉检验，通过交叉检验得到较优的模型参数;</p>
-<p>2、特征选择，减少特征数或使用较少的特征组合，对于按区间离散化的特征，增大划分的区间;</p>
-<p>3、正则化，常用的有 L1、L2 正则。而且 L1正则还可以自动进行特征选择;</p>
-<p>4、如果有正则项则可以考虑增大正则项参数 lambda;</p>
-<p>5、增加训练数据可以有限的避免过拟合;</p>
-<p>6、Bagging ,将多个弱学习器Bagging 一下效果会好很多，比如随机森林等.</p>
-<h2 id="二-Ridge回归-岭回归"><a href="#二-Ridge回归-岭回归" class="headerlink" title="二: Ridge回归 - 岭回归"></a>二: Ridge回归 - 岭回归</h2><h3 id="1-Ridge回归-梯度下降-在线性回归后加上L2正则项-解决过拟合问题"><a href="#1-Ridge回归-梯度下降-在线性回归后加上L2正则项-解决过拟合问题" class="headerlink" title="1: Ridge回归 - 梯度下降(在线性回归后加上L2正则项-解决过拟合问题)"></a>1: Ridge回归 - 梯度下降(在线性回归后加上L2正则项-解决过拟合问题)</h3><p><strong>损失函数:</strong><br>$$<br>J(w) = \min\limits_w||Xw-y||_2^2 + \alpha||w||_2^2<br>$$</p>
-<p><strong>$$\frac{1}{m}$$表示m个样本求平均:</strong><br>$$<br>J(w) = \frac{1}{m}\sum_{i=1}^m(||X_iw-y_i||_2^2 + \alpha||w||_2^2)<br>$$</p>
-<p>$$<br>J(w) = \frac{1}{m}[(Xw-y)^T(Xw-y)+\alpha w^Tw]<br>$$</p>
-<p><strong>求解梯度(导数):</strong><br>$$<br>J’(w) = \frac{2}{m}[X^T(Xw-y)+\alpha w]<br>$$</p>
-<p>$$<br>\nabla_wJ(w) = \frac{2}{m} [X^T(Xw - y) +\alpha w]<br>$$</p>
-<p><strong>更新w:</strong><br>$$<br>w = w-\epsilon \nabla_wJ(w)<br>$$</p>
-<p>$$<br>w = w -\frac{2}{m}\epsilon[X^T(Xw-y)+\alpha w]<br>$$</p>
-<p>$$<br>w = w -\frac{2\epsilon}{m}  X^T(Xw-y)-\frac{2\alpha\epsilon}{m}  w<br>$$</p>
-<p>$$<br>w = [w -\frac{2\epsilon}{m}  X^T(Xw-y)]-\frac{2\alpha\epsilon}{m}  w<br>$$</p>
-<p>如上公式, 中括号内的公式是线性回归的更新规则, 也就是说岭回归就是在 线性回归的基础上多减了一项,$$\frac{2\alpha\epsilon}{m}  w$$, 其</p>
-<p>中:</p>
-<p>​        $$\alpha &gt;= 0$$缩放强度</p>
-<p>​        $$\epsilon&gt;=0$$步幅</p>
-<p>​        $$m&gt;0$$样本数量</p>
-<p>当w是<font color = red>正数</font>时：$$\frac{2\epsilon\alpha}{m}w$$ 为正数,此时岭回归就相当于在线性回归的基础上减去一个正数, 所以<font color = red>系数w变小</font></p>
-<p>当w是<font color = red>负数</font>时：$$\frac{2\epsilon\alpha}{m}w$$ 为负数,此时岭回归就相当于在线性回归的基础上减去一个负数, 所以<font color = red>系数w的绝对值变小</font></p>
-<p>正则项：w变小的好处：<font color = red>防止过拟合</font></p>
-<p>岭回归适用范围:</p>
-<p>方程完全共线性(方程内有方程是其他方程的倍数,相当于重复方程):</p>
-<ul>
-<li>x+ 2y + 22 = 9</li>
-<li>2x +4y + 42 = 18</li>
-</ul>
-<p>岭回归适用于数据中存在共线性的情况(非满秩矩阵)</p>
-<h3 id="2-Ridge回归正规方程推导"><a href="#2-Ridge回归正规方程推导" class="headerlink" title="2: Ridge回归正规方程推导:"></a>2: Ridge回归正规方程推导:</h3><p>损失函数:<br>$$<br>J(w) = \min\limits_w||Xw-y||_2^2 + \alpha||w||_2^2<br>$$</p>
-<p>$$<br>J(w)=(Xw-y)^T(Xw-y)+\alpha w^Tw<br>$$</p>
-<p>求导:<br>$$<br>\nabla_wJ(w)=2X^TXw-2X^Ty+2\alpha w<br>$$<br>令导数为0:<br>$$<br>2X^TXw-2X^Ty+2\alpha w=0<br>$$</p>
-<p>$$<br>X^TXw-X^Ty+\alpha Iw=0<br>$$</p>
-<p>$$<br>(X^TX+\alpha I)w-X^Ty=0<br>$$</p>
-<p>$$<br>(X^TX+\alpha I)w=X^Ty<br>$$</p>
-<p>$$<br>(X^TX+\alpha I)^{-1}(X^TX+\alpha I)w=(X^TX+\alpha I)^{-1}X^Ty<br>$$</p>
-<p>推导得出w:<br>$$<br>w=(X^TX+\alpha I)^{-1}X^Ty<br>$$</p>
-<h3 id="3-Ridge回归和线性回归对比"><a href="#3-Ridge回归和线性回归对比" class="headerlink" title="3: Ridge回归和线性回归对比"></a>3: Ridge回归和线性回归对比</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, Ridge, Lasso</span><br><span class="line"><span class="comment"># 将数据一分为二</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment"># 均方误差</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line"><span class="comment"># 加载训练数据</span></span><br><span class="line"><span class="comment"># train = pd.read_table('./zhengqi_train.txt') 和下面一行的效果相同</span></span><br><span class="line">train = pd.read_csv(<span class="string">'./zhengqi_train.txt'</span>, sep = <span class="string">'\t'</span>)</span><br><span class="line">train</span><br><span class="line"><span class="comment"># 加载测试数据</span></span><br><span class="line">test = pd.read_table(<span class="string">'./zhengqi_test.txt'</span>)</span><br><span class="line">test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将训练数据分乘特征值和目标值</span></span><br><span class="line"><span class="comment"># 特征, 影响目标值的因素</span></span><br><span class="line">X = train.iloc[:, :<span class="number">-1</span>]</span><br><span class="line"><span class="comment"># 目标值</span></span><br><span class="line">y = train[<span class="string">'target'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法评估, 将上面的数据分成两份,一部分用来训练, 一部分用来测试</span></span><br><span class="line">X_train, X_validation, y_train, y_validation = train_test_split(X, y, test_size = <span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用普通线性回归模型</span></span><br><span class="line">linear = LinearRegression()</span><br><span class="line">linear.fit(X_train, y_train)</span><br><span class="line">y_ = linear.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)   <span class="comment"># 均方误差</span></span><br><span class="line"><span class="string">'''0.11713370444738197'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用线性模型预测测试数据</span></span><br><span class="line">y_commit = linear.predict(test)</span><br><span class="line"><span class="comment"># 保存数据到本地</span></span><br><span class="line">s = pd.Series(y_commit)</span><br><span class="line">s.to_csv(<span class="string">'./linear_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用岭回归模型</span></span><br><span class="line">ridge = Ridge(alpha=<span class="number">256</span>)   <span class="comment"># alpha值</span></span><br><span class="line">ridge.fit(X_train, y_train)</span><br><span class="line">y_ = ridge.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)</span><br><span class="line"><span class="string">'''0.13427749653218798'''</span></span><br><span class="line"></span><br><span class="line">y_commit = ridge.predict(test)</span><br><span class="line">pd.Series(y_commit).to_csv(<span class="string">'./ridge_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
-
-<p><font color=red>将生成的数据上传到阿里天池,与实际数据对比,计算均方误差时, 使用岭回归模型得到的数据比使用线性回归模型得到的数据的均方误差要小,说明对该组数据,岭回归效果更好</font></p>
-<h2 id="三-lasso回归-套索回归"><a href="#三-lasso回归-套索回归" class="headerlink" title="三: lasso回归 - 套索回归"></a>三: lasso回归 - 套索回归</h2><h3 id="1-lasso回归-梯度下降-在线性回归后加上L1正则项-解决过拟合问题"><a href="#1-lasso回归-梯度下降-在线性回归后加上L1正则项-解决过拟合问题" class="headerlink" title="1: lasso回归 - 梯度下降(在线性回归后加上L1正则项-解决过拟合问题)"></a>1: lasso回归 - 梯度下降(在线性回归后加上L1正则项-解决过拟合问题)</h3><p><strong>罗斯回归方程:</strong><br>$$<br>\min\limits_w \frac{1}{2n_{samples}}||Xw-y||_2^2+\alpha ||w||_1<br>$$<br><strong>方程转换:</strong><br>$$<br>J(w)=||Xw-y||_2^2+\alpha ||w||_1<br>$$<br>向量的1范数: 取绝对值的最大值</p>
-<p>由于求导时方程中不能有绝对值符号, 所以分情况讨论: w是正数或者为负数</p>
-<p><strong>求导:</strong><br>$$<br>\nabla_wJ(w)=2X^TXw-2X^Ty+\alpha sgn(w)<br>$$<br>sgn(w)是符号表示函数: sgn(w)代表着w&gt;0那么sgn(w)=+1;如果w&lt;0那么sgn(W)=-1</p>
-<p><strong>梯度下降中系数w的更新规则:</strong><br>$$<br>w = w - \epsilon \nabla_wJ(w)<br>$$</p>
-<p>$$<br>w = w - \epsilon(X^TXw-X^Ty)-\epsilon \alpha sgn(w)<br>$$</p>
-<p>$$<br>w = [w - \epsilon(X^TXw-X^Ty)]-\epsilon \alpha sgn(w)<br>$$</p>
-<p>当w为正时候sgn(w) =+1,直接去掉减去入所以正的w变小了</p>
-<p>当w为负时候sgn(w)=-1,负号变成了正号加上了入,负数w取向零</p>
-<p>Lasso回归系数可以缩减到0,岭回归不可以</p>
-<p>系数(权重)变成0了,说明:可有可无,属性不重要</p>
-<h3 id="2-lasso回归与岭回归和线性回归对比"><a href="#2-lasso回归与岭回归和线性回归对比" class="headerlink" title="2: lasso回归与岭回归和线性回归对比"></a>2: lasso回归与岭回归和线性回归对比</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, Ridge, Lasso</span><br><span class="line"><span class="comment"># 将数据一分为二</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment"># 均方误差</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line"><span class="comment"># 加载训练数据</span></span><br><span class="line"><span class="comment"># train = pd.read_table('./zhengqi_train.txt') 和下面一行的效果相同</span></span><br><span class="line">train = pd.read_csv(<span class="string">'./zhengqi_train.txt'</span>, sep = <span class="string">'\t'</span>)</span><br><span class="line">train</span><br><span class="line"><span class="comment"># 加载测试数据</span></span><br><span class="line">test = pd.read_table(<span class="string">'./zhengqi_test.txt'</span>)</span><br><span class="line">test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将训练数据分乘特征值和目标值</span></span><br><span class="line"><span class="comment"># 特征, 影响目标值的因素</span></span><br><span class="line">X = train.iloc[:, :<span class="number">-1</span>]</span><br><span class="line"><span class="comment"># 目标值</span></span><br><span class="line">y = train[<span class="string">'target'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法评估, 将上面的数据分成两份,一部分用来训练, 一部分用来测试</span></span><br><span class="line">X_train, X_validation, y_train, y_validation = train_test_split(X, y, test_size = <span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用普通线性回归模型</span></span><br><span class="line">linear = LinearRegression()</span><br><span class="line">linear.fit(X_train, y_train)</span><br><span class="line">y_ = linear.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)   <span class="comment"># 均方误差</span></span><br><span class="line"><span class="string">'''0.11713370444738197'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用线性模型预测测试数据</span></span><br><span class="line">y_commit = linear.predict(test)</span><br><span class="line"><span class="comment"># 保存数据到本地</span></span><br><span class="line">s = pd.Series(y_commit)</span><br><span class="line">s.to_csv(<span class="string">'./linear_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用岭回归模型</span></span><br><span class="line">ridge = Ridge(alpha=<span class="number">256</span>)   <span class="comment"># alpha值</span></span><br><span class="line">ridge.fit(X_train, y_train)</span><br><span class="line">y_ = ridge.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)</span><br><span class="line"><span class="string">'''0.13427749653218798'''</span></span><br><span class="line"></span><br><span class="line">y_commit = ridge.predict(test)</span><br><span class="line">pd.Series(y_commit).to_csv(<span class="string">'./ridge_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用lasso回归模型</span></span><br><span class="line">lasso = Lasso(alpha=<span class="number">256</span>)</span><br><span class="line">lasso.fit(X_train, y_train)</span><br><span class="line">y_ = lasso.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)</span><br><span class="line"><span class="string">'''0.9351911263395224'''</span></span><br><span class="line"></span><br><span class="line">y_commit = lasso.predict(test)</span><br><span class="line">pd.Series(y_commit).to_csv(<span class="string">'./lasso_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
-
-<p><font color=red>将生成的数据上传到阿里天池,与实际数据对比,计算均方误差时, 使用lasso回归模型得到的数据比使用岭回归模型和线性回归模型得到的数据的均方误差要小,说明对该组数据,lasso回归效果较好好</font></p>
-<p><font color=green>套索回归适用于稀松矩阵(大部分系数是0)</font></p>
-<h2 id="四-Elastic-Net-弹性网络回归"><a href="#四-Elastic-Net-弹性网络回归" class="headerlink" title="四: Elastic-Net  -  弹性网络回归"></a>四: Elastic-Net  -  弹性网络回归</h2><p><strong>弹性网络回归方程:</strong><br>$$<br>\min_{w} { \frac{1}{2n_{\text{samples}}} ||X w - y||_2 ^ 2 + \alpha \rho ||w||_1 +<br>\frac{\alpha(1-\rho)}{2} ||w||_2 ^ 2}<br>$$</p>
-<p><strong>使用弹性网络回归预测工业蒸汽量:(在线性回归后加L1, L2正则项来解决过拟合问题)</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># ElasticNetCV 交叉验证(可以一次传递多个参数, 模型挑选合适的)</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, Ridge, ElasticNet, ElasticNetCV</span><br><span class="line"><span class="comment"># 将数据一分为二</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment"># 均方误差</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line"><span class="comment"># 加载训练数据</span></span><br><span class="line"><span class="comment"># train = pd.read_table('./zhengqi_train.txt') 和下面一行的效果相同</span></span><br><span class="line">train = pd.read_csv(<span class="string">'./zhengqi_train.txt'</span>, sep = <span class="string">'\t'</span>)</span><br><span class="line">train</span><br><span class="line"><span class="comment"># 加载测试数据</span></span><br><span class="line">test = pd.read_table(<span class="string">'./zhengqi_test.txt'</span>)</span><br><span class="line">test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将训练数据分乘特征值和目标值</span></span><br><span class="line"><span class="comment"># 特征, 影响目标值的因素</span></span><br><span class="line">X = train.iloc[:, :<span class="number">-1</span>]</span><br><span class="line"><span class="comment"># 目标值</span></span><br><span class="line">y = train[<span class="string">'target'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法评估, 将上面的数据分成两份,一部分用来训练, 一部分用来测试</span></span><br><span class="line"><span class="comment"># random_state = 1024 ; 种子固定,当数值固定时,生成的随机数是固定的</span></span><br><span class="line">X_train, X_validation, y_train, y_validation = train_test_split(X, y, test_size = <span class="number">0.2</span>, random_state = <span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ElasticNetCV可以筛选多个alpha中最好的一个</span></span><br><span class="line">model = ElasticNetCV(l1_ratio=<span class="number">0.05</span>, alphas=[<span class="number">0.1</span>, <span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">5.0</span>, <span class="number">10.0</span>])</span><br><span class="line">model.fit(X, y)</span><br><span class="line">y_ = model.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)</span><br><span class="line"><span class="string">'''0.10872462328271233'''</span></span><br><span class="line"></span><br><span class="line">model.alpha_   <span class="comment"># 返回选择的alpha值</span></span><br><span class="line"></span><br><span class="line">result = model.predict(test)</span><br><span class="line">pd.Series(result).to_csv(<span class="string">'./elastic.txt'</span>, index=<span class="literal">False</span>, header=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>机器学习</tag>
-        <tag>算法</tag>
-        <tag>Lasso回归</tag>
-        <tag>Ridge回归</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>KNN近邻算法</title>
     <url>/2019/02/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/KNN%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<h1 id="一-KNN算法概述"><a href="#一-KNN算法概述" class="headerlink" title="一: KNN算法概述"></a>一: KNN算法概述</h1><p><strong>K nearest neighbors (k邻近算法)</strong></p>
@@ -2539,8 +2450,97 @@ git remote -v   # 查看远端仓库的地址</code></pre><br>
       <tags>
         <tag>基础</tag>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>KNN</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>岭回归(Ridge)和套索回归(Lasso)</title>
+    <url>/2018/11/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B2%AD%E5%9B%9E%E5%BD%92(Ridge)%E5%92%8C%E5%A5%97%E7%B4%A2%E5%9B%9E%E5%BD%92(Lasso)/</url>
+    <content><![CDATA[<h2 id="一-拟合"><a href="#一-拟合" class="headerlink" title="一: 拟合"></a>一: 拟合</h2><h3 id="一-过拟合与欠拟合"><a href="#一-过拟合与欠拟合" class="headerlink" title="(一): 过拟合与欠拟合"></a>(一): 过拟合与欠拟合</h3><p><strong>机器学习中一个重要的话题便是模型的泛化能力，泛化能力强的模型才是好模型</strong>，对于训练好的模型，若在训练集表现差，不必说在测试集表现同样会很差，这可能是欠拟合导致；若模型在训练集表现非常好，却在测试集上差强人意，则这便是过拟合导致的; 过拟合与欠拟合也可以用 Bias 与 Variance 的角度来解释，<strong>欠拟合会导致高 Bias; 过拟合会导致高 Variance ，所以模型需要在 Bias 与 Variance 之间做出一个权衡</strong></p>
+<p><strong>Bias 即为模型的期望输出与其真实输出之间的差异</strong>；</p>
+<p><strong>Variance 刻画了不同训练集得到的模型的输出与这些模型期望输出的差异</strong>。</p>
+<p>一般在模型效果差的第一个想法是增多数据，其实增多数据并不一定会有更好的结果，因为<strong>欠拟合时增多数据往往导致效果更差，而过拟合时增多数据会导致 Gap 的减小，效果不会好太多</strong>，所以当模型效果很差时，应该检查模型是否处于欠拟合或者过拟合的状态，而不要一味的增多数据量，关于过拟合与欠拟合，这里给出几个解决方法。</p>
+<h3 id="二-常用解决办法"><a href="#二-常用解决办法" class="headerlink" title="(二): 常用解决办法"></a>(二): 常用解决办法</h3><p><strong>(1)解决欠拟合的方法：</strong></p>
+<p>1、增加新特征，可以考虑加入进特征组合、高次特征，来增大假设空间;</p>
+<p>2、尝试非线性模型，比如核SVM 、决策树、DNN等模型;</p>
+<p>3、如果有正则项可以调小正则项参数 $\lambda$;</p>
+<p>4、Boosting ,Boosting 往往会有较小的 Bias，比如 Gradient Boosting 等.</p>
+<p><strong>(2)解决过拟合的方法：</strong></p>
+<p>1、交叉检验，通过交叉检验得到较优的模型参数;</p>
+<p>2、特征选择，减少特征数或使用较少的特征组合，对于按区间离散化的特征，增大划分的区间;</p>
+<p>3、正则化，常用的有 L1、L2 正则。而且 L1正则还可以自动进行特征选择;</p>
+<p>4、如果有正则项则可以考虑增大正则项参数 lambda;</p>
+<p>5、增加训练数据可以有限的避免过拟合;</p>
+<p>6、Bagging ,将多个弱学习器Bagging 一下效果会好很多，比如随机森林等.</p>
+<h2 id="二-Ridge回归-岭回归"><a href="#二-Ridge回归-岭回归" class="headerlink" title="二: Ridge回归 - 岭回归"></a>二: Ridge回归 - 岭回归</h2><h3 id="1-Ridge回归-梯度下降-在线性回归后加上L2正则项-解决过拟合问题"><a href="#1-Ridge回归-梯度下降-在线性回归后加上L2正则项-解决过拟合问题" class="headerlink" title="1: Ridge回归 - 梯度下降(在线性回归后加上L2正则项-解决过拟合问题)"></a>1: Ridge回归 - 梯度下降(在线性回归后加上L2正则项-解决过拟合问题)</h3><p><strong>损失函数:</strong><br>$$<br>J(w) = \min\limits_w||Xw-y||_2^2 + \alpha||w||_2^2<br>$$</p>
+<p><strong>$$\frac{1}{m}$$表示m个样本求平均:</strong><br>$$<br>J(w) = \frac{1}{m}\sum_{i=1}^m(||X_iw-y_i||_2^2 + \alpha||w||_2^2)<br>$$</p>
+<p>$$<br>J(w) = \frac{1}{m}[(Xw-y)^T(Xw-y)+\alpha w^Tw]<br>$$</p>
+<p><strong>求解梯度(导数):</strong><br>$$<br>J’(w) = \frac{2}{m}[X^T(Xw-y)+\alpha w]<br>$$</p>
+<p>$$<br>\nabla_wJ(w) = \frac{2}{m} [X^T(Xw - y) +\alpha w]<br>$$</p>
+<p><strong>更新w:</strong><br>$$<br>w = w-\epsilon \nabla_wJ(w)<br>$$</p>
+<p>$$<br>w = w -\frac{2}{m}\epsilon[X^T(Xw-y)+\alpha w]<br>$$</p>
+<p>$$<br>w = w -\frac{2\epsilon}{m}  X^T(Xw-y)-\frac{2\alpha\epsilon}{m}  w<br>$$</p>
+<p>$$<br>w = [w -\frac{2\epsilon}{m}  X^T(Xw-y)]-\frac{2\alpha\epsilon}{m}  w<br>$$</p>
+<p>如上公式, 中括号内的公式是线性回归的更新规则, 也就是说岭回归就是在 线性回归的基础上多减了一项,$$\frac{2\alpha\epsilon}{m}  w$$, 其</p>
+<p>中:</p>
+<p>​        $$\alpha &gt;= 0$$缩放强度</p>
+<p>​        $$\epsilon&gt;=0$$步幅</p>
+<p>​        $$m&gt;0$$样本数量</p>
+<p>当w是<font color = red>正数</font>时：$$\frac{2\epsilon\alpha}{m}w$$ 为正数,此时岭回归就相当于在线性回归的基础上减去一个正数, 所以<font color = red>系数w变小</font></p>
+<p>当w是<font color = red>负数</font>时：$$\frac{2\epsilon\alpha}{m}w$$ 为负数,此时岭回归就相当于在线性回归的基础上减去一个负数, 所以<font color = red>系数w的绝对值变小</font></p>
+<p>正则项：w变小的好处：<font color = red>防止过拟合</font></p>
+<p>岭回归适用范围:</p>
+<p>方程完全共线性(方程内有方程是其他方程的倍数,相当于重复方程):</p>
+<ul>
+<li>x+ 2y + 22 = 9</li>
+<li>2x +4y + 42 = 18</li>
+</ul>
+<p>岭回归适用于数据中存在共线性的情况(非满秩矩阵)</p>
+<h3 id="2-Ridge回归正规方程推导"><a href="#2-Ridge回归正规方程推导" class="headerlink" title="2: Ridge回归正规方程推导:"></a>2: Ridge回归正规方程推导:</h3><p>损失函数:<br>$$<br>J(w) = \min\limits_w||Xw-y||_2^2 + \alpha||w||_2^2<br>$$</p>
+<p>$$<br>J(w)=(Xw-y)^T(Xw-y)+\alpha w^Tw<br>$$</p>
+<p>求导:<br>$$<br>\nabla_wJ(w)=2X^TXw-2X^Ty+2\alpha w<br>$$<br>令导数为0:<br>$$<br>2X^TXw-2X^Ty+2\alpha w=0<br>$$</p>
+<p>$$<br>X^TXw-X^Ty+\alpha Iw=0<br>$$</p>
+<p>$$<br>(X^TX+\alpha I)w-X^Ty=0<br>$$</p>
+<p>$$<br>(X^TX+\alpha I)w=X^Ty<br>$$</p>
+<p>$$<br>(X^TX+\alpha I)^{-1}(X^TX+\alpha I)w=(X^TX+\alpha I)^{-1}X^Ty<br>$$</p>
+<p>推导得出w:<br>$$<br>w=(X^TX+\alpha I)^{-1}X^Ty<br>$$</p>
+<h3 id="3-Ridge回归和线性回归对比"><a href="#3-Ridge回归和线性回归对比" class="headerlink" title="3: Ridge回归和线性回归对比"></a>3: Ridge回归和线性回归对比</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, Ridge, Lasso</span><br><span class="line"><span class="comment"># 将数据一分为二</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment"># 均方误差</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line"><span class="comment"># 加载训练数据</span></span><br><span class="line"><span class="comment"># train = pd.read_table('./zhengqi_train.txt') 和下面一行的效果相同</span></span><br><span class="line">train = pd.read_csv(<span class="string">'./zhengqi_train.txt'</span>, sep = <span class="string">'\t'</span>)</span><br><span class="line">train</span><br><span class="line"><span class="comment"># 加载测试数据</span></span><br><span class="line">test = pd.read_table(<span class="string">'./zhengqi_test.txt'</span>)</span><br><span class="line">test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将训练数据分乘特征值和目标值</span></span><br><span class="line"><span class="comment"># 特征, 影响目标值的因素</span></span><br><span class="line">X = train.iloc[:, :<span class="number">-1</span>]</span><br><span class="line"><span class="comment"># 目标值</span></span><br><span class="line">y = train[<span class="string">'target'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法评估, 将上面的数据分成两份,一部分用来训练, 一部分用来测试</span></span><br><span class="line">X_train, X_validation, y_train, y_validation = train_test_split(X, y, test_size = <span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用普通线性回归模型</span></span><br><span class="line">linear = LinearRegression()</span><br><span class="line">linear.fit(X_train, y_train)</span><br><span class="line">y_ = linear.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)   <span class="comment"># 均方误差</span></span><br><span class="line"><span class="string">'''0.11713370444738197'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用线性模型预测测试数据</span></span><br><span class="line">y_commit = linear.predict(test)</span><br><span class="line"><span class="comment"># 保存数据到本地</span></span><br><span class="line">s = pd.Series(y_commit)</span><br><span class="line">s.to_csv(<span class="string">'./linear_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用岭回归模型</span></span><br><span class="line">ridge = Ridge(alpha=<span class="number">256</span>)   <span class="comment"># alpha值</span></span><br><span class="line">ridge.fit(X_train, y_train)</span><br><span class="line">y_ = ridge.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)</span><br><span class="line"><span class="string">'''0.13427749653218798'''</span></span><br><span class="line"></span><br><span class="line">y_commit = ridge.predict(test)</span><br><span class="line">pd.Series(y_commit).to_csv(<span class="string">'./ridge_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p><font color=red>将生成的数据上传到阿里天池,与实际数据对比,计算均方误差时, 使用岭回归模型得到的数据比使用线性回归模型得到的数据的均方误差要小,说明对该组数据,岭回归效果更好</font></p>
+<h2 id="三-lasso回归-套索回归"><a href="#三-lasso回归-套索回归" class="headerlink" title="三: lasso回归 - 套索回归"></a>三: lasso回归 - 套索回归</h2><h3 id="1-lasso回归-梯度下降-在线性回归后加上L1正则项-解决过拟合问题"><a href="#1-lasso回归-梯度下降-在线性回归后加上L1正则项-解决过拟合问题" class="headerlink" title="1: lasso回归 - 梯度下降(在线性回归后加上L1正则项-解决过拟合问题)"></a>1: lasso回归 - 梯度下降(在线性回归后加上L1正则项-解决过拟合问题)</h3><p><strong>罗斯回归方程:</strong><br>$$<br>\min\limits_w \frac{1}{2n_{samples}}||Xw-y||_2^2+\alpha ||w||_1<br>$$<br><strong>方程转换:</strong><br>$$<br>J(w)=||Xw-y||_2^2+\alpha ||w||_1<br>$$<br>向量的1范数: 取绝对值的最大值</p>
+<p>由于求导时方程中不能有绝对值符号, 所以分情况讨论: w是正数或者为负数</p>
+<p><strong>求导:</strong><br>$$<br>\nabla_wJ(w)=2X^TXw-2X^Ty+\alpha sgn(w)<br>$$<br>sgn(w)是符号表示函数: sgn(w)代表着w&gt;0那么sgn(w)=+1;如果w&lt;0那么sgn(W)=-1</p>
+<p><strong>梯度下降中系数w的更新规则:</strong><br>$$<br>w = w - \epsilon \nabla_wJ(w)<br>$$</p>
+<p>$$<br>w = w - \epsilon(X^TXw-X^Ty)-\epsilon \alpha sgn(w)<br>$$</p>
+<p>$$<br>w = [w - \epsilon(X^TXw-X^Ty)]-\epsilon \alpha sgn(w)<br>$$</p>
+<p>当w为正时候sgn(w) =+1,直接去掉减去入所以正的w变小了</p>
+<p>当w为负时候sgn(w)=-1,负号变成了正号加上了入,负数w取向零</p>
+<p>Lasso回归系数可以缩减到0,岭回归不可以</p>
+<p>系数(权重)变成0了,说明:可有可无,属性不重要</p>
+<h3 id="2-lasso回归与岭回归和线性回归对比"><a href="#2-lasso回归与岭回归和线性回归对比" class="headerlink" title="2: lasso回归与岭回归和线性回归对比"></a>2: lasso回归与岭回归和线性回归对比</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, Ridge, Lasso</span><br><span class="line"><span class="comment"># 将数据一分为二</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment"># 均方误差</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line"><span class="comment"># 加载训练数据</span></span><br><span class="line"><span class="comment"># train = pd.read_table('./zhengqi_train.txt') 和下面一行的效果相同</span></span><br><span class="line">train = pd.read_csv(<span class="string">'./zhengqi_train.txt'</span>, sep = <span class="string">'\t'</span>)</span><br><span class="line">train</span><br><span class="line"><span class="comment"># 加载测试数据</span></span><br><span class="line">test = pd.read_table(<span class="string">'./zhengqi_test.txt'</span>)</span><br><span class="line">test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将训练数据分乘特征值和目标值</span></span><br><span class="line"><span class="comment"># 特征, 影响目标值的因素</span></span><br><span class="line">X = train.iloc[:, :<span class="number">-1</span>]</span><br><span class="line"><span class="comment"># 目标值</span></span><br><span class="line">y = train[<span class="string">'target'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法评估, 将上面的数据分成两份,一部分用来训练, 一部分用来测试</span></span><br><span class="line">X_train, X_validation, y_train, y_validation = train_test_split(X, y, test_size = <span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用普通线性回归模型</span></span><br><span class="line">linear = LinearRegression()</span><br><span class="line">linear.fit(X_train, y_train)</span><br><span class="line">y_ = linear.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)   <span class="comment"># 均方误差</span></span><br><span class="line"><span class="string">'''0.11713370444738197'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用线性模型预测测试数据</span></span><br><span class="line">y_commit = linear.predict(test)</span><br><span class="line"><span class="comment"># 保存数据到本地</span></span><br><span class="line">s = pd.Series(y_commit)</span><br><span class="line">s.to_csv(<span class="string">'./linear_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用岭回归模型</span></span><br><span class="line">ridge = Ridge(alpha=<span class="number">256</span>)   <span class="comment"># alpha值</span></span><br><span class="line">ridge.fit(X_train, y_train)</span><br><span class="line">y_ = ridge.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)</span><br><span class="line"><span class="string">'''0.13427749653218798'''</span></span><br><span class="line"></span><br><span class="line">y_commit = ridge.predict(test)</span><br><span class="line">pd.Series(y_commit).to_csv(<span class="string">'./ridge_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用lasso回归模型</span></span><br><span class="line">lasso = Lasso(alpha=<span class="number">256</span>)</span><br><span class="line">lasso.fit(X_train, y_train)</span><br><span class="line">y_ = lasso.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)</span><br><span class="line"><span class="string">'''0.9351911263395224'''</span></span><br><span class="line"></span><br><span class="line">y_commit = lasso.predict(test)</span><br><span class="line">pd.Series(y_commit).to_csv(<span class="string">'./lasso_result.txt'</span>, index=<span class="literal">False</span>, header = <span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p><font color=red>将生成的数据上传到阿里天池,与实际数据对比,计算均方误差时, 使用lasso回归模型得到的数据比使用岭回归模型和线性回归模型得到的数据的均方误差要小,说明对该组数据,lasso回归效果较好好</font></p>
+<p><font color=green>套索回归适用于稀松矩阵(大部分系数是0)</font></p>
+<h2 id="四-Elastic-Net-弹性网络回归"><a href="#四-Elastic-Net-弹性网络回归" class="headerlink" title="四: Elastic-Net  -  弹性网络回归"></a>四: Elastic-Net  -  弹性网络回归</h2><p><strong>弹性网络回归方程:</strong><br>$$<br>\min_{w} { \frac{1}{2n_{\text{samples}}} ||X w - y||_2 ^ 2 + \alpha \rho ||w||_1 +<br>\frac{\alpha(1-\rho)}{2} ||w||_2 ^ 2}<br>$$</p>
+<p><strong>使用弹性网络回归预测工业蒸汽量:(在线性回归后加L1, L2正则项来解决过拟合问题)</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># ElasticNetCV 交叉验证(可以一次传递多个参数, 模型挑选合适的)</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, Ridge, ElasticNet, ElasticNetCV</span><br><span class="line"><span class="comment"># 将数据一分为二</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment"># 均方误差</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line"><span class="comment"># 加载训练数据</span></span><br><span class="line"><span class="comment"># train = pd.read_table('./zhengqi_train.txt') 和下面一行的效果相同</span></span><br><span class="line">train = pd.read_csv(<span class="string">'./zhengqi_train.txt'</span>, sep = <span class="string">'\t'</span>)</span><br><span class="line">train</span><br><span class="line"><span class="comment"># 加载测试数据</span></span><br><span class="line">test = pd.read_table(<span class="string">'./zhengqi_test.txt'</span>)</span><br><span class="line">test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将训练数据分乘特征值和目标值</span></span><br><span class="line"><span class="comment"># 特征, 影响目标值的因素</span></span><br><span class="line">X = train.iloc[:, :<span class="number">-1</span>]</span><br><span class="line"><span class="comment"># 目标值</span></span><br><span class="line">y = train[<span class="string">'target'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法评估, 将上面的数据分成两份,一部分用来训练, 一部分用来测试</span></span><br><span class="line"><span class="comment"># random_state = 1024 ; 种子固定,当数值固定时,生成的随机数是固定的</span></span><br><span class="line">X_train, X_validation, y_train, y_validation = train_test_split(X, y, test_size = <span class="number">0.2</span>, random_state = <span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ElasticNetCV可以筛选多个alpha中最好的一个</span></span><br><span class="line">model = ElasticNetCV(l1_ratio=<span class="number">0.05</span>, alphas=[<span class="number">0.1</span>, <span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">5.0</span>, <span class="number">10.0</span>])</span><br><span class="line">model.fit(X, y)</span><br><span class="line">y_ = model.predict(X_validation)</span><br><span class="line">mean_squared_error(y_validation,y_)</span><br><span class="line"><span class="string">'''0.10872462328271233'''</span></span><br><span class="line"></span><br><span class="line">model.alpha_   <span class="comment"># 返回选择的alpha值</span></span><br><span class="line"></span><br><span class="line">result = model.predict(test)</span><br><span class="line">pd.Series(result).to_csv(<span class="string">'./elastic.txt'</span>, index=<span class="literal">False</span>, header=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>机器学习</tag>
+        <tag>算法</tag>
+        <tag>Lasso回归</tag>
+        <tag>Ridge回归</tag>
       </tags>
   </entry>
   <entry>
