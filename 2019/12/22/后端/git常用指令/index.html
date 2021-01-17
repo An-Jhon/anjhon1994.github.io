@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>git常用指令 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">git常用指令</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2019-12-22</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Git-Shell/">&nbsp;&nbsp;Git & Shell</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>git的基本常用指令集</p>
+<a id="more"></a>
+<h1 id="1-基本指令"><a href="#1-基本指令" class="headerlink" title="1.基本指令"></a>1.基本指令</h1><p>git init        ——&gt;新建git仓库<br>git add 文件/文件夹       ——&gt;  将文件添加到缓存区中<br>git add -A   ——&gt;  添加所有内容到缓存区中</p>
+<p>git status      ——&gt;    查看git状态<br>git commit -m  ‘提交信息’       ——&gt;  将缓存区中的内容全部提交到git本地仓库中<br>git log        ——&gt; 查看提交日志 </p>
+<p>git reset  – hard   HEAD       ——&gt;   让工作目录中的内容和仓库中的内容保持一致<br>git reset  –hard HEAD^  ——&gt;  回到上一个版本<br>git  reset  – hard 版本号  ——&gt;  回到指定的版本 </p>
+<p>git checkout  文件名   ——&gt;  从暂存区中恢复工作目录中的内容(让工作区中的指定文件，回到上次提交的时候的状态) </p>
+<p>git clone <url>    ——&gt;  将服务器上的项目(仓库)克隆 (使用https地址需要输入密码，使用ssh地址需要添加公钥) </p>
+<p>git remote add origin 地址    ——&gt;  关联远程仓库(只需要关联一次)</p>
+<p>git push [-u] origin master   ——&gt;  提交(-u在第一次提交分支的时候才用) </p>
+<p>git push   ——&gt;  将本地仓库的内容提交到远程仓库master分支上</p>
+<p>git push origin 分支名     ——&gt;  将本地仓库的内容提交到远程仓库对应的分支上, 如果分支不存在会自动创建</p>
+<p>git pull   ——&gt;  将远程仓库中的内容更新到本地仓库和工作区中</p>
+<h1 id="2-分之管理"><a href="#2-分之管理" class="headerlink" title="2.分之管理"></a>2.分之管理</h1><p>创建仓库会默认给我们创建一个master分之,这个分之一般作为提交和发布分之;开发一般会自己创建一个develop分之，用来开发和测试;多人协作的时候还可能根据不同的人或者(不同的功能)创建不同的分之，用来独立开发 </p>
+<p>常见分之： master(主要是合并develop), develop(主要合并下面的其他分支), 功能/人员分之(开发)  </p>
+<p>git branch [-a]   ——&gt;查看分之<br>git branch 分之名——&gt;创建分之<br>git checkout   分支名——&gt;  切换分之<br>git checkout -b 分之名    ——&gt;切换并创建新的分之<br>git diff  分之1  分之2——&gt;查看两个分之之间的差异<br>git merge 分之名——&gt;让当前分之和指定分之进行合并</p>
+<p>注意: 切换分之、push、pull，这些操作前要保证工作区是clean<br>怎么避免冲突：  不要发生多个分之对同一个文件在同一个版本下进行修改(和同伴确认和商量)</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2019/12/22/%E5%90%8E%E7%AB%AF/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/">git常用指令</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/git/">▼ git</a>
+                    
+                        <a href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/">▼ 技术文档</a>
+                    
+                        <a href="/tags/%E6%8C%87%E4%BB%A4/">▼ 指令</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2019/12/22/%E5%90%8E%E7%AB%AF/Linux%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/">上一篇：Linux常用指令</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/20/%E5%90%8E%E7%AB%AF/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">下一篇：Linux定时任务</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

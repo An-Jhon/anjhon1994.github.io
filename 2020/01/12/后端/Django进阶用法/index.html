@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>Django进阶 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Django进阶</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2020-01-12</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Django/">&nbsp;&nbsp;Django</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>Django进阶和API接口</p>
+<a id="more"></a>
+
+<h1 id="一丶-工欲善其事必先利其器"><a href="#一丶-工欲善其事必先利其器" class="headerlink" title="一丶 工欲善其事必先利其器"></a>一丶 工欲善其事必先利其器</h1><h2 id="1-pip全局使用豆瓣镜像设置"><a href="#1-pip全局使用豆瓣镜像设置" class="headerlink" title="1. pip全局使用豆瓣镜像设置"></a>1. pip全局使用豆瓣镜像设置</h2><h3 id="windows系统中"><a href="#windows系统中" class="headerlink" title="windows系统中"></a>windows系统中</h3><p>①在c盘—&gt;用户—&gt;anjhon—&gt;文件夹中创建pip文件夹<br>②在pip文件夹中创建pip.ini文件<br>③在pip.ini文件中添加以下代码</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line"><span class="built_in">index</span>-url=http<span class="variable">s:</span>//pypi.doubanio.<span class="keyword">com</span>/simple</span><br></pre></td></tr></table></figure>
+
+<h3 id="git中"><a href="#git中" class="headerlink" title="git中"></a>git中</h3><p>cd ~   (进入用户组目录)<br>进入.pip文件夹(没有就创建)<br>创建pip.conf文件<br>在文件内添加以下代码</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line"><span class="built_in">index</span>-url=http<span class="variable">s:</span>//pypi.doubanio.<span class="keyword">com</span>/simple</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-调试工具Debug-Tool-Bar安装"><a href="#2-调试工具Debug-Tool-Bar安装" class="headerlink" title="2. 调试工具Debug-Tool-Bar安装"></a>2. 调试工具Debug-Tool-Bar安装</h2><ol>
+<li>安装：<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install </span>django-<span class="built_in">debug</span>-toolbar</span><br></pre></td></tr></table></figure></li>
+<li>添加app<figure class="highlight diff"><figcaption><span>settings.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'debug_toolbar',</span><br></pre></td></tr></table></figure></li>
+<li>添加中间键<figure class="highlight diff"><figcaption><span>settings.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'debug_toolbar.middleware.DebugToolbarMiddleware',</span><br></pre></td></tr></table></figure></li>
+<li>配置前端效果：<figure class="highlight diff"><figcaption><span>setting.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DEBUG_TOOLBAR_CONFIG = &#123;</span><br><span class="line">    # 引入jQuery库</span><br><span class="line">    'JQUERY_URL': 'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js',</span><br><span class="line">    # 工具栏是否折叠</span><br><span class="line">    'SHOW_COLLAPSED': True,</span><br><span class="line">    # 是否显示工具栏</span><br><span class="line">    'SHOW_TOOLBAR_CALLBACK': lambda x: True,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>路由配置<figure class="highlight diff"><figcaption><span>urls.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if settings.DEBUG:</span><br><span class="line">    import debug_toolbar</span><br><span class="line">	urlpatterns.insert(0, path('__debug__/', include(debug_toolbar.urls)))</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h1 id="二丶-Django用法进阶"><a href="#二丶-Django用法进阶" class="headerlink" title="二丶 Django用法进阶"></a>二丶 Django用法进阶</h1><h2 id="1-django自带分页器"><a href="#1-django自带分页器" class="headerlink" title="1. django自带分页器"></a>1. django自带分页器</h2><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 导入分页工具</span><br><span class="line">from django.core.paginator <span class="keyword">import</span> Paginator</span><br><span class="line"></span><br><span class="line"># 调用分页器函数会返回一个对象</span><br><span class="line">page_obj = = Paginator(obj_list, per_page)</span><br><span class="line">	obj_list是需要分页的内容</span><br><span class="line">	per_page是每页的内容数量,一般为int类型</span><br><span class="line">	</span><br><span class="line"># 对象的使用方法</span><br><span class="line"><span class="function"><span class="title">page_obj</span>.has_previous  ---&gt;</span>  是否存在前一页（布尔值）</span><br><span class="line"><span class="function"><span class="title">page_obj</span>.has_next  ---&gt;</span>  是否存在下一页（布尔值）</span><br><span class="line"><span class="function"><span class="title">page_obj</span>.previous_page_number  ---&gt;</span>  前一页的页码（数值）</span><br><span class="line"><span class="function"><span class="title">page_obj</span>.next_page_number  ---&gt;</span>  下一页的页码（数值）</span><br><span class="line"><span class="function"><span class="title">page_obj</span>.number  ---&gt;</span>  当前页的页码（数值）</span><br><span class="line"><span class="function"><span class="title">page_obj</span>.get_page(<span class="built_in">page</span>)  ---&gt;</span>  ???</span><br><span class="line"><span class="function"><span class="title">page_obj</span>.<span class="built_in">page</span>(3)  ---&gt;</span>  访问指定页面</span><br><span class="line"><span class="function"><span class="title">page2</span>.start_index()  ---&gt;</span>  从<span class="number">1</span>开始计数的当前页的第一个对象</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="function"><span class="title">page2</span>.end_index()  ---&gt;</span>  从<span class="number">1</span>开始计数的当前页最后<span class="number">1</span>个对象</span><br><span class="line"><span class="function"><span class="title">paginator</span>.page_range  ---&gt;</span>  页码范围（迭代对象）</span><br><span class="line"><span class="function"><span class="title">paginator</span>.num_pages  ---&gt;</span>  页面总数量（数值）</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-查询-查询结果是集合类型的对象"><a href="#2-查询-查询结果是集合类型的对象" class="headerlink" title="2. 查询(查询结果是集合类型的对象)"></a>2. 查询(查询结果是集合类型的对象)</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">Entry.objects.all()   ---&gt;   查询所有记录</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定查询:only</span></span><br><span class="line">queryset = Teacher.objects.filter(<span class="attribute">subject__no</span>=sno).only('', <span class="string">''</span>, <span class="string">''</span>)</span><br><span class="line"><span class="comment"># 排除查询:defer</span></span><br><span class="line">queryset = Teacher.objects.filter(<span class="attribute">subject__no</span>=sno).defer('', <span class="string">''</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 空值查询:</span></span><br><span class="line">District.objects.filter(<span class="attribute">pid__null</span>=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 条件查询:</span></span><br><span class="line">Entry.objects.filter(<span class="attribute">num</span>=3)   ---&gt;   查询<span class="attribute">num</span>=3的数据记录</span><br><span class="line">Entry.objects.exclude(<span class="attribute">num</span>=3)   ---&gt;   查询<span class="attribute">num</span>=3的数据记录</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用切片的方法可以进行范围取值,相当于SQL语句中的LIMIT和OFFSET子句</span></span><br><span class="line">Entry.objects.all()[:5]   ---&gt;   返回前5个对象</span><br><span class="line">Entry.objects.all()[5:10]   ---&gt;   返回第6个到第10个对象</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关键字查询:</span></span><br><span class="line">1) 精确查询: __exact (默认就是精准查询,可以不写)</span><br><span class="line">Entry.objects.<span class="builtin-name">get</span>(<span class="attribute">headline__exact</span>=<span class="string">"Cat bites dog"</span>)</span><br><span class="line">2) 模糊查询</span><br><span class="line">__contains：是否包含</span><br><span class="line">__startswith: 以指定值开头</span><br><span class="line">__endswith：以指定值结尾</span><br><span class="line">3) 空查询</span><br><span class="line">isnull：是否为<span class="literal">null</span></span><br><span class="line">4) 范围查询</span><br><span class="line"><span class="keyword">in</span>：是否包含在范围内</span><br><span class="line">5) 比较查询</span><br><span class="line">gt、gte、lt、lte：大于、大于等于、小于、小于等于</span><br><span class="line">6) 日期查询</span><br><span class="line">year、month、day、week_day、hour、minute、second：对日期时间类型的属性进行运算</span><br><span class="line">7) 不区分大小写: __iexact</span><br><span class="line">Entry.objects.<span class="builtin-name">get</span>(<span class="attribute">name__iexact</span>=<span class="string">"beatles blog"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Q对象查询</span></span><br><span class="line">在查询的条件中需要组合条件时(例如两个条件“且”或者“或”)。我们可以使用Q()查询对象</span><br><span class="line"><span class="keyword">from</span> django.db.models import Q</span><br><span class="line">Q(<span class="attribute">question__startswith</span>=<span class="string">'What'</span>)</span><br><span class="line">可以在Q()对象的前面使用字符“~”来代表意义“非”</span><br><span class="line">可以使用 “&amp;”或者“|”还有括号来对条件进行分组从而组合成更加复杂的查询逻辑</span><br><span class="line">Q(<span class="attribute">question__startswith</span>=<span class="string">'Who'</span>) | Q(<span class="attribute">question__startswith</span>=<span class="string">'What'</span>)</span><br><span class="line">例:</span><br><span class="line">	queryset = Record.objects.filter(Q(<span class="attribute">car__carno__startswith</span>=carno) | Q(<span class="attribute">car__owner__contains</span>=carno)).select_related('car').order_by('-offend_time')[(page - 1) * size:page * size]</span><br><span class="line">	context[<span class="string">'records'</span>] = queryset</span><br><span class="line">	# .select_related(<span class="string">'car'</span>)   在Q对象中car__carno已经实现连表查询,这时再用.select_related(<span class="string">'car'</span>)语法连同car一起查询</span><br><span class="line">	</span><br><span class="line">	.prefetch_related(<span class="string">'...'</span>)   ---&gt;   多对多顺带查询</span><br><span class="line">	.select_related(<span class="string">'...'</span>)   ---&gt;   一对多顺带查询</span><br><span class="line">	避免1+n出现</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Vue"><a href="#3-Vue" class="headerlink" title="3. Vue"></a>3. Vue</h2><figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">1. 属性:</span></span><br><span class="line"><span class="xml">1) el属性  -   字符串，传选择器(一般写id选择器), 将当前创建的Vue对象和html中的标签进行关联</span></span><br><span class="line"><span class="xml">2) data属性  -  通过对象的属性提供数据</span></span><br><span class="line"><span class="xml">3) methods属性 -  通过对象属性提供方法</span></span><br><span class="line"><span class="xml">4) computed属性 -  属性值必须函数, 函数的返回值就是使用属性的值</span></span><br><span class="line"><span class="xml">5) created钩子 - 在实例被创建之后被调用</span></span><br><span class="line"><span class="xml">	</span></span><br><span class="line"><span class="xml">2. Vue指令</span></span><br><span class="line"><span class="xml">1) 标签内容  -  </span><span class="template-variable">&#123;&#123;Vue属性名&#125;&#125;</span></span><br><span class="line"><span class="xml">2) 标签属性  -  v-bind:标签属性 = 'Vue属性名'</span></span><br><span class="line"><span class="xml">3) if语句   -  v-if='Vue属性名' (如果Vue属性值是true对应的标签就显示，否则就隐藏)</span></span><br><span class="line"><span class="xml">4) 循环结构  -  v-for = '变量 in 类型是数组的Vue属性'</span></span><br><span class="line"><span class="xml">5) 双向绑定  -  v-model='Vue属性名' (一般在表单标签中有效)</span></span><br><span class="line"><span class="xml">6) 事件绑定  -  v-on:事件名</span></span><br><span class="line"></span><br><span class="line"><span class="xml">3. 补充</span></span><br><span class="line"><span class="xml">1) 可以直接在标签内用 @事件名 的方法绑定事件,并直接调用事件函数</span></span><br><span class="line"><span class="xml">	例:<span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"prevPage()"</span>&gt;</span>上一页<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">2) 缩写</span></span><br><span class="line"><span class="xml">v-bind 缩写</span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!-- 完整语法 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">a</span> <span class="attr">v-bind:href</span>=<span class="string">"url"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!-- 缩写 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">a</span> <span class="attr">:href</span>=<span class="string">"url"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">v-on 缩写</span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!-- 完整语法 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click</span>=<span class="string">"doSomething"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!-- 缩写 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">a</span> @<span class="attr">click</span>=<span class="string">"doSomething"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-字段映射器bpmapper-将数据库的查询对象转换成字典"><a href="#4-字段映射器bpmapper-将数据库的查询对象转换成字典" class="headerlink" title="4. 字段映射器bpmapper:  将数据库的查询对象转换成字典"></a>4. 字段映射器bpmapper:  将数据库的查询对象转换成字典</h2><p>1) 在应用文件夹下新建映射器文件 : mappers.py</p>
+<figure class="highlight diff"><figcaption><span>app/mappers.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from bpmappers import RawField, DelegateField</span><br><span class="line">from bpmappers.djangomodel import ModelMapper</span><br><span class="line">from polls.models import Subject, Teacher</span><br><span class="line"></span><br><span class="line">class SubjectMapper(ModelMapper):</span><br><span class="line">    """学科映射器"""</span><br><span class="line">    isHot = RawField('is_hot')</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        model = Subject</span><br><span class="line">        exclude = ('is_hot', )</span><br><span class="line">        </span><br><span class="line">    exclude = ()   ---&gt;   排除某些字段</span><br><span class="line">	fields = ()   ---&gt;   包含某些字段</span><br><span class="line">	fields = '__all__'   ---&gt;   序列化所有字段</span><br><span class="line">	isHot = RawField('is_hot')   ---&gt;   将后端的is_hot映射成前端的isHot</span><br><span class="line">	car = DelegateField(Car)   ---&gt;   将car字段委托Car类查询映射</span><br></pre></td></tr></table></figure>
+<p>2) 调用映射器</p>
+<figure class="highlight diff"><figcaption><span>app/views.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from polls.mappers import SubjectMapper</span><br><span class="line"></span><br><span class="line">def show_subjects(request):</span><br><span class="line">    """获取所有学科"""</span><br><span class="line">    queryset = Subject.objects.all()</span><br><span class="line">    subjects = [SubjectMapper(subject).as_dict()   # 调用映射器函数将查询对象变成有序字典</span><br><span class="line">                for subject in queryset]</span><br><span class="line">    return JsonResponse(subjects, safe=False)</span><br></pre></td></tr></table></figure>
+
+<p>JsonResponse默认只能返回字典,若想返回列表需要给一个参数safe=False</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return <span class="constructor">JsonResponse(<span class="params">subjects</span>, <span class="params">safe</span>=False)</span></span><br></pre></td></tr></table></figure>
+
+<p>列表生成式语法: (性能比列表追加元素要好)</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">records = [RecordMapper(<span class="keyword">record</span>).as_dict()</span><br><span class="line">           <span class="keyword">for</span> <span class="keyword">record</span> <span class="keyword">in</span> page_obj.object_list]</span><br><span class="line"># 从page_obj.object_list中取元素<span class="keyword">record</span>, 将<span class="keyword">record</span>传给RecordMapper().as_dict()转换成字典再添加到records里面</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="5-fetch请求"><a href="#5-fetch请求" class="headerlink" title="5.  fetch请求"></a>5.  fetch请求</h2><p>基本语法:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">'http://example.com/movies.json'</span>)   <span class="comment"># 返回一个包含响应结果的promise</span></span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span><span class="params">(response)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> response.json();</span><br><span class="line">  &#125;)   <span class="comment"># 用.json()方法获取到的包含json数据的对象</span></span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span><span class="params">(myJson)</span> </span>&#123;</span><br><span class="line">    console.log(myJson);</span><br><span class="line">  &#125;);   <span class="comment"># 获取到json文件里的真实数据</span></span><br></pre></td></tr></table></figure>
+<p>实例:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">let app = new Vue(&#123;</span><br><span class="line">			el: <span class="string">'#app'</span>,</span><br><span class="line">			<span class="keyword">data</span>: &#123;</span><br><span class="line">				<span class="string">'searched'</span>: <span class="literal">false</span>,</span><br><span class="line">				records: [],</span><br><span class="line">				current_page: <span class="number">1</span>,</span><br><span class="line">				total_page: <span class="number">0</span>,</span><br><span class="line">				carno: <span class="string">''</span></span><br><span class="line">				</span><br><span class="line">			&#125;,</span><br><span class="line">			methods: &#123;</span><br><span class="line">				search()&#123;</span><br><span class="line">					let url = <span class="string">'/search/?carno='</span> + <span class="keyword">this</span>.carno + <span class="string">'&amp;page='</span> + <span class="keyword">this</span>.current_page</span><br><span class="line">					fetch(url).then(resp =&gt; resp.json()).then(json =&gt; &#123;</span><br><span class="line">						<span class="keyword">this</span>.searched = json.searched;</span><br><span class="line">						<span class="keyword">this</span>.records = json.records;</span><br><span class="line">						<span class="keyword">this</span>.current_page = json.current_page;</span><br><span class="line">						<span class="keyword">this</span>.total_page = json.total_page</span><br><span class="line">					&#125;)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">	# 注:<span class="keyword">this</span>代表app对象</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="6-配置redis数据库作为缓存"><a href="#6-配置redis数据库作为缓存" class="headerlink" title="6. 配置redis数据库作为缓存"></a>6. 配置redis数据库作为缓存</h2><h3 id="1-redis配置-添加以下代码"><a href="#1-redis配置-添加以下代码" class="headerlink" title="1. redis配置(添加以下代码)"></a>1. redis配置(添加以下代码)</h3><figure class="highlight diff"><figcaption><span>project/settings.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"># 添加缓存(可以配多组)</span><br><span class="line">CACHES = &#123;</span><br><span class="line">    # 默认缓存</span><br><span class="line">    'default': &#123;</span><br><span class="line">        # 用什么来做缓存</span><br><span class="line">        'BACKEND': 'django_redis.cache.RedisCache',</span><br><span class="line">        'LOCATION': [</span><br><span class="line">            # 可以一主多从</span><br><span class="line">            'redis://49.233.152.190:6379/0',   # 主机用来写</span><br><span class="line">            'redis://49.233.152.190:6379/0',   # 从机用来读(可以有多个)</span><br><span class="line">        ],</span><br><span class="line">        # 区别命名</span><br><span class="line">        'KEY_PREFIX': 'django19062',</span><br><span class="line">        'OPTIONS': &#123;</span><br><span class="line">            'CLIENT_CLASS': 'django_redis.client.DefaultClient',</span><br><span class="line"></span><br><span class="line">            # 池化技术(提前连接好,要用时借出去,用完还回来)用空间换时间</span><br><span class="line">            'CONNECTION_POOL_KWARGS': &#123;</span><br><span class="line">                # 最大连接数</span><br><span class="line">                'max_connections': 512,</span><br><span class="line">            &#125;,</span><br><span class="line">            'PASSWORD': '119148',</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # 会话缓存(会话放到缓存的好处:  性能好,不用手动清理,利于水平扩展)</span><br><span class="line">    'session': &#123;</span><br><span class="line">        # 用什么来做缓存</span><br><span class="line">        'BACKEND': 'django_redis.cache.RedisCache',</span><br><span class="line">        'LOCATION': [</span><br><span class="line">            # 可以一主多从</span><br><span class="line">            'redis://49.233.152.190:6379/1',   # 主机用来写</span><br><span class="line">            # 'redis://49.233.152.190:6379/0',   # 从机用来读(可以有多个)</span><br><span class="line">        ],</span><br><span class="line">        # 键的前缀</span><br><span class="line">        'KEY_PREFIX': 'django19062',</span><br><span class="line">        'OPTIONS': &#123;</span><br><span class="line">            'CLIENT_CLASS': 'django_redis.client.DefaultClient',</span><br><span class="line"></span><br><span class="line">            # 池化技术(提前连接好,要用时借出去,用完还回来)用空间换时间</span><br><span class="line">            'CONNECTION_POOL_KWARGS': &#123;</span><br><span class="line">                # 最大连接数</span><br><span class="line">                'max_connections': 1024,</span><br><span class="line">            &#125;,</span><br><span class="line">            'PASSWORD': '119148',</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 配置使用缓存来支持用户会话</span><br><span class="line">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'</span><br><span class="line"># 会话数据放在哪一组缓存中</span><br><span class="line">SESSION_CACHE_ALIAS = 'session'</span><br><span class="line"># 设置会话保存的时长(单位秒)</span><br><span class="line">SESSION_CACHE_AGE = 86400  # 86400秒为1天</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-为视图函数-添加缓存机制"><a href="#2-为视图函数-添加缓存机制" class="headerlink" title="2. 为视图函数 添加缓存机制"></a>2. 为视图函数 添加缓存机制</h3><figure class="highlight diff"><figcaption><span>app/views.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="addition">+ 	@cache_page(timeout=3600, cache='default')</span></span><br><span class="line">    def show_subjects(request):</span><br><span class="line">        """获取所有学科"""</span><br><span class="line">        queryset = Subject.objects.all()</span><br><span class="line">        subjects = [SubjectMapper(subject).as_dict()</span><br><span class="line">                    for subject in queryset]</span><br><span class="line">        return JsonResponse(subjects, safe=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="addition">+   @cache_page(timeout=300, cache='default')</span></span><br><span class="line">    def show_teachers(request):</span><br><span class="line">        """获取指定学科的老师"""</span><br><span class="line">        try:</span><br><span class="line">            sno = request.GET['sno']</span><br><span class="line">            subject = Subject.objects.get(no=sno)</span><br><span class="line">            queryset = Teacher.objects\</span><br><span class="line">                .filter(subject__no=sno).defer('subject')</span><br><span class="line">            teachers = [TeacherMapper(teacher).as_dict()</span><br><span class="line">                        for teacher in queryset]</span><br><span class="line">            data = &#123;</span><br><span class="line">                'subject': SubjectSimpleMapper(subject).as_dict(),</span><br><span class="line">                'teachers': teachers</span><br><span class="line">            &#125;</span><br><span class="line">            return JsonResponse(data)</span><br><span class="line">        except (KeyError, ValueError, Subject.DoesNotExist):</span><br><span class="line">            pass</span><br></pre></td></tr></table></figure>
+<p>如你所见,添加缓存机制只需调用一个装饰器函数即可;在调用时需要传参,timeout为超时时间,在固定时间后缓存自动清除;cache选择缓存组;</p>
+<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3. 测试"></a>3. 测试</h3><p>开启django服务,访问前端页面,然后观察控制台</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 第一次请求时在控制台中会使用<span class="keyword">select</span>语句在mysql中查询数据</span><br><span class="line">(<span class="number">0.289</span>) <span class="keyword">SELECT</span> <span class="symbol">`tb_subject`</span>.<span class="symbol">`no`</span>, <span class="symbol">`tb_subject`</span>.<span class="symbol">`name`</span>, <span class="symbol">`tb_subject`</span>.<span class="symbol">`intro`</span>, <span class="symbol">`tb_subject`</span>.<span class="symbol">`is_hot`</span> <span class="keyword">FROM</span> <span class="symbol">`tb_subject`</span> <span class="keyword">WHERE</span> <span class="symbol">`tb_subject`</span>.<span class="symbol">`no`</span> = <span class="number">1</span>; args=(1,)</span><br><span class="line">(0.358) <span class="keyword">SELECT</span> <span class="symbol">`tb_teacher`</span>.<span class="symbol">`no`</span>, <span class="symbol">`tb_teacher`</span>.<span class="symbol">`name`</span>, <span class="symbol">`tb_teacher`</span>.<span class="symbol">`sex`</span>, <span class="symbol">`tb_teacher`</span>.<span class="symbol">`birth`</span>, <span class="symbol">`tb_teacher`</span>.<span class="symbol">`photo`</span>, <span class="symbol">`tb_teacher`</span>.<span class="symbol">`intro`</span>, <span class="symbol">`tb_teacher`</span>.<span class="symbol">`good_count`</span>, <span class="symbol">`tb_teacher`</span>.<span class="symbol">`bad_count`</span> <span class="keyword">FROM</span> <span class="symbol">`tb_teacher`</span> <span class="keyword">WHERE</span> <span class="symbol">`tb_teacher`</span>.<span class="symbol">`sno`</span> = <span class="number">1</span>; args=(1,)</span><br><span class="line"></span><br><span class="line"># 再次刷新页面时直接从缓存中获取数据</span><br><span class="line">[08/Jan/2020 22:02:14] "GET /teachers/?sno=1 HTTP/1.1" 200 5605</span><br><span class="line">[08/Jan/2020 22:02:14] "GET /media/images/yuting.png HTTP/1.1" 304 0</span><br><span class="line">[08/Jan/2020 22:02:14] "GET /media/images/luohao.png HTTP/1.1" 304 0</span><br></pre></td></tr></table></figure>
+
+<p>实时数据缓存到redis<br>在需要实时显示并且并发量较大时(例如简单的投票),若直接从sql数据库中取值则会大大增加数据库的压力,同时有一条请求在操作数据库的时候就会锁定该数据,完成后下一个请求才能操作.<br>此时将投票信息添加到缓存,再在缓存内添加定时任务,定时推送缓存的数据到数据库保存,这是一种牺牲暂时一致性,获取最终一致性和提高性能的方法</p>
+<h1 id="三丶-API-应用程序编程接口"><a href="#三丶-API-应用程序编程接口" class="headerlink" title="三丶 API  -  应用程序编程接口"></a>三丶 API  -  应用程序编程接口</h1><p>自己定义的函数也是一种API接口<br>网络API   -   通过HTT请求一个URL获得数据</p>
+<p>RESTful API</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">REpresentational State Transfer   <span class="comment">---&gt;   表述性状态转移</span></span><br><span class="line">REST架构两大特点: 无状态和幂等性</span><br><span class="line">HTTP协议请求行 <span class="keyword">GET</span> / POST / <span class="keyword">DELETE</span> / PUT / PATCH</span><br><span class="line">新建   <span class="comment">---&gt;   POST-不需要幂等性</span></span><br><span class="line">查看   <span class="comment">---&gt;   GET</span></span><br><span class="line">更新   <span class="comment">---&gt;   PUT/PATCH</span></span><br><span class="line">删除   <span class="comment">---&gt;   DELETE</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作:"></a>1. 准备工作:</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>) 安装djangorestframework</span><br><span class="line">pip <span class="keyword">install </span>djangorestframework</span><br><span class="line">pip <span class="keyword">install </span>drf-<span class="keyword">extensions</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">2) </span>在<span class="keyword">INSTALLED_APPS注册rest_framework</span></span><br><span class="line"><span class="keyword">INSTALLED_APPS </span>= [</span><br><span class="line">    <span class="string">'rest_framework'</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-API接口"><a href="#2-API接口" class="headerlink" title="2. API接口"></a>2. API接口</h2><h3 id="1-FBV-基于函数的视图"><a href="#1-FBV-基于函数的视图" class="headerlink" title="1) FBV   -   基于函数的视图"></a>1) FBV   -   基于函数的视图</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py   控制器</span></span><br><span class="line">path(<span class="string">'agent/'</span>, get_agent),</span><br><span class="line"></span><br><span class="line"><span class="comment"># serializers.py  映射器</span></span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> common.models <span class="keyword">import</span> Agent</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AgentSimpleSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Agent</span><br><span class="line">        exclude = (<span class="string">'estates'</span>, )</span><br><span class="line">        </span><br><span class="line"><span class="comment"># view视图函数:</span></span><br><span class="line"><span class="meta">@api_view(('GET', ))   # 指定请求,其他请求没效果</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_agent</span><span class="params">(request)</span>:</span></span><br><span class="line">    queryset = Agent.objects.all().defer(<span class="string">'estates'</span>)</span><br><span class="line">    serializer = AgentSimpleSerializer(queryset, many=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> Response(serializer.data)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-CBV-基于类的视图"><a href="#2-CBV-基于类的视图" class="headerlink" title="2) CBV   -   基于类的视图"></a>2) CBV   -   基于类的视图</h3><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py   控制器</span></span><br><span class="line">	path('estate/', EstatesView.as_view()),</span><br><span class="line">	path('estate/<span class="variable">&lt;int:pk&gt;</span>/', EstatesView.as_view())   <span class="comment"># pk参数是一种约定,不能修改</span></span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"><span class="comment"># serializers.py  映射器</span></span><br><span class="line"><span class="keyword">from</span> rest_framework import serializers</span><br><span class="line"><span class="keyword">from</span> common.models import E<span class="keyword">state</span></span><br><span class="line">class E<span class="keyword">state</span>Serializer(serializers.ModelSerializer):</span><br><span class="line">    class Meta:</span><br><span class="line">        model = E<span class="keyword">state</span></span><br><span class="line">        exclude = ('agents', 'district')</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># exclude = ()   ---&gt;   排除某些字段</span></span><br><span class="line">	<span class="comment"># fields = ()   ---&gt;   包含某些字段</span></span><br><span class="line">	<span class="comment"># fields = '__all__'   ---&gt;   序列化所有字段</span></span><br><span class="line">	<span class="comment"># isHot = RawField('is_hot')   ---&gt;   将后端的is_hot映射成前端的isHot</span></span><br><span class="line">	<span class="comment"># car = DelegateField(Car)   ---&gt;   将car字段委托Car类查询映射</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="comment"># view.py :</span></span><br><span class="line">class EstatesView(ListAPIView, RetrieveAPIView):</span><br><span class="line">    queryset = E<span class="keyword">state</span>.objects.<span class="literal">all</span>().defer('district', 'agents')</span><br><span class="line">    serializer_class = E<span class="keyword">state</span>Serializer</span><br><span class="line">    <span class="comment"># 将请求单个数据和请求多个数据分开</span></span><br><span class="line">    def get(<span class="literal">self</span>, request, *args, **kwargs):</span><br><span class="line">        if 'pk' <span class="keyword">in</span> kwargs:</span><br><span class="line">            cls = RetrieveAPIView   <span class="comment"># 单</span></span><br><span class="line">        else:</span><br><span class="line">            cls = ListAPIView   <span class="comment"># 多</span></span><br><span class="line">        return cls.get(<span class="literal">self</span>, request, *args, **kwargs)</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 父类的选择       </span></span><br><span class="line">        CreateAPIView   ---&gt;   新增</span><br><span class="line">        ListAPIView   ---&gt;   查询所有</span><br><span class="line">        RetrieveAPIView   ---&gt;   查询单个</span><br><span class="line">        DestroyAPIView   ---&gt;   删除</span><br><span class="line">        UpdateAPIView   ---&gt;   修改</span><br><span class="line">        ListCreateAPIView</span><br><span class="line">        RetrieveUpdateAPIView</span><br><span class="line">        RetrieveDestroyAPIView</span><br><span class="line">        RetrieveUpdateDestroyAPIView</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">🚩 全套接口视图集</span><br><span class="line">📌 view.py : </span><br><span class="line"><span class="keyword">from</span> rest_framework.viewsets import ModelViewSet</span><br><span class="line">class HouseTypeViewSet(ModelViewSet):</span><br><span class="line">    queryset = HouseType.objects.<span class="literal">all</span>()</span><br><span class="line">    serializer_class = HouseTypeSerializer</span><br><span class="line">    </span><br><span class="line">📌 urls.py : </span><br><span class="line">urlpatterns = [</span><br><span class="line">	...</span><br><span class="line">]</span><br><span class="line"><span class="comment"># 路由器</span></span><br><span class="line">router = SimpleRouter()   <span class="comment"># 简单路由</span></span><br><span class="line">router.register('housetypes', HouseTypeViewSet)   <span class="comment"># 注册</span></span><br><span class="line">urlpatterns += router.urls   <span class="comment"># 添加</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="接口测试"><a href="#接口测试" class="headerlink" title="接口测试:"></a>接口测试:</h4><p>1:  三方库: requests </p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="type">json</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">resp = requests.<span class="keyword">get</span>(<span class="string">'http://localhost:8000/api/estates/'</span>)</span><br><span class="line">estates = <span class="type">json</span>.loads(resp.text)</span><br><span class="line"><span class="keyword">for</span> <span class="keyword">index</span>, estate <span class="keyword">in</span> enumerate(estates):</span><br><span class="line">    print(<span class="keyword">index</span>, estate)</span><br></pre></td></tr></table></figure>
+<p>2: Postman和Postwomam软件</p>
+<h2 id="3-DRF-分页"><a href="#3-DRF-分页" class="headerlink" title="3. DRF 分页"></a>3. DRF 分页</h2><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">P<span class="function"><span class="title">ageNumberPagination</span>   ---&gt;</span>   按页码分页</span><br><span class="line">L<span class="function"><span class="title">imitoffsetPagination</span>   ---&gt;</span>   跳过N条,查第N+<span class="number">1</span>条</span><br><span class="line">CursorPagination</span><br></pre></td></tr></table></figure>
+<p>1) 自定义分页</p>
+<figure class="highlight diff"><figcaption><span>setting.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">中间键后面添加以下代码(全部实现分页)</span><br><span class="line"></span><br><span class="line"># DRF配置文件</span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    # 按页码分页</span><br><span class="line">	'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',</span><br><span class="line">    'PAGE_SIZE': 5,</span><br><span class="line">&#125;</span><br><span class="line"># 若单个视图类不想分页可以加以下代码:</span><br><span class="line">	pagination_class = None</span><br></pre></td></tr></table></figure>
+<p>2) 游标分页</p>
+<figure class="highlight diff"><figcaption><span>app/views.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 定义游标分页类</span><br><span class="line">class EstatePagination(CursorPagination):</span><br><span class="line">    page_size_query_param = 'size' # 自定义单页显示记录数</span><br><span class="line">    max_page_size = 20   # 单页最多记录数</span><br><span class="line">    ordering = 'estateid'   # 按楼盘id分页</span><br><span class="line"># 在视图类里面调用</span><br><span class="line">pagination_class = EstatePagination</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="4-DRF缓存"><a href="#4-DRF缓存" class="headerlink" title="4. DRF缓存"></a>4. DRF缓存</h2><p>依赖项drf-extensions==0.5.0 为DRF提供缓存扩展</p>
+<p>1)  django里的装饰器@method_decorator可以将装饰函数的装饰器变成可以装饰类方法的装饰器</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@method_decorator</span>(decorator=cache_page(<span class="number">500</span>), name=<span class="string">'list'</span>)</span><br><span class="line"><span class="variable">@method_decorator</span>(decorator=cache_page(<span class="number">120</span>), name=<span class="string">'retrieve'</span>)</span><br><span class="line">class HouseTypeViewSet(ModelViewSet):</span><br><span class="line">    queryset = HouseType.objects.all()</span><br><span class="line">    serializer_class = HouseTypeSerializer</span><br><span class="line">    # 拒绝分页</span><br><span class="line">    pagination_class = None</span><br></pre></td></tr></table></figure>
+<p>2)  导入混入类做缓存</p>
+<figure class="highlight diff"><figcaption><span>setting.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 缓存混入类</span><br><span class="line">REST_FRAMEWORK_EXTENSIONS = &#123;</span><br><span class="line">    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 120,</span><br><span class="line">    'DEFAULT_USE_CACHE': 'default',</span><br><span class="line">    'DEFAULT_OBJECT_CACHE_KEY_FUNC': 'rest_framework_extensions.utils.default_object_cache_key_func',</span><br><span class="line">    'DEFAULT_LIST_CACHE_KEY_FUNC': 'rest_framework_extensions.utils.default_list_cache_key_func',</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight diff"><figcaption><span>app/views.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 导入混入类:</span><br><span class="line">from rest_framework_extensions.cache.mixins import CacheResponseMixin</span><br><span class="line"></span><br><span class="line"># 让视图类继承混入类:</span><br><span class="line">class EstatesView(CacheResponseMixin):   </span><br><span class="line"># 带Mixin的类是混入类,混入类必须写在前面</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="5-接口数据的筛选和排序"><a href="#5-接口数据的筛选和排序" class="headerlink" title="5. 接口数据的筛选和排序"></a>5. 接口数据的筛选和排序</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装django filter</span></span><br><span class="line">pip <span class="keyword">install</span> django-filter</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件添加应用</span></span><br><span class="line"><span class="string">'django_filters'</span>,</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入DjangoFilterBackend</span></span><br><span class="line"><span class="keyword">from</span> django_filters.rest_framework <span class="keyword">import</span> DjangoFilterBackend</span><br><span class="line"></span><br><span class="line"><span class="comment"># DjangoFilterBackend帮忙筛数据</span></span><br><span class="line">filter_backends = (DjangoFilterBackend, OrderingFilter)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">--------------- 直接查询 ------------------</span></span><br><span class="line"><span class="comment"># 设置筛选条件</span></span><br><span class="line">filter_fields = (<span class="string">'district'</span>, )</span><br><span class="line"><span class="comment"># 设置排序字段</span></span><br><span class="line">ordering_fields = (<span class="string">'hot'</span>, <span class="string">'estateid'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">--------- 自定义一个类来指定查询条件-----------</span></span><br><span class="line"><span class="comment"># ①: 自定义类:</span></span><br><span class="line"><span class="keyword">class</span> EstateFilterSet(django_filters.FilterSet):</span><br><span class="line">    minhot = django_filters.NumberFilter(field_name=<span class="string">'hot'</span>, lookup_expr=<span class="string">'gte'</span>)</span><br><span class="line">    maxhot = django_filters.NumberFilter(field_name=<span class="string">'hot'</span>, lookup_expr=<span class="string">'lte'</span>)</span><br><span class="line">    keyword = django_filters.CharFilter(method=<span class="string">'filter_by_keyword'</span>)</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    <span class="keyword">def</span> filter_by_keyword(queryset, <span class="keyword">key</span>, <span class="keyword">value</span>):</span><br><span class="line">        queryset = queryset.filter(Q(name__contains=<span class="keyword">value</span>) | Q(intro__contains=<span class="keyword">value</span>))</span><br><span class="line">        <span class="keyword">return</span> queryset</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="comment"># ②: 导入定义好的类</span></span><br><span class="line"><span class="keyword">from</span> common.utils <span class="keyword">import</span> EstateFilterSet</span><br><span class="line"></span><br><span class="line"><span class="comment"># ③: 在视图类里面使用(注,使用时要放到filter_backends后面)</span></span><br><span class="line">filter_backends = (DjangoFilterBackend, OrderingFilter)</span><br><span class="line">filterset_class = EstateFilterSet</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-接口限流-限制接口的访问频率"><a href="#6-接口限流-限制接口的访问频率" class="headerlink" title="6. 接口限流:  限制接口的访问频率"></a>6. 接口限流:  限制接口的访问频率</h2><p>原理: 在缓存(Redis)内记录IP地址,并记录访问次数,当请求超过阈值则限制访问</p>
+<figure class="highlight diff"><figcaption><span>settings.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    # 限流配置</span><br><span class="line">    'DEFAULT_THROTTLE_CLASSES': (</span><br><span class="line">        'rest_framework.throttling.AnonRateThrottle',</span><br><span class="line">    ),</span><br><span class="line">    'DEFAULT_THROTTLE_RATES': &#123;</span><br><span class="line">        'anon': '5/min',</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若不想限流,可以在视图类里面加入以下代码:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">throttle_classes</span> = ()</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2020/01/12/%E5%90%8E%E7%AB%AF/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">Django进阶</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%A1%86%E6%9E%B6/">▼ 框架</a>
+                    
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">▼ 后端</a>
+                    
+                        <a href="/tags/Django/">▼ Django</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2020/03/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">上一篇：支持向量机（SVM）</a>
+            
+            
+            <a class="next" rel="next" href="/2020/01/05/%E5%90%8E%E7%AB%AF/Django%E5%85%A5%E9%97%A8%E4%B9%8B%E9%80%89%E8%AF%BE%E7%B3%BB%E7%BB%9F/">下一篇：Django入门之选课系统</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

@@ -13,7 +13,7 @@
     <meta name="subtitle" content="小安">
 
 
-    <meta name="description" content="没有做不到的事,只是看你想不想做">
+    <meta name="description" content="佛系分享">
 
 
 
@@ -94,6 +94,8 @@
 
 <meta name="generator" content="Hexo 4.1.1"></head>
 <body>
+
+	
     <div class="wrapper">
         <header>
     <nav class="navbar">
@@ -273,7 +275,7 @@
 <h2 id="一-理解朴素贝叶斯"><a href="#一-理解朴素贝叶斯" class="headerlink" title="(一): 理解朴素贝叶斯"></a>(一): 理解朴素贝叶斯</h2><p><strong>屌丝逆袭实例:</strong></p>
 <p>大学的时候，某男生经常去007自习室上晚自习，发现他喜欢的那个女生也常去那个自习室，心中窃喜，于是每天买点好吃点在那个自习室蹲点等她来，可是人家女生不一定每天都来，眼看天气渐渐炎热，自习室又不开空调，如果那个女生没有去自习室，该男生也就不去，每次男生鼓足勇气说：“嘿，你明天还来不？”,“啊，不知道，看情况”。然后该男生每天就把她去自习室与否以及一些其他情况做一下记录，<strong>用Y表示该女生是否去自习室，即Y={去，不去}，X是跟去自习室有关联的一系列条件，比如当天上了哪门主课，</strong>蹲点统计了一段时间后，该男生打算今天不再蹲点，而是先预测一下她会不会去，现在已经知道了今天上了常微分方法这么主课，于是计算<strong>$P(Y=去|常微分方程)$</strong>与<strong>$P(Y=不去|常微分方程)$</strong>，看哪个概率大，如果<strong>$P(Y=去|常微分方程) &gt;P(Y=不去|常微分方程)$</strong>，那这个男生不管多热都屁颠屁颠去自习室了，否则不就去自习室受罪了。P(Y=去|常微分方程)的计算可以转为计算以前她去的情况下，那天主课是常微分的概率P(常微分方程|Y=去)，注意公式右边的分母对每个类别（去/不去）都是一样的，所以计算的时候忽略掉分母，这样虽然得到的概率值已经不再是0~1之间，但是<strong>通过比较大小还是能选择类别</strong>。后来他发现还有一些其他条件可以挖，<strong>比如当天星期几、当天的天气，以及上一次与她在自修室的气氛</strong>，统计了一段时间后，该男子一计算，发现不好算了，因为总结历史的公式：<br>$$<br>P(X=x|Y=C_k) = P(X^{(1)}=x^{(1)}, X^{(2)}=x^{(2)}, …, X^{(n)}=x^{(n)} | Y=C_k)<br>$$<br><strong>这里n=4，x(1)表示主课，x(2)表示天气，x(3)表示星期几，x(4)表示气氛，Y仍然是{去，不去}，现在主课有8门，天气有晴、雨、阴三种、气氛有A+,A,B+,B，C五种，那么总共需要估计的参数有8×3×7×5×2=1680个，</strong>每天只能收集到一条数据，那么等凑齐1680条数据，大学都毕业了，男生大呼不妙</p>
 <p><font color=purple><strong>当特征数量为多个时, 多个条件之间互相影响, 增加了数据复杂度, 最终决定对应的类别;</strong></font></p>
-<p>于是做了一个<font color=red><strong>独立性假设，假设这些影响她去自习室的原因是独立互不相关的:</strong></font><br>$$<br>\begin{aligned}<br>P(X=x|Y=C_k) &amp;= P(X^{(1)}=x^{(1)}, X^{(2)}=x^{(2)}, …, X^{(n)}=x^{(n)} | Y=C_k)\<br>&amp; = P(X^{(1)}=x^{(1)} | Y=C_k) \times P(X^{(2)}=x^{(2)} | Y=C_k) \times …\times P(X^{(n)}=x^{(n)} | Y=C_k)\<br>&amp;=\prod_{i=1}^n P(X^{(i)}=x^{(i)} | Y=C_k)\<br>\end{aligned}<br>$$<br>有了这个独立假设后，需要估计的参数就变为，(8+3+7+5)×2 = 46个了，而且每天收集的一条数据，可以提供4个参数，这样该男生就预测越来越准了</p>
+<p>于是做了一个<font color=red><strong>独立性假设，假设这些影响她去自习室的原因是独立互不相关的:</strong></font><br>$$<br>\begin{aligned}<br>P(X=x|Y=C_k) &amp;= P(X^{(1)}=x^{(1)}, X^{(2)}=x^{(2)}, …, X^{(n)}=x^{(n)} | Y=C_k)\\<br>&amp; = P(X^{(1)}=x^{(1)} | Y=C_k) \times P(X^{(2)}=x^{(2)} | Y=C_k) \times …\times P(X^{(n)}=x^{(n)} | Y=C_k)\\<br>&amp;=\prod_{i=1}^n P(X^{(i)}=x^{(i)} | Y=C_k)\\<br>\end{aligned}<br>$$<br>有了这个独立假设后，需要估计的参数就变为，(8+3+7+5)×2 = 46个了，而且每天收集的一条数据，可以提供4个参数，这样该男生就预测越来越准了</p>
 <p>通过上面这个屌丝逆袭的例子我们可以简单的总结一下: </p>
 <p><strong><font color=red> sklearn中的朴素贝叶斯其实就是将贝叶斯中的各属性看成是独立的,不相互影响的</font></strong></p>
 <p>那么朴素贝叶斯又是怎么判断类别的呢?</p>
@@ -281,7 +283,7 @@
 <h2 id="二-朴素贝叶斯的工作原理"><a href="#二-朴素贝叶斯的工作原理" class="headerlink" title="(二): 朴素贝叶斯的工作原理"></a>(二): 朴素贝叶斯的工作原理</h2><p><strong>又是一个例子:</strong></p>
 <p>如果一对男女朋友，男生向女生求婚，男生的四个特点分别是不帅，性格不好，身高矮，不上进，请你判断一下女生是嫁还是不嫁？</p>
 <p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgn7r1riwj20t40f8adw.jpg" alt="嫁不嫁算例.png"></p>
-<p>首先,我们用<strong>贝叶斯公式</strong>将这个时间的概率表示出来:<br>$$<br>P(嫁 | 不帅、性格不好、身高矮、不上进)=\frac{P(不帅、性格不好、身高矮、不上进|嫁) \times P(嫁)}{P(不帅、性格不好、身高矮、不上进)}<br>$$<br>将贝叶斯转换成<strong>朴素贝叶斯</strong><br>$$<br>\begin{aligned}<br>P(嫁 | 不帅、性格不好、身高矮、不上进)&amp;=\frac{P(不帅、性格不好、身高矮、不上进|嫁) \times P(嫁)}{P(不帅、性格不好、身高矮、不上进)}\<br>&amp;= \frac{P(不帅|嫁) \times P(性格不好|嫁) \times P(身高矮|嫁) \times P(不上进|嫁) \times P(嫁)}{P(不帅) \times P(性格不好) \times P(身高矮) \times P(不上进)}\<br>\end{aligned}<br>$$</p>
+<p>首先,我们用<strong>贝叶斯公式</strong>将这个时间的概率表示出来:<br>$$<br>P(嫁 | 不帅、性格不好、身高矮、不上进)=\frac{P(不帅、性格不好、身高矮、不上进|嫁) \times P(嫁)}{P(不帅、性格不好、身高矮、不上进)}<br>$$<br>将贝叶斯转换成<strong>朴素贝叶斯</strong><br>$$<br>\begin{aligned}<br>P(嫁 | 不帅、性格不好、身高矮、不上进)&amp;=\frac{P(不帅、性格不好、身高矮、不上进|嫁) \times P(嫁)}{P(不帅、性格不好、身高矮、不上进)}\\<br>&amp; \\<br>&amp;= \frac{P(不帅|嫁) \times P(性格不好|嫁) \times P(身高矮|嫁) \times P(不上进|嫁) \times P(嫁)}{P(不帅) \times P(性格不好) \times P(身高矮) \times P(不上进)}\\<br>\end{aligned}<br>$$</p>
 <p>此时,我们就可以轻易的看出:</p>
 <p>$P(不帅|嫁)$ 的概率为: 1/2</p>
 <p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmgn88b2jlj218u0jsjwl.jpg" alt="嫁不帅的概率.png"></p>
@@ -385,7 +387,7 @@
         </section>
         <section class="post-nav">
             	
-                <a class="prev" rel="prev" href="/2019/12/20/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">上一篇：Linux定时任务</a>
+                <a class="prev" rel="prev" href="/2019/12/20/%E5%90%8E%E7%AB%AF/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">上一篇：Linux定时任务</a>
             
             
             <a class="next" rel="next" href="/2019/03/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/">下一篇：逻辑斯蒂回归(Logistic)</a>
@@ -455,5 +457,7 @@
 
     </div>
 	
+
+
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
 </html>

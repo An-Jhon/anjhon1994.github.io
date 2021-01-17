@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>聚类 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        
+		src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">聚类</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2020-04-01</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;机器学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-聚类"><a href="#一-聚类" class="headerlink" title="一: 聚类"></a>一: 聚类</h1><h2 id="一-概述"><a href="#一-概述" class="headerlink" title="(一): 概述"></a>(一): 概述</h2><p><strong>聚类算法</strong> 是机器学习（Mahine Learning）的一种，属于<strong>无监督学习（Unsupervised Learning）</strong>，即数据样本没有数据标签。它的目的是将数据中具有相似特征的数据自动聚为一类。</p>
+<p>分类简单来说，就是根据文本的特征或属性，划分到已有的类别中。也就是说，这些类别是已知的，通过对已知分类的数据进行训练和学习，找到这些不同类的特征，再对未分类的数据进行分类。<br>        而聚类的理解更简单，就是你压根不知道数据会分为几类，通过聚类分析将数据或者说用户聚合成几个群体，那就是聚类了。聚类不需要对数据进行训练和学习。</p>
+<h2 id="二-聚类算法"><a href="#二-聚类算法" class="headerlink" title="(二): 聚类算法"></a>(二): 聚类算法</h2><p><strong>聚类分析的八类方法</strong></p>
+<ol>
+<li>划分方法<br>1）K-Means聚类<br>2）K-Medoids聚类<br>3）CLARANS算法<br>4）Canopy算法</li>
+<li>层次方法<br>1）BIRCH算法</li>
+<li>基于密度的方法<br>1）DBSCAN算法</li>
+</ol>
+<br>
+
+
+
+<h1 id="二-K-Means聚类"><a href="#二-K-Means聚类" class="headerlink" title="二: K-Means聚类"></a>二: K-Means聚类</h1><h2 id="一-原理"><a href="#一-原理" class="headerlink" title="(一): 原理"></a>(一): 原理</h2><p>K-Means算法的思想很简单，对于给定的样本集，按照样本之间的距离大小，将样本集划分为K个簇。让簇内的点尽量紧密的连在一起，而让簇间的距离尽量的大。</p>
+<p><strong>举一个简单得例子:</strong></p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmql5gtgmqj20fz0av3zf.jpg" alt="k-means示例.png" style="zoom:80%;" />
+
+<p>上图a表达了初始的数据集，假设k=2。在图b中，我们随机选择了两个k类所对应的类别质心，即图中的红色质心和蓝色质心，然后分别求样本中所有点到这两个质心的距离，并标记每个样本的类别为该样本距离最小的质心的类别，如图c所示，经过计算样本和红色质心和蓝色质心的距离，我们得到了所有样本点的第一轮迭代后的类别。此时我们对我们当前标记为红色和蓝色的点分别求其新的质心，如图d所示，新的红色质心和蓝色质心的位置已经发生了变动。图e和图f重复了我们在图c和图d的过程，即将所有点的类别标记为距离最近的质心的类别并求新的质心。最终我们得到的两个类别如图f。</p>
+<h2 id="二-K值的选择"><a href="#二-K值的选择" class="headerlink" title="(二):K值的选择"></a>(二):K值的选择</h2><p>不像监督学习的分类问题和回归问题，我们的无监督聚类没有样本输出，也就没有比较直接的聚类评估方法。但是我们可以从簇内的稠密程度和簇间的离散程度来评估聚类的效果。</p>
+<p>常用的方法有<strong>轮廓系数</strong>(Silhouette Coefficient), <strong>调整兰德系数</strong>(Adjusted Rand index)和<strong>CH指标分析</strong>(Calinski-Harabasz Index)</p>
+<p><strong>在sklearn中轮廓系数对应的方法是: silhouette_score(X,y_)</strong></p>
+<p><strong>在sklearn中调整兰德系数对应的方法是: adjusted_rand_score(y,y_)</strong></p>
+<p>Calinski-Harabasz分数值s的数学计算公式是：</p>
+<p>$$s(k)=\frac{tr(Bk)}{tr(Wk)}\frac{m−k}{k−1}$$</p>
+<p>其中m为训练集样本数，k为类别数。Bk为类别之间的协方差矩阵，Wk为类别内部数据的协方差矩阵。tr为矩阵的迹。</p>
+<p>也就是说，类别内部数据的协方差越小越好，类别之间的协方差越大越好，这样的Calinski-Harabasz分数会高。<strong>在scikit-learn中， Calinski-Harabasz Index对应的方法是metrics.calinski_harabaz_score.</strong></p>
+<h2 id="三-参数详解"><a href="#三-参数详解" class="headerlink" title="(三): 参数详解"></a>(三): 参数详解</h2><p>用KMeans类的话，一般要注意的仅仅就是k值的选择，即参数n_clusters；</p>
+<p><strong>KMeans类的主要参数有：</strong></p>
+<p>1) <strong>n_clusters</strong>: 即我们的k值，一般需要多试一些值以获得较好的聚类效果。k值好坏的评估标准在下面会讲。</p>
+<p>2）<strong>max_iter</strong>： 最大的迭代次数，一般如果是凸数据集的话可以不管这个值，如果数据集不是凸的，可能很难收敛，此时可以指定最大的迭代次数让算法可以及时退出循环。</p>
+<p>3）<strong>n_init：</strong>用不同的初始化质心运行算法的次数。由于K-Means是结果受初始值影响的局部最优的迭代算法，因此需要多跑几次以选择一个较好的聚类效果，默认是10，一般不需要改。如果你的k值较大，则可以适当增大这个值。</p>
+<p>4）<strong>init：</strong> 即初始值选择的方式，可以为完全随机选择’random’,优化过的’k-means++’或者自己指定初始化的k个质心。一般建议使用默认的’k-means++’。</p>
+<p>5）<strong>algorithm</strong>：有“auto”, “full” or “elkan”三种选择。”full”就是我们传统的K-Means算法， “elkan”是我们原理篇讲的elkan K-Means算法。默认的”auto”则会根据数据值是否是稀疏的，来决定如何选择”full”和“elkan”。一般数据是稠密的，那么就是 “elkan”，否则就是”full”。一般来说建议直接用默认的”auto”</p>
+<p><a href="https://www.cnblogs.com/pinard/p/6169370.html" target="_blank" rel="noopener">用scikit-learn学习K-Means聚类 - 刘建平</a></p>
+<br>
+
+
+
+<h1 id="三-DBSCAN聚类"><a href="#三-DBSCAN聚类" class="headerlink" title="三: DBSCAN聚类"></a>三: DBSCAN聚类</h1><h2 id="一-原理-1"><a href="#一-原理-1" class="headerlink" title="(一): 原理"></a>(一): 原理</h2><p>DBSCAN是一种基于密度的聚类算法，这类密度聚类算法一般假定类别可以通过样本分布的紧密程度决定。同一类别的样本，他们之间的紧密相连的，也就是说，在该类别任意样本周围不远处一定有同类别的样本存在。</p>
+<p>通过将紧密相连的样本划为一类，这样就得到了一个聚类类别。通过将所有各组紧密相连的样本划为各个不同的类别，则我们就得到了最终的所有聚类类别结果。</p>
+<p>DBSCAN是基于一组邻域来描述样本集的紧密程度的，参数(ϵ, MinPts)用来描述邻域的样本分布紧密程度。其中，<strong>ϵ描述了某一样本的邻域距离阈值，MinPts描述了某一样本的距离为ϵϵ的邻域中样本个数的阈值。</strong></p>
+<p>直白了说就是刚开始随机某个点, <strong>以ϵ为半径画圆, 只要在该圆的范围内的点都会被归纳到相同的类别中, 但是若权重的点的总数没有达到设置的阈值MinPts,则不能形成聚类</strong></p>
+<p><img src="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/photos/%E8%81%9A%E7%B1%BB/DBSCAN%E5%8E%9F%E7%90%86.gif" alt=""></p>
+<h2 id="二-总结"><a href="#二-总结" class="headerlink" title="(二): 总结"></a>(二): 总结</h2><p>和传统的K-Means算法相比，DBSCAN最大的不同就是不需要输入类别数k，当然它最大的优势是可以发现任意形状的聚类簇，而不是像K-Means，一般仅仅使用于凸的样本集聚类。同时它在聚类的同时还可以找出异常点，这点和BIRCH算法类似。</p>
+<p>那么我们什么时候需要用DBSCAN来聚类呢？<strong>一般来说，如果数据集是稠密的，并且数据集不是凸的，那么用DBSCAN会比K-Means聚类效果好很多。如果数据集不是稠密的，则不推荐用DBSCAN来聚类。</strong></p>
+<p>下面对DBSCAN算法的优缺点做一个总结。</p>
+<p><strong>DBSCAN的主要优点有：</strong></p>
+<p>1） 可以对任意形状的稠密数据集进行聚类，相对的，K-Means之类的聚类算法一般只适用于凸数据集。</p>
+<p>2） 可以在聚类的同时发现异常点，对数据集中的异常点不敏感。</p>
+<p>3） 聚类结果没有偏倚，相对的，K-Means之类的聚类算法初始值对聚类结果有很大影响。</p>
+<p><strong>DBSCAN的主要缺点有：</strong></p>
+<p>1）如果样本集的密度不均匀、聚类间距差相差很大时，聚类质量较差，这时用DBSCAN聚类一般不适合。</p>
+<p>2） 如果样本集较大时，聚类收敛时间较长，此时可以对搜索最近邻时建立的KD树或者球树进行规模限制来改进。</p>
+<p>3） 调参相对于传统的K-Means之类的聚类算法稍复杂，主要需要对距离阈值ϵϵ，邻域样本数阈值MinPts联合调参，不同的参数组合对最后的聚类效果有较大影响。</p>
+<p><a href="https://www.cnblogs.com/pinard/p/6208966.html" target="_blank" rel="noopener">DBSCAN密度聚类算法 - 刘建平</a></p>
+<h2 id="三-参数详解-1"><a href="#三-参数详解-1" class="headerlink" title="(三): 参数详解"></a>(三): 参数详解</h2><p>DBSCAN类的重要参数也分为两类，一类是DBSCAN算法本身的参数，一类是最近邻度量的参数，下面我们对这些参数做一个总结。</p>
+<p>1）<strong>eps</strong>： DBSCAN算法参数，即我们的ϵϵ-邻域的距离阈值，和样本距离超过ϵϵ的样本点不在ϵϵ-邻域内。默认值是0.5.一般需要通过在多组值里面选择一个合适的阈值。eps过大，则更多的点会落在核心对象的ϵϵ-邻域，此时我们的类别数可能会减少， 本来不应该是一类的样本也会被划为一类。反之则类别数可能会增大，本来是一类的样本却被划分开。</p>
+<p>2）<strong>min_samples</strong>： DBSCAN算法参数，即样本点要成为核心对象所需要的ϵϵ-邻域的样本数阈值。默认值是5. 一般需要通过在多组值里面选择一个合适的阈值。通常和eps一起调参。在eps一定的情况下，min_samples过大，则核心对象会过少，此时簇内部分本来是一类的样本可能会被标为噪音点，类别数也会变多。反之min_samples过小的话，则会产生大量的核心对象，可能会导致类别数过少。</p>
+<p><a href="https://www.cnblogs.com/pinard/p/6217852.html" target="_blank" rel="noopener">用scikit-learn学习DBSCAN聚类 - 刘建平</a></p>
+<h2 id="四-实例"><a href="#四-实例" class="headerlink" title="(四): 实例"></a>(四): 实例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans,DBSCAN</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数据</span></span><br><span class="line"><span class="comment"># y中是两类：0,1</span></span><br><span class="line">X,y = datasets.make_circles(n_samples=<span class="number">1000</span>,noise=<span class="number">0.05</span>,factor = <span class="number">0.5</span>)</span><br><span class="line"><span class="comment"># centers = [(1.5,1.5)] 元组，代表着，中心点的坐标值</span></span><br><span class="line"><span class="comment"># y1一类：0 + 2</span></span><br><span class="line">X1,y1 = datasets.make_blobs(n_samples=<span class="number">500</span>,n_features=<span class="number">2</span>,centers=[(<span class="number">1.5</span>,<span class="number">1.5</span>)],cluster_std=<span class="number">0.2</span>)</span><br><span class="line"><span class="comment"># 将circle和散点进行了数据合并</span></span><br><span class="line">X = np.concatenate([X,X1])</span><br><span class="line">y = np.concatenate([y,y1 + <span class="number">2</span>])</span><br><span class="line">plt.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],c = y)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># DBSCAN聚类</span></span><br><span class="line">dbscan = DBSCAN(eps = <span class="number">0.2</span>,min_samples=<span class="number">5</span>)</span><br><span class="line">dbscan.fit(X)</span><br><span class="line">y_ = dbscan.labels_</span><br><span class="line">plt.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],c = y_)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/photos/%E8%81%9A%E7%B1%BB/DBSCAN%E8%81%9A%E7%B1%BB%E5%AE%9E%E4%BE%8B.jpg" alt=""></p>
+<br>
+
+
+
+<h1 id="四-BIRCH聚类"><a href="#四-BIRCH聚类" class="headerlink" title="四: BIRCH聚类"></a>四: BIRCH聚类</h1><p>BIRCH聚类算法是用层次方法来聚类和规约数据的,.</p>
+<h2 id="一-聚类特征数"><a href="#一-聚类特征数" class="headerlink" title="(一): 聚类特征数"></a>(一): 聚类特征数</h2><p>BIRCH聚类算法的主要过程其实就是在构建一颗CF tree(聚类特征数);</p>
+<p>这颗树的每一个节点是由若干个聚类特征(Clustering Feature，简称CF)组成。从下图我们可以看看聚类特征树是什么样子的：每个节点包括叶子节点都有若干个CF，而内部节点的CF有指向孩子节点的指针，所有的叶子节点用一个双向链表链接起来。</p>
+<p><img src="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/photos/%E8%81%9A%E7%B1%BB/%E8%81%9A%E7%B1%BB%E7%89%B9%E5%BE%81%E6%A0%911.png" alt=""></p>
+<p>CF有一个很好的性质，就是满足线性关系，也就是CF1+CF2=(N1+N2,LS1+LS2,SS1+SS2)CF1+CF2=(N1+N2,LS1+LS2,SS1+SS2)。这个性质从定义也很好理解。如果把这个性质放在CF Tree上，也就是说，在CF Tree中，对于每个父节点中的CF节点，它的(N,LS,SS)三元组的值等于这个CF节点所指向的所有子节点的三元组之和。如下图所示：</p>
+<p><img src="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/photos/%E8%81%9A%E7%B1%BB/%E8%81%9A%E7%B1%BB%E7%89%B9%E5%BE%81%E6%A0%91.png" alt=""></p>
+<p>从上图中可以看出，根节点的CF1的三元组的值，可以从它指向的6个子节点（CF7 - CF12）的值相加得到。这样我们在更新CF Tree的时候，可以很高效。</p>
+<p>对于CF Tree，我们一般有几个重要参数，第一个参数是每个内部节点的最大CF数B，第二个参数是每个叶子节点的最大CF数L，第三个参数是针对叶子节点中某个CF中的样本点来说的，它是叶节点每个CF的最大样本半径阈值T，<font color=red>也就是说，在这个CF中的所有样本点一定要在半径小于T的一个超球体内。对于上图中的CF Tree，限定了B=7， L=5， 也就是说内部节点最多有7个CF，而叶子节点最多有5个CF。</font></p>
+<h2 id="二-BIRCH聚类原理"><a href="#二-BIRCH聚类原理" class="headerlink" title="(二): BIRCH聚类原理"></a>(二): BIRCH聚类原理</h2><p>在最开始的时候，CF Tree是空的，没有任何样本，我们从训练集读入第一个样本点，将它放入一个新的CF三元组A，这个三元组的N=1，将这个新的CF放入根节点</p>
+<p>继续读入第二个样本点，我们发现这个样本点和第一个样本点A，在半径为T的超球体范围内，也就是说，他们属于一个CF，我们将第二个点也加入CF A,此时需要更新A的三元组的值。</p>
+<p>此时来了第三个节点，结果我们发现这个节点不能融入刚才前面的节点形成的超球体内，也就是说，我们需要一个新的CF三元组B，来容纳这个新的值。此时根节点有两个CF三元组A和B</p>
+<p><strong>BIRCH聚类和K-Mean聚类的区别就是是否有连通性约束</strong></p>
+<p><img src="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/photos/%E8%81%9A%E7%B1%BB/%E8%BF%9E%E9%80%9A%E6%80%A7%E7%BA%A6%E6%9D%9F1.png" alt=""></p>
+<p><img src="https://anjhon-blog-imags-1300562301.cos.ap-nanjing.myqcloud.com/photos/%E8%81%9A%E7%B1%BB/%E8%BF%9E%E9%80%9A%E6%80%A7%E7%BA%A6%E6%9D%9F2.png" alt=""></p>
+<p><strong>总结:</strong> </p>
+<ol>
+<li><p>从根节点向下寻找和新样本距离最近的叶子节点和叶子节点里最近的CF节点</p>
+</li>
+<li><p>如果新样本加入后，这个CF节点对应的超球体半径仍然满足小于阈值T，则更新路径上所有的CF三元组，插入结束。否则转入3.</p>
+</li>
+<li><p>如果当前叶子节点的CF节点个数小于阈值L，则创建一个新的CF节点，放入新样本，将新的CF节点放入这个叶子节点，更新路径上所有的CF三元组，插入结束。否则转入4。</p>
+</li>
+<li><p>将当前叶子节点划分为两个新叶子节点，选择旧叶子节点中所有CF元组里超球体距离最远的两个CF元组，分布作为两个新叶子节点的第一个CF节点。将其他元组和新样本元组按照距离远近原则放入对应的叶子节点。依次向上检查父节点是否也要分裂，如果需要按和叶子节点分裂方式相同。</p>
+</li>
+</ol>
+<h2 id="三-算法小结"><a href="#三-算法小结" class="headerlink" title="(三): 算法小结"></a>(三): 算法小结</h2><p>BIRCH算法可以不用输入类别数K值，这点和K-Means，Mini Batch K-Means不同。如果不输入K值，则最后的CF元组的组数即为最终的K，否则会按照输入的K值对CF元组按距离大小进行合并。</p>
+<p>一般来说，BIRCH算法适用于样本量较大的情况，这点和Mini Batch K-Means类似，但是BIRCH适用于类别数比较大的情况，而Mini Batch K-Means一般用于类别数适中或者较少的时候。BIRCH除了聚类还可以额外做一些异常点检测和数据初步按类别规约的预处理。但是如果数据特征的维度非常大，比如大于20，则BIRCH不太适合，此时Mini Batch K-Means的表现较好。</p>
+<p>对于调参，BIRCH要比K-Means，Mini Batch K-Means复杂，因为它需要对CF Tree的几个关键的参数进行调参，这几个参数对CF Tree的最终形式影响很大。</p>
+<p><strong>最后总结下BIRCH算法的优缺点：</strong></p>
+<p>BIRCH算法的主要优点有：</p>
+<p>　　1) 节约内存，所有的样本都在磁盘上，CF Tree仅仅存了CF节点和对应的指针。</p>
+<p>　　2) 聚类速度快，只需要一遍扫描训练集就可以建立CF Tree，CF Tree的增删改都很快。</p>
+<p>　　3) 可以识别噪音点，还可以对数据集进行初步分类的预处理</p>
+<p>BIRCH算法的主要缺点有：</p>
+<p>　　1) 由于CF Tree对每个节点的CF个数有限制，导致聚类的结果可能和真实的类别分布不同.</p>
+<p>　　2) 对高维特征的数据聚类效果不好。此时可以选择Mini Batch K-Means</p>
+<p>　　3) 如果数据集的分布簇不是类似于超球体，或者说不是凸的，则聚类效果不好。</p>
+<h2 id="四-参数详解"><a href="#四-参数详解" class="headerlink" title="(四): 参数详解"></a>(四): 参数详解</h2><p>1) <strong>threshold</strong>:即叶节点每个CF的最大样本半径阈值T，它决定了每个CF里所有样本形成的超球体的半径阈值。一般来说threshold越小，则CF Tree的建立阶段的规模会越大，即BIRCH算法第一阶段所花的时间和内存会越多。但是选择多大以达到聚类效果则需要通过调参决定。默认值是0.5.如果样本的方差较大，则一般需要增大这个默认值。</p>
+<p>2) <strong>branching_factor</strong>：即CF Tree内部节点的最大CF数B，以及叶子节点的最大CF数L。这里scikit-learn对这两个参数进行了统一取值。也就是说，branching_factor决定了CF Tree里所有节点的最大CF数。默认是50。如果样本量非常大，比如大于10万，则一般需要增大这个默认值。选择多大的branching_factor以达到聚类效果则需要通过和threshold一起调参决定</p>
+<p>3）<strong>n_clusters</strong>：即类别数K，在BIRCH算法是可选的，如果类别数非常多，我们也没有先验知识，则一般输入None，此时BIRCH算法第4阶段不会运行。但是如果我们有类别的先验知识，则推荐输入这个可选的类别值。默认是3，即最终聚为3类。</p>
+<p>4）<strong>compute_labels</strong>：布尔值，表示是否标示类别输出，默认是True。一般使用默认值挺好，这样可以看到聚类效果。</p>
+<ul>
+<li>掌握Python编程语言,能使用Numpy,Pandas,Matplotlib,sklearn等第三方库进行数据清洗, 数据分析, 数据可视化;</li>
+<li>掌握SQL语言,能在Python及MySQL环境下熟练使用SQL语句进行操作;</li>
+<li>熟悉tableau,Excel(熟悉使用内置函数, 数据透视表);</li>
+<li>熟悉常用的机器学习算法,包括: 线性回归,逻辑回归,KNN,决策树,随机森林,朴素贝叶斯,支持向量机,K-means,等;</li>
+<li>熟悉Linux开发环境, 熟悉Git团队协作开发;</li>
+<li>熟悉常规的深度神经网络(RNN, CNN, LSTM)原理及主流框架TensorFlow的使用</li>
+</ul>
+<p>目前人在成都。<br>有扎实的计算机和统计学基础，近2.5年数据分析实战经验，善于用数据化的思维驱动相关工作。熟练使用Excel和Python语言，熟悉数据可视化和数据挖掘相关方法，擅长Pandas、Seaborn、ScikitLearn等工具，擅长数据分析报告的撰写，较强的自我学习能力和自我驱动能力，善于总结和归纳。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2020/04/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB/">聚类</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">▼ 机器学习</a>
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">▼ 算法</a>
+                    
+                        <a href="/tags/%E8%81%9A%E7%B1%BB/">▼ 聚类</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2020/04/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%9B%86%E6%88%90%E7%AE%97%E6%B3%95/">上一篇：集成算法</a>
+            
+            
+            <a class="next" rel="next" href="/2020/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95/">下一篇：决策树</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>支持向量机（SVM） | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        
+		src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">支持向量机（SVM）</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2020-03-12</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;机器学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-SVM-支持向量机-概述"><a href="#一-SVM-支持向量机-概述" class="headerlink" title="一: SVM(支持向量机)概述"></a>一: SVM(支持向量机)概述</h1><p><strong>先来一段维基百科的定义:</strong></p>
+<p>在机器学习中，支持向量机（英语：support vector machine，常简称为SVM，又名支持向量网络）是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为<strong>非概率二元线性分类器</strong>。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后，将新的实例映射到同一空间，并基于它们落在间隔的哪一侧来预测所属类别。</p>
+<p>除了进行线性分类之外，SVM还可以使用所谓的核技巧有效地进行非线性分类，将其输入隐式映射到高维特征空间中。</p>
+<br>
+
+
+
+
+
+<h1 id="二-SVM原理"><a href="#二-SVM原理" class="headerlink" title="二: SVM原理"></a>二: SVM原理</h1><h2 id="一-工作原理"><a href="#一-工作原理" class="headerlink" title="(一): 工作原理"></a>(一): 工作原理</h2><h3 id="1-硬间隔"><a href="#1-硬间隔" class="headerlink" title="1: 硬间隔"></a>1: 硬间隔</h3><p>现在有两种类别的数据需要分类, 如下图:</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqk3hnm1bj20fk0gnt8p.jpg" alt="支持向量机工作原理1.png" style="zoom:50%;" />
+
+
+
+<p>要想将这两类数据分开, 可以说是轻而易举, 只需要这样:</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqk3wqzhkj20fk0gnjrj.jpg" alt="支持向量机工作原理2.png" style="zoom:50%;" />
+
+
+
+<p>但是这样分类的方式(线条)有很多, 而支持向量机这个算法是追求完美的,  他想要的效果不仅仅是将数据分开, 还要找到一个最佳的分类’位置’进行黄金分割, 就像这样: </p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqk454iypj20fk0gn0t0.jpg" alt="支持向量机工作原理3.png" style="zoom:50%;" />
+
+<p>每一个可能把数据集正确分开的方向都有一个最优决策面（<strong>有些方向无论如何移动决策面的位置也不可能将两类样本完全分开</strong>），而不同方向的最优决策面的分类间隔通常是不同的，那个具有“最大间隔”的决策面就是SVM要寻找的最优解。</p>
+<blockquote>
+<p> 直观上看，应该去找位于两类训练样本“正中间”的划分超平面，因为该划分超平面对训练样本局部扰动的“容忍”性最好.例如，由于训练集的局限性或噪声的因素，训练集外的样本可能比训练样本更接近两个类的分隔界，这将使许多划分超平面出现错误，而“正中间”的划分超平面受影响最小.换言之，这个划分超平面所产生的分类结果是最鲁棒的，对未见示例的泛化能力最强.</p>
+</blockquote>
+<p>这是无数条可以分类的直线当中最完美的，因为它恰好在两个类的中间，<font color=red><strong>距离两个类的点都一样远, 同时他还是这两个类别之间间隔最大的线性分类器; 换句话说: 这个分类器对每个类别最近的元素距离最远.</strong></font></p>
+<p>而在高维空间中对于支持向量机来说，<strong>数据点若是p维向量，我们用p−1维的超平面来分开这些点。</strong>但是可能有许多超平面可以把数据分类。最佳超平面的一个合理选择就是以最大间隔把两个类分开的超平面。因此，SVM选择能够使离超平面最近的数据点的到超平面距离最大的超平面。</p>
+<h3 id="2-软间隔"><a href="#2-软间隔" class="headerlink" title="2: 软间隔"></a>2: 软间隔</h3><p>在实际应用中，完全线性可分的样本是很少的，我们会遇到不能够完全线性可分的样本，于是我们就有了软间隔，相比于硬间隔的苛刻条件，我们允许个别样本点出现在间隔带里面，比如：</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqk4h23edj20eo09wmy8.jpg" alt="支持向量机工作原理5.png" style="zoom: 80%;" />
+
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqk63bzwnj22240l8gyt.jpg" alt="支持向量机算法原理4.png"></p>
+<h3 id="3-非线性"><a href="#3-非线性" class="headerlink" title="3: 非线性"></a>3: 非线性</h3><p>还有一种非线性情况, 比如下面这个:</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqk6fmj66j20i90ge74b.jpg" alt="支持向量机工作原理4.png" style="zoom:50%;" />
+
+
+
+<p>这个时候, 我们就需要引入我们的三维空间了, 没错将数据上升一个维度, 就能轻松将数据分开, 如下图:</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqkdu2tb4j21mo0mq16f.jpg" alt="支持向量机算法原理5.png" style="zoom: 50%;" />
+
+
+
+
+
+
+
+<p>为了解决更加复杂的问题，支持向量机学习方法有一些由简至繁的模型:</p>
+<ul>
+<li><p><strong>线性可分SVM</strong><br>当训练数据线性可分时，通过<strong>硬间隔(hard margin)</strong>最大化可以学习得到一个线性分类器，即硬间隔SVM。</p>
+</li>
+<li><p><strong>线性SVM</strong><br>当训练数据不能线性可分但是可以近似线性可分时，通过<strong>软间隔(soft margin)</strong>最大化也可以学习到一个线性分类器，即软间隔SVM。</p>
+</li>
+<li><p><strong>非线性SVM</strong><br>当训练数据线性不可分时，通过使用<strong>核技巧(kernel trick)和软间隔最大化</strong>，可以学习到一个非线性SVM。</p>
+</li>
+</ul>
+<br>
+
+
+
+<h2 id="二-算法原理"><a href="#二-算法原理" class="headerlink" title="(二): 算法原理"></a>(二): 算法原理</h2><p><strong>SVM学习的基本想法是求解能够正确划分训练数据集并且几何间隔最大的分离超平面。</strong></p>
+<p>但实际上最优决策面的方向和位置完全取决于选择哪些样本作为支持向量。而在经过漫长的公式推导后，你最终会发现，其实与线性决策面的方向和位置直接相关的参数都会被约减掉，最终结果只取决于样本点的选择结果。</p>
+<h3 id="1-线性可分SVM—硬间隔"><a href="#1-线性可分SVM—硬间隔" class="headerlink" title="1: 线性可分SVM—硬间隔"></a>1: 线性可分SVM—硬间隔</h3><h4 id="1-目标函数-类别之间的间隔"><a href="#1-目标函数-类别之间的间隔" class="headerlink" title="(1): 目标函数(类别之间的间隔)"></a>(1): 目标函数(类别之间的间隔)</h4><p>如图所示:</p>
+<p>我们给出样本 $(x_i, y_i)$ , 类别标签为 $ y_i \in {-1, 1}$</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqkeeupq7j20pm0mkab2.jpg" alt="支持向量机算法原理1.png" style="zoom:50%;" />
+
+
+
+<p><strong>向量 $\vec W = [w_1, w_2]^T$ 与直线 $\vec W^Tx + b = 0$ 是相互垂直的</strong> ()</p>
+<p>在上图中,  向量 $\vec W$ 是决策面的法向量,  那么决策面的方程就能表示成: $\vec W^T x + b = 0$</p>
+<p>正例满足: $ \vec W^T x + b \ge 1$</p>
+<p>负例满足: $ \vec W^T x + b \le -1$</p>
+<h5 id="1-方法一-用点到直线的距离求间隔"><a href="#1-方法一-用点到直线的距离求间隔" class="headerlink" title="1): 方法一, 用点到直线的距离求间隔"></a>1): 方法一, 用点到直线的距离求间隔</h5><p>知道了决策面的表达式后, 我们就可以根据点到直线的距离公式:<br>$$<br>d = \frac{|Ax+By+C|}{\sqrt{A^2+B^2}}<br>$$<br>可以求出其中一类的支持向量到决策面的距离了:<br>$$<br> d = \frac{|\vec W^T x + b|}{||\vec W||}<br>$$<br>这里 $||\vec W||$ 是向量的模，表示在空间中向量的长度</p>
+<p>支持向量所在的直线 $\vec W^T x + b = 1$ 或 $\vec W^T x + b = -1$ , 而无论是-1还是1, 绝对值之后都是1 , 所以:<br>$$<br> d = \frac{|\vec W^T x + b|}{||\vec W||}=\frac{1}{||\vec W||}<br>$$<br><strong>这只是其中一类到决策面的距离, 因此, 总间隔为</strong><br>$$<br> d =\frac{2}{||\vec W||}<br>$$</p>
+<h5 id="2-方法二-用向量求间隔"><a href="#2-方法二-用向量求间隔" class="headerlink" title="2): 方法二, 用向量求间隔"></a>2): 方法二, 用向量求间隔</h5><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqket1zqjj20m80howfi.jpg" alt="支持向量机算法原理2.png" style="zoom:50%;" />
+
+
+
+<p>如图:</p>
+<p>我们要分类的向量到决策边界的距离可以用该向量在决策边界的法向量上面的正交投影来衡量,所以我们如果想要求两个类别之间的间隔, 可以用两个支持边界(决策边界两边的那两条线)上的支持向量在决策边界的法向量上的正交投影相减即可( $x_2$ 在 $w$ 上的投影减去 $x_1$ 在 $w$ 上的投影):</p>
+<p>当然上图中的 $x_1, x_2$ 并没有在支持边界上, 我们假设他们都在决策边界上, 这时我们就可以用向量的正交投影的公式:<br>$$<br>||\vec x_2||= \frac{\vec x_2 \times \vec W}{||\vec W||}\<br>||\vec x_1||= \frac{\vec x_1 \times \vec W}{||\vec W||}\<br>$$<br>所以间隔为:<br>$$<br>\begin{aligned}<br>d &amp;= ||\vec x_2|| - ||\vec x_1||\\<br>&amp;=\frac{\vec x_2 \times \vec W}{||\vec W||}-\frac{\vec x_1 \times \vec W}{||\vec W||}\\<br>&amp;=\frac{1-b}{||\vec W||} - \frac{-1-b}{||\vec W||}\\<br>&amp;=\frac{2}{||\vec W||}<br>\end{aligned}<br>$$</p>
+<h5 id="3-得出目标函数"><a href="#3-得出目标函数" class="headerlink" title="3): 得出目标函数"></a>3): 得出目标函数</h5><p>间隔求出来了, 而我们的SVM要求的是两类之间的最大间隔:<br>$$<br>max(d) = max(\frac{2}{||\vec W||})<br>$$<br>等价于:<br>$$<br>min||\vec W||<br>$$</p>
+<p>等价于:<br>$$<br>min (\frac{1}{2}||\vec W||^2)<br>$$<br><strong>之所以要加上平方和1/2的系数，是为了以后进行最优化的过程中对目标函数求导时比较方便，但这绝不影响最优化问题最后的解。</strong></p>
+<p>同时也不要忘了有一些约束条件:<br>$$<br>\vec W^T x_i + b \ge 1, y_i=1\<br>\vec W^T x_i + b \le -1, y_i=-1\<br>$$<br>将这个式子精简一下:<br>$$<br>y_i(\vec W^T x_i + b ) \ge1, i=1,2,3…,n<br>$$</p>
+<p><font color=red><strong>至此我们的目标函数就出来了:</strong> </font><br>$$<br>min_{\vec W, b}\frac{1}{2}||\vec W||^2\<br>s.t.y_i(\vec W^T x_i + b ) \ge1, i=1,2,3…,n<br>$$</p>
+<p>这里n是样本点的总个数，缩写s. t. 表示“Subject to”，是“服从某某条件”的意思。这是一个典型的不等式约束条件下的二次型函数优化问题</p>
+<p><font color=red>某些条件下，把原始的约束问题通过拉格朗日函数转化为无约束问题，如果原始问题求解棘手，在满足KKT的条件下用求解对偶问题来代替求解原始问题，使得问题求解更加容易。</font></p>
+<h4 id="2-拉格朗日乘子法"><a href="#2-拉格朗日乘子法" class="headerlink" title="(2): 拉格朗日乘子法"></a>(2): 拉格朗日乘子法</h4><p>上一节我们求出了目标函数, 但这是一个带约束的优化问题, 此时我们可以用拉格朗日乘子法构造一个拉格朗日函数, 将原来的有约束的优化问题转换为没有约束的优化问题.</p>
+<p><strong>拉格朗日乘子法的基本思想是把约束条件转化为新的目标函数的一部分，从而使有约束优化问题变成我们习惯的无约束优化问题。</strong></p>
+<blockquote>
+<p><strong>拉格朗日乘子法扩展</strong></p>
+<p>①: 当约束条件为<strong>等式</strong>时:</p>
+<p>​                原函数:<br>$$<br>min_x f(x)\<br>s.t. h_i(x)=0 , i=1,2,3…,m<br>$$<br>​                拉格朗日函数:<br>$$<br>L(x, \alpha)=f(x) + \sum_{i=1}^m\alpha_i h_i(x)<br>$$<br>②: 当约束条件为<strong>不等式</strong>时:</p>
+<p>​                原函数:<br>$$<br>min_x f(x)\<br>s.t. g_j(x) \le 0 , j=1,2,3…,n<br>$$<br>​                拉格朗日函数:<br>$$<br>L(x, \beta)=f(x) + \sum_{i=1}^n\beta_j g_j(x)<br>$$<br>并且不等式约束转换之后需要满足<strong>KKT(Karush-Kuhn-Tucker)</strong>条件, 即:<br>$$<br>\begin{cases}<br>乘子非负: \beta_j \ge 0, j=1,2,3…,n\\<br>约束条件: g_j(x) \le 0 , j=1,2,3…,n\\<br>互补条件: \beta_j \times g_j(x) = 0<br>\end{cases}<br>$$<br><strong>KKT条件是对最优解的约束，而原始问题中的约束条件是对可行解的约束</strong></p>
+</blockquote>
+<p>回到我们得原始问题上来,<br>$$<br>min_{\vec W, b}\frac{1}{2}||\vec W||^2\<br>s.t.y_i(\vec W^T x_i + b ) \ge 1, i=1,2,3…,n<br>$$</p>
+<p> 我们用拉格朗日乘子法对我们得原函数进行转换:<br>$$<br>L(\vec W, b, \alpha) = \frac{1}{2}||\vec W||^2 + \sum_{i=1}^n\alpha_i [1 - y_i(\vec W^T x_i + b ) ] , \alpha_i \ge 0\<br>$$<br>假设找到了最佳参数是的目标函数取得了最小值 $p$。即 $\frac{1}{2}||\vec W||^2=p$  。而根据 $\alpha_i \ge 0$ ，$y_i(\vec W^T x_i + b ) \ge 1$ 可知  $\sum\limits_{i=1}^n\alpha [1-y_i(\vec W^T x_i + b )] \le 0$ ，因此$L(\vec W, b, \alpha) \le p$ ，为了找到最优的参数  $\alpha$ ，使得 $L(\vec W, b, \alpha)$ 接近 $p$，故问题转换为出 ${max}_{\alpha, \alpha \ge0} L(\vec W, b, \alpha)$。</p>
+<p>但我们最终得目的是求原函数关于 $\vec W$ 和 $b$ 的最小值, 也就是拉格朗日函数关于 $\vec W$ 和 $b$ 的最小值, </p>
+<p>所以我们将问题转换为:<br>$$<br>min_{\vec W, b}[max_{\alpha, \alpha \ge0}L(\vec W, b, \alpha)]<br>$$</p>
+<h4 id="3-拉格朗日对偶函数"><a href="#3-拉格朗日对偶函数" class="headerlink" title="(3): 拉格朗日对偶函数"></a>(3): 拉格朗日对偶函数</h4><p>拉格朗日函数的<strong>对偶问题</strong>为:<br>$$<br>max_{\alpha, \alpha \ge0}[min_{\vec W, b}L(\vec W, b, \alpha)]<br>$$</p>
+<blockquote>
+<p><strong>对偶问题:</strong></p>
+<p>假设有个函数 <img src="https://www.zhihu.com/equation?tex=f" alt="[公式]"> 我们有：<br>$$<br>min max f \ge maxmin f<br>$$<br>也就是说，最大的里面挑出来的最小的也要比最小的里面挑出来的最大的要大。这关系实际上就是弱对偶关系，而强对偶关系是当等号成立时，即：<br>$$<br>min max f = maxmin f<br>$$<br>如果 <img src="https://www.zhihu.com/equation?tex=f+" alt="[公式]"> 是凸优化问题，强对偶性成立。<strong>而我们之前求的 KKT 条件是强对偶性的充要条件</strong>。</p>
+</blockquote>
+<p>回到我们的问题中, 我们现在的目标是先求出: $\min\limits_{\vec W, b}L(\vec W, b, \alpha)$ </p>
+<p>我们分别令函数 $L(\vec W, b, \alpha)$ 对 $\vec W, b$ 求偏导，并使其等于0。<br>$$<br>\frac{\partial L}{\partial \vec W}=\vec W - \sum_{i=1}^n\alpha_i y_ix_i =0\<br>\frac{\partial L}{\partial b} = -\sum_{i=1}^n\alpha_i y_i = 0\<br>$$<br>得到 :<br>$$<br>\vec W = \sum_{i=1}^n\alpha_i y_ix_i\<br>\sum_{i=1}^n\alpha_i y_i = 0<br>$$<br>将我们得到的结果带入 $\min\limits_{\vec W, b}L(\vec W, b, \alpha)$ :<br>$$<br>\begin{aligned}<br>\min_{\vec W, b}L(\vec W, b, \alpha) &amp;= \frac{1}{2}||\vec W||^2 + \sum_{i=1}^n\alpha_i [1 - y_i(\vec W^T x_i + b ) ] \\<br>&amp;=\frac{1}{2}(\sum_{i=1}^n\alpha_i y_ix_i)^T (\sum_{i=1}^n\alpha_i y_ix_i) + \sum_{i=1}^n\alpha_i - \sum_{i=1}^n\alpha_i y_i(\sum_{j=1}^n\alpha_i y_i (x_i x_j) + b )  \\<br>&amp;=\frac{1}{2}\sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j (x_i x_j) + \sum_{i=1}^n\alpha_i - \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j (x_i x_j) - \sum_{i=1}^n\alpha_i y_i b   \\<br>&amp;=\sum_{i=1}^n\alpha_i - \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j (x_i x_j)<br>\end{aligned}<br>$$</p>
+<p>$\min \limits_{\vec W, b}L(\vec W, b, \alpha)$ 求出来之后我们就可以求 $max_{\alpha, \alpha \ge 0} min_{\vec W, b}L(\vec W, b, \alpha)$ 了, 也就是:<br>$$<br>\max_{\alpha, \alpha \ge 0}[\sum_{i=1}^n\alpha_i - \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j (x_i x_j)]\<br>s.t \sum_{i=1}^n\alpha_i y_i = 0 , \alpha_i \ge 0<br>$$<br>不难发现这是一个二次规划问题，有现成的通用的算法来求解。</p>
+<h4 id="4-二次规划-gt-SMO算法"><a href="#4-二次规划-gt-SMO算法" class="headerlink" title="(4): 二次规划 -&gt; SMO算法"></a>(4): 二次规划 -&gt; SMO算法</h4><blockquote>
+<p><strong>维基百科定义的二次规划</strong></p>
+<p>一个有n个变数与m个限制的二次规划问题可以用以下的形式描述。首先给定：</p>
+<ul>
+<li>一个<em>n</em> 维的向量 <strong>c</strong></li>
+<li>一个<em>n</em> × <em>n</em> 维的对称矩阵<em>Q</em></li>
+<li>一个<em>m</em> × <em>n</em> 维的矩阵<em>A</em></li>
+<li>一个<em>m</em> 维的向量 <strong>b</strong></li>
+</ul>
+<p>则此二次规划问题的目标即是在限制条件为<br>$$<br>Ax \le b<br>$$<br>的条件下，找一个<em>n</em> 维的向量 <strong>x</strong> ，使得<br>$$<br>f(x) = \frac{1}{2}x^TQx+c^Tx<br>$$<br>为最小。</p>
+<p>其中$x^T是 x$的转置。</p>
+<p>根据不同的参数特性，可以得到对问题不同的结论</p>
+<ul>
+<li>如果Q是半正定矩阵，那么f(x)是一个凸函数。相应的二次规划为凸二次规划问题；此时若约束条件定义的可行域不为空，且目标函数在此可行域有下界，则该问题有全局最小值。</li>
+<li>如果Q是正定矩阵，则该问题有唯一的全局最小值。</li>
+<li>若Q为非正定矩阵，则目标函数是有多个平稳点和局部极小点的NP难问题</li>
+</ul>
+<p>根据优化理论，一个点x成为全局最小值的必要条件是满足KKT。当f(x)是凸函数时，KKT条件也是充分条件。</p>
+</blockquote>
+<p>对于二次规划问题, 我们常用 SMO(Sequential Minimal Optimization) 算法求解。SMO序列最小优化算法，其核心思想非常简单：每次只优化一个参数，其他参数先固定住，仅求当前这个优化参数的极值。</p>
+<p>我们刚说了 SMO 算法每次只优化一个参数，但我们的优化目标有约束条件：$\sum\limits_{i=1}^n\alpha_i y_i = 0$ ，没法一次只变动一个参数。所以我们选择了一次选择两个参数。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="noopener">SMO详解 - SVM中的SMO算法</a> </p>
+<p><strong>通过 SMO 求得最优解$\hat \alpha$</strong> </p>
+<p>假设我们现在求得了 $\alpha$ 的最优解 $\hat \alpha$，则根据式 $\vec W = \sum\limits_{i=1}^n\alpha_i y_ix_i\$ 可求得最优 $\hat W$ ：<br>$$<br>\hat W = \sum_{i=1}^n \hat \alpha_i y_ix_i\<br>$$</p>
+<p>我们知道所有 $ \alpha_i$ 对应的点都是支持向量，我们可以随便找个支持向量，然后带入：$1 - y_s(\vec W^T x_s + b ) = 0 $ 求出 b 即可:<br>$$<br>1 - y_s(\hat W^T x_s + \hat b ) = 0\\<br>1 = y_s(\hat W^T x_s + \hat b )\\<br>y_s = y^2_s(\hat W^T x_s + \hat b )\\<br> \\<br>由于: y_s^2 = 1(y=正负1)\\<br> \\<br>y_s = \hat W^T x_s + \hat b \\<br>\hat b = y_s - \hat W^T x_s<br>$$<br><strong>此处s代表该点是支持向量,</strong></p>
+<p>为了更具鲁棒性，我们可以求得支持向量的均值：<br>$$<br>\hat b = \frac{1}{S}\sum_{s \in S}y_s - \hat W^T x_s<br>$$</p>
+<p>最终我们的决策函数为:<br>$$<br>\begin{aligned}<br>f(x) &amp;= \vec Wx+b\<br>&amp; =\sum_{i=1}^n \hat \alpha_i y_ix_i x +\hat b<br>\end{aligned}<br>$$<br><font color=red>最最后,加上一个阶跃函数:</font><br>$$<br>f(x) = sign(\sum_{i=1}^n \hat \alpha_i y_ix_i x +\hat b)<br>$$</p>
+<blockquote>
+<p>阶跃函数sing()<br>$$<br>sing(x) =<br>\begin{cases}<br>-1, x \lt 0\\<br>0, x = 0\\<br>1, x \gt 0\\<br>\end{cases}<br>$$</p>
+</blockquote>
+<br>
+
+<h3 id="2-线性不可分SVM—软间隔"><a href="#2-线性不可分SVM—软间隔" class="headerlink" title="2: 线性不可分SVM—软间隔"></a>2: 线性不可分SVM—软间隔</h3><p>我们允许部分样本点不满足约束条件： $ 1 - y_i(\vec W^T x_i + b )  \le 0 $ </p>
+<p>为了度量这个间隔软到何种程度，我们为每个样本引入一个松弛变量 $\xi$ ，令 $\xi_i \gt0$ ，且 $ 1 - y_i(\vec W^T x_i + b ) - \xi_i \le 0 $ 。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqkgv0jy0j20rm0nit9l.jpg" alt="支持向量机算法原理3.png" style="zoom:50%;" />
+
+
+
+
+
+<p>引入松弛变量后, 我们的目标函数就可以重新写为:<br>$$<br>\min_{\vec W, b, \xi}\frac{1}{2}||\vec W||^2 + C\sum_{i=1}^n\xi_i\<br>s.t.y_i(\vec W^T x_i + b ) \ge 1- \xi_i\<br>\xi_i \ge 0, i=1,2,3…,n<br>$$<br>其中 C 是一个大于 0 的常数，可以理解为错误样本的惩罚程度，若 C 为无穷大，$\xi$ 必然无穷小，如此一来线性 SVM 就又变成了线性可分 SVM；当 C 为有限值的时候，才会允许部分样本不遵循约束条件。</p>
+<p>构造拉格朗日函数:<br>$$<br>\min_{\vec W, b, \xi} \max_{\lambda, \mu} L(\vec W, b, \xi, \lambda, \mu) = \frac{1}{2}||\vec W||^2 + C\sum_{i=1}^n\xi_i +<br>\sum_{i=1}^n \lambda_i [1-\xi_i-y_i(\vec W^T x_i + b )] + \sum_{i-1}^n\mu_i\xi_i<br>$$<br>其中 $\lambda$和 $\mu$ 是拉格朗日乘子，$\vec W$、b 和 $ \xi$ 是主问题参数。</p>
+<p>根据强对偶性，对偶问题为：<br>$$<br>\max_{\lambda, \mu} \min_{\vec W, b, \xi}  L(\vec W, b, \xi, \lambda, \mu)<br>$$<br>分别对主问题参数$\vec W$、b 和 $ \xi$  求偏导数，并令偏导数为 0，得出如下关系：<br>$$<br>\vec W = \sum_{i=1}^n\lambda_i y_ix_i\<br>0 = \sum_{i=1}^n\lambda_i y_i \<br>C = \lambda_i + \mu_i<br>$$<br>将这些关系带入拉格朗日函数中，得到：<br>$$<br>\min_{\vec W, b, \xi}  L(\vec W, b, \xi, \lambda, \mu) = \sum_{j=1}^n \lambda_i - \frac{1}{2}\sum_{i-1}^n \sum_{j=1}^n \lambda_i \lambda_j y_i y_j(x_i x_j)<br>$$<br>所以:<br>$$<br>\max_{\lambda, \mu}[\sum_{j=1}^n \lambda_i - \frac{1}{2}\sum_{i-1}^n \sum_{j=1}^n \lambda_i \lambda_j y_i y_j(x_i x_j)]\<br>s.t. \sum_{i=1}^n\lambda_i y_i = 0 ,<br>C - \lambda_i - \mu_i = 0<br>$$<br>我们可以看到这个和硬间隔的一样，只是多了个约束条件。</p>
+<p><strong>然后我们利用 SMO 算法求解得到拉格朗日乘子 $ \lambda^*$ 。</strong></p>
+<p>将最佳乘子带入即得:</p>
+<p>$$<br>\hat W = \sum\limits_{i=1}^n\hat\lambda_i y_ix_i\<br>\hat b = \frac{1}{S}\sum_{s \in S}y_s - \hat W^T x_s<br>$$<br>超平面函数为:<br>$$<br>f(x) = sign(\sum_{i=1}^n \hat \lambda_i y_ix_i x +\hat b)<br>$$<br><strong>这边要注意一个问题，在间隔内的那部分样本点是不是支持向量</strong></p>
+<p>我们可以由求参数 w 的那个式子可看出，只要 $\lambda_i \gt 0$ 的点都能够影响我们的超平面，因此都是支持向量。</p>
+<br>
+
+<h3 id="3-非线性SVM—核函数"><a href="#3-非线性SVM—核函数" class="headerlink" title="3: 非线性SVM—核函数"></a>3: 非线性SVM—核函数</h3><p>如下图所示，核技巧的基本思路分为两步:</p>
+<ul>
+<li>使用一个变换将原空间的数据映射到新空间(例如更高维甚至无穷维的空间)；</li>
+<li>然后在新空间里用线性方法从训练数据中学习得到模型。</li>
+</ul>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqkh54j4wj21mo0mq16f.jpg" alt="支持向量机算法原理5.png" style="zoom:50%;" />
+
+
+
+<p>我们用 x 表示原来的样本点，用 $\phi(x)$表示 x 映射到特征新的特征空间后到新向量。那么分割超平面可以表示为: $f(x) = \vec W \phi(x) + b$</p>
+<p>则非线性得SVM的对偶问题就变成:<br>$$<br>\max_{\lambda, \mu}{\sum_{j=1}^n \lambda_i - \frac{1}{2}\sum_{i-1}^n \sum_{j=1}^n \lambda_i \lambda_j y_i y_j[\phi(x_i)  \phi(x_j)]}\<br>s.t. \sum_{i=1}^n\lambda_i y_i = 0 ,<br>C - \lambda_i - \mu_i = 0<br>$$</p>
+<blockquote>
+<p> <strong>核函数得定义</strong></p>
+<p> 设 $\mathcal{X}$ 是输入空间(欧式空间$R^n$的子集或离散集合)，又设 $\mathcal{H}$ 是特征空间(希尔伯特空间)，如果存在一个 $\mathcal{X}$ 到 $\mathcal{H}$ 的映射<br> $$<br> \phi(x): \mathcal{X} \to \mathcal{H}<br> $$<br> 使得对所有 $x, z \in \mathcal{X}$，函数 $K(x,z)$ 满足条件<br> $$<br> K(x,z) = \phi(x) \phi(z)<br> $$<br> 则称 $K(x,z)$ 为核函数， $ϕ(x)$ 为映射函数，式中 $ϕ(x)⋅ϕ(z)$ 为 $ϕ(x)$ 和ϕ(z) 的內积。</p>
+</blockquote>
+<p>因为低维空间映射到高维空间后维度可能会很大，如果将全部样本的点乘全部计算好，这样的计算量太大了。</p>
+<p>有了核函数之后, 我们可以通过计算原始空间的核函数$K(x_i, x_j)$, 就可以得到特征空间内$\phi(x_i)$ 和 $\phi(x_j)$ 的点积, 岂不美哉?</p>
+<p><strong>而我们常见的核函数有:</strong></p>
+<p>(1): 线性核函数<br>$$<br>K(x_i, x_j) = x_i x_j<br>$$<br>(2): 多项式核函数<br>$$<br>K(x_i, x_j) = ((x_i x_j)+1)^d<br>$$<br>(3): 高斯核函数<br>$$<br>K(x_i, x_j) = exp(-\frac{||x_i - x_j||^2}{\delta^2})<br>$$<br><a href="https://blog.csdn.net/wsj998689aa/article/details/47027365" target="_blank" rel="noopener">核函数详解</a></p>
+<p>选择核函数的方法：</p>
+<ul>
+<li>如果特征的数量大到和样本数量差不多，则选用LR或者线性核的SVM；</li>
+<li>如果特征的数量小，样本的数量正常，则选用SVM+高斯核函数；</li>
+<li>如果特征的数量小，而样本的数量很大，则需要手工添加一些特征从而变成第一种情况。</li>
+</ul>
+<br>
+
+
+
+<h1 id="三-SVM优缺点"><a href="#三-SVM优缺点" class="headerlink" title="三: SVM优缺点"></a>三: SVM优缺点</h1><p><strong>优点</strong></p>
+<ul>
+<li>有严格的数学理论支持，可解释性强，不依靠统计方法，从而简化了通常的分类和回归问题；</li>
+<li>由于SVM是一个凸优化问题，所以求得的解一定是全局最优而不是局部最优。</li>
+<li>能找出对任务至关重要的关键样本（即：支持向量）；</li>
+<li>采用核技巧之后，可以处理非线性分类/回归任务；</li>
+<li>最终决策函数只由少数的支持向量所确定，计算的复杂性取决于支持向量的数目，而不是样本空间的维数，这在某种意义上避免了“维数灾难”。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>训练时间长。当采用 SMO 算法时，由于每次都需要挑选一对参数，因此时间复杂度为 $O(N^2)$  其中 N 为训练样本的数量；</li>
+<li>当采用核技巧时，如果需要存储核矩阵，则空间复杂度为  $O(N^2)$ </li>
+<li>模型预测时，预测时间与支持向量的个数成正比。当支持向量的数量较大时，预测计算复杂度较高。</li>
+</ul>
+<br>
+
+<h1 id="四-SVM调参"><a href="#四-SVM调参" class="headerlink" title="四: SVM调参"></a>四: SVM调参</h1><blockquote>
+<p>主要参考:<br><code>Hsu C W, Chang C C, Lin C J. A practical guide to support vector classification[J]. 2003.</code></p>
+</blockquote>
+<ol>
+<li>将原始数据转换为SVM算法期待的格式；</li>
+<li>将数据进行scaling(很重要)；</li>
+<li>一般考虑用高斯核RBF(如果特征维度太高，建议直接用线性SVM)；</li>
+<li>交叉验证寻找最优的RBF的参数以及参数 CC ;</li>
+<li>用上面找到的最优参数在整个训练集上训练；</li>
+</ol>
+<blockquote>
+<p>参考文章:</p>
+<ul>
+<li><a href="https://tangshusen.me/2018/10/27/SVM/" target="_blank" rel="noopener">看了这篇文章你还不懂SVM你就来打我</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/77750026" target="_blank" rel="noopener">【机器学习】支持向量机 SVM（非常详细）</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/24638007" target="_blank" rel="noopener">零基础学SVM—Support Vector Machine(一)</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/29865057" target="_blank" rel="noopener">零基础学SVM-Support Vector Machine(二)</a></li>
+<li><a href="https://www.matongxue.com/madocs/939/" target="_blank" rel="noopener">如何理解拉格朗日乘子法？</a></li>
+<li><a href="https://www.cnblogs.com/90zeng/p/Lagrange_duality.html" target="_blank" rel="noopener">简易解说拉格朗日对偶（Lagrange duality）</a></li>
+</ul>
+<p>同时推荐刘建平老师的文章:</p>
+<ul>
+<li><a href="https://www.cnblogs.com/pinard/p/6097604.html" target="_blank" rel="noopener">支持向量机原理(一) 线性支持向量机</a></li>
+<li><a href="https://www.cnblogs.com/pinard/p/6100722.html" target="_blank" rel="noopener">支持向量机原理(二) 线性支持向量机的软间隔最大化模型</a></li>
+<li><a href="https://www.cnblogs.com/pinard/p/6103615.html" target="_blank" rel="noopener">支持向量机原理(三)线性不可分支持向量机与核函数</a></li>
+<li><a href="https://www.cnblogs.com/pinard/p/6111471.html" target="_blank" rel="noopener">支持向量机原理(四)SMO算法原理</a></li>
+<li><a href="https://www.cnblogs.com/pinard/p/6113120.html" target="_blank" rel="noopener">支持向量机原理(五)线性支持回归</a></li>
+<li><a href="https://www.cnblogs.com/pinard/p/6117515.html" target="_blank" rel="noopener">scikit-learn 支持向量机算法库使用小结</a></li>
+<li><a href="https://www.cnblogs.com/pinard/p/6126077.html" target="_blank" rel="noopener">支持向量机高斯核调参小结</a></li>
+</ul>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2020/03/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">支持向量机（SVM）</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">▼ 机器学习</a>
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">▼ 算法</a>
+                    
+                        <a href="/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">▼ 支持向量机</a>
+                    
+                        <a href="/tags/SVM/">▼ SVM</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2020/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95/">上一篇：决策树</a>
+            
+            
+            <a class="next" rel="next" href="/2020/01/12/%E5%90%8E%E7%AB%AF/Django%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">下一篇：Django进阶</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

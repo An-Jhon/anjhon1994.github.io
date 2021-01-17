@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>集成算法 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        
+		src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">集成算法</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2020-04-18</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;机器学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-概述"><a href="#一-概述" class="headerlink" title="一: 概述"></a>一: 概述</h1><p>集成学习(ensemble learning)可以说是现在非常火爆的机器学习方法了。它本身不是一个单独的机器学习算法，而是通过构建并结合多个机器学习器来完成学习任务。也就是我们常说的“博采众长”。集成学习可以用于分类问题集成，回归问题集成，特征选取集成，异常点检测集成等等，可以说所有的机器学习领域都可以看到集成学习的身影。</p>
+<p>集成学习有两个主要的问题需要解决，第一是如何得到若干个个体学习器，第二是如何选择一种结合策略，将这些个体学习器集合成一个强学习器。</p>
+<p><strong>集成学习分为两种:</strong>  </p>
+<p>第一种就是所有的个体学习器都是一个种类的，或者说是同质的。比如都是决策树个体学习器，或者都是神经网络个体学习器。</p>
+<p>第二种是所有的个体学习器不全是一个种类的，或者说是异质的。比如我们有一个分类问题，对训练集采用支持向量机个体学习器，逻辑回归个体学习器和朴素贝叶斯个体学习器来学习，再通过某种结合策略来确定最终的分类强学习器。</p>
+<p>目前来说，同质个体学习器的应用是最广泛的，一般我们常说的集成学习的方法都是指的同质个体学习器。而同质个体学习器使用最多的模型是CART决策树和神经网络。同质个体学习器按照个体学习器之间是否存在依赖关系可以分为两类，第一个是个体学习器之间存在强依赖关系，一系列个体学习器基本都需要串行生成，代表算法是boosting系列算法，第二个是个体学习器之间不存在强依赖关系，一系列个体学习器可以并行生成，代表算法是bagging和随机森林（Random Forest）系列算法。</p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqlnqcb8vj21zu0oa0w1.jpg" alt="集成学习的分类.jpg"></p>
+<br>
+
+
+
+<h1 id="二-同质学习器的分类"><a href="#二-同质学习器的分类" class="headerlink" title="二: 同质学习器的分类"></a>二: 同质学习器的分类</h1><h2 id="1-bagging"><a href="#1-bagging" class="headerlink" title="1: bagging"></a>1: bagging</h2><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqlo3lgh9j20u00csmy9.jpg" alt="bagging.jpg" style="zoom:67%;" />
+
+
+
+<p><strong>具体过程：</strong></p>
+<ol>
+<li>从原始样本集中抽取训练集。每轮从原始样本集中使用 Bootstraping 的方法抽取 n 个训练样本（在训练集中，有些样本可能被多次抽取到，而有些样本可能一次都没有被抽中 - 有放回抽样）。共进行 k 轮抽取，得到 k 个训练集。（k 个训练集之间是相互独立的）</li>
+<li>每次使用一个训练集得到一个模型，k 个训练集共得到 k 个模型。</li>
+</ol>
+<p>Bagging 的思路是所有基础模型都一致对待，每个基础模型手里都只有一票。然后使用民主投票的方式得到最终的结果。</p>
+<p>大部分情况下， <strong>经过 bagging 得到的结果方差（variance）更小</strong> 。</p>
+<p>随机森林是bagging的一个特化进阶版，所谓的特化是因为随机森林的弱学习器都是决策树。所谓的进阶是随机森林在bagging的样本随机采样基础上，又加上了特征的随机选择，其基本思想没有脱离bagging的范畴。</p>
+<h2 id="2-boosting"><a href="#2-boosting" class="headerlink" title="2: boosting"></a>2: boosting</h2><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqloeqsk9j20u00csmyd.jpg" alt="bosting.jpg" style="zoom:67%;" />
+
+
+
+<p><strong>具体过程：</strong></p>
+<ol>
+<li>通过加法模型将基础模型进行线性的组合。</li>
+<li>每一轮训练都提升那些错误率小的基础模型权重，同时减小错误率高的模型权重。</li>
+<li>在每一轮改变训练数据的权值或概率分布，通过提高那些在前一轮被弱分类器分错样例的权值，减小前一轮分对样例的权值，来使得分类器对误分的数据有较好的效果。</li>
+</ol>
+<p>Boosting算法的工作机制是首先从训练集用初始权重训练出一个弱学习器，根据弱学习的学习误差率表现来更<strong>新训练样本</strong>的权重，使得之前弱学习器<strong>学习误差率高的训练样本点的权重变高</strong>，使得这些误差率高的点在后面的弱学习器中得到更多的重视。</p>
+<p>Boosting通过加法模型将弱分类器进行线性组合，比如AdaBoost通过加权多数表决的方式，<strong>即增大错误率小的分类器的权值，同时减小错误率较大的分类器的权值。</strong></p>
+<p>Boosting 和 bagging 最本质的差别在于他对基础模型不是一致对待的，而是经过不停的考验和筛选来挑选出精英，然后给精英更多的投票权，表现不好的基础模型则给较少的投票权，然后综合所有人的投票得到最终结果。</p>
+<p>大部分情况下， <strong>经过 boosting 得到的结果偏差（bias）更小</strong> 。</p>
+<h2 id="3-Bagging-和-Boosting-的差别"><a href="#3-Bagging-和-Boosting-的差别" class="headerlink" title="3: Bagging 和 Boosting 的差别"></a>3: Bagging 和 Boosting 的差别</h2><p><strong>样本选择上：</strong></p>
+<p>Bagging：训练集是在原始集中有放回选取的，从原始集中选出的各轮训练集之间是独立的。</p>
+<p>Boosting：每一轮的训练集不变，只是训练集中每个样例在分类器中的权重发生变化。而权值是根据上一轮的分类结果进行调整。</p>
+<p><strong>样例权重：</strong></p>
+<p>Bagging：使用均匀取样，每个样例的权重相等</p>
+<p>Boosting：根据错误率不断调整样例的权值，错误率越大则权重越大。</p>
+<p><strong>预测函数：</strong></p>
+<p>Bagging：所有预测函数的权重相等。</p>
+<p>Boosting：每个弱分类器都有相应的权重，对于分类误差小的分类器会有更大的权重。</p>
+<p><strong>并行计算：</strong></p>
+<p>Bagging：各个预测函数可以并行生成</p>
+<p>Boosting：各个预测函数只能顺序生成，因为后一个模型参数需要前一轮模型的结果。</p>
+<br>
+
+
+
+<h1 id="三-集成学习的结合策略"><a href="#三-集成学习的结合策略" class="headerlink" title="三: 集成学习的结合策略"></a>三: 集成学习的结合策略</h1><h2 id="1-平均法"><a href="#1-平均法" class="headerlink" title="1: 平均法"></a>1: 平均法</h2><p>对于数值类的回归预测问题，通常使用的结合策略是平均法，也就是说，对于若干个弱学习器的输出进行平均得到最终的预测输出。<br>$$<br>H(x)=\frac{1}{T}\sum_{i=1}^Th_i(x)<br>$$<br>$T$代表基础模型数量; $h_i(x)$为每个模型预测的结果</p>
+<h2 id="2-投票法"><a href="#2-投票法" class="headerlink" title="2: 投票法"></a>2: 投票法</h2><p>对于分类问题的预测，我们通常使用的是投票法。</p>
+<p>最简单的投票法是相对多数投票法，也就是我们常说的少数服从多数，如果不止一个类别获得最高票，则随机选择一个做最终类别。</p>
+<p>稍微复杂的投票法是绝对多数投票法，也就是我们常说的要票过半数。在相对多数投票法的基础上，不光要求获得最高票，还要求票过半数。否则会拒绝预测。</p>
+<p>更加复杂的是加权投票法，和加权平均法一样，每个弱学习器的分类票数要乘以一个权重，最终将各个类别的加权票数求和，最大的值对应的类别为最终类别。</p>
+<h2 id="3-学习法"><a href="#3-学习法" class="headerlink" title="3: 学习法"></a>3: 学习法</h2><p>学习法，代表方法是stacking，当使用stacking的结合策略时， 我们不是对弱学习器的结果做简单的逻辑处理，而是再加上一层学习器，也就是说，我们将训练集弱学习器的学习结果作为输入，将训练集的输出作为输出，重新训练一个学习器来得到最终结果。</p>
+<p>在这种情况下，我们将弱学习器称为初级学习器，将用于结合的学习器称为次级学习器。对于测试集，我们首先用初级学习器预测一次，得到次级学习器的输入样本，再用次级学习器预测一次，得到最终的预测结果。</p>
+<br>
+
+
+
+<h1 id="四-bagging之随机森林系列算法"><a href="#四-bagging之随机森林系列算法" class="headerlink" title="四: bagging之随机森林系列算法"></a>四: bagging之随机森林系列算法</h1><h2 id="1-随机森林"><a href="#1-随机森林" class="headerlink" title="1: 随机森林"></a>1: 随机森林</h2><h3 id="1-构建随机森林"><a href="#1-构建随机森林" class="headerlink" title="(1): 构建随机森林"></a>(1): 构建随机森林</h3><ol>
+<li>假如有N个样本，则有放回的随机选择n个样本(每次随机选择一个样本，然后返回继续选择)。这选择好了的N个样本用来训练一个决策树，作为决策树根节点处的样本。</li>
+<li>当每个样本有M个属性时，在决策树的每个节点需要分裂时，随机从这M个属性中选取出m个属性，满足条件m &lt;&lt; M。然后从这m个属性中采用某种策略（比如说信息增益）来选择1个属性作为该节点的分裂属性。</li>
+<li>决策树形成过程中每个节点都要按照步骤2来分裂（很容易理解，如果下一次该节点选出来的那一个属性是刚刚其父节点分裂时用过的属性，则该节点已经达到了叶子节点，无须继续分裂了）。一直到不能够再分裂为止。注意整个决策树形成过程中没有进行剪枝。</li>
+<li>按照步骤1~3建立大量的决策树，这样就构成了随机森林了。</li>
+</ol>
+<h3 id="2-随机森林的优缺点"><a href="#2-随机森林的优缺点" class="headerlink" title="(2): 随机森林的优缺点"></a>(2): 随机森林的优缺点</h3><p><strong>优点</strong></p>
+<p>1、训练可以并行化，对于大规模样本的训练具有速度的优势。</p>
+<p>2、由于进行随机选择决策树划分特征列表，这样在样本维度比较高的时候，仍然具有比较高的训练性能。</p>
+<p>3、可以给出各个特征值的重要性列表。</p>
+<p>4、由于存在随机抽样，训练出来的模型方差小，泛化能力强。</p>
+<p>5、RF实现简单。</p>
+<p>6、对于部分特征的丢失不敏感。</p>
+<p><strong>缺点</strong></p>
+<p>1、噪音过大的特征上，容易过拟合。</p>
+<p>2、取值比较多的划分特征对RF的决策会产生更大的影响，从而有可能影响模型的效果。</p>
+<h3 id="3-随机森林的应用方向"><a href="#3-随机森林的应用方向" class="headerlink" title="(3): 随机森林的应用方向"></a>(3): 随机森林的应用方向</h3><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqloy1wkxj20u00csq3h.jpg" alt="随机森林应用方向.jpg" style="zoom:67%;" />
+
+
+
+<h3 id="4-随机森林参数详解"><a href="#4-随机森林参数详解" class="headerlink" title="(4): 随机森林参数详解"></a>(4): 随机森林参数详解</h3><p><a href="https://www.cnblogs.com/pinard/p/6160412.html" target="_blank" rel="noopener">刘建平老师 - scikit-learn随机森林调参小结</a></p>
+<h2 id="2-机限随机森林-extra-trees"><a href="#2-机限随机森林-extra-trees" class="headerlink" title="2: 机限随机森林(extra trees)"></a>2: 机限随机森林(extra trees)</h2><p>1、RF会随机采样来作为子决策树的训练集，而Extra Tree每个子决策树采用原始数据集训练。</p>
+<p>2、RF在选择划分特征点的时候会和传统决策树一样，会基于信息增益、信息增益率、基尼系数、均方差等原则来选择最优的特征值。Extra Tree则是随机选择一个特征值来划分决策树。</p>
+<p>从第二点可以看出，由于随机选择了特征值的划分点位，而不是最优点位，这样会导致生成的决策树的规模一般会大于RF所生成的决策树。也就是说，模型的方差相对于RF进一步减少，但是偏倚相对于RF进一步增大。在某些时候，extra trees的泛化能力比RF更好。</p>
+<p>本文强烈参考的文章:</p>
+<p><a href="https://www.chainnews.com/articles/804594953090.htm" target="_blank" rel="noopener">一文看懂集成学习（详解 bagging、boosting 以及他们的 4 点区别）</a></p>
+<p><a href="https://www.cnblogs.com/pinard/p/6131423.html" target="_blank" rel="noopener">刘建平老师 - 集成学习原理小结</a></p>
+<br>
+
+
+
+<h1 id="五-bosting系列算法"><a href="#五-bosting系列算法" class="headerlink" title="五: bosting系列算法"></a>五: bosting系列算法</h1><h2 id="一-AdaBoost算法"><a href="#一-AdaBoost算法" class="headerlink" title="(一): AdaBoost算法"></a>(一): AdaBoost算法</h2><h3 id="1-AdaBoost算法概述"><a href="#1-AdaBoost算法概述" class="headerlink" title="1: AdaBoost算法概述"></a>1: AdaBoost算法概述</h3><p>Adaboost既可以用作分类，也可以用作回归。</p>
+<p>在boosting中我们介绍过, Boosting算法的工作机制是首先从训练集用初始权重训练出一个弱学习器1，<strong>根据弱学习的学习误差率表现来更新训练样本的权重，使得之前弱学习器1学习误差率高的训练样本点的权重变高，使得这些误差率高的点在后面的弱学习器2中得到更多的重视。然后基于调整权重后的训练集来训练弱学习器2.</strong>，如此重复进行，直到弱学习器数达到事先指定的数目T，最终将这T个弱学习器通过集合策略进行整合，得到最终的强学习器。</p>
+<p><strong>只要是boosting大家族的算法，都要解决下面4个问题。</strong></p>
+<p>1）如何计算学习误差率e?</p>
+<p>2)  如何得到弱学习器权重系数α?</p>
+<p>3）如何更新样本权重D?</p>
+<p>4)  使用何种结合策略？</p>
+<h3 id="2-AdaBoost算法原理"><a href="#2-AdaBoost算法原理" class="headerlink" title="2: AdaBoost算法原理"></a>2: AdaBoost算法原理</h3><p>输入为样本集 $T={(x_1,y_1),(x_2,y_2),…(x_m,y_m)}$ 输出为 ${-1, +1}$ ，弱分类器算法, 弱分类器迭代次数K。</p>
+<p>输出为最终的强分类器 $f(x)$</p>
+<p><strong>1) 初始化样本集权重为</strong></p>
+<p>$$D(1)=(w_{11}),w_{12}),…w_{1m}))$$</p>
+<p>$$ w_{1i}=\frac{1}{m}, i=1,2…m$$</p>
+<p><strong>2) 对于k=1,2，…K:</strong></p>
+<p>　　a) 使用具有权重 $D_k$ 的样本集来训练数据，得到弱分类器$G_k(x)$</p>
+<p>　　b) 计算$G_k(x)$的<strong>分类误差率</strong><br>$$<br>e_k=P(G_k(x_i)≠y_i)=\sum_{i=1}^m w_{ki}I(G_k(x_i)≠y_i)<br>$$</p>
+<p>　　c) 计算<strong>弱分类器的系数</strong></p>
+<p>$$<br>α_k=\frac{1}{2}log(\frac{1-e_k}{e_k})<br>$$<br>　　d) <strong>更新样本集的权重分布</strong><br>$$<br>w _{k+1, i}=\frac{w _{ki}}{Z_K}exp(−α_ky_iG_k(x_i)), i=1,2,…m<br>$$</p>
+<p><strong>这里ZkZk是规范化因子</strong><br>$$<br>Z_k=\sum_{i=1}^m w_{ki}exp(−α_k y_i G_k(x_i))<br>$$</p>
+<p><strong>3) 构建最终分类器为：</strong><br>$$<br>f(x)=sign(\sum_{k=1}^K α_k G_k(x))<br>$$</p>
+<p>对于Adaboost多元分类算法，其实原理和二元分类类似，最主要区别在弱分类器的系数上。比如Adaboost SAMME算法，它的弱分类器的系数<br>$$<br>α_k=\frac{1}{2}log(\frac{1-e_k}{e_k})+log(R−1)<br>$$<br><strong>其中R为类别数。</strong>从上式可以看出，如果是二元分类，R=2，则上式和我们的二元分类算法中的弱分类器的系数一致。</p>
+<h3 id="3-代码实现Adaboost算法"><a href="#3-代码实现Adaboost算法" class="headerlink" title="3: 代码实现Adaboost算法"></a>3: 代码实现Adaboost算法</h3><h4 id="二分类"><a href="#二分类" class="headerlink" title="二分类"></a><strong>二分类</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> AdaBoostClassifier</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X = np.arange(<span class="number">10</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">y = np.array([<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">-1</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一棵树!!!!!!</span></span><br><span class="line"><span class="comment"># 样本的初始权重，还没有开始进行训练，所以，所有样本权重一样？</span></span><br><span class="line">w1 = np.full(shape = <span class="number">10</span>,fill_value=<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 样本中10个数据，划分，0到1之间(threshold阈值0.5)划分；1到2之间（1.5）划分……</span></span><br><span class="line"></span><br><span class="line">thresholds = np.arange(<span class="number">0.5</span>,<span class="number">10</span>)   <span class="comment"># 生成0.5到9.5中间间隔1的10个数</span></span><br><span class="line"><span class="keyword">for</span> i,t <span class="keyword">in</span> enumerate(thresholds,start = <span class="number">1</span>): <span class="comment">#enumerate,获取索引，默认从0开始， </span></span><br><span class="line">    y_ = np.array([<span class="number">1</span>]*i + [<span class="number">-1</span>]*(<span class="number">10</span>-i))   <span class="comment"># 计算预测值</span></span><br><span class="line">    print(t,((y !=y_)*w1).sum())   <span class="comment"># 计算每个分割点的误差率</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0.5 0.5</span></span><br><span class="line"><span class="string">1.5 0.4</span></span><br><span class="line"><span class="string">2.5 0.30000000000000004</span></span><br><span class="line"><span class="string">3.5 0.4</span></span><br><span class="line"><span class="string">4.5 0.5</span></span><br><span class="line"><span class="string">5.5 0.6</span></span><br><span class="line"><span class="string">6.5 0.5</span></span><br><span class="line"><span class="string">7.5 0.4</span></span><br><span class="line"><span class="string">8.5 0.30000000000000004</span></span><br><span class="line"><span class="string">9.5 0.4</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 阈值是2.5或者8.5，误差最小的：0.3; 选择2.5或者8.5作为裂分条件，代码中一般选择，前面的索引</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算第一个弱学习器的权重，相当于大夫的话语权</span></span><br><span class="line">e1 = <span class="number">0.3</span></span><br><span class="line">a1 = <span class="number">1</span>/<span class="number">2</span>*np.log((<span class="number">1</span> -e1)/e1 )</span><br><span class="line">print(<span class="string">'第一个弱学习器的权重:'</span>,a1)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">第一个弱学习器的权重: 0.42364893019360184</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新样本的权重</span></span><br><span class="line"><span class="comment"># 在w1的基础上，进行更新 w1 = [0.1,0.1,0.1……]</span></span><br><span class="line">y_ = np.array([<span class="number">1</span>]*<span class="number">3</span> + [<span class="number">-1</span>]*(<span class="number">10</span><span class="number">-3</span>))</span><br><span class="line">w2 = w1*np.exp(-y*y_*a1)</span><br><span class="line">w2 = w2/w2.sum()</span><br><span class="line">print(w2)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[0.07142857 0.07142857 0.07142857 0.07142857 0.07142857 0.07142857</span></span><br><span class="line"><span class="string"> 0.16666667 0.16666667 0.16666667 0.07142857]</span></span><br><span class="line"><span class="string"> '''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二棵树!!!!!!!!!!</span></span><br><span class="line">thresholds = np.arange(<span class="number">0.5</span>,<span class="number">10</span>)</span><br><span class="line"><span class="keyword">for</span> i,t <span class="keyword">in</span> enumerate(thresholds,start = <span class="number">1</span>): <span class="comment">#enumerate,获取索引，默认从0开始， </span></span><br><span class="line">    y_ = np.array([<span class="number">1</span>]*i + [<span class="number">-1</span>]*(<span class="number">10</span>-i))   <span class="comment"># 计算预测值</span></span><br><span class="line">    print(t,((y !=y_)*w2).sum())   <span class="comment"># 计算每个分割点的误差率</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0.5 0.6428571428571428</span></span><br><span class="line"><span class="string">1.5 0.5714285714285714</span></span><br><span class="line"><span class="string">2.5 0.5</span></span><br><span class="line"><span class="string">3.5 0.5714285714285714</span></span><br><span class="line"><span class="string">4.5 0.6428571428571428</span></span><br><span class="line"><span class="string">5.5 0.7142857142857142</span></span><br><span class="line"><span class="string">6.5 0.5476190476190476</span></span><br><span class="line"><span class="string">7.5 0.38095238095238093</span></span><br><span class="line"><span class="string">8.5 0.21428571428571425</span></span><br><span class="line"><span class="string">9.5 0.28571428571428564</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 阈值，如果是8.5，那么左边9个数，右边是1个数，计算误差率</span></span><br><span class="line">y_ = np.array([<span class="number">1</span>]*<span class="number">9</span> + [<span class="number">-1</span>]*(<span class="number">10</span><span class="number">-9</span>))<span class="comment">#预测值</span></span><br><span class="line">display(y,y_)</span><br><span class="line">e2 = ((y != y_)*w2).sum()   <span class="comment"># 误差率</span></span><br><span class="line">print(<span class="string">'第二棵树的误差率：'</span>,e2)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">第二棵树的误差率： 0.21428571428571425</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">a2 =np.round( <span class="number">1</span>/<span class="number">2</span>*np.log((<span class="number">1</span> - e2)/e2),<span class="number">4</span>)</span><br><span class="line">print(<span class="string">'第二棵树，权重是：'</span>,a2)   <span class="comment"># 计算第二棵树的权重</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">第二棵树，权重是： 0.6496</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新样本权重</span></span><br><span class="line">w3 = w2*np.exp(-y*y_*a2)</span><br><span class="line">w3 = w3/w3.sum()</span><br><span class="line">print(<span class="string">'更新样本权重：'</span>,w3)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[0.04545643 0.04545643 0.04545643 0.16665975 0.16665975 0.16665975</span></span><br><span class="line"><span class="string"> 0.10606501 0.10606501 0.10606501 0.04545643]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第三棵树!!!!!!!!!!</span></span><br><span class="line">thresholds = np.arange(<span class="number">0.5</span>,<span class="number">10</span>)</span><br><span class="line"><span class="keyword">for</span> i,t <span class="keyword">in</span> enumerate(thresholds,start = <span class="number">1</span>):<span class="comment">#enumerate,获取索引，默认从0开始， </span></span><br><span class="line">    y_ = np.array([<span class="number">1</span>]*i + [<span class="number">-1</span>]*(<span class="number">10</span>-i))</span><br><span class="line">    print(t,((y !=y_)*w3).sum()) <span class="comment">#误差率 + 准确率 = 1</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0.5 0.40910788311754365</span></span><br><span class="line"><span class="string">1.5 0.36365145166003876</span></span><br><span class="line"><span class="string">2.5 0.318195020202534</span></span><br><span class="line"><span class="string">3.5 0.4848547715250161</span></span><br><span class="line"><span class="string">4.5 0.6515145228474983</span></span><br><span class="line"><span class="string">5.5 0.8181742741699806</span></span><br><span class="line"><span class="string">6.5 0.7121092674358026</span></span><br><span class="line"><span class="string">7.5 0.6060442607016245</span></span><br><span class="line"><span class="string">8.5 0.4999792539674466</span></span><br><span class="line"><span class="string">9.5 0.5454356854249515</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">e3 = <span class="number">0.1820</span></span><br><span class="line"><span class="comment"># 计算第三棵树的权重</span></span><br><span class="line">y_ = np.array([<span class="number">-1</span>]*<span class="number">6</span> + [<span class="number">1</span>]*(<span class="number">10</span><span class="number">-6</span>))</span><br><span class="line">a3 = <span class="number">1</span>/<span class="number">2</span>*np.log((<span class="number">1</span> - e3)/e3)</span><br><span class="line">print(<span class="string">'第三棵树的权重是：'</span>,a3)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">第三棵树的权重是： 0.7514278247629759</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新第三棵树的，样本权值分布，权重</span></span><br><span class="line">w4 = w3*np.exp(-y*y_*a3)</span><br><span class="line">w4 = w4/w4.sum()</span><br><span class="line">print(<span class="string">'第三棵树，更新样本权重：'</span>,w4.round(<span class="number">3</span>))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">第三棵树，更新样本权重： [0.125 0.125 0.125 0.102 0.102 0.102 0.065 0.065 0.065 0.125]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 集成算法</span></span><br><span class="line"><span class="comment"># 第一棵树ft(x)</span></span><br><span class="line">y1 = np.array([<span class="number">1</span>]*<span class="number">3</span> + [<span class="number">-1</span>]*(<span class="number">10</span><span class="number">-3</span>))</span><br><span class="line"><span class="comment"># 第二棵树的预测值</span></span><br><span class="line">y2 = np.array([<span class="number">1</span>]*<span class="number">9</span> + [<span class="number">-1</span>]*(<span class="number">10</span><span class="number">-9</span>))<span class="comment">#预测值</span></span><br><span class="line"><span class="comment"># 第三棵树，预测值</span></span><br><span class="line">y3 = np.array([<span class="number">-1</span>]*<span class="number">6</span> + [<span class="number">1</span>]*(<span class="number">10</span><span class="number">-6</span>))</span><br><span class="line">F =  a1*y1 + a2*y2 + a3*y3</span><br><span class="line"><span class="comment"># 将多个弱分类器，整合，变成了强分类器F(X)</span></span><br><span class="line">F</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([ 0.32182111,  0.32182111,  0.32182111, -0.52547675, -0.52547675,</span></span><br><span class="line"><span class="string">       -0.52547675,  0.97737889,  0.97737889,  0.97737889, -0.32182111])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">result = [<span class="number">-1</span> <span class="keyword">if</span> i &lt;<span class="number">0</span> <span class="keyword">else</span> <span class="number">1</span>  <span class="keyword">for</span> i <span class="keyword">in</span> F]</span><br><span class="line">result</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[1, 1, 1, -1, -1, -1, 1, 1, 1, -1]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 分类成功!</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="多分类"><a href="#多分类" class="headerlink" title="多分类"></a>多分类</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">待更新。。。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p><a href="https://www.cnblogs.com/pinard/p/6133937.html" target="_blank" rel="noopener">刘建平 - 集成学习之Adaboost算法原理小结</a></p>
+<p><a href="https://www.cnblogs.com/pinard/p/6136914.html" target="_blank" rel="noopener">刘建平 - scikit-learn Adaboost类库使用小结</a></p>
+<h2 id="二-GBDT-梯度提升树-算法-Gradient-Boosting-Decision-Tree"><a href="#二-GBDT-梯度提升树-算法-Gradient-Boosting-Decision-Tree" class="headerlink" title="(二): GBDT(梯度提升树)算法(Gradient Boosting Decision Tree)"></a>(二): GBDT(梯度提升树)算法(Gradient Boosting Decision Tree)</h2><h3 id="1-梯度提升回归树算法原理"><a href="#1-梯度提升回归树算法原理" class="headerlink" title="1: 梯度提升回归树算法原理"></a>1: 梯度提升回归树算法原理</h3><h4 id="1-残差更新"><a href="#1-残差更新" class="headerlink" title="(1): 残差更新:"></a>(1): 残差更新:</h4><p>举个简单的例子: 预测一个同学本次的考试成绩, 根据他之前的考试成绩的平均值来预测本次结果, 在训练算法时, 将预测值(之前分数的平均分) 分数和实际的分数相减, 得到的值就是残差;(在梯度提升回归树中, 残差值越小越好)</p>
+<p>之后按照梯度下降的思想不断更新残差:</p>
+<p>$residual = residual - learning_rate*residual$</p>
+<p> residual 是上一轮的残差, learning_rate是残差更新的系数, 也就是学习率,在定义算法时定义的参数</p>
+<p>直到循环的次数达到事先预设好的次数就结束, 预设次数是参数n_estimators决定的(默认是100)</p>
+<p><strong>示例:</strong> 现有一组数据,  X代表消费金额和上网时长, 通过X预测任务的年龄.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingRegressor</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X = np.array([[<span class="number">600</span>,<span class="number">0.8</span>],[<span class="number">800</span>,<span class="number">1.2</span>],[<span class="number">1500</span>,<span class="number">10</span>],[<span class="number">2500</span>,<span class="number">3</span>]])</span><br><span class="line">y = np.array([<span class="number">14</span>,<span class="number">16</span>,<span class="number">24</span>,<span class="number">26</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># loss  = ls 最小二乘法</span></span><br><span class="line">learning_rate = <span class="number">0.1</span>   <span class="comment"># 残差更新系数</span></span><br><span class="line">gbdt = GradientBoostingRegressor(n_estimators=<span class="number">1</span>,loss = <span class="string">'ls'</span>, learning_rate=<span class="number">0.1</span>)  <span class="comment"># learning_rate 学习率</span></span><br><span class="line">gbdt.fit(X,y_true)  <span class="comment">#训练</span></span><br><span class="line">y_ = gbdt.predict(X)  <span class="comment">#预测</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用代码实现残差更新</span></span><br><span class="line">residual = y  - y.mean()   <span class="comment"># 残差(第一棵树); 预测的初始值给训练数据的平均值</span></span><br><span class="line">print(residual)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([-6., -4.,  4.,  6.])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">result = y - residual   <span class="comment"># 第一棵树的预测值</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">residual = residual - learning_rate*residual   <span class="comment"># 对残差进行更新(残差值越小越好) - 第二棵树的残差</span></span><br><span class="line">result = y - residual   <span class="comment"># 第二棵树的预测值</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([-3., -2.,  2.,  3.])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以此类推, 残差值会越来越小, 预测的结果也就月接近真实值</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法模型实现残差更新</span></span><br><span class="line">gbdt[<span class="number">0</span>, <span class="number">0</span>].predict(X)   <span class="comment"># 得到残差</span></span><br><span class="line">gbdt.predict(X)    <span class="comment"># 预测值</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-均方误差判断分裂标准"><a href="#2-均方误差判断分裂标准" class="headerlink" title="(2): 均方误差判断分裂标准:"></a>(2): 均方误差判断分裂标准:</h4><p><strong>知识扩展:</strong></p>
+<p><strong>均方误差: 预测值和真实值的差的平方的平均值</strong></p>
+<p>MSE的值越小，说明预测模型描述实验数据具有更好的精确度<br>$$<br>MSE=\frac{1}{N}\sum_{i=1}^N(True_i-Predict_i)^2<br>$$<br><strong>均方根误差: 均方误差开方</strong><br>$$<br>RMSE=\sqrt{\frac{1}{N}\sum_{i=1}^N(True_i-Predict_i)^2}<br>$$<br><strong>平均绝对误差: 预测值和真实值的绝对值求和的平方的平均值</strong></p>
+<p>平均绝对误差能更好地反映预测值误差的实际情况.<br>$$<br>MAE=\frac{1}{N}\sum_{i=1}^N|True_i-Predict_i|<br>$$<br><strong>方差: 数组内每个数和该数组的平均值的差的平方的和的平均值</strong><br>$$<br>\sigma^2 = \frac{1}{N}\sum _{i=1}^N(x_i-\overline x)^2<br>$$<br><strong>标准差(均方差):  方差开方</strong></p>
+<p>标准差能反映一个数据集的<a href="https://wiki.mbalib.com/wiki/离散程度" target="_blank" rel="noopener">离散程度</a>, 标准差越大,数据越离散<br>$$<br>\sigma = \sqrt{\frac{1}{N}\sum _{i=1}^N(x_i-\overline x)^2}<br>$$</p>
+<p>梯度提升回归树是使用了决策树的算法, 所以在预测的时候可以将过程可视化出来,方便更直观的观察整个过程;在这个过程中我们一般使用<strong>目标值的均方误差</strong>来作为分裂的标准:</p>
+<p>同样是上面那个例子, 在<strong>第一次分裂</strong>的时候我们可以根据消费金额和上网时长来分裂, 这里以消费金额为例, 我们有决策树模型: </p>
+<p>X.iloc[:, 0]  = [600, 800,1500,2500]   —&gt;   y = [14, 16,24,26]</p>
+<ul>
+<li>①:  [[600], [800,1500,2500]]   —&gt;   [[14], [16,24,26]]</li>
+</ul>
+<p>此时计算目标值均方误差(<strong>初次年龄预测值为测试数据的平均值</strong>):<br>$$<br>mse_left = (14 - 14)^2\div1 = 0 \<br>mse_right = ([16,24,26] - (16+24+26)\div3)^2 \div3 = \frac{56}{3}<br>$$<br>再乘以各子数组在总数组中所占的比例:<br>$$<br>\begin{aligned}<br>mse&amp;=\frac{1}{4}mse_left+\frac{3}{4}mse_right\<br>&amp;=\frac{3}{4}\times \frac{56}{3}\<br>&amp;=14<br>\end{aligned}<br>$$<br>同理可以算出另外两种决策树模型的均方误差:</p>
+<ul>
+<li>②: [[600, 800], [1500,2500]]   —&gt;   [[14,16], [24,26]]</li>
+</ul>
+<p>均方误差为: 1</p>
+<ul>
+<li>③: [[600, 800, 1500], [2500]]   —&gt;   [[14,16,24], [26]]</li>
+</ul>
+<p>均方误差为: 14</p>
+<p>均方误差越小,说明该模型预测的结果和真实值越接近,所以,不选它还选谁?</p>
+<p>以上的推导只是梯度提升回归树的第一棵树的第一次裂变, 我们可以设置相应的参数,规定树的裂变次数, 所以按照以上的原理方式依次进行裂变,即可的到最精确的回归模型</p>
+<p><a href="https://www.cnblogs.com/pinard/p/6140514.html" target="_blank" rel="noopener">刘建平 - 梯度提升树(GBDT)原理小结</a></p>
+<h3 id="2-梯度提升分类树算法原理"><a href="#2-梯度提升分类树算法原理" class="headerlink" title="2:梯度提升分类树算法原理"></a>2:梯度提升分类树算法原理</h3><h4 id="1-二分类问题"><a href="#1-二分类问题" class="headerlink" title="(1): 二分类问题:"></a>(1): 二分类问题:</h4><h5 id="1-信息熵和交叉熵"><a href="#1-信息熵和交叉熵" class="headerlink" title="1): 信息熵和交叉熵:"></a>1): 信息熵和交叉熵:</h5><p>信息熵:<br>$$<br>\sum_{k=1}^N p_klog\frac{1}{p_k}<br>$$<br>交叉熵: (pk是真实分布比例, qk是非真实分布(预测分布比例))<br>$$<br>\sum_{k=1}^N p_klog\frac{1}{q_k}<br>$$</p>
+<h5 id="2-GBDT原理概述"><a href="#2-GBDT原理概述" class="headerlink" title="2): GBDT原理概述"></a>2): GBDT原理概述</h5><p>GBDT 是先有 GB（梯度提升），再有 DT（决策树），所以我们先从 GB 讲起.</p>
+<p>boosting 就是通过训练多个弱分类器来组合成一个强分类器，形式如下:<br>$$<br>F_m(x) = F_0 + \alpha_1 F_1(x) + \alpha_2 F_2(x)+… + \alpha_m F_m(x)<br>$$<br>其中，$F_i(x), i=1,2,3,…,m$ 是弱分类器，比如在 <strong>AdaBoost提升中是 C4.5决策树</strong>； $F_m(x)$是最终得到的强分类器; 而本篇中的<font color=red><strong>GBDT的弱分类器则是CART回归树(在GBDT中不管是回归问题还是分类问题,弱学习器都是决策回归树)</strong></font></p>
+<p><strong>最深梯度下降法(Steepest Gradient Descent):</strong></p>
+<ol>
+<li><p>给定一个起点$x_0$</p>
+</li>
+<li><p>更新 $x$ 的位置:</p>
+<p>​    $$i = 1,2,…,k$$</p>
+<p>​    $$x_i = x_{i-1} + \gamma_{i-1}\times g_{i-1}$$</p>
+</li>
+</ol>
+<p>其中:  $g_{i-1} = - \frac{\partial f}{\partial x}|_    {x=x_{i-1}}$ 表示 $f$  在 $x_{i-1}$ 处的导数</p>
+<ol start="3">
+<li>直到$|g_{i-1}|$足够小, 或者$|x_i-x_{i-1}| $ 足够小</li>
+</ol>
+<p>以上迭代过程可以理解为: <strong>整个寻优的过程就是小步快跑的过程，每跑一小步，都往函数当前下降最快的那个方向走一点，直到达到可接受的点</strong></p>
+<p>这个迭代过程展开得到寻优的结果:</p>
+<p>​        $$x_k = x_0 + \gamma_1g_1 + \gamma_2g_2 + … + \gamma_kg_k $$</p>
+<p><strong>所以我们可以将最深梯度下降法运用到boosting, 不同的是最深梯度下降法求得的是一个最优值, 此时我们是要求得一个最优的函数</strong></p>
+<h5 id="3-二分类损失函数-交叉熵"><a href="#3-二分类损失函数-交叉熵" class="headerlink" title="3): 二分类损失函数(交叉熵):"></a>3): 二分类损失函数(交叉熵):</h5><p>$$<br>\psi(y, p) = ylog(\frac{1}{p})+(1-y)log(\frac{1}{1-p})\\<br>\psi(y, p) = -ylog(p)-(1-y)log(1-p)\\<br>其中:\\<br>p=\frac{1}{1+exp(-F(x))}<br>$$<br>y是真实分布, p是非真实分布; 梯度提升回归森林是由决策回归树组成 , F(x)表示GBDT的学习器, 通过p这个sigmoid函数将其转换为相应的概率(多分类问题通过softmax函数转化概率)</p>
+<p><strong>带入p化简:<font color=red>(此处log默认以e为底)</font></strong><br>$$<br>\begin{aligned}<br>\psi(y, F(x)) &amp; = -ylog(p)-(1-y)log_2(1-p)\\<br>&amp; = -ylog(\frac{1}{1+exp(-F(x))})-(1-y)log(1-\frac{1}{1+exp(-F(x))})\\<br>&amp; = ylog(1+exp(-F(x)))-(1-y)log(\frac{exp(-F(x))}{1+exp(-F(x))})\\<br>&amp; = ylog(1+exp(-F(x)))-(1-y)log(exp(-F(x)))+(1-y)log(1+exp(-F(x)))\\<br>&amp; = -(1-y)(-F(x))+log(1+exp(-F(x)))\\<br>&amp; = F(x)-yF(x)+log(1+exp(-F(x)))\\<br>&amp; = -yF(x)+log(exp(F(x)))+log(1+exp(-F(x)))\\<br>&amp; = -yF(x)+log(exp(F(x))\times (1+exp(-F(x))))\\<br>&amp; = -yF(x)+log(exp(F(x))+1)\\<br>\end{aligned}<br>$$</p>
+<p><strong>对损失函数在$F_{m-1}(x)$ 处应用二级泰勒展开(方便计算$\gamma_{mj}$):</strong><br>$$<br>\begin{aligned}<br>L(\gamma_{mj}, R_{mj}) &amp;= \sum_{x_i \in R_{mj}}\psi(y, F_{m-1}(x)+\gamma_{mj})\\<br>&amp;\approx \sum_{x_i \in R_{mj}}{\psi(y, F_{m-1}(x))+\psi’(y, F_{m-1}(x))\gamma_{mj}+\frac{1}{2}\psi’’(y, F_{m-1}(x))\gamma_{mj}^2}\\<br>&amp;=argmin_{\gamma_{mj}}\sum_{x_i \in R_{mj}}{\psi(y_i,F_{m-1}(x_i)) + \psi’(y_i,F_{m-1}(x_i))\gamma_{mj} + \frac{1}{2}\psi’’(y_i,F_{m-1}(x_i))\gamma_{mj}^2 }<br>\end{aligned}<br>$$</p>
+<p>$$F_m(x) = F_{m-1}(x) + \gamma_m*learning_rate$$</p>
+<p>$\gamma_{mj}$ 相当于梯度下降中的梯度(<strong>这里可以理解为弱学习器的拟合函数</strong>), 表示第m轮的第j个叶节点的预测值</p>
+<p>$R_{mj}$是第m轮学习的第j个叶节点, $F_{m-1}(x)$是上一轮学习的结果</p>
+<p><strong>接着对损失函数的泰勒展开式求导:</strong><br>$$<br>\begin{aligned}<br>\frac{\partial L’(\gamma_{mj}, R_{mj})}{\partial\gamma_{mj}}&amp;=\sum_{x_i \in R_{mj}}{\psi’(y_i,F_{m-1}(x_i)) + \psi’’(y_i,F_{m-1}(x_i))*\gamma_{mj}}<br>\end{aligned}<br>$$</p>
+<p><strong>上面泰勒展开式中有损失函数的一阶导数和二阶导数,所以:</strong></p>
+<ol>
+<li><strong>对损失函数求导(一阶导数):</strong></li>
+</ol>
+<p>$$<br>\begin{aligned}<br>\psi’(y, F(x)) &amp;=(-yF(x)+log(exp(F(x))+1))’\\<br>&amp;=-y+\frac{1}{exp(F(x))+1)}\times (exp(F(x)))’\\<br>&amp;注释: (e^x)’ = e^x\\<br>&amp;=-y+\frac{1}{exp(F(x))+1)}\times (exp(F(x)))\\<br>&amp;=-y+\frac{exp(F(x))}{exp(F(x))+1)}\\<br>&amp;注释: 分子分母同时除以exp(F(x))\\<br>&amp;=-y+\frac{1}{1+exp(-F(x))}\\<br>&amp;注释: sigmoid函数可以用\sigma表示\\<br>&amp;=-y+\sigma(F(x))<br>\end{aligned}<br>$$<br>2. <strong>对损失函数求导(二阶导数):</strong> </p>
+<p>$$<br>\begin{aligned}<br>(\psi’(y, F(x)))’ &amp;=(-y+\frac{1}{1+exp(-F(x))})’\\<br>&amp;=[(1+exp(-F(x)))^{-1}]’\\<br>&amp;=-[1+exp(-F(x))]^{-2}\times exp(-F(x))\times [-F(x)]’\\<br>&amp;=-\frac{1}{[1+exp(-F(x))]^{2}}\times exp(-F(x))\times (-1)\\<br>&amp;=\frac{1}{1+exp(-F(x))}\times \frac{exp(-F(x))}{1+exp(-F(x))}\\<br>&amp;=\frac{1}{1+exp(-F(x))}\times \frac{exp(-F(x))+1-1}{1+exp(-F(x))}\\<br>&amp;=\frac{1}{1+exp(-F(x))}\times (1-\frac{1}{1+exp(-F(x))})\\<br>&amp;=\sigma(F(x))\times (1-\sigma(F(x)))\\<br>\end{aligned}<br>$$</p>
+<p>此时令:</p>
+<p>$$\widetilde{y} = y-\frac{1}{1+exp(-F(x))}$$</p>
+<p>则损失函数的一阶导数为:</p>
+<p>$$\psi’(y,F(x)) = -y + \frac{1}{1 + exp(-F(x))} = -\widetilde{y}$$</p>
+<p>损失函数的二阶导数为:</p>
+<p>$$\psi’’(y,F(x)) =\frac{1}{1+exp(-F(x))}\times (1-\frac{1}{1+exp(-F(x))})=(y - \widetilde{y})(1 - y + \widetilde{y})$$</p>
+<p><strong>令导数为0, 并将损失函数的一阶导数和二阶导数带进去, 求$\gamma_{mj}$的最优函数:</strong><br>$$<br>0 = \sum_{x_i \in R_{mj}}{\psi’(y_i,F_{m-1}(x_i)) + \psi’’(y_i,F_{m-1}(x_i)) · \gamma_{mj}} \\<br>0 = \sum_{x_i \in R_{mj}}{-\widetilde{y_i} + (y_i - \widetilde{y_i})(1 - y_i + \widetilde{y_i}) · \gamma_{mj}} \\<br>$$</p>
+<p>$$<br>\sum_{x_i \in R_{mj}}\widetilde{y_i} = \sum_{x_i \in R_{mj}}(y_i - \widetilde{y_i})(1 - y_i + \widetilde{y_i}) *\gamma_{mj}<br>$$</p>
+<p>$$<br>\sum_{x_i \in R_{mj}}\widetilde{y_i} = (\sum_{x_i \in R_{mj}}(y_i - \widetilde{y_i})(1 - y_i + \widetilde{y_i}) )*\gamma_{mj}<br>$$</p>
+<h5 id="4-求初始值"><a href="#4-求初始值" class="headerlink" title="4): 求初始值"></a>4): 求初始值</h5><p>$$<br>\begin{aligned}<br>F_0(x) &amp;= argmin_{\rho}\sum_{i=1}^N \psi(y_i, \rho)\\<br>&amp;=argmin_{\rho}H(\rho) = -\sum\limits_{i=1}^N(y_i\rho -log(1 + exp(\rho)))<br>\end{aligned}<br>$$</p>
+<p>此时$F_0(x)$为$H(\rho)$的最小值, 当$H(\rho)$的导数为零时$F_0(x)$取最小值, 也就是$\rho$取得最小值,即为初始值</p>
+<p>对$H(\rho)$求导<br>$$<br>H’(\rho) = -\sum\limits_{i = 1}^N(y_i - \frac{1}{1 + exp(-\rho)})<br>$$<br>令$$H’(\rho) = 0$$ ,求$\rho$<br>$$<br>0 = -\sum\limits_{i = 1}^N(y_i -\frac{1}{1 + exp(-\rho)})\\<br>0 = \sum\limits_{i = 1}^N(y_i -\frac{1}{1 + exp(-\rho)})\\<br>\sum\limits_{i=1}^Ny_i = \sum\limits_{i=1}^N\frac{1}{1+exp(-\rho)}\\<br>\sum\limits_{i=1}^Ny_i = \frac{N}{1+exp(-\rho)}\\<br>求倒数\\<br>\frac{(1 + exp(-\rho))}{N} = \frac{1}{\sum\limits_{i=1}^Ny_i}\\<br>1 + exp(-\rho) = \frac{N}{\sum\limits_{i=1}^Ny_i}\\<br>1 + exp(-\rho) = \frac{\sum\limits_{i=1}^N1}{\sum\limits_{i=1}^Ny_i}\\<br>exp(-\rho) = \frac{\sum\limits_{i=1}^N1}{\sum\limits_{i=1}^Ny_i} - 1\\<br>exp(-\rho) = \frac{\sum\limits_{i=1}^N(1 -y_i)}{\sum\limits_{i=1}^Ny_i}\\<br>对数运算\\<br>-\rho = log\frac{\sum\limits_{i=1}^N(1 -y_i)}{\sum\limits_{i=1}^Ny_i}\\<br>\rho = log\frac{\sum\limits_{i=1}^Ny_i}{\sum\limits_{i=1}^N(1 -y_i)}<br>$$</p>
+<h5 id="5-最强学习器"><a href="#5-最强学习器" class="headerlink" title="5): 最强学习器"></a>5): <font color=red>最强学习器</font></h5><p>根据:<br>$$<br>F_m(x) = F_0 + \alpha_1 F_1(x) + \alpha_2 F_2(x)+… + \alpha_m F_m(x)<br>$$<br>其中:<br>$$<br>F_n(x) = F_{n-1}(x) + \gamma_n*learning_rate<br>$$<br>而此时初始值:<br>$$<br>F_0 =\rho = log\frac{\sum\limits_{i=1}^Ny_i}{\sum\limits_{i=1}^N(1 -y_i)}<br>$$<br>$\gamma$的值为:<br>$$<br>\gamma_{mj} = \frac{\sum_{x_i \in R_{mj}}\widetilde{y_i}}{\sum_{x_i \in R_{mj}}(y_i - \widetilde{y_i})(1 - y_i + \widetilde{y_i})}<br>$$<br>$learning_rate$ 的值为模型参数,</p>
+<p><strong>经过足够多的学习次数, 最终能得出一个最优学习器$F_m(x)$</strong></p>
+<h5 id="6-代码实现梯度提升分类树"><a href="#6-代码实现梯度提升分类树" class="headerlink" title="6): 代码实现梯度提升分类树"></a>6): 代码实现梯度提升分类树</h5><p>代码实现和模型调用进行对比</p>
+<h6 id="①-模型调用-二分类结果"><a href="#①-模型调用-二分类结果" class="headerlink" title="①: 模型调用(二分类结果)"></a>①: 模型调用(二分类结果)</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造数据</span></span><br><span class="line">X = np.arange(<span class="number">1</span>,<span class="number">11</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">y = np.array([<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>]*<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义算法</span></span><br><span class="line"><span class="comment"># 默认情况下，损失函数就是Log-loss == 交叉熵！</span></span><br><span class="line">clf = GradientBoostingClassifier(n_estimators=<span class="number">100</span>,learning_rate=<span class="number">0.1</span>,max_depth=<span class="number">1</span>)</span><br><span class="line">clf.fit(X,y)</span><br><span class="line">y_ = clf.predict(X)</span><br><span class="line">print(<span class="string">'真实的类别：'</span>,y)</span><br><span class="line">print(<span class="string">'算法的预测：'</span>,y_)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">真实的类别： [0 0 0 1 1 0 0 0 1 1]</span></span><br><span class="line"><span class="string">算法的预测： [0 0 0 1 1 0 0 0 1 1]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制决策树</span></span><br><span class="line"><span class="comment"># 第一棵树</span></span><br><span class="line">_ = tree.plot_tree(clf[<span class="number">0</span>,<span class="number">0</span>],filled=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 第二棵树</span></span><br><span class="line">_ = tree.plot_tree(clf[<span class="number">1</span>,<span class="number">0</span>],filled=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 第三棵树</span></span><br><span class="line">_ = tree.plot_tree(clf[<span class="number">2</span>,<span class="number">0</span>],filled=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqlsmqk6uj20s20gajt1.jpg" alt="1tree.Png" style="zoom:50%;" />
+
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqlswjrmuj20s00go75y.jpg" alt="2tree.Png" style="zoom:50%;" />
+
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqlt4alf8j20rq0gs0ue.jpg" alt="3tree.Png" style="zoom:50%;" />
+
+<h6 id="②-代码实现-二分类结果"><a href="#②-代码实现-二分类结果" class="headerlink" title="②: 代码实现(二分类结果)"></a>②: 代码实现(二分类结果)</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造数据</span></span><br><span class="line">X = np.arange(<span class="number">1</span>,<span class="number">11</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">y = np.array([<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>]*<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>计算初始值:</strong><br>$$<br>F_0 =\rho = log\frac{\sum\limits_{i=1}^Ny_i}{\sum\limits_{i=1}^N(1 -y_i)}<br>$$<br>此处$y_i$表示类别, 其值为1(1表示true)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 二分类问题，类别 ：0,1</span></span><br><span class="line"><span class="comment"># [0 0 0 1 1 0 0 0 1 1]</span></span><br><span class="line">F0 = np.log(<span class="number">4</span>/<span class="number">6</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">-0.40546510810816444</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>计算$$\widetilde{y}$$ 导数就是梯度，负梯度</strong><br>$$<br>\widetilde{y} = y - \frac{1}{1+exp(-F(x))} = -\psi’(y,F(x))\\<br>\psi’(y,F(x)) = -y + \frac{1}{1 + exp(-F(x))}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 函数F(X) 初始值F0的负梯度</span></span><br><span class="line">yderivative0 = y - <span class="number">1</span>/(<span class="number">1</span> + np.exp(-F0))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([-0.4, -0.4, -0.4,  0.6,  0.6, -0.4, -0.4, -0.4,  0.6,  0.6])</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>拟合第一棵树:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分裂标准 mse</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>):</span><br><span class="line">    <span class="keyword">if</span> i ==<span class="number">10</span>:</span><br><span class="line">        mse = ((yderivative0 - yderivative0.mean())**<span class="number">2</span>).mean()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        left_mse = ((yderivative0[:i] - yderivative0[:i].mean())**<span class="number">2</span>).mean()</span><br><span class="line">        right_mse = ((yderivative0[i:] - yderivative0[i:].mean())**<span class="number">2</span>).mean()</span><br><span class="line">        mse = left_mse*i/<span class="number">10</span> + right_mse*(<span class="number">10</span>-i)/<span class="number">10</span></span><br><span class="line">    print(<span class="string">'从第%d个进行切分'</span>%(i),np.round(mse,<span class="number">4</span>))</span><br><span class="line"><span class="comment"># 从第八个样本这里进行分类，最优的选择，和算法第一颗画图的结果一致</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">从第1个进行切分 0.2222</span></span><br><span class="line"><span class="string">从第2个进行切分 0.2</span></span><br><span class="line"><span class="string">从第3个进行切分 0.1714</span></span><br><span class="line"><span class="string">从第4个进行切分 0.225</span></span><br><span class="line"><span class="string">从第5个进行切分 0.24</span></span><br><span class="line"><span class="string">从第6个进行切分 0.2333</span></span><br><span class="line"><span class="string">从第7个进行切分 0.2095</span></span><br><span class="line"><span class="string">从第8个进行切分 0.15</span></span><br><span class="line"><span class="string">从第9个进行切分 0.2</span></span><br><span class="line"><span class="string">从第10个进行切分 0.24</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>计算左、右两侧叶子的预测值:<br>$$<br>\gamma_{mj} = \frac{\sum_{x_i \in R_{mj}}\widetilde{y_i}}{\sum_{x_i \in R_{mj}}(y_i - \widetilde{y_i})(1 - y_i + \widetilde{y_i})}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 左边分支</span></span><br><span class="line">gamma1 = np.round(yderivative0[:<span class="number">8</span>].sum()/((y[:<span class="number">8</span>] - yderivative0[:<span class="number">8</span>])*(<span class="number">1</span> - y[:<span class="number">8</span>] + yderivative0[:<span class="number">8</span>])).sum(),<span class="number">3</span>)</span><br><span class="line">print(<span class="string">'左边决策树分支，预测值：'</span>,gamma1)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">左边决策树分支，预测值： -0.625</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 右边分支</span></span><br><span class="line">gamma2 =np.round(yderivative0[<span class="number">8</span>:].sum()/((y[<span class="number">8</span>:] - yderivative0[<span class="number">8</span>:])*(<span class="number">1</span> - y[<span class="number">8</span>:] + yderivative0[<span class="number">8</span>:])).sum(),<span class="number">3</span>)</span><br><span class="line">print(<span class="string">'右边决策树分支，预测值：'</span>,gamma2)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">右边决策树分支，预测值： 2.5</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第一棵树拟合完毕, 代码实现的，和算法中的第一颗树（画图显示），完全一样</strong></p>
+<p>以此类推实现第二棵树:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拟合第二颗树</span></span><br><span class="line"><span class="comment"># 第一颗预测的结果</span></span><br><span class="line">gamma = np.array([<span class="number">-0.625</span>]*<span class="number">8</span> + [<span class="number">2.5</span>]*<span class="number">2</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([-0.625, -0.625, -0.625, -0.625, -0.625, -0.625, -0.625, -0.625,</span></span><br><span class="line"><span class="string">        2.5  ,  2.5  ])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># F(x) 随着梯度提升树，提升，发生变化</span></span><br><span class="line">learning_rate = <span class="number">0.1</span></span><br><span class="line">F1 =np.round( F0 + gamma*learning_rate,<span class="number">4</span>) <span class="comment">#保留4位小数</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([-0.468 , -0.468 , -0.468 , -0.468 , -0.468 , -0.468 , -0.468 ,</span></span><br><span class="line"><span class="string">       -0.468 , -0.1555, -0.1555])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算F1(x)的负梯度</span></span><br><span class="line">yderivative1 = np.round(y - <span class="number">1</span>/(<span class="number">1</span> + np.exp(-F1)),<span class="number">4</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([-0.3851, -0.3851, -0.3851,  0.6149,  0.6149, -0.3851, -0.3851,</span></span><br><span class="line"><span class="string">       -0.3851,  0.5388,  0.5388])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二颗树分裂标准 mse</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>):</span><br><span class="line">    <span class="keyword">if</span> i ==<span class="number">10</span>:</span><br><span class="line">        mse = ((yderivative1 - yderivative1.mean())**<span class="number">2</span>).mean()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        left_mse = ((yderivative1[:i] - yderivative1[:i].mean())**<span class="number">2</span>).mean()</span><br><span class="line">        right_mse = ((yderivative1[i:] - yderivative1[i:].mean())**<span class="number">2</span>).mean()</span><br><span class="line">        mse = left_mse*i/<span class="number">10</span> + right_mse*(<span class="number">10</span>-i)/<span class="number">10</span></span><br><span class="line">    print(<span class="string">'从第%d个进行切分'</span>%(i),np.round(mse,<span class="number">4</span>))</span><br><span class="line"><span class="comment"># 第二棵树也是从第八个样本这里进行分类，最优的选择，和算法第二颗画图的结果一致</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 左边分支</span></span><br><span class="line">gamma1 = np.round(yderivative1[:<span class="number">8</span>].sum()/((y[:<span class="number">8</span>] - yderivative1[:<span class="number">8</span>])*(<span class="number">1</span> - y[:<span class="number">8</span>] + yderivative1[:<span class="number">8</span>])).sum(),<span class="number">3</span>)</span><br><span class="line">print(<span class="string">'第二棵树左边决策树分支，预测值：'</span>,gamma1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 右边分支</span></span><br><span class="line">gamma2 =np.round(yderivative1[<span class="number">8</span>:].sum()/((y[<span class="number">8</span>:] - yderivative1[<span class="number">8</span>:])*(<span class="number">1</span> - y[<span class="number">8</span>:] + yderivative1[<span class="number">8</span>:])).sum(),<span class="number">3</span>)</span><br><span class="line">print(<span class="string">'第二棵树右边决策树分支，预测值：'</span>,gamma2)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">第二棵树左边决策树分支，预测值： -0.571</span></span><br><span class="line"><span class="string">第二棵树右边决策树分支，预测值： 2.168</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<p>第三棵树:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第二棵树预测值</span></span><br><span class="line">gamma = np.array([<span class="number">-0.571</span>]*<span class="number">8</span> + [<span class="number">2.168</span>]*<span class="number">2</span>)</span><br><span class="line"><span class="comment"># F(x) 随着梯度提升树，提升，发生变化</span></span><br><span class="line">learning_rate = <span class="number">0.1</span></span><br><span class="line">F2 =np.round( F1 + gamma*learning_rate,<span class="number">4</span>) <span class="comment">#保留4位小数</span></span><br><span class="line"><span class="comment"># 计算F2(x)的负梯度</span></span><br><span class="line">yderivative2 = np.round(y - <span class="number">1</span>/(<span class="number">1</span> + np.exp(-F2)),<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第三颗树分裂标准 mse</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>):</span><br><span class="line">    <span class="keyword">if</span> i ==<span class="number">10</span>:</span><br><span class="line">        mse = ((yderivative2 - yderivative2.mean())**<span class="number">2</span>).mean()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        left_mse = ((yderivative2[:i] - yderivative2[:i].mean())**<span class="number">2</span>).mean()</span><br><span class="line">        right_mse = ((yderivative2[i:] - yderivative2[i:].mean())**<span class="number">2</span>).mean()</span><br><span class="line">        mse = left_mse*i/<span class="number">10</span> + right_mse*(<span class="number">10</span>-i)/<span class="number">10</span></span><br><span class="line">    print(<span class="string">'从第%d个进行切分'</span>%(i),np.round(mse,<span class="number">4</span>))</span><br><span class="line"><span class="comment"># 第三棵树从第三个样本这里进行裂分，最优的选择，和算法第三颗画图的结果一致</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  计算第三颗树的预测值</span></span><br><span class="line"><span class="comment"># 前三个是一类</span></span><br><span class="line"><span class="comment"># 后七个是一类</span></span><br><span class="line"><span class="comment"># 左边分支</span></span><br><span class="line">gamma1 = np.round(yderivative2[:<span class="number">3</span>].sum()/((y[:<span class="number">3</span>] - yderivative2[:<span class="number">3</span>])*(<span class="number">1</span> - y[:<span class="number">3</span>] + yderivative2[:<span class="number">3</span>])).sum(),<span class="number">3</span>)</span><br><span class="line">print(<span class="string">'第三棵树左边决策树分支，预测值：'</span>,gamma1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 右边分支</span></span><br><span class="line">gamma2 =np.round(yderivative2[<span class="number">3</span>:].sum()/((y[<span class="number">3</span>:] - yderivative2[<span class="number">3</span>:])*(<span class="number">1</span> - y[<span class="number">3</span>:] + yderivative2[<span class="number">3</span>:])).sum(),<span class="number">3</span>)</span><br><span class="line">print(<span class="string">'第三棵树右边决策树分支，预测值：'</span>,gamma2)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">第三棵树左边决策树分支，预测值： -1.592</span></span><br><span class="line"><span class="string">第三棵树右边决策树分支，预测值： 0.666</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>最后将最后一棵树的结果通过sigmoid函数转换乘概率:<br>$$<br>p = \frac{1}{1 + exp(-F(x))}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算第三颗的F3(x)</span></span><br><span class="line"><span class="comment"># 第三颗树预测值</span></span><br><span class="line">gamma = np.array([<span class="number">-1.592</span>]*<span class="number">3</span> + [<span class="number">0.666</span>]*<span class="number">7</span>)</span><br><span class="line"><span class="comment"># F(x) 随着梯度提升树，提升，发生变化</span></span><br><span class="line">learning_rate = <span class="number">0.1</span></span><br><span class="line">F3 =np.round( F2 + gamma*learning_rate,<span class="number">4</span>) <span class="comment">#保留4位小数</span></span><br><span class="line"></span><br><span class="line">proba = <span class="number">1</span>/(<span class="number">1</span> + np.exp(-F3))</span><br><span class="line"><span class="comment"># 类别：0,1，如果这个概率大于等于0.5类别1，小于0.5类别0</span></span><br><span class="line">(proba &gt;= <span class="number">0.5</span>).astype(np.int8)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结果</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([0, 0, 0, 0, 0, 0, 0, 0, 1, 1], dtype=int8)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<p>可见第三棵树的分类结果已经达到一定的准确率;</p>
+<p>以此类推,只要循环的次数足够多, 就能达到和算法的分类结果相同(代码设置的树是100颗)</p>
+<p>至此,完毕</p>
+<h3 id="3-梯度提升树的优缺点"><a href="#3-梯度提升树的优缺点" class="headerlink" title="3: 梯度提升树的优缺点"></a>3: 梯度提升树的优缺点</h3><p><strong>优点</strong></p>
+<p>1) 可以灵活处理各种类型的数据，包括连续值和离散值。</p>
+<p>2) 在相对少的调参时间情况下，预测的准确率也可以比较高。这个是相对SVM来说的。</p>
+<p>3）使用一些健壮的损失函数，对异常值的鲁棒性非常强。比如 Huber损失函数和Quantile损失函数。</p>
+<p><strong>缺点</strong></p>
+<p>1)由于弱学习器之间存在依赖关系，难以并行训练数据。不过可以通过自采样的SGBT来达到部分并行。</p>
+<h3 id="4-梯度提升树参数详解"><a href="#4-梯度提升树参数详解" class="headerlink" title="4: 梯度提升树参数详解"></a>4: 梯度提升树参数详解</h3><p><a href="https://www.cnblogs.com/pinard/p/6143927.html" target="_blank" rel="noopener">刘建平 - scikit-learn 梯度提升树(GBDT)调参小结</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/34507947" target="_blank" rel="noopener">Surface 键盘耐脏又好擦？真的吗？</a></p>
+<br>
+
+
+
+<h1 id="六-XGboost"><a href="#六-XGboost" class="headerlink" title="六: XGboost"></a>六: XGboost</h1><p>在算法的弱学习器模型选择上，对比GBDT只支持决策树，还可以直接很多其他的弱学习器。</p>
+<p>在算法的损失函数上，除了本身的损失，还加上了正则化部分。</p>
+<p>在算法的优化方式上，GBDT的损失函数只对误差部分做负梯度（一阶泰勒）展开，而XGBoost损失函数对误差部分做二阶泰勒展开，更加准确</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2020/04/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%9B%86%E6%88%90%E7%AE%97%E6%B3%95/">集成算法</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">▼ 机器学习</a>
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">▼ 算法</a>
+                    
+                        <a href="/tags/%E9%9B%86%E6%88%90%E7%AE%97%E6%B3%95/">▼ 集成算法</a>
+                    
+                        <a href="/tags/Bagging/">▼ Bagging</a>
+                    
+                        <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">▼ 随机森林</a>
+                    
+                        <a href="/tags/Boosting/">▼ Boosting</a>
+                    
+                        <a href="/tags/AdaBoost/">▼ AdaBoost</a>
+                    
+                        <a href="/tags/GBDT/">▼ GBDT</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2021/08/15/NLP/%E6%89%8B%E5%86%99%E7%BB%B4%E7%89%B9%E6%AF%94%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E8%AF%8D%E6%80%A7%E6%A0%87%E6%B3%A8/">上一篇：手推维特比算法实现词性标注</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB/">下一篇：聚类</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

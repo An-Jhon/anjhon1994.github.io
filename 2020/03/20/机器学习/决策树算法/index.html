@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>决策树 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        
+		src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">决策树</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2020-03-20</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;机器学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一-概述"><a href="#一-概述" class="headerlink" title="一: 概述"></a>一: 概述</h1><p>决策树是附加概率结果的一个树状的决策图，是直观的运用统计概率分析的图法。决策树算法采用树形结构，使用层层推理来实现最终的分类。</p>
+<p><strong>决策树的结构:</strong></p>
+<p><img src="https://easy-ai.oss-cn-shanghai.aliyuncs.com/2019-09-17-jiegou.png" alt=""></p>
+<ul>
+<li>根节点：包含样本的全集</li>
+<li>内部节点：对应特征属性测试</li>
+<li>叶节点：代表决策的结果</li>
+</ul>
+<p>预测时，在树的内部节点处用某一属性值进行判断，根据判断结果决定进入哪个分支节点，直到到达叶节点处，得到分类结果。</p>
+<br>
+
+
+
+<h1 id="二-决策树算法"><a href="#二-决策树算法" class="headerlink" title="二: 决策树算法"></a>二: 决策树算法</h1><p>决策树算法中有三种基本算法: <strong>ID3算法,C4.5算法,CART算法(在sklearn中默认是使用CART算法);</strong> </p>
+<h2 id="一-ID3算法"><a href="#一-ID3算法" class="headerlink" title="(一): ID3算法"></a>(一): ID3算法</h2><p>ID3算法用<strong>信息增益</strong>来作为<strong>特征选择标准</strong></p>
+<p>对熵这个概念还不是很熟悉的童鞋可以借鉴一下<a href="https://www.zhihu.com/people/pwlin/answers" target="_blank" rel="noopener">CyberRep在知乎的回答</a></p>
+<p>信息熵表示的是不确定度。均匀分布时，不确定度最大，此时熵就最大。当选择某个特征对数据集进行分类时，分类后的数据集信息熵会比分类前的小，其差值表示为信息增益。信息增益可以衡量某个特征对分类结果的影响大小。</p>
+<p><strong>衡量熵值的两个公式:</strong></p>
+<p><strong>1: 信息熵公式:</strong><br>$$<br>H(X) = -\sum\limits_{i=1}^n p_ilog_2p_i<br>$$</p>
+<p>$$<br>H(X) = \sum\limits_{i=1}^n p_ilog_2 \frac{1}{p_i}<br>$$</p>
+<p><strong>联合熵:</strong><br>$$<br>H(X,Y)=−\sum_{i=1}^np(x_i,y_i)logp(x_i,y_i)<br>$$<br><strong>条件熵:</strong></p>
+<p>它度量了我们的X在知道Y以后剩下的不确定性<br>$$<br>H(X|Y)=−\sum_{i=1}^np(x_i,y_i)logp(x_i|y_i)=\sum_{j=1}^np(y_j)H(X|y_j)<br>$$<br><strong>用目标值的信息熵   减去   知道属性比例后的目标值   的信息熵</strong></p>
+<p><strong>信息增益:</strong><br>$$<br>H(X) - H(X|Y)<br>$$</p>
+<p><strong>ID3算法的不足:</strong></p>
+<p>第一: 不能处理连续特征</p>
+<p>第二: 用信息增益作为标准容易偏向于取值较多的特征</p>
+<p>第三: 缺失值处理的问和过拟合问题</p>
+<p><strong>举个栗子:</strong></p>
+<p>如下图, 三个属性:日志密度, 好友密度, 头像是否真实, 判断账号是否真实</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqkxtn8vcj20go0bqq4a.jpg" alt="熵-1.png" style="zoom: 67%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算最后一栏的熵值(暂时不考虑属性的影响 - 期望信息)</span></span><br><span class="line"><span class="comment"># 3个no,7个yes; </span></span><br><span class="line">H1 = -(<span class="number">0.3</span>*np.log2(<span class="number">0.3</span>)+<span class="number">0.7</span>*np.log2(<span class="number">0.7</span>))</span><br><span class="line">H1</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0.8812908992306927</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算日志密度对期望信息的熵值</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">s -&gt; 个数3 -&gt; 概率0.3 -&gt; 2个no,1个yes  </span></span><br><span class="line"><span class="string">m -&gt; 个数4 -&gt; 概率0.4 -&gt; 1个no,3个yes  </span></span><br><span class="line"><span class="string">i -&gt; 个数3 -&gt; 概率0.3 -&gt; 3个yes  </span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">H2 = (<span class="number">0.3</span>*(<span class="number">2</span>/<span class="number">3</span>*np.log2(<span class="number">3</span>/<span class="number">2</span>)+<span class="number">1</span>/<span class="number">3</span>*np.log2(<span class="number">3</span>))) + (<span class="number">0.4</span>*(<span class="number">1</span>/<span class="number">4</span>*np.log2(<span class="number">4</span>)+<span class="number">3</span>/<span class="number">4</span>*np.log2(<span class="number">4</span>/<span class="number">3</span>))) + (<span class="number">0.3</span>*np.log2(<span class="number">1</span>))</span><br><span class="line">print(H2)</span><br><span class="line">print(<span class="string">'信息增益:'</span>, H1-H2)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0.5999999999999999</span></span><br><span class="line"><span class="string">信息增益: 0.28129089923069284</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算好友密度对期望信息的熵值</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">s -&gt; 个数4 -&gt; 概率0.4 -&gt; 3个no,1个yes  </span></span><br><span class="line"><span class="string">m -&gt; 个数4 -&gt; 概率0.4 -&gt; 4个yes  </span></span><br><span class="line"><span class="string">i -&gt; 个数2 -&gt; 概率0.2 -&gt; 2个yes  </span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">H3 = (<span class="number">0.4</span>*(<span class="number">3</span>/<span class="number">4</span>*np.log2(<span class="number">4</span>/<span class="number">3</span>)+<span class="number">1</span>/<span class="number">4</span>*np.log2(<span class="number">4</span>))) + (<span class="number">0.4</span>*np.log2(<span class="number">1</span>)) + (<span class="number">0.2</span>*np.log2(<span class="number">1</span>))</span><br><span class="line">print(H3)</span><br><span class="line">print(<span class="string">'信息增益:'</span>, H1-H3)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0.32451124978365314</span></span><br><span class="line"><span class="string">信息增益: 0.5567796494470396</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<p><font color=red>通过以上例子可以看出: 好友密度的信息增益比日志密度的信息增益大, 所以好友密度这一属性更适合作为根节点</font></p>
+<h2 id="二-C4-5算法"><a href="#二-C4-5算法" class="headerlink" title="(二): C4.5算法"></a>(二): C4.5算法</h2><p>C4.5算法用<strong>信息增益比</strong>来作为<strong>特征选择标准</strong><br>$$<br>I_R(D,A)=\frac{I(A,D)}{H_A(D)}<br>$$<br>I(A,D)是信息增益, $H_A(D)$是特征熵<br>$$<br>H_A(D)=−\sum_{i=1}^n\frac{|D_i|}{|D|}log2\frac{|D_i|}{|D|}<br>$$<br>其中n为特征A的类别数， Di为特征A的第i个取值对应的样本个数。|D|为样本个数。</p>
+<p><strong>C4.5算法的不足:</strong></p>
+<p>模型是用较为复杂的熵来度量</p>
+<p>使用了相对较为复杂的多叉树</p>
+<p>只能处理分类不能处理回归等</p>
+<h2 id="三-CART算法"><a href="#三-CART算法" class="headerlink" title="(三): CART算法"></a>(三): CART算法</h2><p>CART分类树算法使用基尼系数来代替信息增益比，基尼系数代表了模型的不纯度，基尼系数越小，则不纯度越低，特征越好。</p>
+<p>具体的，在分类问题中，假设有K个类别，第k个类别的概率为$p_i$, 则基尼系数的表达式为：<br>$$<br>gini = \sum\limits_{i = 1}^np_i(1 - p_i)<br>$$</p>
+<p>对于个给定的样本D,假设有K个类别, 第k个类别的数量为$C_k$,则样本D的基尼系数表达式为：<br>$$<br>Gini(D)=1−\sum_{k=1}^K(\frac{|C_k|}{|D|})^2<br>$$</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>支持模型</th>
+<th>树结构</th>
+<th>特征选择</th>
+<th>连续值处理</th>
+<th>缺失值处理</th>
+<th>剪枝</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID3</td>
+<td>分类</td>
+<td>多叉树</td>
+<td>信息增益</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>C4.5</td>
+<td>分类</td>
+<td>多叉树</td>
+<td>信息增益比</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>CART</td>
+<td>分类，回归</td>
+<td>二叉树</td>
+<td>基尼系数，均方差</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+</tbody></table>
+<br>
+
+
+
+<h1 id="三-建立决策树"><a href="#三-建立决策树" class="headerlink" title="三: 建立决策树"></a>三: 建立决策树</h1><h2 id="一-特征选择"><a href="#一-特征选择" class="headerlink" title="(一): 特征选择"></a>(一): 特征选择</h2><p>特征选择决定了使用哪些特征来做判断。选择一个合适的特征作为判断节点，可以快速的分类，减少决策树的深度。决策树的目标就是把数据集按对应的类标签进行分类。</p>
+<p>在训练数据集中，每个样本的属性可能有很多个，不同属性的作用有大有小。因而特征选择的作用就是筛选出跟分类结果相关性较高的特征，也就是分类能力较强的特征。</p>
+<h2 id="二-决策树的生成"><a href="#二-决策树的生成" class="headerlink" title="(二): 决策树的生成"></a>(二): 决策树的生成</h2><p>选择好特征后，就从根节点触发，对节点计算所有特征的信息增益，选择信息增益最大的特征作为节点特征，根据该特征的不同取值建立子节点；对每个子节点使用相同的方式生成新的子节点，直到信息增益很小或者没有特征可以选择为止。</p>
+<h2 id="三-决策树的修剪"><a href="#三-决策树的修剪" class="headerlink" title="(三): 决策树的修剪"></a>(三): 决策树的修剪</h2><p>决策树生成算法递归地产生决策树，直到不能继续下去未为止。这样产生的树往往对训练数据的分类很准确，但对未知的测试数据的分类却没有那么准确，即出现过拟合现象。过拟合的原因在于学习时过多地考虑如何提高对训练数据的正确分类，从而构建出过于复杂的决策树。解决这个问题的办法是考虑决策树的复杂度，对已生成的决策树进行简化。</p>
+<br>
+
+
+
+<h1 id="四-决策树分类和回归"><a href="#四-决策树分类和回归" class="headerlink" title="四: 决策树分类和回归"></a>四: 决策树分类和回归</h1><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>DecisionTreeClassifier</th>
+<th>DecisionTreeRegressor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>特征选择标准criterion</td>
+<td>可以使用”gini”或者”entropy”，前者代表基尼系数，后者代表信息增益。一般说使用默认的基尼系数”gini”就可以了，即CART算法。除非你更喜欢类似ID3, C4.5的最优特征选择方法。</td>
+<td>可以使用”mse”或者”mae”，前者是均方差，后者是和均值之差的绝对值之和。推荐使用默认的”mse”。一般来说”mse”比”mae”更加精确。除非你想比较二个参数的效果的不同之处。</td>
+</tr>
+<tr>
+<td>特征划分点选择标准splitter</td>
+<td>可以使用”best”或者”random”。前者在特征的所有划分点中找出最优的划分点。后者是随机的在部分划分点中找局部最优的划分点。默认的”best”适合样本量不大的时候，而如果样本数据量非常大，此时决策树构建推荐”random”</td>
+<td></td>
+</tr>
+<tr>
+<td>划分时考虑的最大特征数max_features</td>
+<td>可以使用很多种类型的值，默认是”None”,意味着划分时考虑所有的特征数；如果是”log2”意味着划分时最多考虑log2Nlog2N个特征；如果是”sqrt”或者”auto”意味着划分时最多考虑N−−√N个特征。如果是整数，代表考虑的特征绝对数。如果是浮点数，代表考虑特征百分比，即考虑（百分比xN）取整后的特征数。其中N为样本总特征数。一般来说，如果样本特征数不多，比如小于50，我们用默认的”None”就可以了，如果特征数非常多，我们可以灵活使用刚才描述的其他取值来控制划分时考虑的最大特征数，以控制决策树的生成时间。</td>
+<td></td>
+</tr>
+<tr>
+<td>决策树最大深max_depth</td>
+<td>决策树的最大深度，默认可以不输入，如果不输入的话，决策树在建立子树的时候不会限制子树的深度。一般来说，数据少或者特征少的时候可以不管这个值。如果模型样本量多，特征也多的情况下，推荐限制这个最大深度，具体的取值取决于数据的分布。常用的可以取值10-100之间。</td>
+<td></td>
+</tr>
+<tr>
+<td>内部节点再划分所需最小样本数min_samples_split</td>
+<td>这个值限制了子树继续划分的条件，如果某节点的样本数少于min_samples_split，则不会继续再尝试选择最优特征来进行划分。 默认是2.如果样本量不大，不需要管这个值。如果样本量数量级非常大，则推荐增大这个值。我之前的一个项目例子，有大概10万样本，建立决策树时，我选择了min_samples_split=10。可以作为参考。</td>
+<td></td>
+</tr>
+<tr>
+<td>叶子节点最少样本数min_samples_leaf</td>
+<td>这个值限制了叶子节点最少的样本数，如果某叶子节点数目小于样本数，则会和兄弟节点一起被剪枝。 默认是1,可以输入最少的样本数的整数，或者最少样本数占样本总数的百分比。如果样本量不大，不需要管这个值。如果样本量数量级非常大，则推荐增大这个值。之前的10万样本项目使用min_samples_leaf的值为5，仅供参考。</td>
+<td></td>
+</tr>
+<tr>
+<td>叶子节点最小的样本权重和min_weight_fraction_leaf</td>
+<td>这个值限制了叶子节点所有样本权重和的最小值，如果小于这个值，则会和兄弟节点一起被剪枝。 默认是0，就是不考虑权重问题。一般来说，如果我们有较多样本有缺失值，或者分类树样本的分布类别偏差很大，就会引入样本权重，这时我们就要注意这个值了。</td>
+<td></td>
+</tr>
+<tr>
+<td>最大叶子节点数max_leaf_nodes</td>
+<td>通过限制最大叶子节点数，可以防止过拟合，默认是”None”，即不限制最大的叶子节点数。如果加了限制，算法会建立在最大叶子节点数内最优的决策树。如果特征不多，可以不考虑这个值，但是如果特征分成多的话，可以加以限制，具体的值可以通过交叉验证得到。</td>
+<td></td>
+</tr>
+<tr>
+<td>类别权重class_weight</td>
+<td>指定样本各类别的的权重，主要是为了防止训练集某些类别的样本过多，导致训练的决策树过于偏向这些类别。这里可以自己指定各个样本的权重，或者用“balanced”，如果使用“balanced”，则算法会自己计算权重，样本量少的类别所对应的样本权重会高。当然，如果你的样本类别分布没有明显的偏倚，则可以不管这个参数，选择默认的”None”</td>
+<td>不适用于回归树</td>
+</tr>
+<tr>
+<td>节点划分最小不纯度min_impurity_split</td>
+<td>这个值限制了决策树的增长，如果某节点的不纯度(基尼系数，信息增益，均方差，绝对差)小于这个阈值，则该节点不再生成子节点。即为叶子节点 。</td>
+<td></td>
+</tr>
+<tr>
+<td>数据是否预排序presort</td>
+<td>这个值是布尔值，默认是False不排序。一般来说，如果样本量少或者限制了一个深度很小的决策树，设置为true可以让划分点选择更加快，决策树建立的更加快。如果样本量太大的话，反而没有什么好处。问题是样本量少的时候，我速度本来就不慢。所以这个值一般懒得理它就可以了。</td>
+<td></td>
+</tr>
+</tbody></table>
+<br>
+
+
+
+<h1 id="五-决策树应用"><a href="#五-决策树应用" class="headerlink" title="五: 决策树应用"></a>五: 决策树应用</h1><h2 id="一-葡萄酒分类"><a href="#一-葡萄酒分类" class="headerlink" title="(一): 葡萄酒分类"></a>(一): 葡萄酒分类</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, tree</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">wine = datasets.load_wine()</span><br><span class="line">X = wine[<span class="string">'data'</span>]</span><br><span class="line">y = wine[<span class="string">'target'</span>]</span><br><span class="line"></span><br><span class="line">s1 = <span class="number">0</span></span><br><span class="line">s2 = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">300</span>):</span><br><span class="line">    X_train, X_test, y_train, y_test = train_test_split(X, y)</span><br><span class="line">    model = DecisionTreeClassifier(max_depth=<span class="number">5</span>)</span><br><span class="line">    model.fit(X_train, y_train)</span><br><span class="line">    s1 +=  model.score(X_train, y_train)/<span class="number">300</span></span><br><span class="line">    s2 += model.score(X_test, y_test)/<span class="number">300</span></span><br><span class="line">print(<span class="string">'训练准确度:'</span>, s1)</span><br><span class="line">print(<span class="string">'测试准确度:'</span>, s2)</span><br><span class="line">_ = tree.plot_tree(model, filled=<span class="literal">True</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">训练准确度: 0.9989473684210486</span></span><br><span class="line"><span class="string">测试准确度: 0.9063703703703709</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqkyel2sfj21840vugoj.jpg" alt="决策树-葡萄酒分类.jpg" style="zoom: 40%;" />
+
+<h2 id="二-决策树回归"><a href="#二-决策树回归" class="headerlink" title="(二): 决策树回归"></a>(二): 决策树回归</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, tree</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X = np.linspace(<span class="number">0</span>,<span class="number">2</span>*np.pi, <span class="number">40</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)   <span class="comment"># 将数据变为二维数据</span></span><br><span class="line">y = np.c_[np.sin(X), np.cos(X)]   <span class="comment"># 蒋两张数据组合</span></span><br><span class="line">X_test = np.linspace(<span class="number">0</span>,<span class="number">2</span>*np.pi, <span class="number">187</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">model = DecisionTreeRegressor(criterion=<span class="string">'mse'</span>, max_depth=<span class="literal">None</span>)   <span class="comment"># 当max_depth=1, 画出来的图像只有两个点</span></span><br><span class="line">model.fit(X,y)   <span class="comment"># X有40个点</span></span><br><span class="line">y_ = model.predict(X_test)   <span class="comment"># X_test是187个点</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">3</span>,<span class="number">3</span>))   <span class="comment"># 调节尺寸</span></span><br><span class="line">plt.scatter(y[:,<span class="number">0</span>], y[:,<span class="number">1</span>])   <span class="comment"># 绘制散点图</span></span><br><span class="line">plt.figure(figsize=(<span class="number">12</span>,<span class="number">12</span>))</span><br><span class="line">_ = tree.plot_tree(model, filled=<span class="literal">True</span>)   <span class="comment"># 绘制决策树</span></span><br><span class="line">plt.savefig(<span class="string">'./regrece.pdf'</span>, dpi=<span class="number">1024</span>)   <span class="comment"># 保存决策树为pdf</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqkz1v5oyj20dz0a974d.jpg" alt="决策树-正弦余弦.jpg"></p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gmqkz8nnuhj211v0w576b.jpg" alt="决策树-正弦余弦回归树.jpg" style="zoom: 50%;" />
+
+<p><a href="https://www.cnblogs.com/pinard/p/6053344.html" target="_blank" rel="noopener">借鉴文章 - 决策树算法原理(下) - 刘建平</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2020/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95/">决策树</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">▼ 机器学习</a>
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">▼ 算法</a>
+                    
+                        <a href="/tags/%E5%86%B3%E7%AD%96%E6%A0%91/">▼ 决策树</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2020/04/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB/">上一篇：聚类</a>
+            
+            
+            <a class="next" rel="next" href="/2020/03/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">下一篇：支持向量机（SVM）</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>
