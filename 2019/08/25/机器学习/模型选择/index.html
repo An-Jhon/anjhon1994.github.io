@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>模型选择 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        
+		src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">模型选择</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2019-08-25</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;机器学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><strong>模型选择:</strong></p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5ni7918tj21my10r7on.jpg" alt="模型选择.png"></p>
+<p><strong>模型评估:</strong></p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5nil833sj21130fn40u.jpg" alt="模型选择和评估的方法.png"></p>
+<h1 id="一-交叉验证-划分数据集"><a href="#一-交叉验证-划分数据集" class="headerlink" title="一: 交叉验证(划分数据集)"></a>一: 交叉验证(划分数据集)</h1><p>交叉验证，顾名思义，就是重复的使用数据，把得到的样本数据进行切分，组合为不同的训练集和测试集，用训练集来训练模型，用测试集来评估模型预测的好坏。在此基础上可以得到多组不同的训练集和测试集，某次训练集中的某样本在下次可能成为测试集中的样本，即所谓“交叉”。</p>
+<p>那么什么时候才需要交叉验证呢？交叉验证用在数据不是很充足的时候。如果我们训练出的模型只在训练集上表现极好，但在未知的数据上效果很差，说明出现了过拟合，为了避免这种现象的出现，我们需要验证集来评估我们的模型。比如在我日常项目里面，对于普通适中问题，如果数据样本量小于一万条，我们就会采用交叉验证来训练优化选择模型。如果样本大于一万条的话，我们一般随机的把数据分成三份，一份为训练集（Training Set），一份为验证集（Validation Set），最后一份为测试集（Test Set）。用训练集来训练模型，用验证集来评估模型预测的好坏和选择模型及其对应的参数。把最终得到的模型再用于测试集，最终决定使用哪个模型以及对应参数。</p>
+<p>当我们在训练集上训练好一个模型后，现在验证集上对模型进行，如果验证集上的效果比较好时，再到测试集上就行最后的评估。但是单纯的将数据集分为三部分，会大大减少模型学习的数据量（因为有时数据是很难获取的，数目可能会比较少），并且最后模型的效果也依赖于我们对于数据集的划分。这时我们就可以使用交叉验证，很好解决这个问题。</p>
+<h2 id="1-简单交叉验证-随机交叉"><a href="#1-简单交叉验证-随机交叉" class="headerlink" title="1: 简单交叉验证(随机交叉)"></a>1: 简单交叉验证(随机交叉)</h2><p>我们随机的将样本数据分为两部分（比如： 70%的训练集，30%的测试集），然后用训练集来训练模型，在测试集上验证模型及参数。接着，我们再把样本打乱，重新选择训练集和测试集，继续训练数据和检验模型。最后我们选择损失函数评估最优的模型和参数。　</p>
+<p>代码:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clf = svm.SVC(kernel=<span class="string">'linear'</span>, C=<span class="number">1</span>)</span><br><span class="line">scores = cross_val_score(clf, iris.data, iris.target, cv=<span class="number">5</span>)  <span class="comment">#cv为迭代次数。</span></span><br><span class="line">print(scores)</span><br></pre></td></tr></table></figure>
+
+<p>cross_val_score 默认使用 KFold 或 StratifiedKFold 策略</p>
+<h2 id="2-K折交叉验证"><a href="#2-K折交叉验证" class="headerlink" title="2: K折交叉验证"></a>2: K折交叉验证</h2><p>将全部训练及S分成K个不相交的子集，假设S中样本个数为M，那么，每一个子集的训练样本个数为M/K相应的子集称做${S_{1},S_{2},…,S_{K}}$ 每次从分好的训练只集中拿出一个测试集。其他<code>K-1</code>一个作为训练集。在<code>K-1</code>一个训练集上训练出学习器模型，把这个模型放到测试集上，得到分类率.计算<code>K</code>求得分类率的平均值。作为该模型的真实分类率。</p>
+<p><strong>优点</strong>：充分利用了所有样本</p>
+<p><strong>缺点</strong>：计算繁琐。计算K次，测试K次</p>
+<p><strong>代码:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">KFold_practice</span><span class="params">()</span>:</span></span><br><span class="line">    x = np.arange(<span class="number">12</span>)</span><br><span class="line">    X = x.reshape(<span class="number">6</span>, <span class="number">2</span>)</span><br><span class="line">    y = np.arange(<span class="number">15</span>, <span class="number">21</span>)</span><br><span class="line"></span><br><span class="line">    kf = model_selection.KFold(n_splits=<span class="number">3</span>)  <span class="comment"># 定义一个K折分割器  还有参数shuffle，random_state</span></span><br><span class="line">    <span class="string">'KFold.split(x)返回的是索引，训练样本和测试样本是什么要将索引带到数据集中去'</span></span><br><span class="line">    <span class="keyword">for</span> train_index, test_index <span class="keyword">in</span> kf.split(X):</span><br><span class="line">        print(<span class="string">"TRAIN Index:"</span>, train_index,<span class="string">"TEST Index:"</span>, test_index)</span><br><span class="line"></span><br><span class="line">        X_train, X_test = X[train_index], X[test_index]</span><br><span class="line">        y_train, y_test = y[train_index], y[test_index]</span><br><span class="line">        print(<span class="string">"TRAIN Subset:\n"</span>, X_train)</span><br><span class="line">        print(<span class="string">"TEST Subset:\n"</span>, X_test)</span><br><span class="line">KFold_practice()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-留一法"><a href="#3-留一法" class="headerlink" title="3: 留一法"></a>3: 留一法</h2><p>对于N个样本，每次选择N-1个样本来训练数据，留一个样本来验证模型预测的好坏。此方法主要用于样本量非常少的情况，比如对于普通适中问题，N小于50时，我一般采用留一交叉验证。</p>
+<p><strong>留P法</strong></p>
+<p>对于N个样本，每次选择N-P个样本来训练数据，留P个样本来验证模型预测的好坏。这样得到$C_{n}^{P}$个训练-测试集对（train-test pairs）</p>
+<p><strong>代码:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leave_one_out</span><span class="params">()</span>:</span></span><br><span class="line">    x = np.arange(<span class="number">5</span>,<span class="number">13</span>)</span><br><span class="line">    X = x.reshape(<span class="number">4</span>, <span class="number">2</span>)</span><br><span class="line">    y = np.arange(<span class="number">15</span>, <span class="number">21</span>)</span><br><span class="line">    loo = model_selection.LeaveOneOut()</span><br><span class="line">    <span class="keyword">for</span> train_index,test_index <span class="keyword">in</span> loo.split(X):</span><br><span class="line">        print(<span class="string">"TRAIN INDEX:"</span>, train_index, <span class="string">"TEST INDEX:"</span>, test_index)</span><br><span class="line">        X_train, X_test = X[train_index], X[test_index]</span><br><span class="line">        <span class="comment"># y_train, y_test = y[train_index], y[test_index]</span></span><br><span class="line">        print(<span class="string">"TRAIN X:"</span>, X_train, <span class="string">"TEST X:"</span>, X_test)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>此外还有一种比较特殊的交叉验证方式，也是用于样本量少的时候。叫做<strong>自助法</strong>(bootstrapping)。比如我们有m个样本（m较小），每次在这m个样本中随机采集一个样本，放入训练集，采样完后把样本放回。这样重复采集m次，我们得到m个样本组成的训练集。当然，这m个样本中很有可能有重复的样本数据。同时，用没有被采样到的样本做测试集。这样接着进行交叉验证。由于我们的训练集有重复数据，这会改变数据的分布，因而训练结果会有估计偏差，因此，此种方法不是很常用，除非数据量真的很少，比如小于20个。</p>
+<h1 id="二-超参数调优"><a href="#二-超参数调优" class="headerlink" title="二: 超参数调优"></a>二: 超参数调优</h1><h2 id="1-网格搜索-Grid-Search-GS"><a href="#1-网格搜索-Grid-Search-GS" class="headerlink" title="1: 网格搜索(Grid Search, GS)"></a>1: 网格搜索(Grid Search, GS)</h2><p>在每种参数组合下计算在N折交叉验证的每一折中计算训练集和测试集上的得分。</p>
+<p>GridSearchCV(GridSearch和CV即网格搜索和交叉验证)可以保证在指定的参数范围内找到精度最高的参数，但是这也是网格搜索的缺陷所在，他要求遍历所有可能参数的组合，在面对大数据集和多参数的情况下，非常耗时。</p>
+<p>Grid Search：也叫穷举搜索, 在所有候选的参数选择中，通过循环遍历，尝试每一种可能性，表现最好的参数就是最终的结果。</p>
+<p>所以网格搜索适用于三四个（或者更少）的超参数（当超参数的数量增长时，网格搜索的计算复杂度会呈现指数增长，这时候则使用随机搜索）</p>
+<p><strong>示例代码:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line">param_grid = [</span><br><span class="line">&#123;<span class="string">'n_estimators'</span>: [<span class="number">3</span>, <span class="number">10</span>, <span class="number">30</span>], <span class="string">'max_features'</span>: [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]&#125;,</span><br><span class="line">&#123;<span class="string">'bootstrap'</span>: [<span class="literal">False</span>], <span class="string">'n_estimators'</span>: [<span class="number">3</span>, <span class="number">10</span>], <span class="string">'max_features'</span>: [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]&#125;,</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line">forest_reg = RandomForestRegressor()</span><br><span class="line">grid_search = GridSearchCV(forest_reg, param_grid, cv=<span class="number">5</span>,</span><br><span class="line">                          scoring=<span class="string">'neg_mean_squared_error'</span>)</span><br><span class="line"> </span><br><span class="line">grid_search.fit(housing_prepared, housing_labels)</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>参见:</p>
+<p><a href="https://www.cnblogs.com/wj-1314/p/10422159.html" target="_blank" rel="noopener">Python机器学习笔记：Grid SearchCV（网格搜索）</a></p>
+<p><a href="https://blog.csdn.net/AIjiankeji/article/details/103106630" target="_blank" rel="noopener">网格搜索（GridSearch）及参数说明，实例演示</a></p>
+</blockquote>
+<h2 id="2-随机搜索-Random-Search-RS"><a href="#2-随机搜索-Random-Search-RS" class="headerlink" title="2: 随机搜索(Random Search,RS)"></a>2: 随机搜索(Random Search,RS)</h2><p>当超参数个数比较多的时候再用网格搜索进行参数调优就会比较耗时, 这时我们可以使用<strong>随机搜索</strong>的方法，随机在超参数空间中搜索几十几百个点，其中就有可能有比较小的值。这种做法比上面稀疏化网格的做法快，而且实验证明，随机搜索法结果比稀疏网格法稍好。</p>
+<p><strong>随机搜索通过选择每一个超参数的一个随机值的特定数量的随机组合</strong></p>
+<ul>
+<li>如果你让随机搜索运行， 比如1000次，它会探索每个超参数的1000个不同的值（而不是像网格搜索那样，只搜索每个超参数的几个值）</li>
+<li>你可以方便的通过设定搜索次数，控制超参数搜索的计算量。</li>
+</ul>
+<p>代码示例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> xgboost <span class="keyword">as</span> xgb</span><br><span class="line"><span class="keyword">from</span> sklearn.grid_search <span class="keyword">import</span> RandomizedSearchCV</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#导入训练数据</span></span><br><span class="line">traindata = pd.read_csv(<span class="string">"/traindata.txt"</span>,sep = <span class="string">','</span>)</span><br><span class="line">traindata = traindata.set_index(<span class="string">'instance_id'</span>)</span><br><span class="line">trainlabel = traindata[<span class="string">'is_trade'</span>]</span><br><span class="line"><span class="keyword">del</span> traindata[<span class="string">'is_trade'</span>]</span><br><span class="line">print(traindata.shape,trainlabel.shape)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#分类器使用 xgboost</span></span><br><span class="line">clf1 = xgb.XGBClassifier()</span><br><span class="line">  </span><br><span class="line"><span class="comment">#设定搜索的xgboost参数搜索范围，值搜索XGBoost的主要6个参数</span></span><br><span class="line">param_dist = &#123;</span><br><span class="line">        <span class="string">'n_estimators'</span>:range(<span class="number">80</span>,<span class="number">200</span>,<span class="number">4</span>),</span><br><span class="line">        <span class="string">'max_depth'</span>:range(<span class="number">2</span>,<span class="number">15</span>,<span class="number">1</span>),</span><br><span class="line">        <span class="string">'learning_rate'</span>:np.linspace(<span class="number">0.01</span>,<span class="number">2</span>,<span class="number">20</span>),</span><br><span class="line">        <span class="string">'subsample'</span>:np.linspace(<span class="number">0.7</span>,<span class="number">0.9</span>,<span class="number">20</span>),</span><br><span class="line">        <span class="string">'colsample_bytree'</span>:np.linspace(<span class="number">0.5</span>,<span class="number">0.98</span>,<span class="number">10</span>),</span><br><span class="line">        <span class="string">'min_child_weight'</span>:range(<span class="number">1</span>,<span class="number">9</span>,<span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">#RandomizedSearchCV参数说明，clf1设置训练的学习器</span></span><br><span class="line"><span class="comment">#param_dist字典类型，放入参数搜索范围</span></span><br><span class="line"><span class="comment">#scoring = 'neg_log_loss'，精度评价方式设定为“neg_log_loss“</span></span><br><span class="line"><span class="comment">#n_iter=300，训练300次，数值越大，获得的参数精度越大，但是搜索时间越长</span></span><br><span class="line"><span class="comment">#n_jobs = -1，使用所有的CPU进行训练，默认为1，使用1个CPU</span></span><br><span class="line">grid = RandomizedSearchCV(clf1,param_dist,cv = <span class="number">3</span>,scoring = <span class="string">'neg_log_loss'</span>,n_iter=<span class="number">300</span>,n_jobs = <span class="number">-1</span>)</span><br><span class="line">  </span><br><span class="line"><span class="comment">#在训练集上训练</span></span><br><span class="line">grid.fit(traindata.values,np.ravel(trainlabel.values))</span><br><span class="line"><span class="comment">#返回最优的训练器</span></span><br><span class="line">best_estimator = grid.best_estimator_</span><br><span class="line">print(best_estimator)</span><br><span class="line"><span class="comment">#输出最优训练器的精度</span></span><br><span class="line">print(grid.best_score_)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p><strong>网格搜索&amp;随机搜索</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">news = fetch_20newsgroups(subset=<span class="string">'all'</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment">#取前3000条新闻文本进行数据分割</span></span><br><span class="line">X_train,X_test,y_train,y_test=train_test_split(news.data[:<span class="number">3000</span>],</span><br><span class="line">                                            news.target[:<span class="number">3000</span>],test_size=<span class="number">0.25</span>,random_state=<span class="number">33</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"><span class="comment">#*************导入pipeline*************</span></span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="comment">#使用Pipeline简化系统搭建流程，sklean提供的pipeline来将多个学习器组成流水线，通常流水线的形式为：</span></span><br><span class="line"><span class="comment">#将数据标准化的学习器---特征提取的学习器---执行预测的学习器</span></span><br><span class="line"><span class="comment">#将文本特征与分类器模型串联起来,[(),()]里有两个参数</span></span><br><span class="line"><span class="comment">#参数1:执行 vect = TfidfVectorizer(stop_words='english',analyzer='word')操作</span></span><br><span class="line"><span class="comment">#参数2:执行 svc = SVC()操作</span></span><br><span class="line">clf = Pipeline([(<span class="string">'vect'</span>,TfidfVectorizer(stop_words=<span class="string">'english'</span>,analyzer=<span class="string">'word'</span>)),(<span class="string">'svc'</span>,SVC())])</span><br><span class="line"> </span><br><span class="line"><span class="comment">#这里需要试验的2个超参数svc_gamma和svc_C的元素个数分别为4、3,这样我们一共有12种超参数对集合</span></span><br><span class="line"><span class="comment">#numpy.linspace用于创建等差数列，numpy.logspace用于创建等比数列</span></span><br><span class="line"><span class="comment">#logspace中，开始点和结束点是10的幂</span></span><br><span class="line"><span class="comment">#例如logspace(-2,1,4)表示起始数字为10^-2，结尾数字为10^1即10，元素个数为4的等比数列</span></span><br><span class="line"><span class="comment">#parameters变量里面的key都有一个前缀,这个前缀其实就是在Pipeline中定义的操作名。二者相结合，使我们的代码变得十分简洁。</span></span><br><span class="line"><span class="comment">#还有注意的是，这里对参数名是&lt;两条&gt;下划线 __</span></span><br><span class="line">parameters = &#123;<span class="string">'svc__gamma'</span>:np.logspace(<span class="number">-2</span>,<span class="number">1</span>,<span class="number">4</span>),<span class="string">'svc__C'</span>:np.logspace(<span class="number">-1</span>,<span class="number">1</span>,<span class="number">3</span>)&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">#从sklearn.grid_search中导入网格搜索模块GridSearchCV</span></span><br><span class="line"><span class="keyword">from</span> sklearn.grid_search <span class="keyword">import</span> GridSearchCV</span><br><span class="line"><span class="comment">#GridSearchCV参数解释:</span></span><br><span class="line"><span class="comment">#1.estimator : estimator(评估) object.</span></span><br><span class="line"><span class="comment">#2.param_grid : dict or list of dictionaries</span></span><br><span class="line"><span class="comment">#3.verbose:Controls the verbosity(冗余度): the higher, the more messages.</span></span><br><span class="line"><span class="comment">#4.refit:default=True, Refit(再次拟合)the best estimator with the entire dataset</span></span><br><span class="line"><span class="comment">#5.cv : int, cross-validation generator 此处表示3折交叉验证</span></span><br><span class="line">gs = GridSearchCV(clf,parameters,verbose=<span class="number">2</span>,refit=<span class="literal">True</span>,cv=<span class="number">3</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#执行单线程网格搜索</span></span><br><span class="line">gs.fit(X_train,y_train)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> gs.best_params_,gs.best_score_</span><br><span class="line"> </span><br><span class="line"><span class="comment">#最后输出最佳模型在测试集上的准确性</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'the accuracy of best model in test set is'</span>,gs.score(X_test,y_test)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#小结：</span></span><br><span class="line"><span class="comment">#1.由输出结果可知，使用单线程的网格搜索技术 对朴素贝叶斯模型在文本分类任务中的超参数组合进行调优，</span></span><br><span class="line"><span class="comment">#  共有12组超参数组合*3折交叉验证 =36项独立运行的计算任务</span></span><br><span class="line"><span class="comment">#2.在本机上，该过程一共运行了2.9min，寻找到最佳的超参数组合在测试集上达到的分类准确性为82.27%</span></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>参见:</p>
+<p><a href="https://www.cnblogs.com/wj-1314/p/10422159.html" target="_blank" rel="noopener">Python机器学习笔记：Grid SearchCV（网格搜索）</a></p>
+</blockquote>
+<h2 id="3-贝叶斯优化-Bayesian-Optimization-BO"><a href="#3-贝叶斯优化-Bayesian-Optimization-BO" class="headerlink" title="3: 贝叶斯优化(Bayesian Optimization,BO)"></a>3: 贝叶斯优化(Bayesian Optimization,BO)</h2><blockquote>
+<p>参见:</p>
+<p><a href="https://blog.csdn.net/u010159842/article/details/83030571" target="_blank" rel="noopener">贝叶斯优化: 一种更好的超参数调优方式</a></p>
+<p><a href="https://www.cnblogs.com/yangruiGB2312/p/9374377.html" target="_blank" rel="noopener">强大而精致的机器学习调参方法：贝叶斯优化</a></p>
+</blockquote>
+<h1 id="三-模型评估"><a href="#三-模型评估" class="headerlink" title="三: 模型评估"></a>三: 模型评估</h1><blockquote>
+<p>以下内容整理自:</p>
+<p><a href="https://blog.csdn.net/qq_39751437/article/details/86258163" target="_blank" rel="noopener">机器学习的模型评估(使用sklearn工具)</a></p>
+</blockquote>
+<h2 id="1-分类模型评估方法"><a href="#1-分类模型评估方法" class="headerlink" title="1: 分类模型评估方法"></a>1: 分类模型评估方法</h2><h3 id="1-混淆矩阵-confusion-matrix"><a href="#1-混淆矩阵-confusion-matrix" class="headerlink" title="(1): 混淆矩阵(confusion_matrix)"></a>(1): 混淆矩阵(confusion_matrix)</h3><p>如果我们用的是个二分类的模型，那么把预测情况与实际情况的所有结果两两混合，结果就会出现以下4种情况，就组成了混淆矩阵。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5njivqgyj20e707gjrr.jpg" alt="混淆矩阵.png" style="zoom:67%;" />
+
+<p>由于1和0是数字，阅读性不好，所以我们分别用P和N表示1和0两种结果。变换之后为PP，PN，NP，NN，阅读性也很差，我并不能轻易地看出来预测的正确性与否。因此，为了能够更清楚地分辨各种预测情况是否正确，我们将其中一个符号修改为T和F，以便于分辨出结果。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5njtdtibj20hn07ldg8.jpg" alt="混淆矩阵2.png" style="zoom:67%;" />
+
+
+
+<p>P(Positive):代表1</p>
+<p>N(Negative):代表0</p>
+<p>T(True):代表预测正确</p>
+<p>F(False):代表错误</p>
+<p>11为TP，10为FP，01为FN，00为TN。</p>
+<p>代码示例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sklearn.metrics.confusion_matrix(y_true, y_pred, labels=<span class="literal">None</span>, sample_weight=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="2-召回率-recall-score"><a href="#2-召回率-recall-score" class="headerlink" title="(2): 召回率(recall_score)"></a>(2): 召回率(recall_score)</h3><p>（召回率针对原样本，含义是预测正确的样本数占实际为正样本的百分比），分母为实际为正的样本数。<br>$$<br>R = \frac{TP}{TP+FN}<br>$$<br>代码实现:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recall_score=recall_score(y_true, y_pred,labels=<span class="literal">None</span>,pos_label=<span class="number">1</span>,average=<span class="string">'binary'</span>, sample_weight=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="3-精确率"><a href="#3-精确率" class="headerlink" title="(3): 精确率"></a>(3): 精确率</h3><p>它是针对预测结果而言的，它的含义是预测正确的样本数占预测为正样本的百分比，意思就是在预测为正样本的结果中，我们有多少把握可以预测正确，即预测的有多少个为正样本。分母为预测为正的样本数</p>
+<p>精确率代表对正样本结果中的预测准确程度，而准确率则代表整体的预测准确程度，既包括正样本，也包括负样本，和样本比例有很大关系。<br>$$<br>P = \frac{TP}{TP+FP}<br>$$</p>
+<p>代码示例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">precision_score=precision_score(y_true, y_pred[, labels, …])</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="4-准确率-accuracy-score"><a href="#4-准确率-accuracy-score" class="headerlink" title="(4): 准确率(accuracy_score)"></a>(4): 准确率(accuracy_score)</h3><p>准确率是指预测正确的样本数占总样本百分比<br>$$<br>accuracy = \frac{TP+FN}{TP+TN+FP+FN}<br>$$</p>
+<p>准确率是分类问题中最简单也是最直观的评价指标， 但存在明显的缺陷。 比如， 当负样本占99%时， 分类器把所有样本都预测为负样本也可以获得99%的准确率。 所以， <strong>当不同类别的样本比例非常不均衡时， 占比大的类别往往成为影响准确率的最主要因素</strong></p>
+<p>代码示例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">accuracy_score=accuracy_score(y_true, y_pred, normalize=<span class="literal">True</span>, sample_weight=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="5-F1-score"><a href="#5-F1-score" class="headerlink" title="(5): F1-score"></a>(5): F1-score</h3><p>F1-score是精准率和召回率二者的评估，F1分数同时考虑了精准率和召回率，让二者同时达到最高，取一个平衡。F1分数的公式为 = 2<em>精准率</em>召回率 / (精准率 +召回率)。<br>$$<br>\frac{2}{F} = \frac{1}{P}+\frac{1}{R}<br>$$<br>代码示例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f1_score=f1_score(y_true, y_pred)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-classification-report函数"><a href="#6-classification-report函数" class="headerlink" title="(6): classification_report函数"></a>(6): classification_report函数</h3><p>classification_report函数会输出包含召回率，精确率，F1值的表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line">y_true = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>]</span><br><span class="line">y_pred = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">target_names = [<span class="string">'class 0'</span>, <span class="string">'class 1'</span>, <span class="string">'class 2'</span>]</span><br><span class="line">print(classification_report(y_true, y_pred, target_names=target_names))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-P-R曲线"><a href="#7-P-R曲线" class="headerlink" title="(7): P-R曲线"></a>(7): P-R曲线</h3><p>P-R曲线综合考虑了精确率和召回率，P-R曲线的横轴是召回率， 纵轴是精确率。 对于一个排序模型来说， 其P-R曲线上的一个点代表着， 在某一阈值下， 模型将大于该阈值的结果判定为正样本，小于该阈值的结果判定为负样本， 此时返回结果对应的召回率和精确率。整条P-R曲线是通过将阈值从高到低移动而生成的。</p>
+<h2 id="2-回归算法的评估方法"><a href="#2-回归算法的评估方法" class="headerlink" title="2: 回归算法的评估方法"></a>2: 回归算法的评估方法</h2><h3 id="（1）平均绝对百分比误差MAPE与均方根误差RMSE"><a href="#（1）平均绝对百分比误差MAPE与均方根误差RMSE" class="headerlink" title="（1）平均绝对百分比误差MAPE与均方根误差RMSE"></a>（1）平均绝对百分比误差MAPE与均方根误差RMSE</h3><p>RMSE经常被用来衡量<strong>回归模型</strong>的好坏，一般情况下， RMSE能够很好地反映回归模型预测值与真实值的偏离程度。 但在实际问题中， 如果存在个别偏离程度非常大的<strong>离群点</strong> 时， 即使离群点数量非常少， 也会让RMSE指标变得很差。<br>$$<br>RMSE=\sqrt{\frac{\sum\limits_{i=1}^n (y_i-\hat y_i)^2}{n}}<br>$$<br><strong>存在离群点解决办法：</strong></p>
+<ul>
+<li>第一， 如果我们认定这些离群点是“噪声点”的话， 就需要在数据预处理的阶段把这些噪声点过滤掉。</li>
+<li>第二， 如果不认为这些离群点是“噪声点”的话， 就需要进一步提高模型的<br>预测能力， 将离群点产生的机制建模进去。</li>
+<li>第三， 可以找一个更合适的指标来评估该模型, 比如平均绝对百分比误差MAPE。</li>
+<li></li>
+</ul>
+<p>$$<br>MAPE = \sum_{i=1}^n |\frac{y_i-\hat y_i}{y_i}| \times \frac{100}{n}<br>$$</p>
+<p>相比RMSE， MAPE相当于把每个点的误差进行了归一化， 降低了个别离群点带来的绝对误差的影响。</p>
+<h2 id="3-ROC和AUC曲线"><a href="#3-ROC和AUC曲线" class="headerlink" title="3: ROC和AUC曲线"></a>3: ROC和AUC曲线</h2><h3 id="1-TPR和FPR"><a href="#1-TPR和FPR" class="headerlink" title="(1): TPR和FPR"></a>(1): TPR和FPR</h3><p>TPR和FPR都主要关注正样本</p>
+<p><strong>真正率FPR为有多少负样本被错误预测为正样本</strong></p>
+<p><strong>假正率TPR为有多少正样本被正确预测为正样本</strong></p>
+<p>ROC曲线的横坐标为假阳性率（False Positive Rate，FPR）；纵坐标为真阳性率（True Positive Rate，TPR）。FPR和TPR的计算方法分别为<br>$$<br>FPR = \frac{FP}{N}\<br>TPR = \frac{TP}{P}<br>$$<br>其中P是真实的正样本的数量，N是真实的负样本的数量，TP是P个正样本中被分类器预测为正样本的个数，FP是N个负样本中被分类器预测为正样本的个数</p>
+<h3 id="2-ROC曲线"><a href="#2-ROC曲线" class="headerlink" title="(2): ROC曲线"></a>(2): ROC曲线</h3><p>ROC曲线中的主要两个指标就是真正率和假正率，其中横坐标为真正率（FPR），纵坐标为假正率（TPR）<br>ROC曲线也是通过遍历所有阈值来绘制整条曲线的，改变阈值只是不断地改变预测的正负样本数，曲线是不会变的。</p>
+<p>FPR表示模型虚报的响应程度，而TPR表示模型预测响应的覆盖程度。</p>
+<p>使用ROC曲线评估分类模型是非常通用的手段，但是，使用它的时候要注意两点：</p>
+<ul>
+<li><p>（1）分类的类型，必须为数值型。</p>
+</li>
+<li><p>（2） 且只针对二分类问题。</p>
+</li>
+</ul>
+<p><strong>二分类的时候，可以利用roc_curve计算fpr,tpr,和阈值thresholds;，并画出roc曲线，利用roc_auc_score计算auc的值</strong></p>
+<p><strong>曲线绘制代码:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fpr,tpr,thresholds=roc_curve(y_test,y_pred, pos_label=<span class="literal">None</span>, sample_weight=<span class="literal">None</span>, drop_intermediate=<span class="literal">True</span>)</span><br><span class="line"><span class="keyword">print</span> (tpr,fpr,thresholds)</span><br><span class="line">roc_auc = auc(fpr, tpr)<span class="comment">#计录auc的值，在（0,1）之间</span></span><br><span class="line">plt.plot(fpr, tpr, lw=<span class="number">1</span>, label=<span class="string">'ROC(area = %0.2f)'</span> % (roc_auc))</span><br><span class="line">plt.xlabel(<span class="string">"FPR (False Positive Rate)"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"TPR (True Positive Rate)"</span>)</span><br><span class="line">plt.title(<span class="string">"Receiver Operating Characteristic, ROC(AUC = %0.2f)"</span>% (roc_auc))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>优点:</strong> </p>
+<p>(1)ROC曲线能很容易的查出任意阈值对学习器的泛化性能影响。</p>
+<p>(2)有助于选择最佳的阈值。ROC曲线越靠近左上角，模型的查全率就越高。最靠近左上角的ROC曲线上的点是分类错误最少的最好阈值，其假正例和假反例总数最少。</p>
+<p>(3)可以对不同的学习器比较性能。将各个学习器的ROC曲线绘制到同一坐标中，直观地鉴别优劣，靠近左上角的ROC曲所代表的学习器准确性最高</p>
+<h3 id="3-使用AUC面积值来判断ROC曲线好坏"><a href="#3-使用AUC面积值来判断ROC曲线好坏" class="headerlink" title="(3): 使用AUC面积值来判断ROC曲线好坏"></a>(3): 使用AUC面积值来判断ROC曲线好坏</h3><p><strong>AUC面积的一般判断标准，面积在0到1之间，AUC越高，模型区分能力越好</strong></p>
+<p>0.5 - 0.7：效果较低，但用于预测股票已经很不错了</p>
+<p>0.7 - 0.85：效果一般</p>
+<p>0.85 - 0.95：效果很好</p>
+<p>0.95 - 1：效果非常好，但一般不太可能</p>
+<p><strong>AUC两种计算方法</strong></p>
+<p>(1)<strong>roc_auc_score</strong>: 根据预测值和真实值确定AUC的值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">y = np.array([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line">scores = np.array([<span class="number">0.1</span>, <span class="number">0.4</span>, <span class="number">0.35</span>, <span class="number">0.8</span>])</span><br><span class="line">AUC=roc_auc_score(y_true, y_pred)</span><br><span class="line"><span class="keyword">print</span> (AUC)</span><br></pre></td></tr></table></figure>
+
+<p>(2)<strong>roc_curve（二分类有效）</strong>: 根据曲线上的值确定AUC的值</p>
+<p>roc_curve返回这三个变量：fpr,tpr,和阈值thresholds;</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">y = np.<span class="built_in">array</span>([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line">scores = np.<span class="built_in">array</span>([<span class="number">0.1</span>, <span class="number">0.4</span>, <span class="number">0.35</span>, <span class="number">0.8</span>])</span><br><span class="line">fpr, tpr, thresholds = roc_curve(y, scores, pos_label=<span class="number">2</span>)</span><br><span class="line">print (fpr,tpr,thresholds)</span><br><span class="line">print (auc(fpr, tpr))</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="4-P-R曲线和ROC曲线区别"><a href="#4-P-R曲线和ROC曲线区别" class="headerlink" title="(4): P-R曲线和ROC曲线区别"></a>(4): P-R曲线和ROC曲线区别</h3><p>ROC曲线有一个特点， 当正负样本的分布发生变化时， ROC曲线的形状能够基本保持不变， 而P-R曲线的形状一般会发生较剧烈的变化。</p>
+<p>ROC曲线也是通过遍历所有阈值来绘制整条曲线的，改变阈值只是不断地改变预测的正负样本数，曲线是不会变的，这让ROC曲线能够尽量降低不同测试集带来的干扰， 更加客观地衡量模型本身的性能，实际场景中样本一般不均衡，所以ROC曲线更加稳定。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2019/08/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/">模型选择</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/">▼ 模型选择</a>
+                    
+                        <a href="/tags/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/">▼ 模型评估</a>
+                    
+                        <a href="/tags/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81/">▼ 交叉验证</a>
+                    
+                        <a href="/tags/%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/">▼ 参数调优</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2019/12/20/%E5%90%8E%E7%AB%AF/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">上一篇：Linux定时任务</a>
+            
+            
+            <a class="next" rel="next" href="/2019/08/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">下一篇：朴素贝叶斯</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

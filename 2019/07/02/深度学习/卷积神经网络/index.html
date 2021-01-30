@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>卷积神经网络 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        
+		src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">卷积神经网络</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2019-07-02</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;深度学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><strong>本文整理自:</strong></p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/27642620" target="_blank" rel="noopener">YJango的卷积神经网络——介绍</a></li>
+<li><a href="https://www.jianshu.com/p/c0215d26d20a" target="_blank" rel="noopener">从此明白了卷积神经网络（CNN）</a></li>
+</ul>
+<h1 id="一-卷积神经网络的结构组成"><a href="#一-卷积神经网络的结构组成" class="headerlink" title="一: 卷积神经网络的结构组成"></a>一: 卷积神经网络的结构组成</h1><p><strong>1. Convolutional layer（卷积层–CONV）</strong><br> 由滤波器filters和激活函数构成。<br> 一般要设置的超参数包括filters的数量、大小、步长，以及padding是“valid”还是“same”。当然，还包括选择什么激活函数。</p>
+<p><strong>2. Pooling layer （池化层–POOL）</strong><br> 这里里面没有参数需要我们学习，因为这里里面的参数都是我们设置好了，要么是Maxpooling，要么是Averagepooling。<br> 需要指定的超参数，包括是Max还是average，窗口大小以及步长。<br> 通常，我们使用的比较多的是Maxpooling,而且一般取大小为(2,2)步长为2的filter，这样，经过pooling之后，输入的长宽都会缩小2倍，channels不变。</p>
+<p><strong>3. Fully Connected layer（全连接层–FC）</strong><br> 这个前面没有讲，是因为这个就是我们最熟悉的家伙，<strong>就是我们之前学的神经网络中的那种最普通的层，就是一排神经元</strong>。因为这一层是每一个单元都和前一层的每一个单元相连接，所以称之为“全连接”。<br> 这里要指定的超参数，无非就是神经元的数量，以及激活函数。</p>
+<p>在上面的三个步骤中卷积层和池化层可以叠加多次</p>
+<p>在经过数次卷积和池化之后，我们 <strong>最后会先将多维的数据进行“扁平化”，</strong>也就是把 <strong>(height,width,channel)</strong>的数据压缩成长度为 <strong>height × width × channel</strong> 的一维数组，然后再与 <strong>FC层</strong>连接，<strong>这之后就跟普通的神经网络无异了</strong>。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5ou4t76zj20m80903yx.jpg" alt="CNN.png" style="zoom:67%;" />
+
+
+
+
+
+<br>
+
+
+
+<h1 id="二-卷积层"><a href="#二-卷积层" class="headerlink" title="二: 卷积层"></a>二: 卷积层</h1><p>在计算机中, 图片是由像素组成, 而每个像素由RGB三种颜色代表得数值表达, </p>
+<p>我们可以想象一张图片是数字构成的“长方体”。可用 宽width, 高height, 深depth 来描述，如图。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5ouemhayj208h070jr9.jpg" alt="图片结构.png" style="zoom:67%;" />
+
+<p>RGB中得每个颜色的数值都可以单独写成一个矩阵的表达形式</p>
+<h2 id="1-kernel-卷积核"><a href="#1-kernel-卷积核" class="headerlink" title="1: kernel(卷积核)"></a>1: <strong>kernel</strong>(卷积核)</h2><p>接下来我们将以单层的<strong>‘矩阵’</strong>为例进行讲解</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5our9oeug20go0c3wgl.jpg" alt="卷积层.png" style="zoom:67%;" />
+
+<p>如上图所示, 图中灰色的3x3的区域我们称之为<strong>filter</strong>(滤波器), 也叫<strong>kernel</strong>(卷积核), 我们用这个filter，往我们的第一层矩阵上“盖”，覆盖一块跟filter一样大的区域之后，对应元素相乘，然后求和。计算一个区域之后，就向其他区域挪动，接着计算，直到把原图片的每一个角落都覆盖到了为止。这个过程就是 <strong>“卷积”</strong>。</p>
+<p><strong>来一个更直观的:</strong> </p>
+<p>卷积核是一个小矩阵, 下图中每个格子的右下角红色的就是卷积矩阵, 与对应位置的值相乘求和之后会得到卷积后的结果<strong>convolved feature</strong> 或 <strong>Feature Map</strong></p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5ov0qaudg20em0aot9j.jpg" alt="卷积层2.png" style="zoom:67%;" />
+
+
+
+<p><strong><font color=red>需要注意的是:  卷积核相当于卷积运算的权重, 而卷积核扫描过的所有位置计算输出节点时使用的都是相同的卷积核, 也就是相同的权重, 这就是卷积神经网络的空间共享</font></strong></p>
+<p>我们知道了1层像素矩阵怎么处理了, 但我们的图片一般都是由RBG组成的撒能矩阵, </p>
+<p>在2D卷积中，filter在张量的width维, height维上是局部连接，在depth维上是贯串全部channels的。</p>
+<p>想象在切蛋糕的时候，不管这个蛋糕有多少层，通常大家都会一刀切到底，但是在长和宽这两个维上是局部切割。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5p6n1k74j20920cnt8r.jpg" alt="多层 - 副本2.png" style="zoom: 50%;" />
+
+<ul>
+<li>在输入depth为1时：被filter size为2x2所圈中的4个输入节点连接到1个输出节点上。</li>
+<li>在输入depth为3时：被filter size为2x2，但是贯串3个channels后，所圈中的12个输入节点连接到1个输出节点上。</li>
+</ul>
+<p><strong><font color=red>注意:  虽然多层会累积到一个点, 但是每层的卷积矩阵并不共用, 每一层RGB矩阵都有自己的卷积核</font></strong></p>
+<p>此时的运算规则是:   将每层的结果求解出来再求和, 然后输出为一个数</p>
+<h2 id="2-Zero-padding"><a href="#2-Zero-padding" class="headerlink" title="2: Zero padding"></a>2: Zero padding</h2><p>若按照以上的方式进行计算, 每次卷积之后我们的图像就会变小, 如果次数多一点, 那我们的凸显都被卷没了, 另外, 这样有个缺点就是图像边缘的像素点很少被计算, 容易造成信息丢失</p>
+<p>而padding就可以很好的解决这个问题, </p>
+<p>具体方法就是, 在原图片的周围先填充一圈空白像素, 这样我们在卷积之后得到的Feature Map尺寸依然和原尺寸一样</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5p2qhu1sj20hs0e4jrm.jpg" alt="Zero padding.png" style="zoom:67%;" />
+
+
+
+<p>通常大家都想要在卷积时保持图片的原始尺寸。 选择3x3的filter和1的zero padding，或5x5的filter和2的zero padding可以保持图片的原始尺寸。 这也是为什么大家多选择3x3和5x5的filter的原因。 另一个原因是3x3的filter考虑到了像素与其距离为1以内的所有其他像素的关系，而5x5则是考虑像素与其距离为2以内的所有其他像素的关系。</p>
+<h2 id="3-多个卷积核"><a href="#3-多个卷积核" class="headerlink" title="3: 多个卷积核"></a>3: 多个卷积核</h2><p>每个filter可以抓取探测特定的形状的存在</p>
+<p>因此我们自然而然的会选择用多个不同的filters对同一个图片进行多次抓取</p>
+<p>这样卷积层的输出也不再是depth为1的一个平面，而是和输入一样是depth为复数的长方体。</p>
+<p>如下图所示，当我们增加一个filter（紫色表示）后，就又可以得到一个Feature Map。 将不同filters所卷积得到的Feature Maps按顺序堆叠后，就得到了一个卷积层的最终输出。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5p9papzbj20go089tda.jpg" alt="多层输出.png" style="zoom:67%;" />
+
+
+
+<p>这样卷积后输出的长方体可以作为新的输入送入另一个卷积层中处理。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5pa2yru7j20xc0irt90.jpg" alt="多个卷积核.png" style="zoom: 50%;" />
+
+
+
+
+
+
+
+<h2 id="4-激活函数"><a href="#4-激活函数" class="headerlink" title="4: 激活函数"></a>4: 激活函数</h2><p>经过线性组合和偏移后，会加入非线性增强模型的拟合能力。</p>
+<br>
+
+
+
+
+
+<h1 id="三-池化层"><a href="#三-池化层" class="headerlink" title="三: 池化层"></a>三: 池化层</h1><p>常见的池化方法: average pooling 和 max pooling</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5pacyacuj20dw09w3yp.jpg" alt="池化.png" style="zoom:50%;" />
+
+<p>顾名思义max pooling就是取该区域内的最大值, average pooling就是取该区域内的平均值</p>
+<p><strong>max pooling在不同的depth上是分开执行的，且不需要参数控制。</strong></p>
+<p>Max pooling的主要功能是<strong>降采样(downsamping)</strong>，却不会损坏识别结果。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5pajyrpij20ro083aae.jpg" alt="池化2.png" style="zoom:50%;" />
+
+
+
+
+
+<br>
+
+
+
+<h1 id="四-全连接层"><a href="#四-全连接层" class="headerlink" title="四: 全连接层"></a>四: 全连接层</h1><p>全连接层（也叫前馈层）, 通常卷积网络的最后会将末端得到的长方体平摊(flatten)成一个长长的向量，并送入全连接层配合输出层进行分类。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5pat7somj20et07bt8z.jpg" alt="全连接层.png" style="zoom:67%;" />
+
+
+
+
+
+
+
+<p><strong>卷积神经网络结构图</strong></p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5pb0j7ldj21ji0s278p.jpg" alt="卷积神经网络.png" style="zoom:67%;" />
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2019/07/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">卷积神经网络</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">▼ 深度学习</a>
+                    
+                        <a href="/tags/CNN/">▼ CNN</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2019/08/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">上一篇：朴素贝叶斯</a>
+            
+            
+            <a class="next" rel="next" href="/2019/07/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">下一篇：循环神经网络</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>

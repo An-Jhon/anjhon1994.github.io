@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Anjhon">
+
+
+    <meta name="subtitle" content="小安">
+
+
+    <meta name="description" content="佛系分享">
+
+
+
+<title>特征工程 | Anjhon</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        
+		src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+<body>
+
+	
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Anjhon</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Anjhon</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">博文</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">下到底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "折叠起来"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">特征工程</h1>
+            
+                <div class="post-meta">
+                    <br>
+                    
+                        作者: <a itemprop="author" rel="author" href="/">&nbsp;&nbsp;Anjhon</a>
+                    
+
+                    
+                        <p class="post-time">
+                        发表: <a href="#">&nbsp;&nbsp;2019-07-02</a>
+                        </p>
+                    
+                    
+                        <p class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">&nbsp;&nbsp;机器学习</a>
+                            
+                            </p>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><strong>对于一个机器学习问题，数据和特征往往决定了结果的上限，而模型、算法的选择及优化则是在逐步接近这个上限。</strong></p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n26elowj20ob0qvq5i.jpg" alt="特征工程.jpg" style="zoom: 67%;" />
+
+
+
+<p><strong>特征工程是利用数据领域的相关知识来创建能够使机器学习算法达到最佳性能的特征的过程。</strong> </p>
+<h1 id="特征工程的重要性"><a href="#特征工程的重要性" class="headerlink" title="特征工程的重要性:"></a>特征工程的重要性:</h1><p><strong>（1）特征越好，灵活性越强</strong></p>
+<p>好特征的灵活性在于它允许你选择不复杂的模型，同时运行速度也更快，也更容易理解和维护。</p>
+<p><strong>（2）特征越好，构建的模型越简单</strong></p>
+<p>有了好的特征，即便你的参数不是最优的，你的模型性能也能仍然会表现的很nice</p>
+<p><strong>（3）特征越好，模型的性能越出色</strong></p>
+<p>我们进行特征工程的最终目的就是提升模型的性能。</p>
+<br>
+
+
+
+
+
+<h1 id="一-数据预处理"><a href="#一-数据预处理" class="headerlink" title="一: 数据预处理"></a>一: 数据预处理</h1><h2 id="1-数值型数据—特征归一化-无量纲化"><a href="#1-数值型数据—特征归一化-无量纲化" class="headerlink" title="1: 数值型数据—特征归一化(无量纲化)"></a>1: 数值型数据—特征归一化(无量纲化)</h2><p>为了消除数据特征之间的量纲影响，我们需要对特征进行归一化处理，使得不同指标之间具有可比性; 对数值类型的特征做归一化可以将所有的特征都统一到一个大致相同的数值区间内.</p>
+<p>例如，分析一个人的身高和体重对健康的影响，如果使用米（m）和千克（kg）作为单位，那么身高特征会在1.6～1.8m的数值范围内，体重特征会在50～100kg的范围内，分析出来的结果显然会倾向于数值差别比较大的体重特征。想要得到更为准确的结果，就需要进行特征归一化（Normalization）处理，使各指标处于同一数值量级，以便进行分析。</p>
+<h3 id="1-线性函数归一化-0-1标准化"><a href="#1-线性函数归一化-0-1标准化" class="headerlink" title="1): 线性函数归一化(0-1标准化)"></a>1): 线性函数归一化(0-1标准化)</h3><p><strong>公式如下:</strong><br>$$<br>X_{norm} = \frac{X - X_{min}}{X_{max}-X_{min}}<br>$$<br>它对原始数据进行线性变换，使结果映射到[0, 1]的范围，实现对原始数据的等比缩放。</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line"></span><br><span class="line"><span class="comment">#区间缩放，返回值为缩放到[0, 1]区间的数据</span></span><br><span class="line">MinMaxScaler().fit_transform(iris.data)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-零-均值标准化"><a href="#2-零-均值标准化" class="headerlink" title="2): 零 - 均值标准化"></a>2): 零 - 均值标准化</h3><p><strong>公式如下:</strong><br>$$<br>Z = \frac{x-\mu}{\sigma}<br>$$<br>它会将原始数据映射到均值为0、标准差为1的分布上。具体来说，假设原始特征的均值为μ、标准差为σ，那么归一化公式定义为上式</p>
+<p><strong>代码实现</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"> </span><br><span class="line"><span class="comment">#标准化，返回值为标准化后的数据</span></span><br><span class="line">StandardScaler().fit_transform(iris.data)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="3-Normalizer归一化-L1-L2范数标准化"><a href="#3-Normalizer归一化-L1-L2范数标准化" class="headerlink" title="3): Normalizer归一化(L1/L2范数标准化)"></a>3): Normalizer归一化(L1/L2范数标准化)</h3><p><strong>公式如下:</strong><br>$$<br>x^{‘}= \frac{x}{\sqrt{\sum_j^mx_j^2}}<br>$$<br>x表示当前特征, $x_j$ 表示x的第J个特征</p>
+<p>L1/L2范数标准化：如果我们只是为了统一量纲，那么通过L2范数整体标准化也是可以的，具体方法是求出每个样本特征向量$\vec x$的L2范数$||\vec x||_2$，然后用$\vec x/||\vec x||_2$。代替原样本特征即可。当然L1范数标准化也是可以的，即用$\vec x/||\vec x||_1$，代替原样本特征。通常情况下，范数标准化首选L2范数标准化。在sklearn中，我们可以用Normalizer来做L1/L2范数标准化。</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Normalizer</span><br><span class="line"></span><br><span class="line"><span class="comment">#归一化，返回值为归一化后的数据</span></span><br><span class="line">Normalizer().fit_transform(iris.data)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="2-类别型数据—离散数据-虚拟变量-哑变量"><a href="#2-类别型数据—离散数据-虚拟变量-哑变量" class="headerlink" title="2: 类别型数据—离散数据, 虚拟变量, 哑变量"></a>2: 类别型数据—离散数据, 虚拟变量, 哑变量</h2><p>类别型特征（Categorical Feature）主要是指性别（男、女）、血型（A、B、AB、O）等只在有限选项内取值的特征。类别型特征原始输入通常是字符串形式，除了决策树等少数模型能直接处理字符串形式的输入，对于逻辑回归、支持向量机等模型来说，类别型特征必须经过处理转换成数值型特征才能正确工作。</p>
+<h3 id="1-独热编码-one-hot"><a href="#1-独热编码-one-hot" class="headerlink" title="1): 独热编码(one-hot)"></a>1): 独热编码(one-hot)</h3><p><strong>独热编码通常用于处理类别间不具有大小关系的特征。</strong></p>
+<p>例如血型，一共有4个取值（A型血、B型血、AB型血、O型血），独热编码会把血型变成一个4维稀疏向量，A型血表示为（1, 0, 0, 0），B型血表示为（0, 1, 0, 0），AB型表示为（0, 0,1, 0），O型血表示为（0, 0, 0, 1）。</p>
+<p><strong>理解独热编码:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = [[<span class="string">'自有房'</span>,<span class="number">40</span>,<span class="number">50000</span>],</span><br><span class="line">       [<span class="string">'无自有房'</span>,<span class="number">22</span>,<span class="number">13000</span>],</span><br><span class="line">       [<span class="string">'自有房'</span>,<span class="number">30</span>,<span class="number">30000</span>]]</span><br></pre></td></tr></table></figure>
+
+<p>编码后的样本矩阵变为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = [[<span class="number">1</span>,<span class="number">0</span>,<span class="number">40</span>,<span class="number">50000</span>],</span><br><span class="line">        [<span class="number">0</span>,<span class="number">1</span>,<span class="number">22</span>,<span class="number">13000</span>],</span><br><span class="line">        [<span class="number">1</span>,<span class="number">0</span>,<span class="number">30</span>,<span class="number">30000</span>]]</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，<strong>一个属性如果有N个可取值，它就可以扩充为N个属性，每个样本的这N个属性中，只能有一个为1，表示该样本的该属性属于这个类别，其余扩展属性都为0。</strong></p>
+<p>对于类别取值较多的情况下使用独热编码需要注意以下问题。</p>
+<p>（1）使用稀疏向量来节省空间。</p>
+<p>在独热编码下，特征向量只有某一维取值为1，其他位置取值均为0。因此可以利用向量的稀疏表示有效地节省空间，并且目前大部分的算法均接受稀疏向量形式的输入。</p>
+<p>（2）配合特征选择来降低维度。</p>
+<p>高维度特征会带来几方面的问题。一是在K近邻算法中，高维空间下两点之间的距离很难得到有效的衡量；二是在逻辑回归模型中，参数的数量会随着维度的增高而增加，容易引起过拟合问题；三是通常只有部分维度是对分类、预测有帮助，因此可以考虑配合特征选择来降低维度。</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"></span><br><span class="line"><span class="comment">#哑编码，对IRIS数据集的目标值，返回值为哑编码后的数据</span></span><br><span class="line">OneHotEncoder().fit_transform(iris.target.reshape((<span class="number">-1</span>,<span class="number">1</span>)))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-序号编码-标签编码"><a href="#2-序号编码-标签编码" class="headerlink" title="2): 序号编码(标签编码)"></a>2): 序号编码(标签编码)</h3><p>序号编码通常用于处理类别间具有大小关系的数据。</p>
+<p>例如成绩，可以分为低、中、高三档，并且存在“高&gt;中&gt;低”的排序关系。序号编码会按照大小关系对类别型特征赋予一个数值ID，例如高表示为3、中表示为2、低表示为1，转换后依然保留了大小关系.</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line">le = LabelEncoder()</span><br><span class="line">le.fit([<span class="number">1</span>,<span class="number">5</span>,<span class="number">67</span>,<span class="number">100</span>])</span><br><span class="line">le.transform([<span class="number">1</span>,<span class="number">1</span>,<span class="number">100</span>,<span class="number">67</span>,<span class="number">5</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出： array([0,0,3,2,1])</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="3-连续特征的离散化处理"><a href="#3-连续特征的离散化处理" class="headerlink" title="3:  连续特征的离散化处理"></a>3:  连续特征的离散化处理</h2><h3 id="1-定量特征二值化"><a href="#1-定量特征二值化" class="headerlink" title="1): 定量特征二值化"></a>1): 定量特征二值化</h3><p>定量特征二值化的核心在于设定一个阈值，大于阈值的赋值为1，小于等于阈值的赋值为0</p>
+<p>比如我们根据连续值特征的分位数，将该特征分为高，中和低三个特征。将分位数从0<del>0.3的设置为低，0.3</del>0.7的设置为中，0.7~1的设置为高。</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Binarizer</span><br><span class="line"></span><br><span class="line"><span class="comment">#二值化，阈值设置为3，返回值为二值化后的数据</span></span><br><span class="line">Binarizer(threshold=<span class="number">3</span>).fit_transform(iris.data)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="4-缺失值处理"><a href="#4-缺失值处理" class="headerlink" title="4: 缺失值处理"></a>4: 缺失值处理</h2><h3 id="1-填充"><a href="#1-填充" class="headerlink" title="1): 填充"></a>1): 填充</h3><p>①: 连续值：可以选择该特征值的所有样本的<strong>均值</strong>或<strong>中位数</strong>来填充缺失值</p>
+<p>②: 离散值：选择该特征值的所有样本中<strong>最频繁出现的类别</strong>值来填充缺失值</p>
+<p>注：不可信的样本丢掉，缺省值极多的字段考虑不用（即删掉）</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">data=pandas.read_csv(<span class="string">'路径.csv'</span>)</span><br><span class="line"><span class="keyword">from</span> sclera.preprocessing <span class="keyword">import</span> Imputer</span><br><span class="line"><span class="comment">#'mean','median','most_frequent'</span></span><br><span class="line"></span><br><span class="line">imputer=Imputer(strategy=<span class="string">'mean'</span>)</span><br><span class="line">imputer.fit_transform(data[[<span class="string">'需填充列的列名'</span>]])</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-删除"><a href="#2-删除" class="headerlink" title="2): 删除"></a>2): 删除</h3><p>删除缺失行</p>
+<h2 id="5-异常特征样本清洗"><a href="#5-异常特征样本清洗" class="headerlink" title="5:  异常特征样本清洗"></a>5:  异常特征样本清洗</h2><p>异常数据的清洗，目标是将原始数据中异常的数据清除。</p>
+<p><strong>（1）偏差检测（  聚类（KMeans）和最近邻（KNN））</strong></p>
+<p>比如我们可以用KMeans聚类将训练样本分成若干个簇，如果某一个簇里的样本数很少，而且簇质心和其他所有的簇都很远，那么这个簇里面的样本极有可能是异常特征样本了。我们可以将其从训练集过滤掉。</p>
+<p><strong>（2）异常点检测（iForest，one class SVM）</strong></p>
+<p>主要是使用iForest或者one class SVM，使用异常点检测的机器学习算法来过滤所有的异常点。</p>
+<p><strong>（3）基于统计的异常点检测</strong></p>
+<p>例如极差，四分位数间距，均差，标准差等，这种方法适合于挖掘单变量的数值型数据。全距(Range)，又称极差，是用来表示统计资料中的变异量数(measures of variation) ，其最大值与最小值之间的差距；四分位距通常是用来构建箱形图，以及对概率分布的简要图表概述。</p>
+<p><strong>（4）基于距离的异常点检测</strong></p>
+<p>主要通过距离方法来检测异常点，将数据集中与大多数点之间距离大于某个阈值的点视为异常点，主要使用的距离度量方法有绝对距离 ( 曼哈顿距离 ) 、欧氏距离和马氏距离等方法。</p>
+<p><strong>（5）基于密度的异常点检测</strong></p>
+<p>考察当前点的周围密度，可以发现局部异常点，例如LOF算法</p>
+<br>
+
+
+
+<h1 id="二-特征提取-降维"><a href="#二-特征提取-降维" class="headerlink" title="二: 特征提取(降维)"></a>二: 特征提取(降维)</h1><p>它的目的是自动地构建新的特征，将原始特征转换为一组具有明显物理意义（Gabor、几何特征[角点、不变量]、纹理[LBP HOG]）或者统计意义或核的特征。比如通过变换特征取值来减少原始数据中某个特征的取值个数等。对于表格数据，你可以在你设计的特征矩阵上使用主要成分分析（Principal Component Analysis，PCA)来进行特征提取从而创建新的特征。对于图像数据，可能还包括了线或边缘检测。</p>
+<p><strong>主要的方法是线性映射和非线性映射方法两大类</strong></p>
+<ul>
+<li>线性映射方法的代表方法有：PCA（Principal Component Analysis），LDA（Discriminant Analysis）</li>
+<li>非线性映射方法的代表方法有：核方法（KernelPCA）、流形学习（ISOMap，LLE）</li>
+<li>非负矩阵分解（NMF）是在矩阵中所有元素均为非负数的约束条件之下的矩阵分解方法</li>
+</ul>
+<h2 id="1-PCA主成分分析降维"><a href="#1-PCA主成分分析降维" class="headerlink" title="1: PCA主成分分析降维"></a>1: PCA主成分分析降维</h2><p><strong>PCA是一个非监督学习的降维方法</strong></p>
+<p>PCA顾名思义，就是找出数据里最主要的方面，用数据里最主要的方面来代替原始数据。具体的，假如我们的数据集是 $n$ 维的，共有  $m$ 个数据 $(x_1, x_2, …, x_m)$ 。我们希望将这 $m$ 个数据的维度从 $n$ 维降到 $n^{‘}$ 维，希望这 $m$  个  $n^{‘}$  维的数据集尽可能的代表原始数据集。我们知道数据从 $n$ 维降到 $n^{‘}$ 维肯定会有损失，但是我们希望损失尽可能的小。</p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n4d9g59j20h90cnjui.jpg" alt="pca.png"></p>
+<p> <strong>PCA算法流程</strong></p>
+<p>可以看出，求样本 <img src="https://www.zhihu.com/equation?tex=x_i" alt="[公式]"> 的 <img src="https://www.zhihu.com/equation?tex=n%27" alt="[公式]"> 维的主成分其实就是求样本集的协方差矩阵 <img src="https://www.zhihu.com/equation?tex=%5Cfrac%7B1%7D%7Bm%7DXX%5E%5Ctop" alt="[公式]"> 的前 <img src="https://www.zhihu.com/equation?tex=n%27" alt="[公式]"> 个特征值对应特征向量矩阵 <img src="https://www.zhihu.com/equation?tex=P" alt="[公式]"> ，然后对于每个样本 <img src="https://www.zhihu.com/equation?tex=x_i" alt="[公式]"> ,做如下变换 <img src="https://www.zhihu.com/equation?tex=y_i%3DPx_i" alt="[公式]"> ，即达到降维的PCA目的。</p>
+<p>下面我们看看具体的算法流程：</p>
+<p>输入： <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 维样本集 <img src="https://www.zhihu.com/equation?tex=X%3D%28x_1%2Cx_2%2C...%2Cx_m%29" alt="[公式]"> ，要降维到的维数 <img src="https://www.zhihu.com/equation?tex=n%27" alt="[公式]"> .</p>
+<p>输出：降维后的样本集 <img src="https://www.zhihu.com/equation?tex=Y" alt="[公式]"></p>
+<p>1.对所有的样本进行中心化 <img src="https://www.zhihu.com/equation?tex=x_i%3Dx_i-%5Cfrac%7B1%7D%7Bm%7D%5Csum_%7Bj%3D1%7D%5E%7Bm%7Dx_j" alt="[公式]"></p>
+<p>2.计算样本的协方差矩阵<img src="https://www.zhihu.com/equation?tex=C%3D%5Cfrac%7B1%7D%7Bm%7DXX%5E%5Cmathsf%7BT%7D" alt="[公式]"></p>
+<p>3.求出协方差矩阵的特征值及对应的特征向量</p>
+<p>4.将特征向量按对应特征值大小从上到下按行排列成矩阵，取前k行组成矩阵P</p>
+<p>5.Y=PX即为降维到k维后的数据</p>
+<p>这里对PCA算法做一个总结。作为一个非监督学习的降维方法，它只需要特征值分解，就可以对数据进行压缩，去噪。因此在实际场景应用很广泛。为了克服PCA的一些缺点，出现了很多PCA的变种，比如为解决非线性降维的KPCA，还有解决内存限制的增量PCA方法Incremental PCA，以及解决稀疏数据降维的PCA方法Sparse PCA等。</p>
+<p><strong>PCA算法的主要优点有：</strong></p>
+<ul>
+<li>仅仅需要以方差衡量信息量，不受数据集以外的因素影响。　</li>
+<li>各主成分之间正交，可消除原始数据成分间的相互影响的因素。</li>
+<li>计算方法简单，主要运算是特征值分解，易于实现。</li>
+</ul>
+<p><strong>PCA算法的主要缺点有：</strong></p>
+<ul>
+<li>主成分各个特征维度的含义具有一定的模糊性，不如原始样本特征的解释性强。</li>
+<li>方差小的非主成分也可能含有对样本差异的重要信息，因降维丢弃可能对后续数据处理有影响。</li>
+</ul>
+<p><a href="https://www.zhihu.com/people/wang-he-13-93" target="_blank" rel="noopener">PCA主成分分析学习总结 - 鱼遇雨欲语与余</a></p>
+<h2 id="2-LDA线性判别分析降维"><a href="#2-LDA线性判别分析降维" class="headerlink" title="2: LDA线性判别分析降维"></a>2: LDA线性判别分析降维</h2><p>LDA是一种监督学习的降维技术，也就是说它的数据集的每个样本是有类别输出的。LDA的基本思想：给定训练样例集，设法将样例投影到一条直线上，使得同类样例的投影点尽可能接近、异类样例的投影点中心尽可能远离。更简单的概括为一句话，就是<strong>“投影后类内方差最小，类间方差最大”</strong>。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n4rvam0j20go0bqwfj.jpg" alt="LDA降维.png" style="zoom:67%;" />
+
+
+
+<p> <strong>PCA和LDA</strong></p>
+<p>PCA（主成分分析）和LDA（线性判别分析）有很多的相似点，其本质是要将初始样本映射到维度更低的样本空间中，但是PCA和LDA的映射目标不一样：PCA是为了让映射后的样本具有最大的发散性；而LDA是为了让映射后的样本有最好的分类性能。所以说PCA是一种无监督的降维方法，而LDA是一种有监督的降维方法。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n569ikjj21240el7if.jpg" alt="PCA和LDA.jpg" style="zoom:67%;" />
+
+
+
+
+
+<p> <strong>小结</strong></p>
+<p>LDA算法既可以用来降维，又可以用来分类，但是目前来说，主要还是用于降维。在我们进行图像识别图像识别相关的数据分析时，LDA是一个有力的工具。下面总结下LDA算法的优缺点。</p>
+<p>　<strong>LDA算法的主要优点有：</strong></p>
+<ul>
+<li>在降维过程中可以使用类别的先验知识经验，而像PCA这样的无监督学习则无法使用类别先验知识。</li>
+<li>LDA在样本分类信息依赖均值而不是方差的时候，比PCA之类的算法较优。</li>
+</ul>
+<p>　<strong>LDA算法的主要缺点有：</strong></p>
+<ul>
+<li>LDA不适合对非高斯分布样本进行降维，PCA也有这个问题。</li>
+<li>LDA降维最多降到类别数k-1的维数，如果我们降维的维度大于k-1，则不能使用LDA。当然目前有一些LDA的进化版算法可以绕过这个问题。</li>
+<li>LDA在样本分类信息依赖方差而不是均值的时候，降维效果不好。</li>
+<li>LDA可能过度拟合数据。</li>
+</ul>
+<p><a href="https://zhuanlan.zhihu.com/p/32658341" target="_blank" rel="noopener"> LDA线性判别分析 - 鱼遇雨欲语与余</a></p>
+<h2 id="3-NMF非负矩阵分解"><a href="#3-NMF非负矩阵分解" class="headerlink" title="3: NMF非负矩阵分解"></a>3: NMF非负矩阵分解</h2><p>NMF的基本思想可以简单描述为：对于任意给定的一个非负矩阵V，NMF算法能够寻找到一个非负矩阵W和一个非负矩阵H，使得满足 ，从而将一个非负的矩阵分解为左右两个非负矩阵的乘积。如下图所示，其中要求分解后的矩阵H和W都必须是非负矩阵。</p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n5kdz2ej20gs06t3ym.jpg" alt="NMF.png" style="zoom:67%;" />
+
+
+
+<p>矩阵V分解为左矩阵W和右矩阵H，可理解为原始矩阵V的列向量是H中的所有列向量的加权和，对应的权重系数则是W的列向量的元素，所有H称为基矩阵，W称为系数矩阵。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/22043930" target="_blank" rel="noopener">非负矩阵分解(NMF)简介</a></p>
+<h2 id="4-LLE局部线性嵌入降维法"><a href="#4-LLE局部线性嵌入降维法" class="headerlink" title="4: LLE局部线性嵌入降维法"></a>4: LLE局部线性嵌入降维法</h2><p>所谓LLE（局部线性嵌入）即”Locally Linear Embedding”的降维算法，在处理所谓流形降维的时候，效果比PCA要好很多。首先，所谓流形，我们脑海里最直观的印象就是Swiss roll,在吃它的时候喜欢把它整个摊开成一张饼再吃，其实这个过程就实现了对瑞士卷的降维操作，即从三维降到了两维。降维前，我们看到相邻的卷层之间看着距离很近，但其实摊开成饼状后才发现其实距离很远，所以如果不进行降维操作，而是直接根据近邻原则去判断相似性其实是不准确的。</p>
+<p>和传统的PCA，LDA等<strong>关注样本方差</strong>的降维方法相比，LLE关注于降维时<strong>保持样本局部的线性特征（保持原有拓扑结构）</strong>，由于LLE在降维时保持了样本的局部特征，它广泛的用于图像识别，高维数据可视化等领域。<strong>LLE是非线性降维技术</strong>，可以说是流形学习方法最经典的算法之一。很多后续的流形学习、降维方法都与LLE有密切联系。</p>
+<p>LLE的降维实现过程，直观的可视化效果如下图所示</p>
+<p><img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n5wo4pmj20ae07waag.jpg" alt="LLE4.jpg"></p>
+<p>LLE算法认为每一个数据点都可以由其近邻点的线性加权组合构造得到，LLE算法主要步骤：</p>
+<ul>
+<li>寻找每个样本点的k个近邻点；</li>
+<li>由每个样本点的近邻点计算出该样本点的局部重建权值矩阵；</li>
+<li>由该样本点的局部重建权值矩阵和其近邻点计算出该样本点的输出值。</li>
+</ul>
+<p>LLE算法示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 降维，高维数据降成低维的数据</span><br><span class="line"># manifold 流形</span><br><span class="line"><span class="keyword">from</span> sklearn.manifold <span class="keyword">import</span> LocallyLinearEmbedding</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d.axes3d <span class="keyword">import</span> Axes3D</span><br><span class="line">X,t = datasets.make_swiss_roll(n_samples=<span class="number">1500</span>,noise=<span class="number">0.05</span>)</span><br><span class="line">fig = plt.figure()</span><br><span class="line">axes3D = Axes3D(fig)</span><br><span class="line">axes3D.view_init(<span class="number">7</span>,<span class="number">-80</span>)</span><br><span class="line">axes3D.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],X[:,<span class="number">2</span>],c = t)</span><br><span class="line">Copy</span><br></pre></td></tr></table></figure>
+
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n6bqed6j20gj0b20wd.jpg" alt="LLE5.jpg" style="zoom:67%;" />
+
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pca</span> = <span class="keyword">PCA</span>(n_components= 2)</span><br><span class="line">X_pca = <span class="keyword">pca</span>.fit_transform(X)</span><br><span class="line">plt.<span class="keyword">scatter</span>(X_pca[:,0],X_pca[:,1],c = t)</span><br><span class="line"><span class="keyword">Copy</span></span><br></pre></td></tr></table></figure>
+
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n7g7i3xj20gx0az75v.jpg" alt="LLE7.jpg" style="zoom:67%;" />
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lle = LocallyLinearEmbedding(n_neighbors=<span class="number">10</span>,n_components=<span class="number">2</span>)</span><br><span class="line">lle.fit(X)</span><br><span class="line">X_lle = lle.transform(X)</span><br><span class="line">plt.scatter(X_lle[:,<span class="number">0</span>],X_lle[:,<span class="number">1</span>],c = t)</span><br><span class="line">Copy</span><br></pre></td></tr></table></figure>
+
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n7ssl9bj20hu0aoac5.jpg" alt="LLE6.jpg" style="zoom:67%;" />
+
+
+
+
+
+
+
+
+
+<h1 id="三-特征选择"><a href="#三-特征选择" class="headerlink" title="三: 特征选择"></a>三: 特征选择</h1><p><a href="https://zhuanlan.zhihu.com/p/32749489" target="_blank" rel="noopener">特征选择 - 鱼遇雨欲语与余</a></p>
+<p>当数据预处理完成后，我们需要选择有意义的特征输入机器学习的算法和模型进行训练。通常来说，从两个方面考虑来选择特征：</p>
+<ul>
+<li><strong>特征是否发散：</strong>如果一个特征不发散，例如方差接近于0，也就是说样本在这个特征上基本上没有差异，这个特征对于样本的区分并没有什么用。</li>
+<li><strong>特征与目标的相关性：</strong>这点比较显见，与目标相关性高的特征，应当优选选择。除方差法外，本文介绍的其他方法均从相关性考虑。</li>
+</ul>
+<p><strong>特征选择过程一般包括产生过程，评价函数，停止准则，验证过程，这4个部分。</strong></p>
+<img src="http://ww1.sinaimg.cn/large/e3ee7ad0gy1gn5n8w1o9mj20i9073749.jpg" alt="特征选择流程.png" style="zoom: 80%;" />
+
+<p>(1) 产生过程( Generation Procedure )：产生过程是搜索特征子集的过程，负责为评价函数提供特征子集。</p>
+<p>(2) 评价函数( Evaluation Function )：评价函数是评价一个特征子集好坏程度的一个准则。</p>
+<p>(3) 停止准则( Stopping Criterion )：停止准则是与评价函数相关的，一般是一个阈值，当评价函数值达到这个阈值后就可停止搜索。</p>
+<p>(4) 验证过程( Validation Procedure ) ：在验证数据集上验证选出来的特征子集的有效性。</p>
+<p><strong>根据特征选择的形式可以将特征选择方法分为3种：</strong></p>
+<ul>
+<li><p>Filter：过滤法，按照发散性或者相关性对各个特征进行评分，设定阈值或者待选择阈值的个数，选择特征。</p>
+<ul>
+<li>它主要侧重于单个特征跟目标变量的相关性。</li>
+<li><strong>优点</strong>是计算时间上较高效,对于过拟合问题也具有较高的鲁棒性。</li>
+<li><strong>缺点</strong>就是倾向于选择冗余的特征,因为他们不考虑特征之间的相关性,有可能某一个特征的分类能力很差，但是它和某些其它特征组合起来会得到不错的效果。</li>
+<li></li>
+</ul>
+</li>
+<li><p>Wrapper：包装法，根据目标函数（通常是预测效果评分），每次选择若干特征，或者排除若干特征。</p>
+<ul>
+<li>封装器用选取的特征子集对样本集进行分类，分类的精度作为衡量特征子集好坏的标准,经过比较选出最好的特征子集。常用的有逐步回归（Stepwise regression）、向前选择（Forward selection）和向后选择（Backward selection）。</li>
+<li><strong>优点</strong>是考虑了特征与特征之间的关联性，</li>
+<li><strong>缺点</strong>是当观测数据较少时容易过拟合，而当特征数量较多时,计算时间又会增长</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Embedded：集成法，先使用某些机器学习的算法和模型进行训练，得到各个特征的权值系数，根据系数从大到小选择特征。类似于Filter方法，但是是通过训练来确定特征的优劣。<ul>
+<li>有时候会用Random Forest和Gradient boosting做特征选择，本质上都是基于决策树来做的特征选择，只是细节上有些区别。</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-Filter过滤法-刷选器"><a href="#1-Filter过滤法-刷选器" class="headerlink" title="1: Filter过滤法(刷选器)"></a>1: Filter过滤法(刷选器)</h2><p>它按照特征的发散性或者相关性指标对各个特征进行评分，设定评分阈值或者待选择阈值的个数，选择合适的特征。</p>
+<h3 id="1-方差选择法"><a href="#1-方差选择法" class="headerlink" title="(1): 方差选择法"></a>(1): 方差选择法</h3><p><strong>使用方差选择法，先要计算各个特征的方差，然后根据阈值，选择方差大于阈值的特征。</strong>（方差越大的特征，那么我们可以认为它是比较有用的。如果方差较小，比如小于1，那么这个特征可能对我们的算法作用没有那么大。最极端的，如果某个特征方差为0，即所有的样本该特征的取值都是一样的，那么它对我们的模型训练没有任何作用，可以直接舍弃。在实际应用中，我们会指定一个方差的阈值，当方差小于这个阈值的特征会被我们筛掉。）</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> VarianceThreshold</span><br><span class="line"></span><br><span class="line"><span class="comment">#方差选择法，返回值为特征选择后的数据</span></span><br><span class="line"><span class="comment">#参数threshold为方差的阈值</span></span><br><span class="line">VarianceThreshold(threshold=<span class="number">3</span>).fit_transform(iris.data)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-相关系数法"><a href="#2-相关系数法" class="headerlink" title="(2): 相关系数法"></a>(2): 相关系数法</h3><p>这个主要用于输出连续值的监督学习算法中。我们分别计算所有训练集中各个特征与输出值之间的相关系数，设定一个阈值，选择相关系数较大的部分特征。<strong>即使用相关系数法，先要计算各个特征对目标值的相关系数以及相关系数的P值。</strong></p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectKBest</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> pearsonr</span><br><span class="line"></span><br><span class="line"><span class="comment">#选择K个最好的特征，返回选择特征后的数据</span></span><br><span class="line"><span class="comment">#第一个参数为计算评估特征是否好的函数，该函数输入特征矩阵和目标向量，输出二元组（评分，P值）的数组，数组第i项为第i个特征的评分和P值。在此定义为计算相关系数</span></span><br><span class="line"><span class="comment">#参数k为选择的特征个数</span></span><br><span class="line">SelectKBest(<span class="keyword">lambda</span> X, Y: array(map(<span class="keyword">lambda</span> x:pearsonr(x, Y), X.T)).T, k=<span class="number">2</span>).fit_transform(iris.data, iris.target)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-假设检验法（卡方检验、F检验、t检验）"><a href="#3-假设检验法（卡方检验、F检验、t检验）" class="headerlink" title="(3): 假设检验法（卡方检验、F检验、t检验）"></a>(3): 假设检验法（卡方检验、F检验、t检验）</h3><p>卡方检验可以检验某个特征分布和输出值分布之间的相关性。</p>
+<p>经典的卡方检验是检验定性自变量对定性因变量的相关性。假设自变量有N种取值，因变量有M种取值，考虑自变量等于i且因变量等于j的样本频数的观察值与期望的差距。</p>
+<p>我们还可以使用F检验和t检验，它们都是使用假设检验的方法，只是使用的统计分布不是卡方分布，而是F分布和t分布而已。</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectKBest</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> chi2</span><br><span class="line"></span><br><span class="line"><span class="comment">#选择K个最好的特征，返回选择特征后的数据</span></span><br><span class="line">SelectKBest(chi2, k=<span class="number">2</span>).fit_transform(iris.data, iris.target)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-互信息"><a href="#4-互信息" class="headerlink" title="(4): 互信息"></a>(4): 互信息</h3><p>即从信息熵的角度分析各个特征和输出值之间的关系评分。在决策树算法中我们讲到过互信息（信息增益）。互信息值越大，说明该特征和输出值之间的相关性越大。</p>
+<p>经典的互信息也是评价定性自变量对定性因变量的相关性。</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectKBest</span><br><span class="line"> <span class="keyword">from</span> minepy <span class="keyword">import</span> MINE</span><br><span class="line"> </span><br><span class="line"> <span class="comment">#由于MINE的设计不是函数式的，定义mic方法将其为函数式的，返回一个二元组，二元组的第2项设置成固定的P值0.5</span></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">mic</span><span class="params">(x, y)</span>:</span></span><br><span class="line">     m = MINE()</span><br><span class="line">     m.compute_score(x, y)</span><br><span class="line">     <span class="keyword">return</span> (m.mic(), <span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#选择K个最好的特征，返回特征选择后的数据</span></span><br><span class="line">SelectKBest(<span class="keyword">lambda</span> X, Y: array(map(<span class="keyword">lambda</span> x:mic(x, Y), X.T)).T, k=<span class="number">2</span>).fit_transform(iris.data, iris.target)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="2-Wrapper包装法-封装器"><a href="#2-Wrapper包装法-封装器" class="headerlink" title="2: Wrapper包装法(封装器)"></a>2: Wrapper包装法(封装器)</h2><p>根据目标函数，通常是预测效果评分，每次选择部分特征，或者排除部分特征。</p>
+<h3 id="1-递归消除特征算法"><a href="#1-递归消除特征算法" class="headerlink" title="(1): 递归消除特征算法"></a>(1): 递归消除特征算法</h3><p>递归消除特征法使用一个机器学习模型来进行多轮训练，每轮训练后，消除若干权值系数的对应的特征，再基于新的特征集进行下一轮训练。</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> RFE</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment">#递归特征消除法，返回特征选择后的数据</span></span><br><span class="line"><span class="comment">#参数estimator为基模型</span></span><br><span class="line"><span class="comment">#参数n_features_to_select为选择的特征个数</span></span><br><span class="line">RFE(estimator=LogisticRegression(), n_features_to_select=<span class="number">2</span>).fit_transform(iris.data, iris.target)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="3-Embedded集成法"><a href="#3-Embedded集成法" class="headerlink" title="3: Embedded集成法"></a>3: Embedded集成法</h2><p>先使用某些机器学习的算法和模型进行训练，得到各个特征的权值系数，根据权值系数从大到小来选择特征。（类似于Filter方法，但是是通过训练来确定特征的优劣。）</p>
+<h3 id="1-基于惩罚项的特征选择方法"><a href="#1-基于惩罚项的特征选择方法" class="headerlink" title="(1): 基于惩罚项的特征选择方法"></a>(1): 基于惩罚项的特征选择方法</h3><p>使用带惩罚项的基模型，除了筛选出特征外，同时也进行了降维。</p>
+<p>最常用的是使用L1正则化和L2正则化来选择特征。正则化惩罚项越大，那么模型的系数就会越小。当正则化惩罚项大到一定的程度的时候，部分特征系数会变成0，当正则化惩罚项继续增大到一定程度时，所有的特征系数都会趋于0. 但是我们会发现一部分特征系数会更容易先变成0，这部分系数就是可以筛掉的。也就是说，我们选择特征系数较大的特征。常用的L1正则化和L2正则化来选择特征的基学习器是逻辑回归。（L1惩罚项降维的原理在于保留多个对目标值具有同等相关性的特征中的一个，所以没选到的特征不代表不重要。故，可结合L2惩罚项来优化。具体操作为：若一个特征在L1中的权值为1，选择在L2中权值差别不大且在L1中权值为0的特征构成同类集合，将这一集合中的特征平分L1中的权值，故需要构建一个新的逻辑回归模型）</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectFromModel</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment">#带L1惩罚项的逻辑回归作为基模型的特征选择</span></span><br><span class="line">SelectFromModel(LogisticRegression(penalty=<span class="string">"l1"</span>, C=<span class="number">0.1</span>)).fit_transform(iris.data, iris.target)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-基于树模型的特征选择法"><a href="#2-基于树模型的特征选择法" class="headerlink" title="(2): 基于树模型的特征选择法"></a>(2): 基于树模型的特征选择法</h3><p>可以使用决策树或者GBDT。一般来说，可以得到特征系数coef或者可以得到特征重要度(feature importances)的算法才可以做为嵌入法的基学习器。</p>
+<p>树模型中GBDT也可用来作为基模型进行特征选择，使用feature_selection库的SelectFromModel类结合GBDT模型。</p>
+<p><strong>代码实现:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectFromModel</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingClassifier</span><br><span class="line"></span><br><span class="line"><span class="comment">#GBDT作为基模型的特征选择</span></span><br><span class="line">SelectFromModel(GradientBoostingClassifier()).fit_transform(iris.data, iris.target)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>文章作者:</span>
+                        <span>Anjhon</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章地址:</span>
+                        <span><a href="https://anjhon1994.github.io/2019/07/02/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/">特征工程</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>灵魂拷问:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>文章标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">▼ 机器学习</a>
+                    
+                        <a href="/tags/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/">▼ 特征工程</a>
+                    
+                        <a href="/tags/%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9/">▼ 特征选择</a>
+                    
+                        <a href="/tags/%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%EF%BC%88%E9%99%8D%E7%BB%B4%EF%BC%89/">▼ 特征提取（降维）</a>
+                    
+                        <a href="/tags/%E4%B8%BB%E6%88%90%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/">▼ 主成成分分析</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">【返回上一层】</a>
+                <span>· </span>
+                <a href="/">【去往首页】</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            	
+                <a class="prev" rel="prev" href="/2019/07/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">上一篇：神经网络</a>
+            
+            
+            <a class="next" rel="next" href="/2019/03/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/">下一篇：逻辑回归</a>
+            
+			<br>
+
+        </section>
+
+
+		<br>
+		
+		
+			<span>留下你的痕迹😀</span>
+			<section id="comments" class="comments">
+			  <style>
+				.comments{margin:10px;padding:10px;background:#fff;bordercolor:0,0,0}
+				@media screen and (max-width:900px){.comments{margin:auto;padding:20px;background:#fff;bordercolor:0,0,0}}
+			  </style>
+			  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    new Valine({
+        av: AV,
+        el: '#vcomment',
+        notify: notify,
+        app_id: "d8Xy9CoRkV8wkjgNsf6IRqfe-gzGzoHsz",
+        app_key: "ePiIX7dqVFpzeKkr4T1ixiah",
+        placeholder: "🎈🎈🎈 Just say say ...",
+        avatar:"robohash",
+
+		
+		
+		
+    });
+</script>
+
+			</section>
+		
+		
+
+
+    </article>
+</div>
+
+
+
+
+
+			
+        </div>
+		
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 
+		Anjhon | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		
+		
+		
+		</span>
+    </div>
+</footer>
+
+    </div>
+	
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":180,"height":350},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>
